@@ -6,7 +6,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from optimal_3n1.game import transformed_A, transformed_moves  # noqa: E402
-from optimal_3n1.retrograde import Outcome, bounded_retrograde  # noqa: E402
+from optimal_3n1.retrograde import (  # noqa: E402
+    Outcome,
+    bounded_retrograde,
+    certified_finite_draw_kernel,
+)
 
 
 class RetrogradeTests(unittest.TestCase):
@@ -46,6 +50,10 @@ class RetrogradeTests(unittest.TestCase):
             for _ in range(3):
                 ray.append(transformed_A(ray[-1]))
             self.assertFalse(all(result.outcome(node) == Outcome.WIN for node in ray))
+
+    def test_no_certified_finite_draw_kernel_at_small_cutoff(self) -> None:
+        result = bounded_retrograde(10000)
+        self.assertEqual(list(certified_finite_draw_kernel(result)), [])
 
 
 if __name__ == "__main__":

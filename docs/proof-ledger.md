@@ -19,6 +19,7 @@ Update this table whenever the status of a substantial claim changes.
 | Four consecutive positions on one `A`-ray cannot all be `WIN` | **PROVED** | `docs/verified-results.md`, Section 5 |
 | All predecessors through `B` are parameterized by attached alternating words | **PROVED** | `docs/verified-results.md`, Section 6; `transformed_B_predecessors` |
 | The block `B(B(A(q)))` is smaller than `q` for every `q>0` | **PROVED** | `docs/verified-results.md`, Section 7; `transformed_BBA` |
+| A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |
 | A finite-state transducer plus rank can prove the theorem | **CONJECTURAL PROGRAM** | `docs/research-plan.md` |

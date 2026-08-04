@@ -163,6 +163,50 @@ def bounded_retrograde(limit: int) -> RetrogradeResult:
     return RetrogradeResult(limit=limit, outcomes=outcomes, resolved_at=resolved_at)
 
 
+def certified_finite_draw_kernel(result: RetrogradeResult) -> array:
+    """Return a finite DRAW trap certified inside ``result.limit``.
+
+    Remove every UNKNOWN node from which an UNKNOWN-only path can reach an
+    edge above the cutoff. Every remaining UNKNOWN node has at least one
+    remaining UNKNOWN child, while every other child is already proved WIN.
+    Thus a nonempty returned set is a genuine finite DRAW certificate.
+
+    An empty result excludes only this finite, boundary-independent kind of
+    certificate at the chosen cutoff; it says nothing about unbounded draws.
+    """
+    limit = result.limit
+    reaches_boundary = bytearray(limit + 1)
+    queue: deque[int] = deque()
+
+    for q in range(1, limit + 1):
+        if result.outcomes[q] != Outcome.UNKNOWN:
+            continue
+        if any(child > limit for child in transformed_moves(q)):
+            reaches_boundary[q] = 1
+            queue.append(q)
+
+    offsets, predecessors = _build_reverse_csr(limit)
+    while queue:
+        child = queue.popleft()
+        for index in range(offsets[child], offsets[child + 1]):
+            parent = predecessors[index]
+            if (
+                result.outcomes[parent] == Outcome.UNKNOWN
+                and not reaches_boundary[parent]
+            ):
+                reaches_boundary[parent] = 1
+                queue.append(parent)
+
+    return array(
+        "I",
+        (
+            q
+            for q in range(1, limit + 1)
+            if result.outcomes[q] == Outcome.UNKNOWN and not reaches_boundary[q]
+        ),
+    )
+
+
 def iter_outcomes(result: RetrogradeResult) -> Iterable[tuple[int, Outcome]]:
     for q, value in enumerate(result.outcomes):
         yield q, Outcome(value)

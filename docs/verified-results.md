@@ -279,3 +279,37 @@ loss because its parent is a draw.  Hence it is `WIN`.  Thus in this case
 `B(A(d))` is another draw with a winning `B`-child.  This sharply limits the
 first draw-preserving descent from a minimal counterexample, but does not by
 itself exclude later draw branches.
+
+## 8. A sound finite DRAW-kernel certificate
+
+Let a boundary-safe retrograde calculation be performed on `0,...,N`, and
+let `U` be its set of `UNKNOWN` nodes.  Start with every node in `U` that has
+an edge above `N`, then close this set backwards along edges whose parent is
+also in `U`.  Call the resulting set `H` and put
+
+\[
+K=U\setminus H.
+\]
+
+If `K` is nonempty, then every node in `K` is a genuine `DRAW` in the
+infinite game.
+
+Indeed, a node in `K` has no edge above the cutoff, and none of its UNKNOWN
+children lies in `H`; otherwise the node itself would lie in `H`.  Therefore
+every UNKNOWN child of a node in `K` also belongs to `K`.  Any already
+resolved child must be `WIN`: an UNKNOWN parent cannot have a proved `LOSS`
+child, because that would already prove the parent `WIN`.  Finally, every
+node in `K` has at least one child in `K`; if both children were proved
+`WIN`, bounded retrograde would already have proved the parent `LOSS`.
+
+Thus a player can avoid losing from `K` by always choosing a child in `K`.
+If both players do so, play is infinite.  If the opponent instead exits `K`,
+the exit hands the player a position already proved `WIN`, from which they
+can use its finite winning strategy.  Both players have such a non-losing
+strategy, so neither can force a win and all positions in `K` are `DRAW`.
+
+The function `certified_finite_draw_kernel` computes exactly this set with a
+reverse reachability pass.  A nonempty result is therefore a rigorous finite
+countercertificate.  An empty result only says that no such certificate is
+isolated from the selected boundary; it does not exclude an unbounded draw
+kernel.
