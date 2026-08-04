@@ -2,13 +2,20 @@
 
 Research repository for the two-player `3n±1` game introduced by Ingo Althöfer.
 
-From an odd integer `n > 1`, the player to move chooses one of
+## Prize problem
+
+Let the current position be a positive odd integer `n > 1`. Two players move alternately. On each turn, the player chooses one of
 
 - `3n + 1`,
 - `3n - 1`,
 
-and then removes every factor of `2`. The player whose move first produces `1` wins.
-The open problem asks whether, under optimal play, every odd starting value reaches `1` in finitely many moves.
+and divides the chosen value by `2` repeatedly until an odd integer is obtained. This odd integer is the next position. If the resulting value is `1`, the player who made the move wins immediately.
+
+**Problem.** Prove that for every odd starting integer `n`, the game reaches `1` in finitely many moves when both players play optimally.
+
+Ingo Althöfer offers **€500** for the first proof. The official prize page states that solutions must be submitted by **31 December 2037**. Computer analysis by Michael Hartisch has verified the claim for all starting positions `n < 1,000,000`.
+
+Official source: <https://althofer.de/collatz-prizes.html> (`Prize 3`, page updated 12 June 2026).
 
 The repository is private while the problem is open. Its purpose is to preserve rigorous progress, make computational claims reproducible, and support local work with Codex. The long-term goal is a proof suitable for public release and submission for Althöfer's €500 prize.
 
