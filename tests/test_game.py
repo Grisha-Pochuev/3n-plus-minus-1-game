@@ -9,12 +9,17 @@ from optimal_3n1.game import (  # noqa: E402
     F,
     alternating_suffix_length,
     alternating_suffix_remainder,
+    alternating_word_value,
     decreasing_move,
     inverse_F,
     m_coordinates_children,
     normal_form_children,
     odd_part,
+    side_branch_relation,
+    transformed_A,
     transformed_B,
+    transformed_BBA,
+    transformed_B_predecessors,
 )
 
 
@@ -29,6 +34,12 @@ class GameArithmeticTests(unittest.TestCase):
         self.assertEqual(alternating_suffix_remainder(0b10101), 0)
         self.assertEqual(alternating_suffix_remainder(0b11101), 0b11)
 
+    def test_alternating_word_value(self) -> None:
+        self.assertEqual(alternating_word_value(1, 0), 0b0)
+        self.assertEqual(alternating_word_value(4, 0), 0b0101)
+        self.assertEqual(alternating_word_value(1, 1), 0b1)
+        self.assertEqual(alternating_word_value(5, 1), 0b10101)
+
     def test_normal_form(self) -> None:
         for m in range(1, 10000):
             self.assertEqual(sorted(m_coordinates_children(m)), sorted(normal_form_children(m)))
@@ -36,6 +47,32 @@ class GameArithmeticTests(unittest.TestCase):
     def test_B_strictly_decreases(self) -> None:
         for q in range(1, 10000):
             self.assertLess(transformed_B(q), q)
+
+    def test_BBA_strictly_decreases(self) -> None:
+        for q in range(1, 100000):
+            self.assertLess(transformed_BBA(q), q)
+
+    def test_side_branch_relation(self) -> None:
+        for q in range(1, 10000):
+            relation = side_branch_relation(q)
+            self.assertEqual(relation is None, q % 16 in {1, 3, 12, 14})
+            next_side = transformed_B(transformed_A(q))
+            if relation == "A":
+                self.assertEqual(next_side, transformed_A(transformed_B(q)))
+            elif relation == "B":
+                self.assertEqual(next_side, transformed_B(transformed_B(q)))
+            else:
+                self.assertIsNotNone(side_branch_relation(transformed_A(q)))
+
+    def test_B_predecessor_parameterization(self) -> None:
+        limit = 2000
+        actual: dict[int, list[int]] = {}
+        for q in range(limit + 1):
+            actual.setdefault(transformed_B(q), []).append(q)
+        for r in range(limit + 1):
+            self.assertEqual(
+                transformed_B_predecessors(r, limit), tuple(actual.get(r, ()))
+            )
 
     def test_inverse_F(self) -> None:
         for q in range(10000):

@@ -5,6 +5,9 @@ from __future__ import annotations
 from typing import Tuple
 
 
+SIDE_RELATION_EXCEPTIONAL_RESIDUES = frozenset({1, 3, 12, 14})
+
+
 def v2(value: int) -> int:
     """Return the exponent of 2 dividing a positive integer."""
     if value <= 0:
@@ -102,6 +105,22 @@ def alternating_suffix_remainder(m: int) -> int:
     return m >> alternating_suffix_length(m)
 
 
+def alternating_word_value(length: int, leading_bit: int) -> int:
+    """Return the value of an alternating binary word of fixed length.
+
+    ``leading_bit`` is the most significant bit of the word. A leading zero
+    is retained conceptually, which is useful when the word is appended to a
+    nonempty binary prefix.
+    """
+    if length <= 0:
+        raise ValueError("length must be positive")
+    if leading_bit not in (0, 1):
+        raise ValueError("leading_bit must be 0 or 1")
+    if leading_bit == 0:
+        return (1 << length) // 3
+    return (1 << (length + 1)) // 3
+
+
 def m_coordinates_children(m: int) -> Tuple[int, int]:
     """Children after writing the original odd state as n=2m+1."""
     if m < 0:
@@ -140,6 +159,63 @@ def transformed_moves(q: int) -> Tuple[int, int]:
     if q == 0:
         return ()  # type: ignore[return-value]
     return transformed_A(q), transformed_B(q)
+
+
+def side_branch_relation(q: int) -> str | None:
+    """Describe how consecutive side branches are related.
+
+    Return ``"A"`` when ``B(A(q)) == A(B(q))``, ``"B"`` when
+    ``B(A(q)) == B(B(q))``, and ``None`` for the four exceptional residue
+    classes.  Whether an ordinary case is ``"A"`` or ``"B"`` can depend on
+    higher bits, but the exceptional cases are exactly ``1,3,12,14 mod 16``.
+    """
+    if q < 0:
+        raise ValueError("q must be nonnegative")
+    side = transformed_B(q)
+    next_side = transformed_B(transformed_A(q))
+    if next_side == transformed_A(side):
+        return "A"
+    if next_side == transformed_B(side):
+        return "B"
+    if q % 16 not in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+        raise AssertionError(q)
+    return None
+
+
+def transformed_B_predecessors(r: int, limit: int) -> tuple[int, ...]:
+    """Return all ``q <= limit`` satisfying ``B(q) == r``.
+
+    The enumeration uses the exact alternating-suffix formula rather than a
+    scan through all ``q``. Values outside the image of ``F`` are discarded.
+    """
+    if r < 0:
+        raise ValueError("r must be nonnegative")
+    if limit < 0:
+        raise ValueError("limit must be nonnegative")
+
+    largest_x = F(limit)
+    predecessors: list[int] = [0] if r == 0 else []
+    length = 1
+    while True:
+        if r == 0:
+            x = alternating_word_value(length, 1)
+        else:
+            suffix = alternating_word_value(length, r & 1)
+            x = (r << length) + suffix
+        if x > largest_x:
+            break
+        q = inverse_F(x)
+        if q is not None and q <= limit:
+            predecessors.append(q)
+        length += 1
+    return tuple(predecessors)
+
+
+def transformed_BBA(q: int) -> int:
+    """The uniformly descending block ``B(B(A(q)))``."""
+    if q < 0:
+        raise ValueError("q must be nonnegative")
+    return transformed_B(transformed_B(transformed_A(q)))
 
 
 def inverse_F(y: int) -> int | None:

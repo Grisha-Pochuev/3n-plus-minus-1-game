@@ -15,6 +15,10 @@ Update this table whenever the status of a substantial claim changes.
 | A fixed small horizon of side branches always contains a losing node | **DISPROVED for several proposed small constants** | inherited exploratory counterexamples; see `docs/unverified-leads.md` |
 | A fixed modulus `2^K` determines `R` | **FALSE** | `docs/normal-form.md` |
 | Bounded retrograde labels and extracted proof DAGs are sound | **PROVED FOR THE IMPLEMENTATION LOGIC** | `src/optimal_3n1/retrograde.py`; `scripts/extract_proof.py`; `tests/test_retrograde.py` |
+| Outside `q=1,3,12,14 mod 16`, consecutive side branches satisfy `B(A(q))=A(B(q))` or `B(A(q))=B(B(q))` | **PROVED** | `docs/verified-results.md`, Section 5; `side_branch_relation` |
+| Four consecutive positions on one `A`-ray cannot all be `WIN` | **PROVED** | `docs/verified-results.md`, Section 5 |
+| All predecessors through `B` are parameterized by attached alternating words | **PROVED** | `docs/verified-results.md`, Section 6; `transformed_B_predecessors` |
+| The block `B(B(A(q)))` is smaller than `q` for every `q>0` | **PROVED** | `docs/verified-results.md`, Section 7; `transformed_BBA` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |
 | A finite-state transducer plus rank can prove the theorem | **CONJECTURAL PROGRAM** | `docs/research-plan.md` |
