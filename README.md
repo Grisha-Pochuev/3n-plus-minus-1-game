@@ -31,6 +31,7 @@ python -m unittest discover -s tests -v
 python scripts/verify_claims.py --limit 1000000
 python scripts/retrograde_prefix.py --limit 1000000
 python scripts/analyze_suffixes.py --limit 1000000 --suffix-bits 12
+python scripts/extract_proof.py 100 --limit 1000000 --output results/proof-100.json
 ```
 
 The code uses only the Python standard library.
@@ -44,7 +45,8 @@ The code uses only the Python standard library.
 5. [`docs/proof-ledger.md`](docs/proof-ledger.md) — status of every major claim.
 6. [`docs/pitfalls.md`](docs/pitfalls.md) — arguments that must not be repeated.
 7. [`docs/research-plan.md`](docs/research-plan.md) — prioritized next steps.
-8. [`CODEX_PROMPT.md`](CODEX_PROMPT.md) — a ready starting prompt for local Codex.
+8. [`docs/baseline-run.md`](docs/baseline-run.md) — reproducible local validation.
+9. [`CODEX_PROMPT.md`](CODEX_PROMPT.md) — a ready starting prompt for local Codex.
 
 ## Repository principles
 

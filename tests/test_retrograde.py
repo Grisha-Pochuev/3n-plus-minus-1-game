@@ -31,6 +31,14 @@ class RetrogradeTests(unittest.TestCase):
                 self.assertTrue(all(child <= result.limit for child in children))
                 self.assertTrue(all(result.outcome(child) == Outcome.WIN for child in children))
 
+    def test_proof_children_strictly_precede_parent(self) -> None:
+        result = bounded_retrograde(10000)
+        for q in range(result.limit + 1):
+            if result.outcome(q) == Outcome.UNKNOWN:
+                continue
+            for child in result.proof_children(q):
+                self.assertLess(result.resolved_at[child], result.resolved_at[q])
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,4 +1,4 @@
-.PHONY: test verify retrograde suffixes
+.PHONY: test verify retrograde suffixes proof
 
 test:
 	python -m unittest discover -s tests -v
@@ -11,3 +11,6 @@ retrograde:
 
 suffixes:
 	python scripts/analyze_suffixes.py --limit 1000000 --suffix-bits 12
+
+proof:
+	python scripts/extract_proof.py 1 --limit 100000
