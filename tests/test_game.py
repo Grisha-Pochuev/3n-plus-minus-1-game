@@ -9,9 +9,12 @@ from optimal_3n1.game import (  # noqa: E402
     F,
     alternating_suffix_length,
     alternating_suffix_remainder,
+    alternating_suffix_remainder_via_gray,
     alternating_word_value,
     decreasing_move,
+    gray_code,
     inverse_F,
+    inverse_gray_code,
     m_coordinates_children,
     normal_form_children,
     odd_part,
@@ -20,6 +23,7 @@ from optimal_3n1.game import (  # noqa: E402
     transformed_B,
     transformed_BBA,
     transformed_B_predecessors,
+    v2,
 )
 
 
@@ -39,6 +43,19 @@ class GameArithmeticTests(unittest.TestCase):
         self.assertEqual(alternating_word_value(4, 0), 0b0101)
         self.assertEqual(alternating_word_value(1, 1), 0b1)
         self.assertEqual(alternating_word_value(5, 1), 0b10101)
+
+    def test_gray_normal_form_for_R(self) -> None:
+        for value in range(10000):
+            encoded = gray_code(value)
+            self.assertEqual(inverse_gray_code(encoded), value)
+            self.assertEqual(
+                alternating_suffix_remainder_via_gray(value),
+                alternating_suffix_remainder(value),
+            )
+            stripped = encoded >> (v2(encoded + 1) + 1)
+            self.assertEqual(
+                stripped, gray_code(alternating_suffix_remainder(value))
+            )
 
     def test_normal_form(self) -> None:
         for m in range(1, 10000):

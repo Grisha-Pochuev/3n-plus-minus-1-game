@@ -116,3 +116,54 @@ This identity should be independently formalized if it becomes central to a fina
 For every fixed `K`, two integers can share the same residue modulo `2^K` while their alternating suffixes continue for different lengths beyond those `K` bits. Therefore no fixed residue `m mod 2^K` determines `R(m)` globally.
 
 A successful finite-state argument must either read bits until the first repetition or supplement a suffix state with additional symbolic information.
+
+## Gray-code form of the suffix deletion
+
+Let
+
+\[
+G(x)=x\mathbin{\mathtt{xor}}\left\lfloor\frac{x}{2}\right\rfloor
+\]
+
+be reflected binary Gray code.  Then the alternating-suffix operation has the
+exact form
+
+\[
+\boxed{
+G(R(x))=
+\left\lfloor
+\frac{G(x)}{2^{v_2(G(x)+1)+1}}
+\right\rfloor
+}
+\qquad(x\ge0).
+\]
+
+To see this, write the binary digits of `x` as `b_i`.  Except at the leading
+digit, the Gray digit in position `i` is `b_{i+1} xor b_i`.  If the maximal
+alternating suffix has length `k` and a nonempty prefix remains, its lower
+`k-1` Gray digits are `1`, while the boundary Gray digit is `0`.  Therefore
+`v2(G(x)+1)=k-1`, and shifting Gray code right by `k` positions leaves exactly
+the Gray code of the remaining prefix `R(x)`.
+
+If the whole binary word is alternating, its Gray code is all ones.  The
+displayed exponent is then one larger than the word length, but both sides of
+the identity are still zero.  The case `x=0` is immediate.
+
+Consequently, after conjugating once more by `G`, the two game moves are
+
+\[
+\Gamma(g)=G(A(G^{-1}(g))),
+\qquad
+P(\Gamma(g)),
+\]
+
+where
+
+\[
+P(h)=h\mathbin{\mathtt{>>}}(v_2(h+1)+1).
+\]
+
+Thus the unbounded alternating-suffix scan becomes the simple operation
+"delete the terminal run of ones and the zero immediately to its left" in
+Gray coordinates.  Multiplication by `3` and its carry state remain in
+`Gamma`; this identity alone is not a rank proof.

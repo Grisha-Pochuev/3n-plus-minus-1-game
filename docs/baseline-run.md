@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 10 tests
+Ran 17 tests
 OK
 ```
 
@@ -26,8 +26,13 @@ The tests cover:
 - equality of the original and normal-form children for `m < 10000`;
 - strict descent `B(q)<q` for `q < 10000`;
 - inversion of `F`;
+- exact side-branch identities and the forbidden four-WIN block;
+- exact bounded enumeration of all `B`-predecessors;
+- the Gray-code normal form for alternating-suffix deletion;
+- strict descent of the `BBA` block;
 - the two descent blocks for odd `n < 100000`;
 - soundness invariants of the bounded retrograde labels;
+- absence of a certified finite DRAW kernel at the small test cutoff;
 - strict decrease of resolution order inside extracted finite proof DAGs.
 
 ## Identity and descent verification
@@ -86,3 +91,29 @@ Result:
 ```
 
 Each proof edge goes to a position resolved earlier by the retrograde procedure. This makes the generated JSON a finite acyclic certificate inside the chosen cutoff.
+
+## Finite DRAW-kernel search
+
+Status: **COMPUTATIONALLY VERIFIED** at revision `03aa398`.
+
+Command:
+
+```bash
+python scripts/find_finite_draw_kernel.py --limit 1000000
+```
+
+Output:
+
+```text
+cutoff: 1,000,000
+outcomes: {'loss': 274504, 'win': 430883, 'unknown': 294614}
+first unknown: 46582
+certified finite DRAW kernel size: 0
+No isolated finite DRAW kernel was found at this cutoff.
+This does not exclude a boundary-connected or unbounded DRAW kernel.
+```
+
+The certificate logic is proved in `docs/verified-results.md`, Section 8. A
+nonempty kernel would be a genuine counterexample, not merely a collection of
+boundary-dependent `UNKNOWN` nodes. The empty result above is still only a
+finite statement at the displayed cutoff.

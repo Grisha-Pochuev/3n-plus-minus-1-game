@@ -14,6 +14,7 @@ Update this table whenever the status of a substantial claim changes.
 | Minimal draw implies the entire chain `d,A(d),A^2(d),...` is drawn | **DISPROVED AS AN ARGUMENT** | `docs/pitfalls.md` |
 | A fixed small horizon of side branches always contains a losing node | **DISPROVED for several proposed small constants** | inherited exploratory counterexamples; see `docs/unverified-leads.md` |
 | A fixed modulus `2^K` determines `R` | **FALSE** | `docs/normal-form.md` |
+| In Gray coordinates, `R` deletes the trailing ones and the preceding zero via `G(R(x))=G(x)>>(v2(G(x)+1)+1)` | **PROVED** | `docs/normal-form.md`; `alternating_suffix_remainder_via_gray` |
 | Bounded retrograde labels and extracted proof DAGs are sound | **PROVED FOR THE IMPLEMENTATION LOGIC** | `src/optimal_3n1/retrograde.py`; `scripts/extract_proof.py`; `tests/test_retrograde.py` |
 | Outside `q=1,3,12,14 mod 16`, consecutive side branches satisfy `B(A(q))=A(B(q))` or `B(A(q))=B(B(q))` | **PROVED** | `docs/verified-results.md`, Section 5; `side_branch_relation` |
 | Four consecutive positions on one `A`-ray cannot all be `WIN` | **PROVED** | `docs/verified-results.md`, Section 5 |

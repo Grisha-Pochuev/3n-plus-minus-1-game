@@ -105,6 +105,31 @@ def alternating_suffix_remainder(m: int) -> int:
     return m >> alternating_suffix_length(m)
 
 
+def gray_code(value: int) -> int:
+    """Return the reflected binary Gray code of a nonnegative integer."""
+    if value < 0:
+        raise ValueError("value must be nonnegative")
+    return value ^ (value >> 1)
+
+
+def inverse_gray_code(value: int) -> int:
+    """Invert reflected binary Gray code on nonnegative integers."""
+    if value < 0:
+        raise ValueError("value must be nonnegative")
+    result = 0
+    while value:
+        result ^= value
+        value >>= 1
+    return result
+
+
+def alternating_suffix_remainder_via_gray(m: int) -> int:
+    """Delete the alternating suffix by stripping a Gray-code bit block."""
+    encoded = gray_code(m)
+    stripped = encoded >> (v2(encoded + 1) + 1)
+    return inverse_gray_code(stripped)
+
+
 def alternating_word_value(length: int, leading_bit: int) -> int:
     """Return the value of an alternating binary word of fixed length.
 
