@@ -664,6 +664,15 @@ y's actual sibling.  The remaining high-row task is therefore an outcome
 split for the finite state y, not a search over further factor powers; the
 short rows v<20 can be audited as a finite table.
 
+Section 112 makes the same-type return coefficient-independent.  For an
+arbitrary odd coefficient, a genuine recurrence replaces tail exponent D
+by D-11 and carries a WIN token lower by another two proof levels.  The
+other horizon exits are a strict nested-source descent, a LOSS-source
+factor row, or an exact lift over the actual finite sibling.  Hence no
+unbounded high-tail marked recurrence remains at all.  The proof still
+needs one explicit assembly table for D=3,...,13 and for the finite-lift
+types before the minimum-source/minimum-boundary contradiction is complete.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

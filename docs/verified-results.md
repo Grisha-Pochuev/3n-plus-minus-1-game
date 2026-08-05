@@ -9632,3 +9632,236 @@ DRAW cases must still be ranked, and the short rows \(v<20\) remain
 separate.  The source, phase, valuation, and lift identities are
 regression-tested for \(1\le t<1000\), both phases, and
 \(20\le v\le28\).
+
+## 112. A genuine marked recurrence drops eleven tail bits
+
+The stable arithmetic does not depend on the special coefficient inherited
+from the original high-return entry.  Let \(C\) be any positive odd
+integer, let \(D\ge3\), and put
+
+\[
+b=Q_D^g(C).
+\]
+
+Consider the marked factor configuration
+
+\[
+b\text{ WIN},\qquad A(b)\text{ WIN},\qquad B(b)\text{ LOSS},
+\]
+
+with
+
+\[
+\{Q_3^g(J(b)),Q_2^g(J(b))\}
+\quad\text{containing a DRAW}.
+\]
+
+This is the outcome type transported in Sections 102--109.  Their move
+diamonds are universal; only the displayed coordinates used the old
+letters \(v,t\).  Replacing \(v-6\) by \(D\) and \(27J(t)\) by \(C\)
+gives the following coefficient-independent calculation.
+
+Put
+
+\[
+q=A(b),\qquad y=B(b),\qquad r=B(q).
+\]
+
+For \(D\ge4\), ordinary long-tail reduction gives
+
+\[
+q=Q_{D-1}^g(3C),\qquad
+y=Q_{D-2}^g(3C),\qquad
+r=A(y)=Q_{D-3}^g(9C).
+\]
+
+The marked outcomes imply
+
+\[
+\boxed{r\text{ WIN},\qquad h(r)\le h(y)-1.}
+\]
+
+The first factor numerator always has valuation one.  With
+
+\[
+9J(b)+1-2g=2J(w),
+\]
+
+one has
+
+\[
+w=Q_1^{1-g}(J(y)).
+\]
+
+If
+
+\[
+T=Q_1^{1-g}(J(w)),\qquad S=R(T),
+\]
+
+then for every \(D\ge4\),
+
+\[
+\boxed{S=Q_1^g(J(r)).}
+\]
+
+For \(D\ge5\), put \(k=B(S)\) and factor the source transition at \(r\)
+in phase \(g\) as
+
+\[
+\operatorname{sourceTransition}(r,g)=(B,j,z).
+\]
+
+Exactly as in Section 108,
+
+\[
+\boxed{k=Q_{j-1}^{1-g}(J(z)).}
+\]
+
+For \(D\ge6\), define
+
+\[
+x=B(A(r)).
+\]
+
+The ordinary common-child argument gives
+
+\[
+\boxed{x\text{ WIN},\qquad h(x)\le h(r)-2.}
+\]
+
+The next B-transition at \(k\) has the universal table
+
+\[
+\begin{array}{c|c|c}
+D&\text{valuation}&\text{returned source}\ \\ \hline
+6&2&\text{a factor-free lift over }x\\
+7&3&A(x)\\
+8&\ge5&B(x)\\
+D\ge9&4&B(x).
+\end{array}
+\]
+
+Thus every unresolved row with \(D\ge9\) reaches the four/three frame of
+Section 111 over
+
+\[
+\ell=B(x).
+\]
+
+The genuinely recurrent range is \(D\ge14\).  In this range all relevant
+tails are ordinary, and direct reduction gives
+
+\[
+x=Q_{D-6}^g(81C),\qquad
+\ell=Q_{D-8}^g(243C),
+\]
+
+\[
+p:=B(A(x))=Q_{D-9}^g(729C),
+\]
+
+\[
+b':=B(p)=Q_{D-11}^g(2187C),
+\]
+
+\[
+q':=B(A(p))=A(b')=Q_{D-12}^g(6561C),
+\]
+
+\[
+s':=B(b')=Q_{D-13}^g(6561C).
+\]
+
+Two applications of the ordinary common-child height lemma give
+
+\[
+\boxed{p,q'\text{ are WIN},\qquad
+h(q')\le h(p)-2\le h(x)-4.}
+\]
+
+Moreover
+
+\[
+\boxed{
+9J(\ell)+1-2(1-g)=8J(b'),\qquad
+\operatorname{sourceTransition}(b',g)=(B,2,s').}
+\]
+
+Hence Section 111's first exit pair is exactly
+
+\[
+\boxed{Q_3^g(J(b')),\qquad Q_2^g(J(b')).}
+\]
+
+First split the actual outcome of \(b'\).  If \(b'\) is DRAW, then
+\(b'\to q'\) is a boundary whose WIN endpoint is strictly below the
+carried token, regardless of which horizon exit is DRAW.  Hence retain
+only the two finite outcomes.
+
+If Section 111's horizon is witnessed by its first pair, there are exactly
+two cases.
+
+- If \(b'\) is WIN, its marked child \(q'=A(b')\) is WIN, so its other
+  child \(s'=B(b')\) is LOSS.  This DRAW-containing first pair is therefore
+  exactly the same marked configuration, with
+
+  \[
+  \boxed{(D,C)\longmapsto(D-11,2187C).}
+  \]
+
+- If \(b'\) is LOSS, both \(q',s'\) are WIN and have height at most
+  \(h(b')-1\).  The first pair is the LOSS-source factor normal form of
+  Section 61; continuing its two-level scan carries one of those strictly
+  lower finite tokens rather than restarting at an unmarked source.
+
+The other two exit levels in Section 111 cannot hide a second recurrence.
+Write
+
+\[
+C_1=Q_2^g(J(b')),\qquad T_2=Q_1^g(J(C_1)),\qquad C_2=R(T_2).
+\]
+
+If \(C_2\) is DRAW, Section 107 gives the strict nested-source exit
+
+\[
+\rho(C_2)<C_1.
+\]
+
+If \(T_2\) is DRAW, it is the first alternative of \(O(C_1,g)\).  Write
+
+\[
+\operatorname{sourceTransition}(C_1,g)=(B,j,d),\qquad j\ge3.
+\]
+
+Section 25 transfers it to
+
+\[
+Q_j^{1-g}(J(d)),\qquad Q_{j-1}^{1-g}(J(d)).
+\]
+
+Section 111's third factor pair has the same exact source \(d\), in the
+opposite phase and one level higher.  In both cases
+
+\[
+d=Q_1^{1-g}(J(s')).
+\]
+
+Thus it is an exact lift over the actual sibling \(s'\), which is LOSS in
+the recurrent WIN row and WIN below the LOSS source in the other finite
+row.  It is a typed finite-token/nested-source exit, not a new marked
+configuration with a larger tail.
+
+Consequently the only return to the same marked factor type lowers the
+tail exponent by eleven.  It can occur at most
+
+\[
+\boxed{\left\lfloor\frac{D-3}{11}\right\rfloor}
+\]
+
+times before reaching \(3\le D\le13\).  This proves well-foundedness of
+the coefficient-independent stable marked recurrence.  It does not yet
+assemble the short marked rows, the finite-lift exits, and the initial
+minimum-boundary entry into the global no-DRAW theorem.  All universal
+coordinates above are regression-tested for every odd \(1\le C<200\),
+both phases, and \(14\le D\le25\).

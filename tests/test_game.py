@@ -929,6 +929,135 @@ class GameArithmeticTests(unittest.TestCase):
                         (selected_sibling, 0, 1, exit_phase),
                     )
 
+    def test_universal_marked_factor_macro_drops_eleven_tail_bits(
+        self,
+    ) -> None:
+        for coefficient in range(1, 200, 2):
+            for phase in (0, 1):
+                for exponent in range(14, 26):
+                    factor_source = constant_tail_state(
+                        coefficient,
+                        exponent,
+                        phase,
+                    )
+                    marked_child = transformed_A(factor_source)
+                    loss_child = transformed_B(factor_source)
+                    first_common = transformed_B(marked_child)
+
+                    first_numerator = (
+                        9 * embedded_original_state(factor_source)
+                        + 1
+                        - 2 * phase
+                    )
+                    self.assertEqual(v2(first_numerator), 1)
+                    first_lift_source = constant_tail_coefficient_source(
+                        first_numerator >> 1
+                    )[0]
+                    first_signed = constant_tail_state(
+                        embedded_original_state(first_lift_source),
+                        1,
+                        1 - phase,
+                    )
+                    first_raw = alternating_suffix_remainder(first_signed)
+                    self.assertEqual(
+                        first_raw,
+                        constant_tail_state(
+                            embedded_original_state(first_common),
+                            1,
+                            phase,
+                        ),
+                    )
+
+                    nested_source = transformed_B(first_raw)
+                    nested_transition = source_boundary_transition(
+                        nested_source,
+                        phase,
+                    )
+                    self.assertEqual(nested_transition[:2], ("B", 4))
+
+                    lower_token = transformed_B(
+                        transformed_A(first_common)
+                    )
+                    returned_source = nested_transition[2]
+                    self.assertEqual(
+                        lower_token,
+                        constant_tail_state(
+                            81 * coefficient,
+                            exponent - 6,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        returned_source,
+                        constant_tail_state(
+                            243 * coefficient,
+                            exponent - 8,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        returned_source,
+                        transformed_B(lower_token),
+                    )
+
+                    intermediate_token = transformed_B(
+                        transformed_A(lower_token)
+                    )
+                    following_source = transformed_B(intermediate_token)
+                    following_marked = transformed_B(
+                        transformed_A(intermediate_token)
+                    )
+                    following_loss = transformed_B(following_source)
+                    self.assertEqual(
+                        intermediate_token,
+                        constant_tail_state(
+                            729 * coefficient,
+                            exponent - 9,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        following_source,
+                        constant_tail_state(
+                            2187 * coefficient,
+                            exponent - 11,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        following_marked,
+                        constant_tail_state(
+                            6561 * coefficient,
+                            exponent - 12,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        following_loss,
+                        constant_tail_state(
+                            6561 * coefficient,
+                            exponent - 13,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        following_marked,
+                        transformed_A(following_source),
+                    )
+                    self.assertEqual(
+                        source_boundary_transition(
+                            following_source,
+                            phase,
+                        ),
+                        ("B", 2, following_loss),
+                    )
+                    self.assertEqual(
+                        9 * embedded_original_state(returned_source)
+                        + 1
+                        - 2 * (1 - phase),
+                        8 * embedded_original_state(following_source),
+                    )
+
     def test_high_return_obligation_common_side(self) -> None:
         for source in range(1, 1000):
             coefficient = embedded_original_state(source)
