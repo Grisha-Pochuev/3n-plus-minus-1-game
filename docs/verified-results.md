@@ -2344,3 +2344,94 @@ The complementary surviving classes
 remain in the `B`-selecting phase at `y`.  Thus the final obstruction is no
 longer an arbitrary-exponent frame: it is one exact exponent-one/two pair,
 with its next ordinary source letter and phase completely specified.
+
+## 27. At most two further B-source transfers can survive
+
+It is useful to package the two ways in which an exponent-one/two pair
+occurs.  For a source `x` and phase `e`, write `O(x,e)` for the following
+**DRAW obligation**:
+
+- either `Q_1^e(J(x))` is DRAW;
+- or there is a DRAW state whose two children are exactly
+  `Q_2^e(J(x))` and `Q_1^e(J(x))`.
+
+This notation introduces no new assumption.  The first alternative is the
+first fork of Section 23, and the second is its adjacent-pair fork.
+
+Suppose `e` is the `B`-selecting phase at `x`, and let its valuation be
+`j`.  Section 25 gives an adjacent frame over `y=B(x)` containing a DRAW.
+When `j=2`, this transfer preserves the exact obligation form:
+
+\[
+\boxed{O(x,e)\Longrightarrow O(B(x),1-e).}
+\]
+
+Indeed, if `Q_1^e(J(x))` is DRAW, it is itself a DRAW parent of the
+transferred exponent-two/one pair.  In the second alternative, if that same
+exponent-one state is DRAW, the conclusion is identical.  Otherwise the
+outcome proof in Section 25 forces the common transferred child
+`Q_1^{1-e}(J(B(x)))` to be DRAW, which is the first alternative of the new
+obligation.
+
+After Section 26's first transfer, write its source as `x_0=B(c)`.  The
+eight affine rows there give
+
+\[
+\boxed{s\le x_0<2s.}
+\]
+
+The lower inequality is required for survival.  The upper inequality is
+immediate row by row; alternatively the general bound
+
+\[
+x_0\le\frac{243s+233}{128}
+
+\]
+
+proves it for `s>=18`, and the only smaller surviving source is `s=10`,
+where `x_0=19`.
+
+Now consider any further `B`-selecting obligation at a source `x<2s`.  If
+its valuation is at least three, the alternating suffix of `A(x)` has
+length at least two, so
+
+\[
+B(x)\le\frac{3x+1}{8}<s.
+\]
+
+Section 25 still transfers a DRAW to a frame over this source, contradicting
+the global minimality of `s`.  Thus every surviving transfer has valuation
+exactly two, preserves `O`, and satisfies
+
+\[
+x_{i+1}=B(x_i)\le\frac{3x_i+1}{4}.
+\]
+
+Three consecutive valuation-two transfers are also impossible.  Iterating
+the last inequality gives
+
+\[
+x_3\le\frac{27x_0+37}{64}.
+\]
+
+For `s>=18`, substitution of the displayed bound for `x_0` yields
+
+\[
+x_3\le\frac{6561s+11027}{8192}<s.
+\]
+
+For `s=10`, the exact value `x_0=19` gives the same strict conclusion
+directly.  Therefore
+
+\[
+\boxed{
+\text{a surviving transferred obligation reaches its A-selecting phase}
+\text{ after at most two further B transfers}.}
+\]
+
+This removes an infinite `B`-frame escape.  The remaining obstruction is
+now an `A`-selecting obligation `O(x,alpha(x))` with `s<=x<2s`.  Section 24
+places its common side child below the ordinary selected source `A(x)`;
+the outstanding step is to retain enough of the WIN/LOSS proof tree when
+the exponent-two member, rather than the exponent-one member, carries the
+DRAW.

@@ -776,6 +776,39 @@ class GameArithmeticTests(unittest.TestCase):
                 source % 512 in matching_classes,
             )
 
+    def test_final_B_transfer_run_is_bounded(self) -> None:
+        nondecreasing_classes = {10, 31, 53, 95, 160, 202, 224, 245}
+
+        for source in range(1, 100000):
+            if source % 256 not in nondecreasing_classes:
+                continue
+
+            returned_source = transformed_B(transformed_A(source))
+            common_source = transformed_A(transformed_A(returned_source))
+            current = transformed_B(common_source)
+            phase = source_A_selecting_tail_bit(common_source)
+            self.assertLess(current, 2 * source)
+
+            surviving_B_transfers = 0
+            while phase != source_A_selecting_tail_bit(current):
+                letter, valuation, following = source_boundary_transition(
+                    current, phase
+                )
+                self.assertEqual(letter, "B")
+                if valuation >= 3:
+                    self.assertLess(following, source)
+                    break
+
+                self.assertEqual(valuation, 2)
+                if following < source:
+                    break
+                surviving_B_transfers += 1
+                self.assertLessEqual(surviving_B_transfers, 2)
+                current = following
+                phase = 1 - phase
+            else:
+                self.assertGreaterEqual(current, source)
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

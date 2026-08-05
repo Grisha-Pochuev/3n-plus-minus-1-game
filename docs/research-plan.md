@@ -95,7 +95,11 @@ has valuation exactly two, so its frame already has exponents one and two.
 Only eight classes modulo 256 survive, and their next `A`/`B` source phase
 is split exactly by eight classes modulo 512.  The remaining task is to
 iterate this boundary-pair transfer while proving that a visit to the
-retained LOSS branch lowers the globally minimum WIN proof height.
+retained LOSS branch lowers the globally minimum WIN proof height.  Section
+27 shows that the `B` part cannot iterate indefinitely: after the first
+transfer its source is below `2s`, and at most two further valuation-two
+`B` transfers can stay above `s`.  The obstruction is now an exact
+`A`-selecting exponent-one/two obligation with source in `[s,2s)`.
 
 ## Priority 2: finite transducer plus numerical potential
 
