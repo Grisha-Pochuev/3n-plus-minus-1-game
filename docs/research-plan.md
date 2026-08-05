@@ -526,6 +526,23 @@ outcome-compatible escape.  The remaining work is now an entry audit:
 connect the initial minimum-source/height-one cases to this ranked
 obligation automaton and verify that Sections 69--90 cover every entry.
 
+Section 97 isolates the only place where a high return can still change
+the old source anchor.  In the re-entry obligation at
+c=Q_(v-3)^g(3J(t)), every v>=7 common side is exactly
+Q_(v-6)^g(27J(t)), with coefficient source still t.  The two shorter rows
+are explicit: 27J(t)-g at v=5 and one signed-boundary remainder at v=6.
+The entry audit can therefore focus on coupling just these v=5,6 rows to
+the carried finite LOSS/WIN token; no arbitrary high valuation remains.
+
+Section 98 supplies that coupling whenever the short re-entry takes its
+common DRAW side.  At v=6 the token c is ordinary and the common side is
+B(A(c)); at v=5 it is A^2(c), with the exceptional row becoming the exact
+adjacent frame over B(c).  Splitting on the known finite outcome of c
+always lowers its proof token or exposes a lower boundary.  Hence all
+high-return common-side exits are now anchored.  The remaining assembly
+audit concerns the WIN common-side canonical/factor alternatives, for
+which Sections 93--96 must be checked against the same carried c-token.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

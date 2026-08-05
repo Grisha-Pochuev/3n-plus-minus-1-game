@@ -808,6 +808,164 @@ class GameArithmeticTests(unittest.TestCase):
                         SIDE_RELATION_EXCEPTIONAL_RESIDUES,
                     )
 
+    def test_high_return_obligation_common_side(self) -> None:
+        for source in range(1, 1000):
+            coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                for valuation in range(5, 11):
+                    returned_token = constant_tail_state(
+                        3 * coefficient,
+                        valuation - 3,
+                        phase,
+                    )
+                    selecting_phase = source_A_selecting_tail_bit(
+                        returned_token
+                    )
+                    self.assertEqual(selecting_phase, 1 - phase)
+
+                    lower = constant_tail_state(
+                        embedded_original_state(returned_token),
+                        1,
+                        selecting_phase,
+                    )
+                    upper = constant_tail_state(
+                        embedded_original_state(returned_token),
+                        2,
+                        selecting_phase,
+                    )
+                    common_side = transformed_B(lower)
+                    self.assertEqual(
+                        transformed_B(upper),
+                        common_side,
+                    )
+
+                    selected_source = transformed_A(returned_token)
+                    self.assertEqual(
+                        selected_source,
+                        constant_tail_state(
+                            9 * coefficient,
+                            valuation - 4,
+                            phase,
+                        ),
+                    )
+
+                    if valuation == 5:
+                        self.assertEqual(
+                            common_side,
+                            transformed_A(selected_source),
+                        )
+                        self.assertEqual(
+                            common_side,
+                            27 * coefficient - phase,
+                        )
+                    else:
+                        self.assertEqual(
+                            common_side,
+                            transformed_B(selected_source),
+                        )
+                        if valuation == 6:
+                            self.assertEqual(
+                                common_side,
+                                alternating_suffix_remainder(
+                                    constant_tail_state(
+                                        27 * coefficient,
+                                        1,
+                                        phase,
+                                    )
+                                ),
+                            )
+                        else:
+                            self.assertEqual(
+                                constant_tail_source_coordinates(
+                                    common_side
+                                ),
+                                (
+                                    source,
+                                    3,
+                                    valuation - 6,
+                                    phase,
+                                ),
+                            )
+
+    def test_short_high_return_token_diamonds(self) -> None:
+        for source in range(1, 10000):
+            coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                for valuation in (5, 6):
+                    returned_token = constant_tail_state(
+                        3 * coefficient,
+                        valuation - 3,
+                        phase,
+                    )
+                    selecting_phase = source_A_selecting_tail_bit(
+                        returned_token
+                    )
+                    lower = constant_tail_state(
+                        embedded_original_state(returned_token),
+                        1,
+                        selecting_phase,
+                    )
+                    common_side = transformed_B(lower)
+                    selected_source = transformed_A(returned_token)
+                    opposite_child = transformed_B(selected_source)
+
+                    if valuation == 5:
+                        self.assertEqual(
+                            common_side,
+                            transformed_A(selected_source),
+                        )
+                        if (
+                            returned_token % 16
+                            in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                        ):
+                            loss_source = transformed_B(returned_token)
+                            common_coordinates = (
+                                constant_tail_source_coordinates(common_side)
+                            )
+                            opposite_coordinates = (
+                                constant_tail_source_coordinates(
+                                    opposite_child
+                                )
+                            )
+                            self.assertEqual(
+                                common_coordinates[:2],
+                                (loss_source, 0),
+                            )
+                            self.assertEqual(
+                                opposite_coordinates[:2],
+                                (loss_source, 0),
+                            )
+                            self.assertEqual(
+                                abs(
+                                    common_coordinates[2]
+                                    - opposite_coordinates[2]
+                                ),
+                                1,
+                            )
+                            self.assertEqual(
+                                common_coordinates[3],
+                                opposite_coordinates[3],
+                            )
+                        else:
+                            self.assertIn(
+                                opposite_child,
+                                transformed_moves(
+                                    transformed_B(returned_token)
+                                ),
+                            )
+                    else:
+                        self.assertNotIn(
+                            returned_token % 16,
+                            SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                        )
+                        self.assertEqual(common_side, opposite_child)
+                        self.assertIn(
+                            common_side,
+                            transformed_moves(
+                                transformed_B(returned_token)
+                            ),
+                        )
+
     def test_valuation_one_raw_exit_strict_source_drop(self) -> None:
         for source in range(1, 10000):
             coefficient = embedded_original_state(source)

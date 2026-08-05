@@ -8182,3 +8182,194 @@ and the height-one zero-source entry without omitting an entry type.  The
 common-child identity, all valuations from two through the observed
 unbounded tail, and the strict \(j\ge3\) inequality are regression-tested
 for every \(1\le p<100000\).
+
+## 97. Every valuation-seven-or-higher re-entry preserves its old source
+
+The obligation produced by Section 90 has a stronger anchor than the
+generic estimate of Section 92 records.  Retain
+
+\[
+c=Q_{v-3}^g(3J(t)),\qquad v\ge5,\qquad
+e=\alpha(c)=1-g.
+\]
+
+In the A-selecting obligation \(O(c,e)\), put
+
+\[
+P=Q_1^e(J(c)),\qquad U=Q_2^e(J(c)),\qquad
+y=A(c),\qquad b=B(P)=B(U).
+\]
+
+The long constant tail of \(c\) gives
+
+\[
+\boxed{y=Q_{v-4}^g(9J(t)).}
+\]
+
+The common side \(b\) is one of the two ordinary children of \(y\), by
+Section 24.  Its exact choice changes only at the two shortest return
+lengths.
+
+For \(v=5\), the expanding child of \(y\) has exponent zero:
+
+\[
+A(y)=27J(t)-g.
+\]
+
+Its parity is \(1-g=e\), so the refined side identity selects this
+expanding child:
+
+\[
+\boxed{v=5\Longrightarrow b=A(y)=27J(t)-g.}
+\]
+
+For \(v\ge6\), the expanding child is
+
+\[
+A(y)=Q_{v-5}^g(27J(t)),
+\]
+
+which has parity \(g\), opposite to \(e\).  Hence the side identity selects
+the contracting child:
+
+\[
+\boxed{v\ge6\Longrightarrow b=B(y).}
+\]
+
+At \(v=6\) this leaves the single explicit signed-boundary remainder
+
+\[
+\boxed{v=6\Longrightarrow
+b=R\!\left(Q_1^g(27J(t))\right).}
+\]
+
+When \(v\ge7\), the tail in \(A(y)\) has length at least two, so its
+maximal alternating suffix is only its final bit.  Therefore
+
+\[
+\boxed{
+v\ge7\Longrightarrow
+b=Q_{v-6}^g(27J(t)),\qquad
+(\rho(b),k(b),r(b),e(b))=(t,3,v-6,g).}
+\]
+
+Thus every valuation-seven-or-higher re-entry keeps the exact old
+coefficient source \(t\); it merely adds three factors of three and lowers
+the dyadic exponent.  In particular a DRAW at the common side returns to
+the same anchored factor grid rather than restarting the obligation
+automaton at an unrelated source.  The only high-return rows where this
+anchor can change are now the two explicit boundaries \(v=5\) and \(v=6\).
+
+This is an exact arithmetic closure, not yet an outcome comparison for
+those two short rows.  All identities, both phases, and valuations five
+through ten are regression-tested for \(1\le t<1000\).
+
+## 98. A short high-return DRAW side spends the finite return token
+
+The two short rows isolated in Section 97 also preserve provenance once
+their common side is actually DRAW.  Retain the finite WIN/LOSS token
+
+\[
+c=Q_{v-3}^g(3J(t))
+\]
+
+from Section 86, its A-selected source
+
+\[
+y=A(c),
+\]
+
+and the common side \(b\) of the obligation \(O(c,\alpha(c))\).  Suppose
+\(b\) is DRAW.
+
+### The valuation-six row
+
+For \(v=6\), Section 97 gives
+
+\[
+b=B(y)=B(A(c)).
+\]
+
+The constant tail of \(c=Q_3^g(3J(t))\) ends in three equal bits, so
+
+\[
+c\bmod16\in\{7,8\};
+\]
+
+in particular \(c\) is nonexceptional.  The ordinary side relation makes
+\(b\) a child of both \(y=A(c)\) and \(B(c)\).
+
+The finite state \(c\) cannot be WIN.  If it were, choose a canonical LOSS
+child among \(y,B(c)\).  Its child \(b\) would have to be WIN, contrary to
+the assumed DRAW outcome.  Hence \(c\) is LOSS, and both of its children
+are WIN.  Since the WIN state \(y\) has the DRAW child \(b\), its other
+child must be LOSS:
+
+\[
+\boxed{v=6,\ b\text{ DRAW}\Longrightarrow
+A^2(c)\text{ is LOSS},\qquad h(A^2(c))\le h(c)-2.}
+\]
+
+### The valuation-five row
+
+For \(v=5\), Section 97 instead gives
+
+\[
+b=A(y)=A^2(c).
+\]
+
+First suppose \(c\) is LOSS.  Then \(y=A(c)\) is WIN.  Its child \(b\) is
+DRAW, so its other child is the unique LOSS child:
+
+\[
+\boxed{c\text{ LOSS},\ b\text{ DRAW}\Longrightarrow
+B(A(c))\text{ is LOSS},\qquad
+h(B(A(c)))\le h(c)-2.}
+\]
+
+Now suppose \(c\) is WIN.  The child \(y\), which has the DRAW child \(b\),
+is not LOSS.  Therefore
+
+\[
+\ell=B(c)
+\]
+
+is the unique LOSS child of \(c\), with \(h(\ell)=h(c)-1\).
+
+If \(c\) is nonexceptional, put \(q=B(y)=B(A(c))\).  The ordinary side
+relation makes \(q\) a child of \(\ell\), so it is WIN and
+
+\[
+h(q)\le h(c)-2.
+\]
+
+The state \(y\) has children \(b\) DRAW and \(q\) WIN, hence is DRAW.
+Therefore
+
+\[
+\boxed{c\text{ ordinary WIN},\ b\text{ DRAW}\Longrightarrow
+y\to q\text{ is a boundary},\qquad h(q)\le h(c)-2.}
+\]
+
+If \(c\) is exceptional, the exact formulas of Section 68 apply to the
+two children of \(y=A(c)\).  For some \(m\ge1\) and phase \(\delta\),
+
+\[
+\boxed{
+\{b,B(y)\}
+=\{Q_{m+1}^\delta(J(\ell)),Q_m^\delta(J(\ell))\},}
+\]
+
+so the DRAW state \(b\) remains in an adjacent factor-free frame over the
+actual LOSS token \(\ell\), whose height is one below \(h(c)\).
+
+Consequently neither \(v=5\) nor \(v=6\) can use a DRAW common side to
+replace the finite high-return token by an unrelated source.  The exit is
+always a LOSS token at least two proof levels lower, a boundary WIN at
+least two levels lower, or the exact exceptional frame over the
+height-lower LOSS child.  Together with Section 97, the common-side exit of
+every high-return re-entry is now source- or height-anchored.
+
+The nonexceptional diamonds, the exceptional adjacent coordinates, and
+both short valuations are regression-tested for \(1\le t<10000\), in both
+phases.
