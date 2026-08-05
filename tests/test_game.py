@@ -1768,6 +1768,52 @@ class GameArithmeticTests(unittest.TestCase):
                 1,
             )
 
+    def test_finite_obligation_win_side_token_geometry(self) -> None:
+        for source in range(1, 100000):
+            phase = source_A_selecting_tail_bit(source)
+            coefficient = embedded_original_state(source)
+            lower = constant_tail_state(coefficient, 1, phase)
+            selected_source = transformed_A(source)
+            common_side = transformed_B(lower)
+            returned_token = transformed_B(selected_source)
+
+            selected_children = transformed_moves(selected_source)
+            self.assertIn(common_side, selected_children)
+            self.assertEqual(returned_token, transformed_B(selected_source))
+
+            if source % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                loss_source = transformed_B(source)
+                expanding_coordinates = constant_tail_source_coordinates(
+                    transformed_A(selected_source)
+                )
+                returned_coordinates = constant_tail_source_coordinates(
+                    returned_token
+                )
+                self.assertEqual(
+                    expanding_coordinates[:2],
+                    (loss_source, 0),
+                )
+                self.assertEqual(
+                    returned_coordinates[:2],
+                    (loss_source, 0),
+                )
+                self.assertEqual(
+                    abs(
+                        expanding_coordinates[2]
+                        - returned_coordinates[2]
+                    ),
+                    1,
+                )
+                self.assertEqual(
+                    expanding_coordinates[3],
+                    returned_coordinates[3],
+                )
+            else:
+                self.assertIn(
+                    returned_token,
+                    transformed_moves(transformed_B(source)),
+                )
+
     def test_exponent_one_factor_fork_provenance(self) -> None:
         observed_letters = set()
         for source in range(1, 100000):

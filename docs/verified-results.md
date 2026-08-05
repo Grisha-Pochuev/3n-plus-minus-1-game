@@ -8373,3 +8373,91 @@ every high-return re-entry is now source- or height-anchored.
 The nonexceptional diamonds, the exceptional adjacent coordinates, and
 both short valuations are regression-tested for \(1\le t<10000\), in both
 phases.
+
+## 99. A finite-source WIN side exports a lower proof token before branching
+
+The WIN common-side alternative of Section 91 also cannot erase the known
+finite outcome of its obligation source.  Let
+
+\[
+O(x,\alpha(x))
+\]
+
+hold, suppose \(x\) is WIN or LOSS, and retain
+
+\[
+y=A(x),\qquad
+P=Q_1^{\alpha(x)}(J(x)),\qquad
+U=Q_2^{\alpha(x)}(J(x)),
+\]
+
+\[
+b=B(P)=B(U)\text{ WIN},\qquad p=B(y)=B(A(x)).
+\]
+
+Section 24 gives
+
+\[
+b\in\{A(y),B(y)\}=\{A(y),p\}.
+\]
+
+Moreover \(b\) is already a boundary endpoint.  In the canonical
+alternative \(P\) is DRAW; in the factor alternative \(U\) is DRAW.  Both
+states have \(b\) as a child.
+
+First suppose \(x\) is LOSS.  Then \(y=A(x)\) is WIN and
+\(h(y)\le h(x)-1\).  One child of \(y\) is the WIN state \(b\), so its
+other child, denoted by \(\ell\), is the unique LOSS child.  Hence
+
+\[
+\boxed{x\text{ LOSS}\Longrightarrow
+\ell\in\{A(y),p\}\setminus\{b\},\qquad
+h(\ell)=h(y)-1\le h(x)-2.}
+\]
+
+Thus a LOSS high-return source exports an actual LOSS token two proof
+levels lower before the obligation chooses its canonical or factor branch.
+
+Now suppose \(x\) is WIN and choose a canonical LOSS child \(\ell_0\) of
+\(x\).  Section 57 applies directly to \(p=B(A(x))\).
+
+If \(x\) is nonexceptional, or if \(\ell_0=y=A(x)\), then
+
+\[
+\boxed{p\text{ is WIN},\qquad h(p)\le h(x)-2.}
+\]
+
+When \(b=p\), this lower WIN is itself the boundary endpoint just noted.
+When \(b=A(y)\), the state \(p\) is the other ordinary child of \(y\);
+the lower-height token is still retained explicitly.
+
+The sole remaining orientation has \(x\) exceptional and
+\(\ell_0=B(x)\).  The exact exceptional formulas give, for some \(m\ge1\)
+and phase \(\delta\),
+
+\[
+\boxed{
+\{A(y),p\}
+=\{Q_{m+1}^\delta(J(\ell_0)),
+Q_m^\delta(J(\ell_0))\},\qquad
+h(\ell_0)=h(x)-1.}
+\]
+
+Thus the two ordinary children among which the common WIN side \(b\) is
+chosen form an exact adjacent factor-free pair over the canonical
+height-lower LOSS token.
+
+Consequently every obligation whose source is already known finite exports
+one of three marked objects before any further high return can occur:
+
+1. an actual LOSS token at least two heights below a LOSS source;
+2. an ordinary WIN token at least two heights below a WIN source;
+3. the exact exceptional adjacent pair over the canonical LOSS child one
+   height below a WIN source.
+
+This closes the local WIN-common-side provenance at the high-return
+re-entry.  The remaining global step is an automaton-level induction
+showing that successive marked objects cannot alternate between source and
+height descents while resetting the other component.  The child
+partition, ordinary common-child identity, and exceptional adjacent
+coordinates are regression-tested for every \(1\le x<100000\).

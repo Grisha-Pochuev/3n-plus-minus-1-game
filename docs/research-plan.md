@@ -543,6 +543,15 @@ high-return common-side exits are now anchored.  The remaining assembly
 audit concerns the WIN common-side canonical/factor alternatives, for
 which Sections 93--96 must be checked against the same carried c-token.
 
+Section 99 closes that local WIN-side audit.  A finite LOSS source forces
+the other child of A(c) to be a LOSS token two heights lower.  A finite WIN
+source gives the Section 57 lower WIN, except for the exact exceptional
+adjacent pair over its canonical LOSS child.  The high-return re-entry can
+therefore no longer create an unmarked token in either common-side outcome.
+What remains is now genuinely a global size-change argument: define one
+well-founded order for the already proved source and height decreases and
+verify every entry type against it.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
