@@ -1092,3 +1092,102 @@ hypothetical draw kernel, but not yet a contradiction: the valuation-one
 map increases the coefficient for every nonterminal case, and a DRAW with a
 larger coefficient can later use its contracting child without violating
 global minimality.
+
+## 16. A second boundary fork and division by three
+
+The first forced valuation-one transition in Section 15 can be continued one
+step exactly.  Put
+
+\[
+s=1-2\epsilon\in\{1,-1\},
+\qquad v_2(3a+s)=1,
+\qquad b=\frac{3a+s}{2}.
+\]
+
+Thus a minimum-coefficient DRAW `Q_1^epsilon(a)` has the DRAW child
+`Q_1^(1-epsilon)(b)`.  Now factor
+
+\[
+9a+s=2^v d,
+\qquad d\text{ odd}.
+\]
+
+The initial valuation-one condition implies `v>=2`.  Direct use of the
+boundary formula gives
+
+\[
+A(Q_1^{1-\epsilon}(b))=Q_{v-1}^{\epsilon}(d).
+\]
+
+When `v>=3`, its other child is the adjacent state
+
+\[
+B(Q_1^{1-\epsilon}(b))=Q_{v-2}^{\epsilon}(d).
+\]
+
+Indeed, the expanding child ends in at least two equal `epsilon` bits, so
+`R` deletes only the final bit.  When `v=2`, the two final bits alternate
+instead, and direct deletion gives a contracting child whose canonical
+coefficient is strictly below `a` (the case `a=1` is already terminal or
+resolved).
+
+This yields the following exact trichotomy for a minimum-coefficient DRAW at
+exponent one.
+
+1. If `v=2`, its second state has a smaller-coefficient WIN child and is
+   forced to the DRAW state
+   `Q_1^epsilon((9a+s)/4)`.
+2. If `v=3`, its two children are the adjacent pair
+   `Q_2^epsilon(d),Q_1^epsilon(d)`, where `d=(9a+s)/8`; at least one is DRAW.
+   Their common `B`-child has coefficient below `a` and is therefore WIN.
+3. If `v>=4`, both children have coefficient
+   `d< a`, so neither can be DRAW, contradicting that their parent is DRAW.
+
+For the last inequality,
+
+\[
+d\le\frac{9a+1}{16}<a
+\]
+
+for every relevant `a>=3`.  In the middle case, Section 15 gives
+
+\[
+\kappa(B(Q_1^\epsilon(d)))
+\le\frac{3d+1}{4}<a.
+\]
+
+Hence one quarter of the valuation-one residue classes are eliminated at
+this second step, and another quarter collapse to an exact adjacent-pair
+obstruction.  This remains a conditional reduction, not a proof that the
+pair cannot contain a DRAW.
+
+There is also a useful reverse descent for coefficients divisible by three.
+Let `c` be odd, `a=3c`, and `r>=2`.  If
+
+\[
+Q_r^\epsilon(a)\text{ is DRAW},
+\]
+
+then at least one of
+
+\[
+Q_{r+1}^\epsilon(c),\qquad Q_{r+2}^\epsilon(c)
+\]
+
+is DRAW.
+
+Both displayed states have the original DRAW as one child.  They therefore
+cannot be LOSS.  Suppose that neither were DRAW.  Then both would be WIN,
+and, because their shared DRAW child cannot be a winning witness, their
+other children would both be LOSS.  For `r=2` those two LOSS siblings are
+`Q_1^epsilon(a)` and `Q_3^epsilon(a)`; for `r>=3` they are
+`Q_(r-1)^epsilon(a)` and `Q_(r+1)^epsilon(a)`.  The constant-tail identities
+show that every child of `Q_r^epsilon(a)` is a child of one of these two LOSS
+siblings.  Both children of the alleged DRAW would therefore be WIN, making
+it LOSS, a contradiction.
+
+Repeatedly applying this lemma removes all factors of three from the
+coefficient of a DRAW at exponent at least two.  In particular, if `a` is
+the globally minimum DRAW coefficient and `3` divides `a`, then every DRAW
+with that coefficient must have exponent exactly one.  The exponent-one
+case is not covered by the reverse frame and remains open.

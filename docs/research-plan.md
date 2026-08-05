@@ -47,6 +47,11 @@ can leave `r=1` only through a valuation-one signed transition.  The next
 target is to show that repeated valuation-one growth and long-tail reduction
 must either create a smaller-coefficient DRAW or create a lower-height
 DRAW/WIN boundary.
+Section 16 closes the next step to a three-way fork and proves a reverse
+division-by-three lemma for every exponent at least two.  The surviving
+arithmetic obstruction is now an adjacent `r=1,2` pair with coefficient
+less than `9a/8`, whose shared child is already known to be WIN, plus the
+valuation-two growth branch.
 
 ## Priority 2: finite transducer plus numerical potential
 

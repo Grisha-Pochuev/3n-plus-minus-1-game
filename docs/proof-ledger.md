@@ -37,6 +37,8 @@ Update this table whenever the status of a substantial claim changes.
 | At `r=1`, the expanding move flips the tail bit and uses the exact signed coefficient map `oddpart(3a+1-2epsilon)` | **PROVED** | `docs/verified-results.md`, Section 14; regression in `tests/test_game.py` |
 | The common `B`-child of `Q_1^epsilon(a),Q_2^epsilon(a)` has canonical coefficient at most `(3a+1)/4`, with one resolved equality case | **PROVED** | `docs/verified-results.md`, Section 15; `constant_tail_coordinates`; regression in `tests/test_game.py` |
 | A minimum-coefficient DRAW at constant-tail exponent one must take the valuation-one signed transition | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 15 |
+| The second signed transition of a minimum-coefficient exponent-one DRAW has the `v=2`, adjacent-pair `v=3`, or impossible `v>=4` trichotomy | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 16; arithmetic regression in `tests/test_game.py` |
+| A DRAW with coefficient divisible by three and exponent at least two forces a DRAW with coefficient divided by three | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 16; frame identities in `tests/test_game.py` |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

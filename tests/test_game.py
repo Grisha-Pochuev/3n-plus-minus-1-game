@@ -33,6 +33,7 @@ from optimal_3n1.game import (  # noqa: E402
     transformed_BAB,
     transformed_BBA,
     transformed_B_predecessors,
+    transformed_moves,
     v2,
 )
 from optimal_3n1.transducer import (  # noqa: E402
@@ -243,6 +244,98 @@ class GameArithmeticTests(unittest.TestCase):
                     else:
                         self.assertLess(
                             expanding_coefficient, odd_coefficient
+                        )
+
+    def test_constant_tail_second_boundary_fork(self) -> None:
+        for odd_coefficient in range(1, 1000, 2):
+            for tail_bit in (0, 1):
+                signed_value = 3 * odd_coefficient + 1 - 2 * tail_bit
+                if v2(signed_value) != 1:
+                    continue
+
+                intermediate_coefficient = signed_value // 2
+                intermediate = constant_tail_state(
+                    intermediate_coefficient, 1, 1 - tail_bit
+                )
+                second_signed_value = 9 * odd_coefficient + 1 - 2 * tail_bit
+                second_valuation = v2(second_signed_value)
+                second_coefficient = (
+                    second_signed_value >> second_valuation
+                )
+
+                self.assertEqual(
+                    constant_tail_coordinates(transformed_A(intermediate)),
+                    (
+                        second_coefficient,
+                        second_valuation - 1,
+                        tail_bit,
+                    ),
+                )
+
+                if second_valuation >= 3:
+                    self.assertEqual(
+                        constant_tail_coordinates(transformed_B(intermediate)),
+                        (
+                            second_coefficient,
+                            second_valuation - 2,
+                            tail_bit,
+                        ),
+                    )
+                elif transformed_B(intermediate) > 0:
+                    contracting_coefficient, _, _ = constant_tail_coordinates(
+                        transformed_B(intermediate)
+                    )
+                    self.assertLess(
+                        contracting_coefficient, odd_coefficient
+                    )
+
+                if second_valuation >= 4:
+                    self.assertLess(second_coefficient, odd_coefficient)
+                elif second_valuation == 3 and odd_coefficient > 1:
+                    common_child = transformed_B(
+                        constant_tail_state(
+                            second_coefficient, 1, tail_bit
+                        )
+                    )
+                    if common_child > 0:
+                        common_coefficient, _, _ = constant_tail_coordinates(
+                            common_child
+                        )
+                        self.assertLess(
+                            common_coefficient, odd_coefficient
+                        )
+
+    def test_divisible_coefficient_draw_frame_identities(self) -> None:
+        for base_coefficient in range(1, 100, 2):
+            coefficient = 3 * base_coefficient
+            for tail_bit in (0, 1):
+                for exponent in range(2, 10):
+                    state = constant_tail_state(
+                        coefficient, exponent, tail_bit
+                    )
+                    lower_parent = constant_tail_state(
+                        base_coefficient, exponent + 1, tail_bit
+                    )
+                    upper_parent = constant_tail_state(
+                        base_coefficient, exponent + 2, tail_bit
+                    )
+                    self.assertIn(state, transformed_moves(lower_parent))
+                    self.assertIn(state, transformed_moves(upper_parent))
+
+                    lower_sibling = next(
+                        child
+                        for child in transformed_moves(lower_parent)
+                        if child != state
+                    )
+                    upper_sibling = next(
+                        child
+                        for child in transformed_moves(upper_parent)
+                        if child != state
+                    )
+                    for child in transformed_moves(state):
+                        self.assertTrue(
+                            child in transformed_moves(lower_sibling)
+                            or child in transformed_moves(upper_sibling)
                         )
 
     def test_height_one_arithmetic(self) -> None:
