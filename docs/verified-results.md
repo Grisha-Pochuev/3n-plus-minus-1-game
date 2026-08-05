@@ -6231,30 +6231,46 @@ below is at least one.  Thus there is a DRAW state
 S_{k,r}^\delta,qquad r\in\{1,2\},qquad k\ge1.
 \]
 
-Put \(n=k+1\) and factor
+For any positive integer \(n\), factor
 
 \[
 3^n+1-2\delta=2^j b,qquad b\text{ odd}.
 \]
 
-The exponent-one and exponent-two states have the common contracting child
+The states \(S_{n-1,1}^\delta\) and \(S_{n-1,2}^\delta\) have the common
+contracting child
 
 \[
 C_{n,\delta}:=R(3^n-\delta),
 \]
 
-while the expanding child of the exponent-one state is
+while the expanding child of \(S_{n-1,1}^\delta\) is
 
 \[
 E_{n,\delta}:=Q_j^{1-\delta}(b).
 \]
 
-If the reached DRAW already has exponent one, one of these two children is
-DRAW.  If it has exponent two, its children are the same common state
-\(C_{n,\delta}\) and the exponent-one state
-\(S_{k+1,1}^\delta\).  If the common state is not DRAW, it is WIN and forces
-that exponent-one child to be DRAW; applying its two children gives the
-same conclusion.  Therefore
+If the reached DRAW has exponent one, put \(n=k+1\).  Its children are
+exactly \(C_{n,\delta}\) and \(E_{n,\delta}\), so the pair contains a
+DRAW.
+
+If the reached DRAW has exponent two, first put \(n_0=k+1\).  Its children
+are
+
+\[
+C_{n_0,\delta}\quad\text{and}\quad S_{k+1,1}^\delta.
+\]
+
+If \(C_{n_0,\delta}\) is DRAW, take \(n=n_0\).  Otherwise it is WIN and
+forces \(S_{k+1,1}^\delta\) to be DRAW.  The latter is an exponent-one
+state with coefficient \(3^{k+1}\), so now take \(n=n_0+1=k+2\); its two
+children are \(C_{n,\delta}\) and \(E_{n,\delta}\).  Therefore for some
+
+\[
+n\in\{k+1,k+2\}
+\]
+
+one has
 
 \[
 \boxed{\{C_{n,\delta},E_{n,\delta}\}\text{ contains a DRAW}.}
@@ -6379,3 +6395,105 @@ type.  What remains is an exponent-one obligation, a strict source descent,
 or the single even-minus adjacent frame whose exponent is
 \(1+v_2(n)\) on its lower member.  The identities and strict source
 descent are regression-tested for \(2\le n<100\).
+
+## 73. A zero-source LOSS token reaches the same boundary with lower height
+
+The LOSS-marked zero-source frame of Section 70 has a stronger transition
+than the DRAW-marked frame: its proof-tree height falls while the long tail
+is removed.  Retain
+
+\[
+S_{k,r}^\delta=Q_r^\delta(3^k).
+\]
+
+Suppose \(S_{k,r}^\delta\) is LOSS and \(r\ge4\).  Its expanding child
+
+\[
+U=S_{k+1,r-1}^\delta
+\]
+
+is WIN and satisfies
+
+\[
+h(U)\le h(S_{k,r}^\delta)-1.
+\]
+
+The long-tail recurrence applies once more at \(U\), giving
+
+\[
+\operatorname{moves}(U)=
+\{S_{k+2,r-2}^\delta,S_{k+2,r-3}^\delta\}.
+\]
+
+Choose a canonical LOSS child \(L'\) of the WIN state \(U\).  The height
+recursion gives
+
+\[
+\boxed{
+L'\in\{S_{k+2,r-2}^\delta,S_{k+2,r-3}^\delta\},\qquad
+h(L')\le h(S_{k,r}^\delta)-2.}
+\]
+
+Thus each two-ply block preserves an actual LOSS token, adds exactly two
+factors of three, lowers the tail exponent by two or three, and lowers its
+finite proof height by at least two.
+
+Starting from a LOSS member of the zero-source frame, iteration terminates
+at
+
+\[
+\boxed{
+S_{2m,r}^\delta\text{ LOSS},\qquad
+r\in\{1,2,3\},\qquad
+h(S_{2m,r}^\delta)\le h(L_0)-2m,}
+\]
+
+where \(L_0\) is the original LOSS witness.  In particular the accumulated
+factor exponent is even; the long tail cannot discard the proof-height
+mark.
+
+The three terminal exponents have only two boundary orientations.  If
+\(r=1\), the two children of the LOSS token are the Section 71 pair with
+
+\[
+n=2m+1\quad\text{odd}.
+\]
+
+Both children are WIN, their heights are at most one below the terminal
+LOSS, and the signed valuation is bounded:
+
+\[
+j=
+\begin{cases}
+2,&\delta=0,\\
+1,&\delta=1.
+\end{cases}
+\]
+
+If \(r=2\), its expanding child is
+\(S_{2m+1,1}^\delta\); if \(r=3\), its contracting child is that same
+state.  In either case this exponent-one state is WIN, and a canonical
+LOSS child of it belongs to the Section 71 pair with
+
+\[
+n=2m+2\quad\text{even}.
+\]
+
+That new LOSS has height at most two below the terminal LOSS.  Section 72
+now types the pair exactly:
+
+- for \(\delta=0\), it is the valuation-one ordinary/lift pair over one
+  source;
+- for \(\delta=1\), it is the adjacent factor-free pair
+  \[
+  Q_{1+v_2(n)}^0(J(y)),\qquad
+  Q_{2+v_2(n)}^0(J(y)).
+  \]
+
+Hence the sole unbounded even-minus exponent from Sections 71--72 is never
+unmarked when it comes from the height-one LOSS witness: one of its two
+members is an actual LOSS whose proof height has strictly fallen.  This is
+rank transport, not yet a contradiction, because the accompanying DRAW
+boundary still has to be coupled to that lower LOSS token.  All displayed
+arithmetic identities and parity/valuation rows are regression-tested for
+the indicated small parameter ranges.

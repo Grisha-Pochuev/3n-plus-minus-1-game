@@ -354,6 +354,15 @@ strictly below y.  Thus only the even-minus row retains a tail counter,
 namely 1+v2(n) on the lower frame member.  The next target is a descent for
 that row, preferably by halving the exponent parameter n, together with the
 parallel propagation of the LOSS witness in the zero-source frame.
+Section 73 supplies that parallel propagation.  Every two-ply long-tail
+block turns the marked LOSS into another genuine LOSS, adds two factors of
+three, and lowers its proof height by at least two.  The terminal factor
+exponent is therefore even.  Exponent one reaches only bounded odd-n
+valuations; exponents two and three reach the even-n boundary, where the
+unbounded minus frame now contains a strictly lower-height LOSS token.
+The remaining height-one task is an outcome diamond coupling the adjacent
+DRAW boundary to this lower LOSS member; the arithmetic tail counter itself
+is no longer unmarked.
 
 ## Priority 2: finite transducer plus numerical potential
 

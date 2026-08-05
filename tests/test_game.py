@@ -2063,6 +2063,16 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(transformed_B(lower), common)
                 self.assertEqual(transformed_B(upper), common)
                 self.assertEqual(transformed_A(lower), signed_state)
+                next_lower = constant_tail_state(
+                    3 * coefficient, 1, phase
+                )
+                self.assertEqual(transformed_A(upper), next_lower)
+                self.assertEqual(
+                    transformed_B(next_lower),
+                    alternating_suffix_remainder(
+                        3 ** (power + 1) - phase
+                    ),
+                )
 
                 if phase == 0:
                     expected = 2 if power % 2 else 1
@@ -2114,6 +2124,95 @@ class GameArithmeticTests(unittest.TestCase):
                     self.assertLess(
                         constant_tail_source_coordinates(common)[0],
                         source,
+                    )
+
+    def test_zero_source_loss_token_boundary_transport(self) -> None:
+        for factor_exponent in range(9):
+            coefficient = 3**factor_exponent
+            for exponent in range(4, 21):
+                for phase in (0, 1):
+                    loss_token = constant_tail_state(
+                        coefficient, exponent, phase
+                    )
+                    selected_win = transformed_A(loss_token)
+                    self.assertEqual(
+                        selected_win,
+                        constant_tail_state(
+                            3 * coefficient, exponent - 1, phase
+                        ),
+                    )
+                    self.assertEqual(
+                        transformed_A(selected_win),
+                        constant_tail_state(
+                            9 * coefficient, exponent - 2, phase
+                        ),
+                    )
+                    self.assertEqual(
+                        transformed_B(selected_win),
+                        constant_tail_state(
+                            9 * coefficient, exponent - 3, phase
+                        ),
+                    )
+
+        for blocks in range(20):
+            factor_exponent = 2 * blocks
+            coefficient = 3**factor_exponent
+            for phase in (0, 1):
+                exponent_one = constant_tail_state(
+                    coefficient, 1, phase
+                )
+                odd_power = factor_exponent + 1
+                odd_signed = 3**odd_power + 1 - 2 * phase
+                odd_valuation = v2(odd_signed)
+                self.assertEqual(
+                    transformed_B(exponent_one),
+                    alternating_suffix_remainder(
+                        3**odd_power - phase
+                    ),
+                )
+                self.assertEqual(
+                    odd_valuation, 2 if phase == 0 else 1
+                )
+
+                for terminal_exponent in (2, 3):
+                    terminal = constant_tail_state(
+                        coefficient, terminal_exponent, phase
+                    )
+                    boundary_parent = (
+                        transformed_A(terminal)
+                        if terminal_exponent == 2
+                        else transformed_B(terminal)
+                    )
+                    expected_parent = constant_tail_state(
+                        3 * coefficient, 1, phase
+                    )
+                    self.assertEqual(boundary_parent, expected_parent)
+
+                    even_power = factor_exponent + 2
+                    even_signed = 3**even_power + 1 - 2 * phase
+                    even_valuation = v2(even_signed)
+                    even_coefficient = even_signed >> even_valuation
+                    self.assertEqual(
+                        transformed_A(boundary_parent),
+                        constant_tail_state(
+                            even_coefficient,
+                            even_valuation,
+                            1 - phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        transformed_B(boundary_parent),
+                        alternating_suffix_remainder(
+                            3**even_power - phase
+                        ),
+                    )
+                    expected_valuation = (
+                        1
+                        if phase == 0
+                        else 2 + v2(even_power)
+                    )
+                    self.assertEqual(
+                        even_valuation, expected_valuation
                     )
 
     def test_B_predecessor_parameterization(self) -> None:
