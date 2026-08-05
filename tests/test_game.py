@@ -2149,6 +2149,48 @@ class GameArithmeticTests(unittest.TestCase):
                 0,
             ))
 
+    def test_height_one_factor_transition_valuation_filter(self) -> None:
+        for source in range(1, 10000):
+            if transformed_B(source) != 0:
+                continue
+            length = transformed_A(source).bit_length()
+            source_phase = 0 if length % 2 else 1
+            dyadic_exponent = length + 2
+            coefficient = embedded_original_state(source)
+
+            for factor_exponent in range(1, 257):
+                a_value = (
+                    3 ** (factor_exponent + 1) * coefficient
+                    + 1
+                    - 2 * source_phase
+                )
+                a_valuation = v2(a_value)
+                self.assertEqual(
+                    a_valuation,
+                    2 if factor_exponent % 2 else 1,
+                )
+
+                b_phase = 1 - source_phase
+                b_value = (
+                    3 ** (factor_exponent + 1) * coefficient
+                    + 1
+                    - 2 * b_phase
+                )
+                b_valuation = v2(b_value)
+                three_valuation = (
+                    1
+                    if factor_exponent % 2
+                    else 2 + v2(factor_exponent)
+                )
+                if three_valuation < dyadic_exponent:
+                    self.assertEqual(b_valuation, three_valuation)
+                elif three_valuation > dyadic_exponent:
+                    self.assertEqual(b_valuation, dyadic_exponent)
+                else:
+                    self.assertGreater(
+                        b_valuation, dyadic_exponent
+                    )
+
     def test_zero_source_factor_boundary_valuations(self) -> None:
         for power in range(1, 100):
             coefficient = 3 ** (power - 1)

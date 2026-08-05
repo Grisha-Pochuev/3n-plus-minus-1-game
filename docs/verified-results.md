@@ -6768,3 +6768,93 @@ three accumulated while a long frame descends, but it removes any
 untyped signed transition at its original source.  The identities, phases,
 valuations, and selected sources are regression-tested for every
 height-one source below \(100000\).
+
+## 78. Accumulated factors have one height-one valuation resonance
+
+The factors of three left open by Section 77 have an exact valuation
+filter.  Retain its notation
+
+\[
+3J(s)=2^M+\sigma,\qquad
+M=L+2,\qquad \sigma=1-2\delta,
+\]
+
+and suppose \(k\ge1\) factors of three have accumulated after the first
+factor layer.  At the next signed boundary the numerator is
+
+\[
+N_{k,e}=3^{k+1}J(s)+1-2e
+=3^k(2^M+\sigma)+1-2e.
+\]
+
+In the A-selecting phase \(e=\delta\),
+
+\[
+N_{k,\delta}
+=3^k2^M+\sigma(3^k+1).
+\]
+
+Since \(M\ge4\) and
+
+\[
+v_2(3^k+1)=
+\begin{cases}
+2,&k\text{ odd},\\
+1,&k\text{ even},
+\end{cases}
+\]
+
+the high dyadic term cannot affect the valuation.  Hence
+
+\[
+\boxed{
+v_2(N_{k,\delta})=
+\begin{cases}
+2,&k\text{ odd},\\
+1,&k\text{ even}.
+\end{cases}}
+\]
+
+In the B-selecting phase \(e=1-\delta\), put
+
+\[
+h=v_2(3^k-1)=
+\begin{cases}
+1,&k\text{ odd},\\
+2+v_2(k),&k\text{ even}.
+\end{cases}
+\]
+
+Now
+
+\[
+N_{k,1-\delta}=3^k2^M+\sigma(3^k-1).
+\]
+
+The two summands have valuations \(M\) and \(h\).  If they differ, the
+smaller one is the exact valuation:
+
+\[
+\boxed{h\ne M\Longrightarrow
+v_2(N_{k,1-\delta})=\min\{h,M\}.}
+\]
+
+If \(h=M\), both quotients are odd and their signed sum is even, so
+
+\[
+\boxed{h=M\Longrightarrow v_2(N_{k,1-\delta})>M.}
+\]
+
+The resonance condition is itself exact:
+
+\[
+h=M\quad\Longleftrightarrow\quad v_2(k)=L.
+\]
+
+Thus the arbitrarily long exceptional frame has no unbounded valuation in
+its A phase.  Its B phase is also explicit except for one resonant row,
+where the factor counter \(k\) is divisible by \(2^L\) but not
+\(2^{L+1}\).  This is still not a rank: the resonant quotient and the
+outcomes of the raw/signed siblings must be coupled.  The full filter is
+regression-tested for every height-one source below \(10000\) and
+\(1\le k\le256\).

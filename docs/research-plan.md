@@ -389,6 +389,13 @@ the B phase is the pure power 2^(L+2) and returns source zero.  What remains
 is to control the factors of three accumulated while the adjacent frame
 descends before reaching this signed boundary; its starting transition is
 now dyadic rather than an arbitrary source jump.
+Section 78 filters every later signed boundary.  The A phase alternates
+between valuations two and one with the parity of the accumulated factor
+counter k.  The B phase is the minimum of the dyadic exponent L+2 and the
+LTE counter v2(3^k-1), except only when v2(k)=L; exactly there cancellation
+raises the valuation further.  The next target is therefore the single
+resonant quotient and its raw sibling, rather than an arbitrary long-frame
+transition.
 
 ## Priority 2: finite transducer plus numerical potential
 
