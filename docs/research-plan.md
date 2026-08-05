@@ -575,6 +575,15 @@ The remaining universal gap is now a marked-factor lemma for a WIN source
 with a known lower WIN child and LOSS sibling, plus the two bounded
 exceptional families; no generic high-return source reset remains.
 
+Section 102 fixes the arithmetic of that marked factor row.  The first
+factor exponent is one at v=5, at least three only at v=6, and exactly two
+for every v>=7.  In the universal v>=7 row, the next signed transition at
+the factor source always selects the actual LOSS sibling of the marked
+lower WIN child; its valuation is one at v=7, at least three only at v=8,
+and exactly two thereafter.  The next proof must use the two outcome marks
+through the valuation-two recycle rather than revive the fixed-depth
+shortcut already ruled out by Section 67.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

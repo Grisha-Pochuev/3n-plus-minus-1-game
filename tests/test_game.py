@@ -980,6 +980,82 @@ class GameArithmeticTests(unittest.TestCase):
                                 transformed_moves(child),
                             )
 
+                    predecessor_transition = source_boundary_transition(
+                        lower_win,
+                        phase,
+                    )
+                    self.assertEqual(
+                        predecessor_transition[2],
+                        common_side,
+                    )
+                    if valuation == 5:
+                        self.assertEqual(
+                            predecessor_transition[:2],
+                            ("A", 1),
+                        )
+                    elif valuation == 6:
+                        self.assertEqual(
+                            predecessor_transition[0],
+                            "B",
+                        )
+                        self.assertGreaterEqual(
+                            predecessor_transition[1],
+                            3,
+                        )
+                    else:
+                        self.assertEqual(
+                            predecessor_transition[:2],
+                            ("B", 2),
+                        )
+
+                    if valuation < 7:
+                        continue
+
+                    lower_child = transformed_B(
+                        transformed_A(lower_win)
+                    )
+                    other_factor_child = next(
+                        child
+                        for child in transformed_moves(common_side)
+                        if child != lower_child
+                    )
+                    factor_transition = source_boundary_transition(
+                        common_side,
+                        phase,
+                    )
+                    self.assertEqual(
+                        factor_transition[2],
+                        other_factor_child,
+                    )
+                    if valuation == 7:
+                        self.assertEqual(
+                            lower_child,
+                            transformed_B(common_side),
+                        )
+                        self.assertEqual(
+                            factor_transition[:2],
+                            ("A", 1),
+                        )
+                    else:
+                        self.assertEqual(
+                            lower_child,
+                            transformed_A(common_side),
+                        )
+                        self.assertEqual(
+                            factor_transition[0],
+                            "B",
+                        )
+                        if valuation == 8:
+                            self.assertGreaterEqual(
+                                factor_transition[1],
+                                3,
+                            )
+                        else:
+                            self.assertEqual(
+                                factor_transition[1],
+                                2,
+                            )
+
     def test_short_high_return_token_diamonds(self) -> None:
         for source in range(1, 10000):
             coefficient = embedded_original_state(source)

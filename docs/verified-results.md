@@ -8649,3 +8649,104 @@ expose the marked child \(q\), or a certified descendant, before it can
 replace the proof-height token.  The identities, ordinary diamonds, and
 exceptional residue filter are regression-tested for every
 \(1\le t<10000\), both phases, and valuations five through ten.
+
+## 102. The marked high-return factor fork has one resonant row
+
+The factor alternative left by Section 101 has a much smaller exponent
+table than an arbitrary obligation.  Retain its notation and suppose its
+common side \(b\) is WIN.  The phase of the factor frame is \(g\).  The
+source transition at
+
+\[
+p=Q_{v-4}^g(9J(t))
+\]
+
+selects exactly \(b\).  Its letter and valuation are
+
+\[
+\boxed{
+\operatorname{sourceTransition}(p,g)=
+\begin{cases}
+(A,1,b),&v=5,\\
+(B,j,b),\quad j\ge3,&v=6,\\
+(B,2,b),&v\ge7.
+\end{cases}}
+\]
+
+Indeed, the remaining constant-tail exponent of \(p\) is \(v-4\).  At
+exponent one the phase \(g\) is A-selecting and every A-selected source
+transition has valuation one.  At exponent two the phase is B-selecting
+and direct reduction of the signed numerator modulo eight gives valuation
+at least three.  At every exponent at least three, the tail is
+\(000\) for \(g=0\) or \(111\) for \(g=1\); the same numerator is divisible
+by four but not by eight, so its valuation is exactly two.  Section 28's
+factor identity therefore says that the lower exponent of the DRAW factor
+frame is respectively
+
+\[
+1,\qquad j\ge3,\qquad 2.
+\]
+
+Only the short return \(v=6\) can create an unbounded first factor
+exponent.  In particular every \(v\ge7\) factor alternative starts from
+
+\[
+\boxed{
+\{Q_3^g(J(b)),Q_2^g(J(b))\}\text{ containing a DRAW}.}
+\]
+
+The marked ordinary child from Section 101 also has a fixed orientation
+in these rows.  Put
+
+\[
+q=B(A(p)),\qquad y\in\operatorname{moves}(b)\setminus\{q\}.
+\]
+
+For \(v=7\), the tail exponent of \(p\) is three, and the ordinary side
+relation gives \(q=B(b)\).  For \(v\ge8\), that exponent is at least four
+and the relation gives \(q=A(b)\).  Since \(b\) and \(q\) are WIN in the
+factor alternative,
+
+\[
+\boxed{
+\begin{array}{c|cc}
+&q&y\\ \hline
+v=7&B(b)\text{ WIN}&A(b)\text{ LOSS}\\
+v\ge8&A(b)\text{ WIN}&B(b)\text{ LOSS}.
+\end{array}}
+\]
+
+Now inspect the source transition at the factor source \(b\) in the same
+phase \(g\).  Section 97 gives
+
+\[
+b=Q_{v-6}^g(27J(t))\qquad(v\ge7).
+\]
+
+Repeating the preceding three tail cases, with exponent \(v-6\), yields
+
+\[
+\boxed{
+\operatorname{sourceTransition}(b,g)=
+\begin{cases}
+(A,1,y),&v=7,\\
+(B,k,y),\quad k\ge3,&v=8,\\
+(B,2,y),&v\ge9.
+\end{cases}}
+\]
+
+Thus the factor phase always selects the actual LOSS sibling \(y\), never
+the marked lower WIN child \(q\).  More importantly, the only unbounded
+valuation after the universal exponent-three/two frame is the single row
+\(v=8\).  Sections 79--84 normalize the raw and signed exits of that row;
+the two outcome marks displayed here are precisely the additional data
+that the remaining transport proof must carry through that normalization.
+A fixed-depth exclusion is neither claimed nor needed.
+
+This is a two-stage marked normal form, not yet the missing factor
+transport theorem.  The remaining proof must show that the selected LOSS
+source and the unselected lower WIN child cannot alternate through the
+valuation-two recycle while resetting the latter's height.  The two source
+transition tables, frame exponent, and child orientations are
+regression-tested for every \(1\le t<10000\), both phases, and valuations
+five through ten.
