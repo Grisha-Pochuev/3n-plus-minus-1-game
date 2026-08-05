@@ -332,6 +332,40 @@ class GameArithmeticTests(unittest.TestCase):
                         ),
                     )
 
+    def test_arbitrary_factor_frame_two_level_exit_geometry(self) -> None:
+        for base_coefficient in range(1, 200, 2):
+            for phase in (0, 1):
+                for factor_exponent in range(7):
+                    coefficient = (
+                        3**factor_exponent * base_coefficient
+                    )
+                    upper = constant_tail_state(
+                        coefficient, 2, phase
+                    )
+                    lower = constant_tail_state(
+                        coefficient, 1, phase
+                    )
+                    next_lower = constant_tail_state(
+                        3 * coefficient, 1, phase
+                    )
+                    current_side = transformed_B(lower)
+                    current_signed = transformed_A(lower)
+                    next_side = transformed_B(next_lower)
+                    next_signed = transformed_A(next_lower)
+
+                    self.assertEqual(
+                        transformed_moves(upper),
+                        (next_lower, current_side),
+                    )
+                    self.assertEqual(
+                        transformed_moves(lower),
+                        (current_signed, current_side),
+                    )
+                    self.assertEqual(
+                        transformed_moves(next_lower),
+                        (next_signed, next_side),
+                    )
+
     def test_ninefold_twenty_sevenfold_source_coupling(self) -> None:
         for b in range(1, 100000):
             if b % 64 not in {4, 25, 38, 59}:
@@ -445,6 +479,21 @@ class GameArithmeticTests(unittest.TestCase):
                         self.assertEqual(
                             next_source, selected_source
                         )
+
+    def test_valuation_one_raw_exit_strict_source_drop(self) -> None:
+        for source in range(1, 10000):
+            coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                signed_state = constant_tail_state(
+                    coefficient, 1, phase
+                )
+                raw_exit = alternating_suffix_remainder(signed_state)
+                if raw_exit == 0:
+                    continue
+                raw_source = constant_tail_source_coordinates(
+                    raw_exit
+                )[0]
+                self.assertLess(raw_source, source)
 
     def test_win_factor_source_return_provenance(self) -> None:
         for b in range(1, 100000):

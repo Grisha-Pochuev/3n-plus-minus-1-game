@@ -404,6 +404,19 @@ source zero).  The remaining proof obligation is now an
 outcome diamond forcing a DRAW-marked factor scan to expose the carried
 height-one terminal token before it can restart through that ordinary
 source step.
+Section 80 supplies the bounded outcome scan: every DRAW exponent-two/one
+frame exposes a raw or signed DRAW exit at its current or next factor
+level.  Together with Section 79, the resonant level and its valuation-one
+successor are the complete local horizon.  The remaining task is now to
+attach both raw exits in this four-state diamond to the terminal token
+B(s)=0 (or prove a strict source/height return).
+Section 81 types both raw exits.  At higher valuation they are simply the
+lower member of the signed adjacent frame; at valuation one, every positive
+raw DRAW has coefficient source strictly below the signed returned source
+(and source zero gives the terminal raw state).  The four-exit diamond is
+therefore reduced to an adjacent frame, an exponent-one lift, or strict
+source descent.  The remaining global step is to compare the two coupled
+signed sources with the carried proof-height token.
 
 ## Priority 2: finite transducer plus numerical potential
 

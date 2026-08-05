@@ -6934,3 +6934,126 @@ source; it cannot form an unmarked high-valuation run.  This is a complete
 arithmetic coupling, not yet an outcome descent, because a DRAW may choose
 between side and signed exits.  It is regression-tested for all sources
 below \(100\), both phases, and nine consecutive factor levels.
+
+## 80. A DRAW factor frame exits at the current or next level
+
+The outcome part of Section 59 is also universal.  Let \(a\) be positive
+and odd, fix a phase \(e\), and for any \(k\ge0\) put
+
+\[
+P_k=Q_2^e(3^ka),\qquad R_k=Q_1^e(3^ka),
+\]
+
+\[
+C_k=B(P_k)=B(R_k),\qquad
+R_{k+1}=A(P_k),\qquad T_k=A(R_k).
+\]
+
+The exact moves are
+
+\[
+\operatorname{moves}(P_k)=\{R_{k+1},C_k\},\qquad
+\operatorname{moves}(R_k)=\{T_k,C_k\}.
+\]
+
+Suppose the adjacent frame \(\{P_k,R_k\}\) contains a DRAW.  Its common
+child \(C_k\) cannot be LOSS, since that would make both frame members WIN.
+If \(C_k\) is DRAW, the scan has already exited at the current level.  If
+it is WIN and \(R_k\) is DRAW, outcome recursion forces \(T_k\) to be
+DRAW.
+
+The only remaining case has \(P_k\) DRAW and \(R_k\) not DRAW.  Then
+\(R_{k+1}\) is DRAW.  Its children are exactly \(T_{k+1}\) and
+\(C_{k+1}\).  Neither is LOSS, and at least one is DRAW.  Therefore
+
+\[
+\boxed{\{C_k,T_k,C_{k+1},T_{k+1}\}\text{ contains a DRAW}.}
+\]
+
+This conclusion is independent of \(a,e,k\), the size of the frame before
+it reached exponents two/one, and all residue classes.
+
+Combine it with Section 79.  The two signed exits \(T_k,T_{k+1}\) have
+coupled sources: a valuation at least two at one level is followed by a
+valuation-one exact lift at the other, while a valuation-one source is
+followed by one selected-source step.  Hence the high resonance of Section
+78 cannot be bypassed by continuing through further factor levels: every
+DRAW-marked scan exposes a raw or signed exit at the resonant level or its
+immediate successor.
+
+This is still a four-exit outcome normal form, not a proof-height descent;
+the two raw exits must be attached to the carried terminal/lower-height
+token.  The three displayed move identities are regression-tested for odd
+base coefficients below \(200\), both phases, and seven factor levels.
+
+## 81. Every raw factor exit is adjacent or strictly source-lowering
+
+The two raw exits in Section 80 are not untyped.  Consider either factor
+level and write its signed numerator as
+
+\[
+3a+1-2e=2^vJ(t).
+\]
+
+The signed and raw exits are
+
+\[
+T=Q_v^{\,1-e}(J(t)),\qquad C=R(T).
+\]
+
+If \(v\ge2\), the final constant block of \(T\) has length at least two,
+so its maximal alternating suffix is only its last bit.  Therefore
+
+\[
+\boxed{C=Q_{v-1}^{\,1-e}(J(t)).}
+\]
+
+The raw and signed exits are an adjacent factor-free frame over the same
+source \(t\).  If either is DRAW, that frame contains a DRAW.
+
+If \(v=1\), put \(g=1-e\).  Then
+
+\[
+T=Q_1^g(J(t))=2J(t)-g.
+\]
+
+Suppose its raw exit \(C=R(T)\) is positive, and let \(\rho(C)\) be its
+coefficient source.  Deleting a nonempty binary suffix gives
+
+\[
+C\le\left\lfloor\frac{T}{2}\right\rfloor\le J(t).
+\]
+
+The universal coefficient-source bound yields
+
+\[
+\rho(C)\le\frac{C-1}{6}
+\le\frac{J(t)-1}{6}
+\le\frac{3t+1}{6}<t
+\qquad(t\ge1).
+\]
+
+For \(t=0\), one has \(T\in\{1,2\}\) and \(R(T)=0\), so the raw exit is
+terminal.  Thus a positive valuation-one raw DRAW
+is always a strict numerical source descent:
+
+\[
+\boxed{v=1,\ C\text{ DRAW}\Longrightarrow \rho(C)<t.}
+\]
+
+Combining Sections 79--80 now gives a three-type outcome normal form for
+an arbitrary DRAW factor frame:
+
+1. an adjacent factor-free DRAW frame over the returned source of the
+   valuation-at-least-two level;
+2. an exponent-one DRAW lift over the returned source of the
+   valuation-one level;
+3. a positive raw DRAW whose coefficient source is strictly smaller than
+   that returned source.
+
+The first two sources are coupled by Section 79 as an exact lift or one
+ordinary selected-source step.  Hence neither raw exit creates an
+unmarked restart.  This still does not compare the coupled returned source
+with the proof-height token carried into the factor frame.  The strict raw
+source inequality is regression-tested for every source below \(10000\)
+and both phases.
