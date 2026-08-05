@@ -9204,3 +9204,214 @@ transport problem is therefore confined to the finite outcomes of \(k\),
 with a strict lower numerical anchor \(\rho(k)<r\), plus two explicit short
 exceptional orientations.  The universal strict inequality is regression-
 tested for every \(1\le r<100000\) and both phases.
+
+## 108. From valuation eleven onward the nested source is an actual child of r
+
+The generic inequality in Section 107 can be sharpened to an exact child
+coordinate in every \(v\ge11\) high-return row.  Retain
+
+\[
+S=Q_1^g(J(r)),\qquad k=B(S).
+\]
+
+Section 105 factors the source transition at \(r\) as
+
+\[
+\operatorname{sourceTransition}(r,g)=
+\begin{cases}
+(B,j,z),\quad j\ge3,&v=11,\\
+(B,2,z),&v\ge12,
+\end{cases}
+\qquad z=B(r).
+\]
+
+Apply the B-selecting transfer identity of Section 25 at source \(r\).
+Its exponent-one member is exactly \(S\), so its common side is
+
+\[
+\boxed{k=B(S)=Q_{j-1}^{1-g}(J(z)).}
+\]
+
+Thus \(k\) is an exact factor-free lift over the actual ordinary child
+\(z=B(r)\), not merely a state whose coefficient source satisfies a
+numerical bound.  In particular,
+
+\[
+\boxed{
+k=
+\begin{cases}
+Q_m^{1-g}(J(z)),\quad m\ge2,&v=11,\\
+Q_1^{1-g}(J(z)),&v\ge12.
+\end{cases}}
+\]
+
+Section 106's transition at \(S\) has valuation exactly two throughout
+these rows.  Consequently Section 27 preserves the exact obligation:
+
+\[
+\boxed{O(S,1-g)\Longrightarrow O(k,g)\qquad(v\ge11).}
+\]
+
+The new phase is also fixed by the displayed lift exponent.  A constant
+tail of length at least two with bit \(1-g\) has A-selecting phase \(g\),
+whereas an exponent-one lift has A-selecting phase equal to its tail bit.
+Hence
+
+\[
+\boxed{
+\alpha(k)=
+\begin{cases}
+g,&v=11,\\
+1-g,&v\ge12.
+\end{cases}}
+\]
+
+So valuation eleven enters an A-selecting obligation over a long lift of
+\(z\); every larger valuation enters a B-selecting obligation over the
+exponent-one lift of \(z\).
+
+The outcome of \(z\) now has direct proof-height meaning.  The token \(r\)
+is WIN and Section 104 gives \(h(r)\le h(y)-1\).  Moreover
+
+\[
+r\bmod16\in
+\begin{cases}
+\{4,12\},&v=11, g=0,\\
+\{3,11\},&v=11, g=1,\\
+\{8,7\},&v=12, g=0,1,\\
+\{0,15\},&v\ge13, g=0,1.
+\end{cases}
+\]
+
+Thus \(r\) is ordinary for every \(v\ge12\).  In those rows, if \(z\) is
+DRAW, the other child \(A(r)\) must be LOSS.  The ordinary side identity
+makes
+
+\[
+x=B(A(r))
+\]
+
+a child of both \(z=B(r)\) and \(A(r)\).  Therefore
+
+\[
+\boxed{v\ge12, z\text{ DRAW}\Longrightarrow
+z\to x\text{ is a boundary},\qquad h(x)\le h(r)-2.}
+\]
+
+This strictly lowers the second component already lowered in Section 104.
+The unresolved stable rows now have \(z\) finite: if \(z\) is WIN then
+\(A(r)\) is the actual LOSS sibling and \(x\) is a WIN at least two levels
+below \(r\); if \(z\) is LOSS, the obligation source \(k\) is an exact lift
+over that LOSS child.  The only DRAW-child orientation not covered by the
+ordinary diamond is the bounded \(v=11\) exceptional pair
+\(r\equiv12,3\pmod {16}\).  The lift identity and phase table are
+regression-tested for every \(1\le t<10000\), both phases, and valuations
+eleven through twenty.
+
+## 109. The next B-transition lands on a lower-height child token
+
+The stable \(v\ge12\) branch from Section 108 has one more exact
+provenance identity.  Retain
+
+\[
+z=B(r),\qquad x=B(A(r)),\qquad
+k=Q_1^{1-g}(J(z)),\qquad O(k,g).
+\]
+
+The source \(r\) is ordinary and WIN.  Its two ordinary children have the
+common child \(x\).  Choose a canonical LOSS child of \(r\).  Since \(x\)
+is also a child of that LOSS state,
+
+\[
+\boxed{x\text{ is WIN},\qquad h(x)\le h(r)-2.}
+\]
+
+The long-tail orientation fixes which child of \(z=B(r)\) this is.  Direct
+use of the ordinary side relation gives
+
+\[
+\boxed{x=
+\begin{cases}
+B(z),&v=12,\\
+A(z),&v\ge13.
+\end{cases}}
+\]
+
+Now factor the B-selecting source transition at \(k\):
+
+\[
+3J(k)+1-2g=2^wJ(\ell),\qquad \ell=B(k).
+\]
+
+Because \(k=Q_1^{1-g}(J(z))\), direct substitution gives
+
+\[
+3J(k)+1-2g
+=2\bigl(9J(z)+1-2(1-g)\bigr).
+\]
+
+Write \(a=v-11\ge1\).  Since
+
+\[
+z=Q_a^g(729J(t)),
+\]
+
+the bracket is
+
+\[
+9J(z)+1-2(1-g)
+=19683\,2^aJ(t)+8-16g.
+\]
+
+Its valuation is respectively \(1,2,\ge4,3\) for
+\(a=1,2,3,\ge4\).  Therefore
+
+\[
+\boxed{w=
+\begin{cases}
+2,&v=12,\\
+3,&v=13,\\
+\ge5,&v=14,\\
+4,&v\ge15.
+\end{cases}}
+\]
+
+The returned source follows the three exact rows of Section 54, with the
+extra leading factor two removed:
+
+\[
+\ell=
+\begin{cases}
+Q_m^\delta(J(B(z)))\quad(m\ge1),&w=2,\\
+A^2(z),&w=3,\\
+B(A(z)),&w\ge4.
+\end{cases}
+\]
+
+Substituting the displayed orientation of \(x\) yields the lower-token
+form
+
+\[
+\boxed{\ell=
+\begin{cases}
+Q_m^\delta(J(x))\quad(m\ge1),&v=12,\\
+A(x),&v=13,\\
+B(x),&v\ge14.
+\end{cases}}
+\]
+
+Section 25 transfers \(O(k,g)\) to an adjacent DRAW frame over this exact
+source \(\ell\), with lower exponent \(w-1\).  Thus every stable second-
+level continuation is now attached either to a factor-free lift over the
+WIN token \(x\), or to one of its two actual ordinary children, while
+
+\[
+h(x)\le h(r)-2\le h(y)-3.
+\]
+
+No outcome of \(z\) or \(\ell\) was assumed in deriving this attachment.
+It is not yet boundary exposure: a finite outcome split at \(\ell\) must
+still show that the adjacent frame spends \(x\) rather than replacing it
+by an unrelated proof height.  The child orientation, valuation table, and
+three returned-source rows are regression-tested for every
+\(1\le t<10000\), both phases, and valuations twelve through twenty.

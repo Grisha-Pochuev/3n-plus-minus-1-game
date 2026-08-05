@@ -629,6 +629,23 @@ are ordinary, and only the v=10 residues S=14 or 1 mod 16 need exceptional
 geometry.  The next lemma must combine the finite outcome of B(S) with the
 lower-height token r, rather than replacing one mark by the other.
 
+Section 108 identifies the hidden mark exactly for v>=11.  The source
+k=B(S) is a lift over z=B(r), an actual child of the already lower WIN
+token r, and the valuation-two transfer is the exact obligation O(k,g).
+At v=11 that obligation is A-selecting; at v>=12 it is B-selecting.  Since
+r is ordinary from v=12 onward, z DRAW immediately exposes a boundary WIN
+two heights below r.  The stable unresolved split is therefore finite:
+transport O(k,g) when z is WIN or LOSS, plus the bounded exceptional
+v=11 DRAW-child orientation.  No arbitrary nested source remains.
+
+Section 109 removes the outcome split from the stable v>=12 arithmetic.
+The common child x=B(A(r)) is always WIN with h(x)<=h(r)-2, and the next
+B-transition source is a lift over x at v=12, A(x) at v=13, or B(x) from
+v=14 onward.  Its valuation table is exactly 2, 3, >=5, 4.  Hence the
+second nested scan never replaces the carried height token by an unrelated
+source.  What remains is boundary exposure for an adjacent DRAW frame over
+a lift/ordinary child of x, together with v=11 and the earlier v<=10 rows.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

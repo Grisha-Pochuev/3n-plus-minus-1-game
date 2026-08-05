@@ -825,7 +825,7 @@ class GameArithmeticTests(unittest.TestCase):
         for source in range(1, 1000):
             coefficient = embedded_original_state(source)
             for phase in (0, 1):
-                for valuation in range(5, 13):
+                for valuation in range(5, 21):
                     returned_token = constant_tail_state(
                         3 * coefficient,
                         valuation - 3,
@@ -904,7 +904,7 @@ class GameArithmeticTests(unittest.TestCase):
         for source in range(1, 10000):
             coefficient = embedded_original_state(source)
             for phase in (0, 1):
-                for valuation in range(5, 13):
+                for valuation in range(5, 21):
                     predecessor_token = constant_tail_state(
                         coefficient,
                         valuation - 1,
@@ -1241,6 +1241,75 @@ class GameArithmeticTests(unittest.TestCase):
                             phase,
                         ),
                     )
+
+                    if valuation >= 11:
+                        self.assertEqual(common_transition[0], "B")
+                        self.assertEqual(
+                            transfer_source,
+                            constant_tail_state(
+                                embedded_original_state(following_token),
+                                common_transition[1] - 1,
+                                1 - phase,
+                            ),
+                        )
+                        expected_selecting_phase = (
+                            phase if valuation == 11 else 1 - phase
+                        )
+                        self.assertEqual(
+                            source_A_selecting_tail_bit(transfer_source),
+                            expected_selecting_phase,
+                        )
+
+                    if valuation >= 12:
+                        lower_common_token = transformed_B(
+                            transformed_A(common_token)
+                        )
+                        if valuation == 12:
+                            self.assertEqual(
+                                lower_common_token,
+                                transformed_B(following_token),
+                            )
+                        else:
+                            self.assertEqual(
+                                lower_common_token,
+                                transformed_A(following_token),
+                            )
+
+                        nested_transition = source_boundary_transition(
+                            transfer_source,
+                            phase,
+                        )
+                        self.assertEqual(nested_transition[0], "B")
+                        if valuation == 12:
+                            self.assertEqual(nested_transition[1], 2)
+                        elif valuation == 13:
+                            self.assertEqual(nested_transition[1], 3)
+                        elif valuation == 14:
+                            self.assertGreaterEqual(
+                                nested_transition[1],
+                                5,
+                            )
+                        else:
+                            self.assertEqual(nested_transition[1], 4)
+
+                        nested_source = nested_transition[2]
+                        if valuation == 12:
+                            self.assertEqual(
+                                constant_tail_source_coordinates(
+                                    nested_source
+                                )[:2],
+                                (lower_common_token, 0),
+                            )
+                        elif valuation == 13:
+                            self.assertEqual(
+                                nested_source,
+                                transformed_A(lower_common_token),
+                            )
+                        else:
+                            self.assertEqual(
+                                nested_source,
+                                transformed_B(lower_common_token),
+                            )
 
     def test_short_high_return_token_diamonds(self) -> None:
         for source in range(1, 10000):
