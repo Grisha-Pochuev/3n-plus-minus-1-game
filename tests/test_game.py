@@ -1160,6 +1160,75 @@ class GameArithmeticTests(unittest.TestCase):
                         ),
                     )
 
+                    second_factor_numerator = (
+                        27 * embedded_original_state(common_side)
+                        + 1
+                        - 2 * phase
+                    )
+                    self.assertEqual(v2(second_factor_numerator), 2)
+                    second_factor_source = inverse_F(
+                        ((second_factor_numerator >> 2) - 1) // 2
+                    )
+                    self.assertEqual(
+                        second_factor_source,
+                        first_raw_exit,
+                    )
+
+                    second_signed_exit = constant_tail_state(
+                        embedded_original_state(first_raw_exit),
+                        2,
+                        1 - phase,
+                    )
+                    second_raw_exit = alternating_suffix_remainder(
+                        second_signed_exit
+                    )
+                    self.assertEqual(
+                        second_raw_exit,
+                        constant_tail_state(
+                            embedded_original_state(first_raw_exit),
+                            1,
+                            1 - phase,
+                        ),
+                    )
+
+                    second_transition = source_boundary_transition(
+                        first_raw_exit,
+                        1 - phase,
+                    )
+                    self.assertEqual(second_transition[0], "B")
+                    if valuation == 10:
+                        self.assertGreaterEqual(second_transition[1], 3)
+                    else:
+                        self.assertEqual(second_transition[1], 2)
+                    self.assertEqual(
+                        second_transition[2],
+                        transformed_B(first_raw_exit),
+                    )
+
+                    transfer_source = second_transition[2]
+                    transfer_valuation = second_transition[1]
+                    transfer_common_side = transformed_B(second_raw_exit)
+                    self.assertEqual(
+                        transfer_common_side,
+                        transformed_B(second_signed_exit),
+                    )
+                    self.assertEqual(
+                        transformed_A(second_raw_exit),
+                        constant_tail_state(
+                            embedded_original_state(transfer_source),
+                            transfer_valuation,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        transfer_common_side,
+                        constant_tail_state(
+                            embedded_original_state(transfer_source),
+                            transfer_valuation - 1,
+                            phase,
+                        ),
+                    )
+
     def test_short_high_return_token_diamonds(self) -> None:
         for source in range(1, 10000):
             coefficient = embedded_original_state(source)

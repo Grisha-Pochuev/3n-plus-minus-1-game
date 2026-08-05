@@ -9028,3 +9028,102 @@ valuation-two recycle while resetting the latter's height.  The two source
 transition tables, frame exponent, and child orientations are
 regression-tested for every \(1\le t<10000\), both phases, and valuations
 five through ten.
+
+## 106. The second factor level is a B-selecting obligation at the first raw exit
+
+The second level of the marked factor scan has no new arithmetic freedom.
+Retain Sections 102--105, suppose \(v\ge10\), and write the first two
+factor numerators as
+
+\[
+N_1=9J(b)+1-2g=2J(w),\qquad
+N_2=27J(b)+1-2g.
+\]
+
+Section 104 gives
+
+\[
+w=Q_1^{1-g}(J(y)),\qquad
+T=Q_1^{1-g}(J(w)),\qquad S=R(T)=A(w).
+\]
+
+The phase \(1-g\) is A-selecting at \(w\), with valuation one and selected
+source \(S\).  Hence
+
+\[
+3J(w)-1+2g=2J(S).
+\]
+
+Using the consecutive-factor recurrence from Section 79 now gives the
+exact identity
+
+\[
+\boxed{N_2=3N_1-2(1-2g)=4J(S).}
+\]
+
+Thus the second factor valuation is exactly two, its returned source is
+the first raw exit \(S\), and its signed/raw exits are
+
+\[
+U=Q_2^{1-g}(J(S)),\qquad
+P=Q_1^{1-g}(J(S)),\qquad B(U)=B(P).
+\]
+
+There is also an exact outcome statement.  Suppose neither first exit
+\(S,T\) is DRAW.  In Section 80's four-exit analysis the common first exit
+\(S\) cannot be LOSS and therefore is WIN.  The only remaining case has
+the next bridge state DRAW, with children exactly \(U,P\).  Consequently
+
+\[
+\boxed{S\text{ is a boundary WIN endpoint and }O(S,1-g)\text{ holds}.}
+\]
+
+This obligation is B-selecting.  Indeed Section 104 gives, with
+\(n=v-9\ge1\),
+
+\[
+r=Q_n^g(243J(t)),\qquad
+S=Q_1^g(J(r))
+ =729\,2^{n+1}J(t)+2-5g.
+\]
+
+The last two bits show \(\alpha(S)=g\).  Factoring the opposite-phase
+source transition gives
+
+\[
+3J(S)-1+2g
+=4\bigl(6561\,2^{n-1}J(t)+5-10g\bigr).
+\]
+
+Put \(k=B(S)\).  The bracket is even when \(n=1\), and odd for every
+\(n\ge2\).  Therefore
+
+\[
+\boxed{
+\operatorname{sourceTransition}(S,1-g)=
+\begin{cases}
+(B,j,k),\quad j\ge3,&v=10,\\
+(B,2,k),&v\ge11.
+\end{cases}}
+\]
+
+Section 25 transfers \(O(S,1-g)\) to the exact adjacent frame
+
+\[
+\boxed{
+\left\{Q_j^g(J(k)),Q_{j-1}^g(J(k))\right\}
+\text{ containing a DRAW}.}
+\]
+
+So a marked scan that avoids both first exits cannot silently cross the
+second factor level.  It exposes a B-selecting obligation whose finite WIN
+source \(S\) is itself a boundary endpoint and whose coefficient source is
+the already lower token \(r\).  The transferred source is the actual child
+\(k=B(S)\); it is not an unrelated return.
+
+This is exact source and outcome attachment, but not yet a proof-height
+comparison between \(S\) and \(r\).  Closing that comparison requires
+splitting the outcome of \(k\) while retaining \(r\), and the \(v=9\) row
+remains separate because its first raw exponent can exceed one.  All
+displayed identities and the valuation split are regression-tested for
+every \(1\le t<10000\), both phases, and valuations ten through twelve.

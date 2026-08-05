@@ -610,6 +610,16 @@ continues over S.  The next split is the finite outcome of the selected
 ordinary child z of r; the arbitrary-exponent v=9 row and the second
 factor level remain separate.
 
+Section 106 closes the arithmetic and outcome topology of that second
+factor level for v>=10.  Its numerator is exactly 4J(S), so its exits are
+the exponent-two/one pair over the first raw exit S.  If both first exits
+avoid DRAW, S is a boundary WIN and this pair witnesses the B-selecting
+obligation O(S,1-g); the transfer source is exactly B(S), with valuation
+at least three only for v=10 and exactly two thereafter.  The remaining
+rank question is now precise: split the outcome of B(S) while retaining
+the lower coefficient token r, rather than treating the second level as a
+fresh factor scan.  The arbitrary-exponent v=9 row remains separate.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
