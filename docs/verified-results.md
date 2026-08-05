@@ -4515,3 +4515,62 @@ displayed constant source windows, or a raw-side DRAW whose source is below
 roughly \(3.80s\).  Together with Sections 33--39 and 49, this exhausts all
 signed valuations following the \(r=3\) factor switch.  All coordinates and
 source bounds are regression-tested.
+
+## 51. A minimum-height factor endpoint carries a two-WIN barrier
+
+The retained LOSS state in the factor fork gives a clean height certificate
+when the corresponding boundary endpoint is itself chosen at global minimum
+height.  Keep the factor alternative of Section 28.  Thus some DRAW state
+\(K\) has children \(U,P\), and the forced outcomes are
+
+\[
+P,b\text{ WIN},\qquad U,F\text{ DRAW},\qquad V\text{ LOSS},
+\]
+
+where the two children of \(P\) are exactly \(V,b\).  In particular, \(P\)
+is the WIN endpoint of the boundary edge \(K\mathbin{\to}P\), and \(V\) is
+its unique LOSS child.
+
+Put
+
+\[
+E=A(V),\qquad D=B(V).
+\]
+
+Both \(E,D\) are WIN because \(V\) is LOSS.  The canonical height equations
+give
+
+\[
+h(P)=1+h(V)
+\]
+
+and
+
+\[
+h(E),h(D)\le h(V)-1=h(P)-2.
+\]
+
+Now suppose \(h(P)\) is the global minimum of the heights of all WIN
+endpoints of DRAW-to-WIN boundary edges.  No DRAW position can have \(E\)
+or \(D\) as a child: such an edge would be another boundary whose WIN
+endpoint has height at most \(h(P)-2\).  Hence
+
+\[
+\boxed{
+h(P)\text{ globally minimum}
+\quad\Longrightarrow\quad
+\text{every parent of }E\text{ or }D\text{ is non-DRAW}.}
+\]
+
+This is the exact height information that a recursive factor-switch graph
+must retain.  It is stronger than knowing only that \(V\) is LOSS, because
+it constrains every arithmetic diamond that later meets either child of
+\(V\).
+
+The qualification is essential.  A factor occurrence reached later from a
+minimum-source trajectory makes \(P\) a boundary endpoint, but it does not
+by itself prove that \(h(P)\) equals the global minimum boundary height.
+Thus the boxed barrier cannot simply be attached to every factor fork.
+A completion must either transport the originally minimum endpoint through
+the return graph or prove a genuine height descent before restarting the
+argument.

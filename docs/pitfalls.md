@@ -105,3 +105,28 @@ Section 22 uses the latter, stronger two-sided diamond.  The returned
 suffix-length-two case has only a one-sided diamond, so the same height
 argument cannot be reused there without an additional comparison of the two
 LOSS witnesses.
+
+## 11. A later factor endpoint need not have minimum boundary height
+
+In the factor alternative of Section 28, the WIN state \(P\) is indeed a
+child of a DRAW state, and its other child \(V\) is the unique LOSS witness
+for \(P\).  Therefore both children of \(V\) have height at most
+\(h(P)-2\).
+
+It is nevertheless invalid to forbid those lower WINs from being children
+of every DRAW merely because an earlier boundary endpoint was chosen with
+globally minimum height.  The later endpoint only satisfies
+
+\[
+h(P)\ge H_{\min};
+\]
+
+it need not satisfy equality.  Its children can still have height at least
+\(H_{\min}\), in which case a DRAW parent would not contradict the original
+minimum.
+
+Section 51's two-WIN barrier applies only after proving that this particular
+\(P\) realizes the global minimum, or after transporting an equivalent
+distinguished witness to it.  A correct rank proof must record that
+provenance rather than silently restarting minimum-height reasoning at each
+factor fork.

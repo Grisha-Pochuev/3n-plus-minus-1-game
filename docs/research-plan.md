@@ -193,7 +193,13 @@ obligations or adjacent frames of exponent at most four with explicit
 constant source windows, or a raw-side return below about 3.80s.  All local
 factor exits are now finite.  The central remaining task is to synthesize
 and prove a well-founded rank for their possible recycling, retaining the
-explicit LOSS witnesses and boundary-WIN heights.
+explicit LOSS witnesses and boundary-WIN heights.  Section 51 isolates the
+height component precisely: when the factor endpoint P itself realizes the
+global minimum boundary height, both WIN children of its unique LOSS witness
+form a barrier that no DRAW parent may touch.  The next abstraction must
+therefore distinguish a boundary endpoint whose minimum-height provenance is
+known from an arbitrary later endpoint.  Merely carrying the label LOSS for
+the witness, without this provenance, is insufficient.
 
 ## Priority 2: finite transducer plus numerical potential
 
