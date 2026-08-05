@@ -447,6 +447,13 @@ boundary: its common WIN child lies two proof levels below the exact reverse
 WIN parent.  The global rank may therefore treat factor accumulation as a
 zero-cost pullback and only charge this explicit LOSS/DRAW gate; it no
 longer needs the factor counter itself as an unbounded rank component.
+Section 88 spends that charge at every internal level k>=2.  The preceding
+DRAW spine state and the reverse WIN state have a common DRAW parent, so
+the reverse WIN is an actual boundary endpoint; the gate's common forward
+WIN is another endpoint at least two proof levels lower.  Only a gate at
+the first factor level lacks this reverse boundary parent.  The immediate
+target is now the finite k=1 orientation at the original factor-free frame,
+not an arbitrary accumulated factor counter.
 
 ## Priority 2: finite transducer plus numerical potential
 

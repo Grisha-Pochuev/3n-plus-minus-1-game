@@ -396,6 +396,23 @@ class GameArithmeticTests(unittest.TestCase):
                         (upper, lower),
                     )
 
+                    if factor_exponent >= 2:
+                        preceding_upper = constant_tail_state(
+                            preceding_coefficient,
+                            2,
+                            phase,
+                        )
+                        boundary_parent = constant_tail_state(
+                            3 ** (factor_exponent - 2)
+                            * base_coefficient,
+                            4,
+                            phase,
+                        )
+                        self.assertEqual(
+                            transformed_moves(boundary_parent),
+                            (reverse_parent, preceding_upper),
+                        )
+
     def test_ninefold_twenty_sevenfold_source_coupling(self) -> None:
         for b in range(1, 100000):
             if b % 64 not in {4, 25, 38, 59}:

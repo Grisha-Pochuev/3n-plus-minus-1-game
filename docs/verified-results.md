@@ -7418,3 +7418,75 @@ The height comparison is relative to the exact reverse WIN parent \(H_k\);
 it does not yet claim that \(H_k\) is the globally minimum boundary
 endpoint.  The reverse-parent identity is regression-tested for odd bases
 below \(200\), both phases, and seven factor levels.
+
+## 88. An internal LOSS/DRAW gate is an actual boundary-height descent
+
+The qualification at the end of Section 87 disappears when its gate lies
+on a marked DRAW spine.  Retain
+
+\[
+P_k=Q_2^e(3^ka)\text{ LOSS},\qquad
+R_k=Q_1^e(3^ka)\text{ DRAW},
+\]
+
+and suppose the preceding spine state
+
+\[
+G_k:=Q_2^e(3^{k-1}a)
+\]
+
+is DRAW.  This is the only possible DRAW predecessor inside the long-tail
+grid: its other candidate
+
+\[
+H_k:=Q_3^e(3^{k-1}a)
+\]
+
+has the LOSS child \(P_k\) and is therefore WIN.  As in Section 87,
+
+\[
+h(H_k)=h(P_k)+1.
+\]
+
+For \(k\ge2\), introduce one more reverse state
+
+\[
+K_k:=Q_4^e(3^{k-2}a).
+\]
+
+The two exact move identities are
+
+\[
+\operatorname{moves}(H_k)=\{P_k,R_k\},\qquad
+\operatorname{moves}(K_k)=\{H_k,G_k\}.
+\]
+
+The children of \(K_k\) are respectively WIN and DRAW, so \(K_k\) is
+DRAW and \(K_k\to H_k\) is a boundary edge.  On the forward side of the
+gate, its common child
+
+\[
+C_k=B(P_k)=B(R_k)
+\]
+
+is WIN, \(R_k\to C_k\) is another boundary edge, and
+
+\[
+h(C_k)\le h(P_k)-1=h(H_k)-2.
+\]
+
+Consequently
+
+\[
+\boxed{
+k\ge2\Longrightarrow
+(K_k\to H_k)\text{ is replaced by }(R_k\to C_k)
+\text{ with WIN height lower by at least two}.}
+\]
+
+Thus no internal factor level can use the upper-LOSS/lower-DRAW gate as a
+height-neutral escape.  The only gate not covered by the reverse boundary
+parent \(K_k\) is the first factor level \(k=1\); it must be coupled to the
+original factor-free frame that started the spine.  Both move identities
+are regression-tested for odd three-free bases below \(200\), both phases,
+and levels two through seven.
