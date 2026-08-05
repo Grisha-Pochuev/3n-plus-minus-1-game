@@ -5841,7 +5841,9 @@ the sole exceptional returned WIN in the first row is \(q=35\), with
 Thus a pure canonical A-streak has only three outcomes after at most four
 side tests:
 
-1. the phase becomes B-selecting, entering Sections 25--27;
+1. the phase becomes B-selecting, entering the universal transfer of
+   Section 25 (Section 27 applies once its smaller source window is
+   recovered);
 2. an ordinary DRAW-to-WIN boundary lowers the height by at least two; or
 3. an exceptional non-losing exact lift carries a LOSS token whose height
    is one lower and whose integer source is strictly below the initial
@@ -5850,3 +5852,89 @@ side tests:
 In particular there is no unbounded unmarked canonical A-continuation.
 The exact side identity, exceptional lift source, and strict source return
 are regression-tested for \(10\le x<100000\).
+
+## 66. A B-phase after the canonical streak has bounded length and exponent
+
+The first outcome of Section 65 cannot create a new unbounded B-transfer
+run merely because its source may temporarily exceed the \(2s\) window of
+Section 27.  Let \(x_0\) be that section's original source,
+
+\[
+s\le x_0<2s.
+\]
+
+The phase can switch to B-selecting at one of
+\(x_i=A^i(x_0)\), \(0\le i\le4\).  Repeated use of
+\(A(u)\le(3u+1)/2\) gives
+
+\[
+\boxed{x_i\le A^4(x_0)\le\frac{81x_0+65}{16}
+\le\frac{81s}{8}-1.}
+\]
+
+Suppose an obligation at a source \(u\) is B-selecting.  Factor its signed
+source transition as
+
+\[
+3J(u)+1-2e=2^jJ(y),\qquad y=B(u),\qquad j\ge2.
+\]
+
+Section 25 transfers its DRAW to the adjacent frame over \(y\).  If
+\(j=2\), this is again the exact obligation
+
+\[
+O(y,1-e),
+\]
+
+and
+
+\[
+y=B(u)\le\frac{3u+1}{4}.
+\]
+
+Consequently, after \(n\) consecutive valuation-two B-transfers,
+
+\[
+u_n\le1+\left(\frac34\right)^n(u_0-1).
+\]
+
+At \(n=9\), the preceding source window gives
+
+\[
+u_9\le
+1+\frac{19683}{262144}\left(\frac{81s}{8}-2\right)<s
+\]
+
+for every residual \(s\ge10\).  A DRAW obligation cannot have coefficient
+source below the globally minimum \(s\).  Hence
+
+\[
+\boxed{\text{at most eight consecutive valuation-two B-transfers survive}.}
+\]
+
+Before a ninth transfer, the phase becomes A-selecting or a transition has
+\(j\ge3\).  The latter exit also has bounded exponent.  If its adjacent
+frame contains a DRAW, its exact factor-free source \(y\) must satisfy
+\(y\ge s\).  Since \(J(u)\le3u+2\),
+
+\[
+2^jJ(y)=3J(u)+1-2e
+\le9u+7\le\frac{729s}{8}-2.
+\]
+
+But \(J(y)\ge3s+1\), so \(j\ge5\) would make the left side at least
+\(32(3s+1)>729s/8-2\), a contradiction.  Therefore
+
+\[
+\boxed{3\le j\le4}
+\]
+
+at every source-surviving non-obligation exit.
+
+Thus the phase switch left by Section 65 has only two finite destinations:
+an A-selecting obligation after at most eight exact B-transfers, or an
+adjacent factor-free frame of exponent three/two or four/three.  This does
+not yet prohibit alternation with a nested exceptional lift, but it removes
+an unbounded B counter from that alternation.  The nine-step contraction is
+regression-tested for the extremal sources \(x_0=s,2s-1\), all
+\(10\le s<5000\), and all five possible A-streak positions.

@@ -297,6 +297,12 @@ source at the start of the A-streak.  Therefore neither a pure valuation-two
 loop nor a pure canonical A-streak remains.  The immediate target is now a
 single global rank that proves their finite typed exits cannot alternate
 forever through the exceptional nested-lift orientation.
+Section 66 bounds the intervening B-phase even when the A-streak has left
+the original 2s window.  Its source is still below 81s/8; nine consecutive
+valuation-two B-transfers fall below s, while any source-surviving larger
+valuation is only three or four.  Thus the entire A/B phase alternation has
+bounded local counters.  The remaining issue is genuinely the rank carried
+by the exceptional nested lift, not an omitted long phase run.
 
 ## Priority 2: finite transducer plus numerical potential
 

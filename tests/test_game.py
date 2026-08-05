@@ -205,6 +205,17 @@ class GameArithmeticTests(unittest.TestCase):
                         (loss_token, 0),
                     )
 
+    def test_post_canonical_B_run_contracts_in_nine_steps(self) -> None:
+        for minimum_source in range(10, 5000):
+            for source in (minimum_source, 2 * minimum_source - 1):
+                current = source
+                for _ in range(5):
+                    returned = current
+                    for _ in range(9):
+                        returned = transformed_B(returned)
+                    self.assertLess(returned, minimum_source)
+                    current = transformed_A(current)
+
     def test_residual_three_two_frame_transfer(self) -> None:
         for b in range(1, 100000):
             if b % 64 not in {4, 25, 38, 59}:
