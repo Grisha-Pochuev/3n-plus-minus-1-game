@@ -171,6 +171,22 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertIn(returned, transformed_moves(expanding))
                 self.assertIn(returned, transformed_moves(contracting))
 
+    def test_exceptional_side_return_adjacent_lift(self) -> None:
+        for q in range(1, 100000):
+            if q % 16 not in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                continue
+            loss_source = transformed_B(q)
+            draw_child = transformed_A(q)
+            lower_lift = transformed_B(draw_child)
+            upper_lift = transformed_A(draw_child)
+            lower_coordinates = constant_tail_source_coordinates(lower_lift)
+            upper_coordinates = constant_tail_source_coordinates(upper_lift)
+
+            self.assertEqual(lower_coordinates[:2], (loss_source, 0))
+            self.assertEqual(upper_coordinates[:2], (loss_source, 0))
+            self.assertEqual(upper_coordinates[2], lower_coordinates[2] + 1)
+            self.assertEqual(upper_coordinates[3], lower_coordinates[3])
+
     def test_canonical_A_streak_side_returns(self) -> None:
         for source in range(10, 100000):
             ray = [source]

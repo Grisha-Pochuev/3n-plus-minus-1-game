@@ -5997,3 +5997,78 @@ horizon.  These long prefixes are not DRAW paths or counterexamples: they
 carry no outcome constraints, while Sections 63--64 prove that the retained
 WIN/LOSS token prevents an infinite valuation-two recycle.  The construction
 is regression-tested for \(1\le k<25\).
+
+## 68. An exceptional side return exposes the lower LOSS as a DRAW source
+
+The exceptional alternative of Sections 57 and 65 does not merely carry a
+formal lift token.  One of two adjacent lifts over that token is an actual
+DRAW.  Let \(q\) be exceptional and suppose
+
+\[
+q\text{ is WIN},\qquad d=A(q)\text{ is DRAW},\qquad
+\ell=B(q)\text{ is LOSS}.
+\]
+
+Thus \(\ell\) is the unique LOSS child of \(q\), and
+
+\[
+h(\ell)=h(q)-1.
+\]
+
+Put
+
+\[
+p=B(d)=B(A(q)),\qquad v=A(d)=A^2(q).
+\]
+
+Section 57 gives exact factor-free coordinates
+
+\[
+p=Q_m^\delta(J(\ell))
+\]
+
+for some \(m\ge1\).  The four exceptional formulas of Section 5 sharpen
+this to an adjacent pair.  Writing \(q=16t+c\), one has
+
+\[
+\begin{array}{c|c|c|c}
+c&\ell&p&v\\ \hline
+1&R(6t)&18t+1&36t+3=2p+1\\
+3&R(6t+1)&18t+4&36t+8=2p\\
+12&R(6t+4)&18t+13&36t+27=2p+1\\
+14&R(6t+5)&18t+16&36t+32=2p.
+\end{array}
+\]
+
+In the odd rows \(\delta=1\), so \(2p+1\) appends one more terminal one;
+in the even rows \(\delta=0\), so \(2p\) appends one more terminal zero.
+Consequently
+
+\[
+\boxed{
+p=Q_m^\delta(J(\ell)),\qquad
+v=Q_{m+1}^\delta(J(\ell)).}
+\]
+
+The DRAW state \(d\) has exactly the two children \(p,v\).  Neither can be
+LOSS, and at least one must be DRAW.  Therefore
+
+\[
+\boxed{
+\{Q_m^\delta(J(\ell)),Q_{m+1}^\delta(J(\ell))\}
+\text{ contains a DRAW}.}
+\]
+
+If \(p\) itself is DRAW this is immediate.  If \(p\) is WIN, outcome
+recursion forces \(v\) to be DRAW, so the token is not lost through the
+other child of \(d\).
+
+Thus every exceptional canonical side return produces an actual
+factor-free DRAW lift/frame whose finite source is the canonical LOSS
+\(\ell\), one proof level below the preceding boundary endpoint.  Combined
+with Section 65, its source is also numerically below the source at the
+start of that A-streak.  This closes the local boundary-exposure gap for
+the exceptional orientation; the remaining global task is to order
+successive ordinary and factor-frame exposures without restarting the
+minimum-height endpoint.  The adjacent-coordinate identity is
+regression-tested for every exceptional \(q<100000\).

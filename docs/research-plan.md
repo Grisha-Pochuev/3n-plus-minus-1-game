@@ -308,6 +308,16 @@ alternations has no fixed arithmetic horizon.  Exact prefixes
 `A,B2,A,B2,...` exist at every length.  Hence the final rank must spend the
 retained proof-height token on each valuation-two macrocycle; multiplying
 the separate local counter bounds is not a valid completion.
+Section 68 closes the exceptional local exposure itself.  If the side lift
+over the unique LOSS child is WIN rather than DRAW, the other child of the
+same DRAW parent is exactly the next adjacent lift over that identical
+LOSS source and is forced DRAW.  Hence an exceptional token always becomes
+the genuine coefficient source of a DRAW frame, one proof level lower than
+the preceding boundary endpoint.  The remaining task is global bookkeeping:
+choose a marked-configuration rank that compares these exposed LOSS-source
+frames with the ordinary lower-height boundary endpoints and the factor
+returns of Sections 61--64 without assuming that a later endpoint reattains
+the original minimum height.
 
 ## Priority 2: finite transducer plus numerical potential
 
