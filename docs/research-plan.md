@@ -455,6 +455,17 @@ the first factor level lacks this reverse boundary parent.  The immediate
 target is now the finite k=1 orientation at the original factor-free frame,
 not an arbitrary accumulated factor counter.
 
+Section 89 closes that first-level orientation.  Every typed three/two
+frame in the current normal form inherits the coefficient congruence that
+makes its upper member lie in the image of A.  Its ordinary inverse-A
+parent has exactly the original upper and lower frame members as children,
+so it is DRAW when the gate makes the upper member WIN.  The whole
+upper-LOSS/lower-DRAW factor obstruction is therefore an actual boundary
+replacement with a two-level proof-height drop.  The immediate target is
+now a transition audit and a single lexicographic marked rank covering the
+ordinary source descents, LOSS-token transports, and these boundary-height
+replacements.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

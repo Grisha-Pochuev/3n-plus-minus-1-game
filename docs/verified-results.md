@@ -7490,3 +7490,101 @@ parent \(K_k\) is the first factor level \(k=1\); it must be coupled to the
 original factor-free frame that started the spine.  Both move identities
 are regression-tested for odd three-free bases below \(200\), both phases,
 and levels two through seven.
+
+## 89. Every typed first-factor gate has a hidden boundary parent
+
+The missing first-level parent from Section 88 exists outside the factor
+grid whenever the original exponent-three/two frame has the congruence
+inherited from its construction.  Let \(a\) be positive, odd, and not
+divisible by three, fix \(e\in\{0,1\}\), and suppose
+
+\[
+a\equiv1+e\pmod3.
+\]
+
+Put
+
+\[
+H=Q_3^e(a),\qquad G=Q_2^e(a),\qquad
+K=\frac{2H+e-1}{3}.
+\]
+
+If \(e=0\), then \(H\equiv2\pmod3\) and
+\(K=(2H-1)/3\).  If \(e=1\), then \(H\equiv0\pmod3\) and
+\(K=2H/3\).  These are exactly the two inverse branches of the injective
+map \(A=F\).  Moreover the final three bits of \(H\) are equal, so deleting
+its maximal alternating suffix deletes only the last bit.  Therefore
+
+\[
+\boxed{\operatorname{moves}(K)=\{H,G\}.}
+\]
+
+The required coefficient congruence is automatic for every typed
+exponent-three/two DRAW-frame constructor used above.
+
+First, suppose the frame is the signed/raw pair of a valuation-three
+source transition.  If the input phase is \(g=1-e\), its factorization is
+
+\[
+3J(t)+1-2g=8a.
+\]
+
+Reduction modulo three gives \(a\equiv1+e\pmod3\).  This covers the
+transfers and returned frames of Sections 56, 72, and 81--86.
+
+Second, suppose the frame is an exceptional side-return pair from
+Section 68 and its lower exponent is two.  Its lower member is
+
+\[
+p=Q_2^e(a)=4a-e.
+\]
+
+The four exact exceptional formulas in Section 68 all give
+\(p\equiv1\pmod3\), and hence again \(a\equiv1+e\pmod3\).  This includes
+the exceptional row of Section 69.  Finally, the zero-source frame of
+Section 70 can have lower exponent two only when its word length is three;
+then \((a,e)=(1,0)\), which has the same congruence.
+
+Now suppose the first factor frame has the sole gate orientation
+
+\[
+P=Q_2^e(3a)\text{ LOSS},\qquad
+R=Q_1^e(3a)\text{ DRAW},
+\]
+
+while the original frame \(\{H,G\}\) contains a DRAW.  Since
+
+\[
+\operatorname{moves}(H)=\{P,R\},
+\]
+
+the state \(H\) is WIN, so \(G\) must be DRAW.  The boxed inverse identity
+then makes \(K\) DRAW and \(K\to H\) a boundary edge.  With the common
+forward child
+
+\[
+C=B(P)=B(R),
+\]
+
+Section 87 gives the second boundary \(R\to C\) and
+
+\[
+h(C)\le h(H)-2.
+\]
+
+Consequently
+
+\[
+\boxed{
+(K\to H)\text{ is replaced by }(R\to C)
+\text{ with WIN height lower by at least two}.}
+\]
+
+Together with Section 88, this removes the upper-LOSS/lower-DRAW
+orientation at every factor level reached by the typed DRAW frames in the
+current normal form.  It does not yet prove the global theorem: the
+remaining task is to assemble all typed exits into one well-founded marked
+rank and verify that no transition was omitted.  The inverse-parent
+identity is regression-tested for every valuation-three source transition
+below \(10000\), and for every exceptional side return below \(100000\)
+whose lower exponent is two.

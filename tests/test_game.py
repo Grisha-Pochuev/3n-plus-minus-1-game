@@ -187,6 +187,18 @@ class GameArithmeticTests(unittest.TestCase):
             self.assertEqual(upper_coordinates[2], lower_coordinates[2] + 1)
             self.assertEqual(upper_coordinates[3], lower_coordinates[3])
 
+            if lower_coordinates[2] == 2:
+                coefficient = embedded_original_state(loss_source)
+                phase = lower_coordinates[3]
+                boundary_parent = (
+                    2 * upper_lift + phase - 1
+                ) // 3
+                self.assertEqual(coefficient % 3, 1 + phase)
+                self.assertEqual(
+                    transformed_moves(boundary_parent),
+                    (upper_lift, lower_lift),
+                )
+
     def test_canonical_A_streak_side_returns(self) -> None:
         for source in range(10, 100000):
             ray = [source]
@@ -412,6 +424,28 @@ class GameArithmeticTests(unittest.TestCase):
                             transformed_moves(boundary_parent),
                             (reverse_parent, preceding_upper),
                         )
+
+    def test_valuation_three_frame_has_first_boundary_parent(self) -> None:
+        for source in range(1, 10000):
+            for input_phase in (0, 1):
+                _, valuation, returned_source = source_boundary_transition(
+                    source,
+                    input_phase,
+                )
+                if valuation != 3:
+                    continue
+
+                phase = 1 - input_phase
+                coefficient = embedded_original_state(returned_source)
+                upper = constant_tail_state(coefficient, 3, phase)
+                lower = constant_tail_state(coefficient, 2, phase)
+                boundary_parent = (2 * upper + phase - 1) // 3
+
+                self.assertEqual(coefficient % 3, 1 + phase)
+                self.assertEqual(
+                    transformed_moves(boundary_parent),
+                    (upper, lower),
+                )
 
     def test_ninefold_twenty_sevenfold_source_coupling(self) -> None:
         for b in range(1, 100000):
