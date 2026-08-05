@@ -2070,6 +2070,52 @@ class GameArithmeticTests(unittest.TestCase):
                     expected = 1 if power % 2 else 2 + v2(power)
                 self.assertEqual(valuation, expected)
 
+    def test_zero_source_boundary_source_coupling(self) -> None:
+        for power in range(2, 100):
+            for phase in (0, 1):
+                signed_value = 3**power + 1 - 2 * phase
+                valuation = v2(signed_value)
+                coefficient = signed_value >> valuation
+                source, factor_exponent = constant_tail_coefficient_source(
+                    coefficient
+                )
+                self.assertEqual(factor_exponent, 0)
+
+                common = alternating_suffix_remainder(3**power - phase)
+                signed_state = constant_tail_state(
+                    coefficient, valuation, 1 - phase
+                )
+
+                if valuation >= 2:
+                    self.assertEqual(
+                        common,
+                        constant_tail_state(
+                            coefficient, valuation - 1, 1 - phase
+                        ),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(common),
+                        (source, 0, valuation - 1, 1 - phase),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(signed_state),
+                        (source, 0, valuation, 1 - phase),
+                    )
+                else:
+                    self.assertEqual(
+                        source, (3 ** (power - 1) - 1) // 2
+                    )
+                    selected = (
+                        transformed_A(source)
+                        if phase == 0
+                        else transformed_B(source)
+                    )
+                    self.assertEqual(common, selected)
+                    self.assertLess(
+                        constant_tail_source_coordinates(common)[0],
+                        source,
+                    )
+
     def test_B_predecessor_parameterization(self) -> None:
         limit = 2000
         actual: dict[int, list[int]] = {}

@@ -6288,3 +6288,94 @@ the sole unbounded row is controlled exactly by the integer counter
 the raw side can still carry the DRAW, and the source of the signed odd
 coefficient \(b\) can be large.  The boundary identities and valuation table
 are regression-tested for \(1\le n<100\).
+
+## 72. The raw and signed zero-source exits have one common source
+
+The two exits of Section 71 are not independent.  Retain
+
+\[
+3^n+1-2\delta=2^j b
+\]
+
+and write the factor-free odd coefficient uniquely as
+
+\[
+b=J(y).
+\]
+
+If \(j\ge2\), then the raw and signed exits are exactly the adjacent
+factor-free frame
+
+\[
+\boxed{
+C_{n,\delta}=Q_{j-1}^{\,1-\delta}(J(y)),\qquad
+E_{n,\delta}=Q_j^{\,1-\delta}(J(y)).}
+\]
+
+There are only two such rows.  If \(\delta=0\), then \(n\) is odd and
+\(j=2\).  Since \(3^n\) ends in two one bits, its maximal alternating
+suffix has length one, and
+
+\[
+R(3^n)=\frac{3^n-1}{2}=2b-1.
+\]
+
+If \(\delta=1\), then \(n\) is even and \(j=2+v_2(n)\ge3\).
+The integer \(3^n-1=2^jb\) ends in at least three zero bits, so again its
+maximal alternating suffix has length one, and
+
+\[
+R(3^n-1)=2^{j-1}b.
+\]
+
+These are precisely the two boxed identities.
+
+If \(j=1\), both rows instead share the explicit ordinary source
+
+\[
+\boxed{y=\frac{3^{n-1}-1}{2}.}
+\]
+
+For \(\delta=0\), \(n\) is even, \(y\) is odd, and direct substitution
+gives
+
+\[
+\boxed{C_{n,0}=A(y),\qquad E_{n,0}=Q_1^1(J(y)).}
+\]
+
+For \(\delta=1\), \(n\) is odd and \(A(y)\) is even.  Appending the final
+one in \(J(y)=2A(y)+1\), and then the final zero in \(2J(y)\), extends the
+same alternating suffix without changing its remainder.  Therefore
+
+\[
+\boxed{C_{n,1}=B(y),\qquad E_{n,1}=Q_1^0(J(y)).}
+\]
+
+This coupling sharpens the outcome conclusion of Section 71.  In the
+\(j=2\) row, its construction gives the exact obligation
+\(O(y,1)\): either the lower exponent-one member is DRAW, or a DRAW parent
+has the exponent-two/one pair as its children.  In the \(j\ge3\) row it
+gives an adjacent factor-free DRAW frame over \(y\), with the sole
+remaining exponent
+
+\[
+j=2+v_2(n).
+\]
+
+In either \(j=1\) row, if the signed exit is DRAW then it is already an
+exponent-one factor-free DRAW lift over \(y\).  Otherwise the ordinary
+exit \(A(y)\) or \(B(y)\) is DRAW.  Its coefficient source is strictly
+less than \(y\): for every positive state \(q\),
+
+\[
+\rho(q)\le\frac{q-1}{6},
+\]
+
+while \(B(y)<y\) and \(A(y)\le(3y+1)/2\).  Thus the valuation-one raw
+alternative is a genuine numerical source descent, not an untyped restart.
+
+Consequently the raw zero-source side has been eliminated as an independent
+type.  What remains is an exponent-one obligation, a strict source descent,
+or the single even-minus adjacent frame whose exponent is
+\(1+v_2(n)\) on its lower member.  The identities and strict source
+descent are regression-tested for \(2\le n<100\).

@@ -346,6 +346,14 @@ row at even n retains the counter 2+v2(n).  The next target is to couple the
 raw state to that signed source, as Section 60 coupled the ninefold and
 twenty-sevenfold exits, and to retain the LOSS-marked zero-source frame from
 Section 70 through the same boundary.
+Section 72 supplies the requested coupling.  At valuation at least two the
+raw and signed exits are the two adjacent lifts over one source y.  At
+valuation one, the raw side is exactly A(y) or B(y); if it rather than the
+signed exponent-one lift carries DRAW, its own coefficient source is
+strictly below y.  Thus only the even-minus row retains a tail counter,
+namely 1+v2(n) on the lower frame member.  The next target is a descent for
+that row, preferably by halving the exponent parameter n, together with the
+parallel propagation of the LOSS witness in the zero-source frame.
 
 ## Priority 2: finite transducer plus numerical potential
 
