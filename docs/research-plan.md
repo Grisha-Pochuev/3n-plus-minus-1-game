@@ -490,6 +490,15 @@ signed transition can still bypass the source decrease.  The transition
 audit can now focus on the Sections 79--90 high-to-one coupling with the
 marked LOSS sibling; ordinary source exits are already ranked.
 
+Section 93 closes the lower-exponent-one factor fork completely.  The
+retained LOSS sibling forces one ordinary child of b to be WIN and the
+phase-selected child to be LOSS.  In the A-selecting orientation this
+spends the token in an immediate two-level boundary-height descent; in the
+B-selecting orientation the universal transfer lands on a DRAW frame over
+that actual LOSS source, whose coefficient coordinate is below x.  The
+remaining provenance audit is therefore confined to the opposite-tail
+twin rows with lower exponent at least two.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

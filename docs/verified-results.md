@@ -7803,3 +7803,82 @@ accumulated: Sections 79--90 are still needed to show that such a
 transition either comes back to this ordinary fork or spends the marked
 LOSS token.  The two strict source inequalities are regression-tested for
 every \(1\le x<100000\).
+
+## 93. The exponent-one factor fork spends its retained LOSS token
+
+The lowest factor row of Section 91 has a complete marked exit.  Retain
+its third alternative, put (g=1-e), and suppose the adjacent frame over
+the WIN source (b) has lower exponent (r=1).  Thus the DRAW state (F)
+has children
+
+\[
+H=Q_2^g(J(b)),\qquad G=Q_1^g(J(b)).
+\]
+
+Let
+
+\[
+D=B(V),\qquad X=B(H)=B(G),
+\]
+
+and let (y) be the ordinary source selected by phase (g) at (b).
+The arithmetic identities of Sections 31 and 53 did not use the old
+source window.  They give
+
+\[
+\boxed{b=A^2(x),\qquad
+\{D,y\}=\{A(b),B(b)\},\qquad D\ne y.}
+\]
+
+The retained state (V) is LOSS, so (D) is WIN.  The state (b) is
+also WIN; since its other ordinary child is (y), outcome recursion now
+forces
+
+\[
+\boxed{y\text{ is LOSS},\qquad h(b)=h(y)+1.}
+\]
+
+There are two phase alternatives.  If (g=\alpha(b)), then (y=A(b)).
+The A-selecting side diamond of Section 24 makes (X) a child of (y).
+At least one of (H,G) is DRAW and both have (X) as a child, so (X)
+is non-losing.  Since (y) is LOSS, (X) must actually be WIN, and
+
+\[
+h(X)\le h(y)-1=h(b)-2.
+\]
+
+Thus a DRAW member of the frame points to (X), while the earlier DRAW
+state (U) points to (b).  These are two boundary edges and the second
+WIN endpoint is at least two proof levels lower:
+
+\[
+\boxed{g=\alpha(b)\Longrightarrow
+(U\to b)\text{ is replaced by }(H\text{ or }G)\to X,
+\quad h(X)\le h(b)-2.}
+\]
+
+If (g=1-\alpha(b)), then (y=B(b)) and its signed valuation (j) is at
+least two.  The DRAW state (F) is exactly the second alternative in the
+obligation (O(b,g)).  Section 25 therefore transfers its DRAW to the
+adjacent factor-free frame
+
+\[
+\boxed{
+Q_j^{\,1-g}(J(y)),\qquad Q_{j-1}^{\,1-g}(J(y)),
+}
+\]
+
+whose source (y) is the actual LOSS state just forced above.  If (y=0)
+this is a terminal-source token.  If (y>0), Section 92 gives
+
+\[
+\boxed{\rho(y)<x.}
+\]
+
+Consequently the exponent-one factor fork cannot discard its provenance:
+it either pays a two-level boundary-height descent or returns an adjacent
+DRAW frame over an actual LOSS token whose coefficient source is strictly
+below the generating source (x) (with source zero as the terminal case).
+Only the (r\ge2) opposite-twin rows remain in the factor-fork audit.  All
+displayed arithmetic identities and both phase alternatives are
+regression-tested for every (1\le x<100000).

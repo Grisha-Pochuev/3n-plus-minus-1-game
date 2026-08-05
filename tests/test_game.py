@@ -1533,6 +1533,83 @@ class GameArithmeticTests(unittest.TestCase):
                 1,
             )
 
+    def test_exponent_one_factor_fork_provenance(self) -> None:
+        observed_letters = set()
+        for source in range(1, 100000):
+            phase = source_A_selecting_tail_bit(source)
+            opposite_phase = 1 - phase
+            coefficient = embedded_original_state(source)
+            lower = constant_tail_state(coefficient, 1, phase)
+            upper = constant_tail_state(coefficient, 2, phase)
+            retained_loss = transformed_A(lower)
+            factor_source = transformed_B(lower)
+            factor_parent = transformed_A(upper)
+            factor_children = transformed_moves(factor_parent)
+            factor_coordinates = [
+                constant_tail_source_coordinates(child)
+                for child in factor_children
+            ]
+            lower_exponent = min(
+                coordinates[2] for coordinates in factor_coordinates
+            )
+            if lower_exponent != 1:
+                continue
+
+            self.assertEqual(
+                factor_source,
+                transformed_A(transformed_A(source)),
+            )
+            retained_win = transformed_B(retained_loss)
+            letter, valuation, selected_loss = source_boundary_transition(
+                factor_source, opposite_phase
+            )
+            observed_letters.add(letter)
+            self.assertEqual(
+                {retained_win, selected_loss},
+                set(transformed_moves(factor_source)),
+            )
+            self.assertNotEqual(retained_win, selected_loss)
+            if selected_loss > 0:
+                self.assertLess(
+                    constant_tail_source_coordinates(selected_loss)[0],
+                    source,
+                )
+
+            common_children = set(
+                transformed_moves(factor_children[0])
+            ) & set(transformed_moves(factor_children[1]))
+            self.assertEqual(len(common_children), 1)
+            common_child = common_children.pop()
+
+            if letter == "A":
+                self.assertEqual(valuation, 1)
+                self.assertIn(
+                    common_child,
+                    transformed_moves(selected_loss),
+                )
+            else:
+                transferred_signed = transformed_A(
+                    min(factor_children)
+                )
+                transferred_coordinates = {
+                    constant_tail_source_coordinates(common_child),
+                    constant_tail_source_coordinates(transferred_signed),
+                }
+                self.assertEqual(
+                    {coordinates[0] for coordinates in transferred_coordinates},
+                    {selected_loss},
+                )
+                self.assertEqual(
+                    {coordinates[1] for coordinates in transferred_coordinates},
+                    {0},
+                )
+                self.assertEqual(
+                    {coordinates[2] for coordinates in transferred_coordinates},
+                    {valuation - 1, valuation},
+                )
+
+        self.assertEqual(observed_letters, {"A", "B"})
+
     def test_B_selecting_source_frame_diamond(self) -> None:
         for source in range(1, 100000):
             phase = 1 - source_A_selecting_tail_bit(source)
