@@ -8461,3 +8461,69 @@ showing that successive marked objects cannot alternate between source and
 height descents while resetting the other component.  The child
 partition, ordinary common-child identity, and exceptional adjacent
 coordinates are regression-tested for every \(1\le x<100000\).
+
+## 100. A high-return obligation inherits the predecessor token height
+
+The finite token \(c\) in Section 86 is also tied directly to the finite
+state immediately before the high return.  Retain Section 84's notation
+
+\[
+u=Q_{v-1}^g(J(t)),\qquad
+c=B(u)=Q_{v-3}^g(3J(t)),\qquad v\ge5.
+\]
+
+The second high-return alternative is used only after the current
+factor-free frame over \(t\) has no DRAW member, the next raw state
+\(c\) is not DRAW, and the next signed state is DRAW.  In Section 80's
+notation, \(u=C_k\).  The common child \(C_k\) cannot be LOSS; hence the
+absence of a current DRAW makes \(u\) WIN.  The next frame member
+\(R_{k+1}\) is DRAW and has the next signed state and \(c=C_{k+1}\) as
+its children.  Since one child is DRAW, the other cannot be LOSS; the
+absence of a raw DRAW therefore makes \(c\) WIN.  Thus
+
+\[
+\boxed{u\text{ and }c=B(u)\text{ are both WIN}.}
+\]
+
+The tail exponent of \(u\) is \(v-1\ge4\).  Hence
+
+\[
+u\bmod16\in\{0,15\},
+\]
+
+so \(u\) is nonexceptional.  Put
+
+\[
+p=B(A(u)).
+\]
+
+The ordinary side relation at \(u\) makes \(p\) a child of
+\(c=B(u)\), while it is directly a child of \(A(u)\):
+
+\[
+\boxed{p\in\operatorname{moves}(c)\cap
+\operatorname{moves}(A(u)).}
+\]
+
+Because \(u\) is WIN while its ordinary child \(c=B(u)\) is also WIN,
+its other child \(A(u)\) is necessarily LOSS.  It is therefore the
+canonical LOSS child of \(u\), and
+
+\[
+\boxed{p\text{ is WIN},\qquad h(p)\le h(u)-2,\qquad
+p\in\operatorname{moves}(c).}
+\]
+
+Thus the obligation \(O(c,\alpha(c))\) never introduces a fresh,
+height-unrelated finite token.  It inherits the explicit ordinary child
+\(p\) of \(c\), at least two proof levels below \(u\).  Sections 97--99
+then transport or spend that inherited token through every common-side
+outcome.
+
+This closes the proof-height reset that remained in the high-return
+re-entry.  It is still a local transition theorem; the final proof must
+place it in the global size-change order together with the initial
+height-one and minimum-source entries.  The exact source \(c\),
+nonexceptional residue of \(u\), and common-child identity are
+regression-tested for every \(1\le t<10000\), both phases, and valuations
+five through ten.

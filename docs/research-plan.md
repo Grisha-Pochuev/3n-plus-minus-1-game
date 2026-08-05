@@ -552,6 +552,15 @@ What remains is now genuinely a global size-change argument: define one
 well-founded order for the already proved source and height decreases and
 verify every entry type against it.
 
+Section 100 removes the last local height reset inside a high return.  The
+state u immediately preceding the new obligation and c=B(u) are both WIN,
+while the ordinary common child B(A(u)) is a WIN token at least two
+heights below u.  Therefore the
+Section 90 re-entry preserves both the old source anchor (Section 97) and
+a strictly descending finite proof token (Section 100).  No internal
+high-return transition is now unmarked; only the global entry and
+size-change induction remain to be written and audited.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

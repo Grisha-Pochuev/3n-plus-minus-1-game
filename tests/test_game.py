@@ -887,6 +887,38 @@ class GameArithmeticTests(unittest.TestCase):
                                 ),
                             )
 
+    def test_high_return_predecessor_token_diamond(self) -> None:
+        for source in range(1, 10000):
+            coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                for valuation in range(5, 11):
+                    predecessor_token = constant_tail_state(
+                        coefficient,
+                        valuation - 1,
+                        phase,
+                    )
+                    returned_source = transformed_B(predecessor_token)
+                    self.assertEqual(
+                        returned_source,
+                        constant_tail_state(
+                            3 * coefficient,
+                            valuation - 3,
+                            phase,
+                        ),
+                    )
+                    self.assertNotIn(
+                        predecessor_token % 16,
+                        SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                    )
+
+                    lower_win = transformed_B(
+                        transformed_A(predecessor_token)
+                    )
+                    self.assertIn(
+                        lower_win,
+                        transformed_moves(returned_source),
+                    )
+
     def test_short_high_return_token_diamonds(self) -> None:
         for source in range(1, 10000):
             coefficient = embedded_original_state(source)
