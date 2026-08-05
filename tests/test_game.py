@@ -171,6 +171,40 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertIn(returned, transformed_moves(expanding))
                 self.assertIn(returned, transformed_moves(contracting))
 
+    def test_canonical_A_streak_side_returns(self) -> None:
+        for source in range(10, 100000):
+            ray = [source]
+            for _ in range(5):
+                ray.append(transformed_A(ray[-1]))
+
+            phase = source_A_selecting_tail_bit(source)
+            for index in range(4):
+                expected_phase = phase ^ (index % 2)
+                if source_A_selecting_tail_bit(ray[index]) != expected_phase:
+                    break
+                if (
+                    source_A_selecting_tail_bit(ray[index + 1])
+                    != 1 - expected_phase
+                ):
+                    break
+
+                lifted = constant_tail_state(
+                    embedded_original_state(ray[index]),
+                    1,
+                    expected_phase,
+                )
+                self.assertEqual(transformed_B(lifted), ray[index + 2])
+
+                preceding_win = ray[index + 1]
+                if preceding_win % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                    loss_token = transformed_B(preceding_win)
+                    returned = transformed_B(transformed_A(preceding_win))
+                    self.assertLess(loss_token, source)
+                    self.assertEqual(
+                        constant_tail_source_coordinates(returned)[:2],
+                        (loss_token, 0),
+                    )
+
     def test_residual_three_two_frame_transfer(self) -> None:
         for b in range(1, 100000):
             if b % 64 not in {4, 25, 38, 59}:

@@ -5724,3 +5724,129 @@ rank alternatives: an all-exceptional tail would be a strictly descending
 sequence of positive integers, while its first ordinary row enters the
 height/LOSS dichotomy of Section 63.  The exact residue table and strict
 inequality are regression-tested for \(x<100000\).
+
+## 65. A canonical A-streak reaches a typed side return in four steps
+
+The other potentially unbounded mechanism in Section 28 is the canonical
+A-continuation.  It cannot run indefinitely without exposing the token of
+Section 57.  Retain the globally minimum DRAW coefficient source \(s\) and
+an A-selecting obligation
+
+\[
+O(x,e),\qquad e=\alpha(x),\qquad s\le x<2s.
+\]
+
+Suppose its exponent-one member is DRAW, so Section 28 takes the canonical
+continuation.  Put
+
+\[
+x_i=A^i(x),\qquad e_i=e\mathbin{\mathsf{xor}}(i\bmod2),\qquad
+P_i=L_{e_i}(x_i).
+\]
+
+As long as \(e_i=\alpha(x_i)\), the expanding child of \(P_i\) is
+\(P_{i+1}\).  If the next phase is also A-selecting, then Section 24's
+refined side formula simplifies to
+
+\[
+\boxed{B(P_i)=x_{i+2}.}
+\]
+
+Indeed, \(e_{i+1}=1-e_i=\alpha(x_{i+1})\), so \(e_i\) is the second
+binary bit of \(x_{i+1}\).  Directly from
+\(A(y)=\lceil3y/2\rceil\), its parity is the second binary bit of \(y\).
+Thus \(A(x_{i+1})\bmod2=e_i\), and the first row of Section 24 gives the
+box.  This is an exact two-bit identity, not a bounded-suffix assumption.
+
+Section 28 makes \(B(P_0)=x_2\) WIN and hence \(P_1\) DRAW.  Continue only
+while the phase remains A-selecting.  Whenever \(P_i\) is DRAW, its side
+child \(x_{i+2}\) is non-losing.  If the first four such side children
+
+\[
+x_2,x_3,x_4,x_5
+\]
+
+were all WIN, they would contradict Section 5's theorem that no four
+consecutive states on an A-ray are WIN.  Consequently one of
+\(x_3,x_4,x_5\) is DRAW, unless an earlier phase has already become
+B-selecting.  Let
+
+\[
+x_{j+2}\text{ be the first such DRAW},\qquad 1\le j\le3,
+\]
+
+and put
+
+\[
+q=x_{j+1},\qquad d=A(q)=x_{j+2},\qquad
+\ell=B(q),\qquad p=B(d).
+\]
+
+Then \(q\) is a WIN child of the DRAW state \(P_{j-1}\), while \(d\) is
+DRAW.  Therefore \(\ell\) is the unique LOSS child of \(q\), and it realizes
+the canonical height of \(q\):
+
+\[
+h(\ell)=h(q)-1.
+\]
+
+The state \(p\) is non-losing because it is a child of \(d\).  Section 57
+now gives an exact typed return.  If \(q\) is nonexceptional, \(p\) is also
+a child of the LOSS state \(\ell\), and hence
+
+\[
+\boxed{d\to p\text{ is a DRAW-to-WIN boundary},\qquad
+h(p)\le h(q)-2.}
+\]
+
+This is a descent relative to the actual preceding boundary endpoint
+\(q\), not an illicit restart of the global minimum-height argument.
+
+If \(q\) is exceptional, Section 57 instead makes \(p\) an exact
+factor-free constant-tail lift over \(\ell\).  In this A-streak the retained
+LOSS source also decreases numerically:
+
+\[
+\boxed{\ell<x.}
+\]
+
+To prove it, the four exceptional formulas of Section 5 give uniformly
+
+\[
+B(q)\le\frac{3q-3}{16}.
+\]
+
+Here \(q=A^{j+1}(x)\) with \(j\le3\), so
+
+\[
+q\le A^4(x)\le\frac{81x+65}{16}.
+\]
+
+For \(x\ge12\), these inequalities yield
+
+\[
+\ell\le\frac{243x+147}{256}<x.
+\]
+
+The only smaller residual possibilities are \(x=10,11\).  Their first four
+A-iterates are respectively
+
+\[
+10,15,23,35,53\quad\text{and}\quad11,17,26,39,59;
+\]
+
+the sole exceptional returned WIN in the first row is \(q=35\), with
+\(B(q)=3<10\), and the second row has none.  This completes the proof.
+
+Thus a pure canonical A-streak has only three outcomes after at most four
+side tests:
+
+1. the phase becomes B-selecting, entering Sections 25--27;
+2. an ordinary DRAW-to-WIN boundary lowers the height by at least two; or
+3. an exceptional non-losing exact lift carries a LOSS token whose height
+   is one lower and whose integer source is strictly below the initial
+   \(x\).
+
+In particular there is no unbounded unmarked canonical A-continuation.
+The exact side identity, exceptional lift source, and strict source return
+are regression-tested for \(10\le x<100000\).

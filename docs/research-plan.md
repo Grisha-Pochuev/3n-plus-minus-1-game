@@ -287,6 +287,16 @@ smaller.  Hence an indefinitely pure valuation-two recycle is impossible;
 it must terminate in the lower-WIN/LOSS rank types of Sections 61 and 63.
 The remaining proof obligation is no longer the valuation-two loop itself,
 but boundary exposure for the finite nested-lift exits that terminate it.
+Section 65 also removes the other unbounded-looking local mechanism.  Four
+consecutive A-selecting lift sides would be four consecutive WIN states on
+one A-ray, which Section 5 forbids.  At the first DRAW side, the preceding
+WIN is an actual boundary endpoint.  Its ordinary return lowers boundary
+height by two; its exceptional return is an exact lift over the unique LOSS
+child, whose height is lower by one and whose source is strictly below the
+source at the start of the A-streak.  Therefore neither a pure valuation-two
+loop nor a pure canonical A-streak remains.  The immediate target is now a
+single global rank that proves their finite typed exits cannot alternate
+forever through the exceptional nested-lift orientation.
 
 ## Priority 2: finite transducer plus numerical potential
 
