@@ -655,6 +655,15 @@ steps.  The remaining audit must route every coupled raw/signed exit into
 one of these lower-token configurations and then close the finite terminal
 rows v<=14; no unbounded high-return counter remains.
 
+Section 111 also removes an unbounded factor counter after the stable
+return.  A Q4/Q3 DRAW frame must expose a raw or signed exit in its first
+three factor levels.  From v>=20 the three possible exit pairs have exact
+sources: the marked source y with its height-lower WIN child, an
+exponent-one lift over the first raw member, or an exponent-one lift of
+y's actual sibling.  The remaining high-row task is therefore an outcome
+split for the finite state y, not a search over further factor powers; the
+short rows v<20 can be audited as a finite table.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

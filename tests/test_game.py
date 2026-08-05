@@ -856,6 +856,79 @@ class GameArithmeticTests(unittest.TestCase):
                         current_coefficient *= 9
                         current_exponent -= 3
 
+    def test_stable_q4_q3_three_level_exit_sources(self) -> None:
+        for source in range(1, 1000):
+            source_coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                exit_phase = 1 - phase
+                for valuation in range(20, 29):
+                    token = constant_tail_state(
+                        2187 * source_coefficient,
+                        valuation - 12,
+                        phase,
+                    )
+                    factor_source = transformed_B(token)
+                    first_lower_token = transformed_B(
+                        transformed_A(token)
+                    )
+                    marked_source = transformed_B(first_lower_token)
+                    second_lower_token = transformed_B(
+                        transformed_A(first_lower_token)
+                    )
+                    selected_sibling = transformed_B(marked_source)
+
+                    self.assertEqual(
+                        second_lower_token,
+                        transformed_A(marked_source),
+                    )
+                    self.assertEqual(
+                        source_boundary_transition(marked_source, phase),
+                        ("B", 2, selected_sibling),
+                    )
+
+                    coefficient = embedded_original_state(factor_source)
+                    first_numerator = (
+                        9 * coefficient + 1 - 2 * exit_phase
+                    )
+                    self.assertEqual(
+                        first_numerator,
+                        8 * embedded_original_state(marked_source),
+                    )
+                    self.assertEqual(v2(first_numerator), 3)
+
+                    first_raw = constant_tail_state(
+                        embedded_original_state(marked_source),
+                        2,
+                        phase,
+                    )
+                    second_numerator = (
+                        27 * coefficient + 1 - 2 * exit_phase
+                    )
+                    self.assertEqual(
+                        second_numerator,
+                        2 * embedded_original_state(first_raw),
+                    )
+                    self.assertEqual(v2(second_numerator), 1)
+
+                    third_numerator = (
+                        81 * coefficient + 1 - 2 * exit_phase
+                    )
+                    transition = source_boundary_transition(
+                        first_raw,
+                        phase,
+                    )
+                    self.assertEqual(transition[0], "B")
+                    self.assertGreaterEqual(transition[1], 3)
+                    self.assertEqual(
+                        third_numerator,
+                        (1 << (transition[1] + 1))
+                        * embedded_original_state(transition[2]),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(transition[2]),
+                        (selected_sibling, 0, 1, exit_phase),
+                    )
+
     def test_high_return_obligation_common_side(self) -> None:
         for source in range(1, 1000):
             coefficient = embedded_original_state(source)

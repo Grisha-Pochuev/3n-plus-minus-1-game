@@ -9492,3 +9492,143 @@ exponents one through three, together with \(v\le11\), remain finite base
 rows.  The exact chain coordinates are regression-tested for every odd
 \(1\le C<1000\), both phases, and initial exponents four through twenty-
 four.
+
+## 111. The stable four/three frame has a three-level marked exit horizon
+
+First record a universal outcome reduction.  Let \(a\) be positive and
+odd, fix a phase \(e\), and suppose
+
+\[
+H=Q_4^e(a),\qquad G=Q_3^e(a)
+\]
+
+contain a DRAW.  For \(i\ge1\), put
+
+\[
+P_i=Q_2^e(3^ia),\qquad R_i=Q_1^e(3^ia),
+\]
+
+and retain the raw and signed exits of Section 80,
+
+\[
+C_i=B(P_i)=B(R_i),\qquad T_i=A(R_i).
+\]
+
+The first two move diamonds are
+
+\[
+\operatorname{moves}(H)=\{Q_3^e(3a),P_1\},\qquad
+\operatorname{moves}(G)=\{P_1,R_1\},
+\]
+
+\[
+\operatorname{moves}(Q_3^e(3a))=\{P_2,R_2\}.
+\]
+
+The common state \(P_1\) cannot be LOSS, since that would make both
+\(H,G\) WIN.  If \(P_1\) is DRAW, the first two/one frame contains a
+DRAW.  If it is WIN and \(G\) is DRAW, then \(R_1\) is DRAW.  In the only
+remaining case \(H\) is DRAW, so \(Q_3^e(3a)\) is DRAW and the second
+two/one frame contains a DRAW.  Section 80 applied at the reached frame
+therefore gives
+
+\[
+\boxed{\{C_i,T_i:1\le i\le3\}\text{ contains a DRAW}.}
+\]
+
+Thus a four/three frame needs at most three, rather than an unbounded
+number of, factor numerators.
+
+Now apply this to the stable row of Section 109.  Put \(e=1-g\), assume
+\(v\ge20\), and write
+
+\[
+x=Q_{v-12}^g(2187J(t)),\qquad
+\ell=B(x)=Q_{v-14}^g(6561J(t)),
+\]
+
+\[
+p=B(A(x))=Q_{v-15}^g(19683J(t)),
+\]
+
+\[
+y=B(p)=Q_{v-17}^g(59049J(t)),\qquad
+p'=B(A(p))=Q_{v-18}^g(177147J(t)).
+\]
+
+Sections 109--110 give
+
+\[
+\boxed{p,p'\text{ are WIN},\qquad
+h(p')\le h(p)-2\le h(x)-4.}
+\]
+
+All displayed tails are now long enough for ordinary reduction.  In
+particular
+
+\[
+p'=A(y),\qquad s:=B(y),\qquad
+\operatorname{sourceTransition}(y,g)=(B,2,s).
+\]
+
+The four/three frame from Section 109 has phase \(e\) and source \(\ell\).
+Its first three factor numerators are
+
+\[
+N_i=3^{i+1}J(\ell)+1-2e\qquad(1\le i\le3).
+\]
+
+Direct substitution gives the first exact attachment
+
+\[
+\boxed{N_1=8J(y).}
+\]
+
+Consequently its first signed/raw exits are
+
+\[
+\boxed{T_1=Q_3^g(J(y)),\qquad C_1=Q_2^g(J(y)).}
+\]
+
+The consecutive-factor identity then gives
+
+\[
+\boxed{N_2=2J(C_1),\qquad T_2=Q_1^g(J(C_1)),
+\qquad C_2=R(T_2).}
+\]
+
+Finally factor the B-selecting transition at \(C_1\):
+
+\[
+\operatorname{sourceTransition}(C_1,g)=(B,j,d),\qquad j\ge3.
+\]
+
+The valuation-two transfer at the long-tail source \(y\) identifies its
+selected source exactly:
+
+\[
+\boxed{d=B(C_1)=Q_1^{1-g}(J(s)),\qquad
+N_3=2^{j+1}J(d).}
+\]
+
+Hence
+
+\[
+\boxed{T_3=Q_{j+1}^g(J(d)),\qquad C_3=Q_j^g(J(d)).}
+\]
+
+Combining these identities with the universal horizon proves that every
+stable four/three DRAW frame exposes one of exactly three typed pairs:
+
+1. the three/two frame over \(y\), whose marked child \(p'=A(y)\) is a
+   WIN at least two proof levels below \(p\);
+2. the signed/raw pair of the exponent-one lift over \(C_1\);
+3. an adjacent frame over the exact exponent-one lift \(d\) of the actual
+   sibling \(s=B(y)\).
+
+No exit in the stable row has an unrelated coefficient source.  This is
+not yet the outcome split for the finite state \(y\): its WIN, LOSS, and
+DRAW cases must still be ranked, and the short rows \(v<20\) remain
+separate.  The source, phase, valuation, and lift identities are
+regression-tested for \(1\le t<1000\), both phases, and
+\(20\le v\le28\).
