@@ -3930,3 +3930,181 @@ Section 43: it either drops below \(s\), reaches this A-selecting form, or
 enters an exponent-two/three frame after a bounded number of
 valuation-two transfers.  The common-child occurrence under \(R\) is
 regression-tested.
+
+## 45. The \(r=2\), \(v=3,4\) opposite LOSS is a known finite ladder
+
+Return to the exponent-two factor switch of Sections 30 and 32.  Put
+
+\[
+a=J(b),\qquad
+X=Q_1^g(3a)\text{ DRAW},\qquad
+E=Q_2^e(a)\text{ WIN},\qquad
+L=A(E)=Q_1^e(3a),
+\]
+
+where \(g=1-e\).  Write the signed transition at \(X\) as
+
+\[
+9a+1-2g=2^vJ(t),\qquad v\le4.
+\]
+
+For every \(v\ge3\), the opposite twin has the exact contracting child
+
+\[
+\boxed{B(L)=Q_{v-2}^e(J(t)).}
+\]
+
+Indeed, the opposite signed expression differs by two:
+
+\[
+9a+1-2e=2^vJ(t)+2(2g-1).
+\]
+
+Its valuation is one.  The expanding child \(A(L)\) is obtained by
+appending the two-bit word \(10\) when \(g=0\), and \(01\) when \(g=1\),
+to \(Q_{v-2}^e(J(t))\).  Since \(v-2\ge1\), the leading appended bit
+repeats the existing final \(e\)-bit, so deleting the maximal alternating
+suffix removes exactly those two appended bits and proves the box.
+
+The lower state \(B(L)\) is WIN except possibly when \(E\) itself is
+exceptional.  Indeed, because \(E\) is WIN, at least one of \(L,B(E)\) is
+LOSS.  If \(L\) is LOSS, this is immediate.  Otherwise \(B(E)\) is LOSS.
+When \(E\) is nonexceptional, the ordinary side relation makes
+\(B(L)=B(A(E))\) a child of \(B(E)\), so it is again WIN.  Thus the only
+unresolved orientation at this step has
+
+\[
+\boxed{E\bmod16\in\{3,12\}.}
+\]
+
+Outside these two rows, the two possible valuations are exactly the finite
+ladders already analyzed in Sections 40--41.
+
+For \(v=3\), the DRAW state \(X\) has children
+
+\[
+Q_3^e(J(t)),\qquad Q_2^e(J(t)),
+\]
+
+while the lower state \(Q_1^e(J(t))=B(L)\) is WIN.  If the exponent-two
+member is DRAW, the other child of the lower WIN is LOSS; if it is WIN,
+the exponent-three member is DRAW and the common side child is LOSS.  This
+is precisely the \(j=3\) split of Section 40.
+
+For \(v=4\), the children of \(X\) are
+
+\[
+Q_4^e(J(t)),\qquad Q_3^e(J(t)),
+\]
+
+and \(Q_2^e(J(t))=B(L)\) is WIN.  If the exponent-three member is DRAW, its
+lower common child forces the boundary side of \(Q_2^e\) to be LOSS.  If
+it is WIN, the exponent-four member is DRAW and
+\(Q_1^e(3J(t))\) is LOSS.  This is the \(j=4\) split; the second lower WIN
+used in Section 40 is not needed for this dichotomy.
+
+Applying the one-sided lemma of Section 41 in each row gives
+
+\[
+\boxed{
+\begin{array}{c}
+r=2,\quad v=3,4,\quad E\text{ nonexceptional}\\
+\Longrightarrow\
+\text{a boundary WIN},\quad\text{or a strict height descent},\quad
+\text{or an exceptional lower WIN state}.
+\end{array}}
+\]
+
+Besides an exceptional \(E\), the only possible exceptional lower states
+are
+
+\[
+v=3:\quad Q_1^e(J(t))\equiv1,14
+\ \text{or}\ Q_2^e(J(t))\equiv3,12\pmod {16},
+\]
+
+and
+
+\[
+v=4:\quad Q_2^e(J(t))\equiv3,12\pmod {16}.
+\]
+
+The exponent-three state is always \(7\) or \(8\) modulo \(16\), so it is
+never exceptional.  Thus the high half of the \(r=2\) twin switch contains
+no new outcome geometry: it is the same finite ladder, plus the exceptional
+rows \(E\equiv3,12\) and the same lower \(S_1/S_2\) rows already isolated
+for \(r=3\).  The twin return, side-child occurrence, and all constant-tail
+coordinates are regression-tested.
+
+## 46. The exceptional \(E\) in the \(r=2\) switch is a bounded LOSS-source lift
+
+It remains to normalize the orientation exception
+\(E\equiv3,12\pmod {16}\) from Section 45.  Put
+
+\[
+C=B(E),\qquad L=A(E),\qquad p=B(L).
+\]
+
+The unresolved orientation has \(C\) LOSS.  Write again \(a=J(b)\), so
+\(E=Q_2^e(a)\).  The same exceptional-\(S_2\) calculation as in Section 42
+gives
+
+\[
+\boxed{
+p=Q_k^{1-e}(J(C)),\qquad k\ge1,\qquad
+p=\frac{9a-1}{2}.}
+\]
+
+Indeed, \(E\equiv12\) forces \(e=0,a\equiv3\pmod4\), while
+\(E\equiv3\) forces \(e=1,a\equiv1\pmod4\).  In the first case the
+constant-tail coefficient of \(p\) is
+\(\kappa(9a)=J(R(3a))=J(C)\); in the second it is
+\(\kappa(9a-1)=J(R(3a-1))=J(C)\).  The final bit is \(1-e\).
+
+The exponent-two factor bound from Section 32 says
+
+\[
+b\le\frac{27s-8}{12},
+\]
+
+and hence
+
+\[
+a=J(b)\le3b+2\le\frac{27s}{4}.
+\]
+
+Because \(k\ge1\),
+
+\[
+2J(C)\le p+1-e\le\frac{9a+1}{2},
+\]
+
+which gives the strict source window
+
+\[
+\boxed{C<\frac{81}{16}s.}
+\]
+
+If \(p\) is DRAW, global source minimality additionally forces \(C\ge s\).
+Then \(k\ge4\) would imply
+
+\[
+16(3s+1)\le2^kJ(C)=p+1-e
+\le\frac{243s+4}{8},
+\]
+
+an impossibility.  Therefore
+
+\[
+\boxed{p\text{ DRAW}\quad\Longrightarrow\quad
+s\le C<\frac{81}{16}s,\qquad k\le3.}
+\]
+
+If \(L\) is DRAW and \(p\) is WIN, the edge \(L\to p\) is already a new
+boundary.  If both remain DRAW, the continuation is one of only three
+constant-tail levels over the explicit LOSS source \(C\).  If \(L\) is
+WIN, the same exact lift still records its side outcome, so no unbounded
+valuation is hidden in the exceptional orientation.  Thus all
+\(r=2,\ v=3,4\) branches are reduced to boundary/height alternatives or
+finite exponent-at-most-three LOSS-source lifts.  The source identity,
+window, and exponent bound are regression-tested.

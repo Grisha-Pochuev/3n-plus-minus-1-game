@@ -931,6 +931,93 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(boundary_power, 0)
                 if boundary_exponent >= 5:
                     self.assertLess(boundary_source, source)
+                if boundary_exponent >= 3:
+                    boundary_coefficient = embedded_original_state(
+                        boundary_source
+                    )
+                    if selected_twin % 16 in {
+                        1,
+                        3,
+                        12,
+                        14,
+                    }:
+                        self.assertIn(selected_twin % 16, {3, 12})
+                        exceptional_loss = transformed_B(selected_twin)
+                        exceptional_lift = transformed_B(expected_twin)
+                        (
+                            exceptional_source,
+                            exceptional_power,
+                            exceptional_exponent,
+                            exceptional_phase,
+                        ) = constant_tail_source_coordinates(
+                            exceptional_lift
+                        )
+                        self.assertEqual(
+                            (
+                                exceptional_source,
+                                exceptional_power,
+                                exceptional_phase,
+                            ),
+                            (
+                                exceptional_loss,
+                                0,
+                                1 - phase,
+                            ),
+                        )
+                        self.assertLess(
+                            16 * exceptional_loss,
+                            81 * source,
+                        )
+                        if exceptional_loss >= source:
+                            self.assertLessEqual(
+                                exceptional_exponent,
+                                3,
+                            )
+                    if selected_twin % 16 not in {
+                        1,
+                        3,
+                        12,
+                        14,
+                    }:
+                        self.assertIn(
+                            transformed_B(expected_twin),
+                            transformed_moves(
+                                transformed_B(selected_twin)
+                            ),
+                        )
+                    self.assertEqual(
+                        transformed_B(expected_twin),
+                        constant_tail_state(
+                            boundary_coefficient,
+                            boundary_exponent - 2,
+                            phase,
+                        ),
+                    )
+                    expanding_boundary, contracting_boundary = (
+                        transformed_moves(boundary)
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            expanding_boundary
+                        ),
+                        (
+                            boundary_source,
+                            0,
+                            boundary_exponent,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            contracting_boundary
+                        ),
+                        (
+                            boundary_source,
+                            0,
+                            boundary_exponent - 1,
+                            phase,
+                        ),
+                    )
             else:
                 first_boundary = constant_tail_state(
                     3 * factor_coefficient,

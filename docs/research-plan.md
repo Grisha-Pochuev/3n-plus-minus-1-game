@@ -166,7 +166,16 @@ sibling across these bounded transfers and the recycling WIN-boundary
 alternative.  In the immediate A-selecting half, Section 44 already gives
 the boundary/strict-descent dichotomy and leaves only an exceptional WIN
 source R.  The unresolved B half and that exceptional R row should be
-merged with the bounded exceptional lifts of Section 42.
+merged with the bounded exceptional lifts of Section 42.  Section 45 shows
+that the r=2 valuations three and four are not new cases whenever E is
+nonexceptional: either orientation of its forced LOSS supplies the same
+j=3 or j=4 ladder.  Only E=3,12 modulo 16 and the already known lower
+S1/S2 exceptions survive.  Those rows and valuations one/two are the next
+local targets.  Section 46 converts the E=3,12 orientation itself into an
+exponent-at-most-three lift over an explicit LOSS source below 81s/16.
+Thus valuations three/four are finite in every orientation; valuations
+one/two and the common treatment of these bounded LOSS-source lifts are the
+next local targets.
 
 ## Priority 2: finite transducer plus numerical potential
 
