@@ -673,6 +673,13 @@ unbounded high-tail marked recurrence remains at all.  The proof still
 needs one explicit assembly table for D=3,...,13 and for the finite-lift
 types before the minimum-source/minimum-boundary contradiction is complete.
 
+Section 113 removes the only arbitrary lift exponent in that short table.
+At D=3 the first raw state is a lift of length m>=2 over the carried lower
+WIN, but this forces the A-selecting phase, and the second factor level is
+exactly the obligation O(S,alpha(S)).  Thus the short-row audit no longer
+has an unbounded parameter: D=3 routes into Sections 91--96, while
+D=4,...,13 use the fixed tables of Sections 106--112.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

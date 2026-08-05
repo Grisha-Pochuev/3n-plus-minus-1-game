@@ -1058,6 +1058,60 @@ class GameArithmeticTests(unittest.TestCase):
                         8 * embedded_original_state(following_source),
                     )
 
+    def test_short_marked_row_enters_A_selecting_obligation(self) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                factor_source = constant_tail_state(
+                    coefficient,
+                    3,
+                    phase,
+                )
+                marked_child = transformed_A(factor_source)
+                loss_child = transformed_B(factor_source)
+                common_token = transformed_B(marked_child)
+                self.assertEqual(
+                    common_token,
+                    transformed_B(loss_child),
+                )
+
+                first_numerator = (
+                    9 * embedded_original_state(factor_source)
+                    + 1
+                    - 2 * phase
+                )
+                self.assertEqual(v2(first_numerator), 1)
+                lifted_source = constant_tail_coefficient_source(
+                    first_numerator >> 1
+                )[0]
+                first_signed = constant_tail_state(
+                    embedded_original_state(lifted_source),
+                    1,
+                    1 - phase,
+                )
+                first_raw = alternating_suffix_remainder(first_signed)
+                self.assertEqual(first_raw, transformed_A(lifted_source))
+                raw_coordinates = constant_tail_source_coordinates(
+                    first_raw
+                )
+                self.assertEqual(raw_coordinates[:2], (common_token, 0))
+                self.assertGreaterEqual(raw_coordinates[2], 2)
+                self.assertEqual(raw_coordinates[3], phase)
+                self.assertEqual(
+                    source_A_selecting_tail_bit(first_raw),
+                    1 - phase,
+                )
+
+                second_numerator = (
+                    27 * embedded_original_state(factor_source)
+                    + 1
+                    - 2 * phase
+                )
+                self.assertEqual(
+                    second_numerator,
+                    4 * embedded_original_state(first_raw),
+                )
+                self.assertEqual(v2(second_numerator), 2)
+
     def test_high_return_obligation_common_side(self) -> None:
         for source in range(1, 1000):
             coefficient = embedded_original_state(source)

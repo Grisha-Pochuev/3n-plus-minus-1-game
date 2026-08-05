@@ -9865,3 +9865,93 @@ assemble the short marked rows, the finite-lift exits, and the initial
 minimum-boundary entry into the global no-DRAW theorem.  All universal
 coordinates above are regression-tested for every odd \(1\le C<200\),
 both phases, and \(14\le D\le25\).
+
+## 113. The arbitrary lift in the shortest marked row is A-selecting
+
+The coefficient-independent marked configuration of Section 112 has one
+apparently unbounded short row.  Put
+
+\[
+b=Q_3^g(C)
+\]
+
+for an arbitrary positive odd \(C\), and retain
+
+\[
+b,A(b)\text{ WIN},\qquad B(b)\text{ LOSS}.
+\]
+
+The two children of \(b\) are
+
+\[
+A(b)=Q_2^g(3C),\qquad B(b)=Q_1^g(3C).
+\]
+
+Their common child at the signed boundary is
+
+\[
+\boxed{r=B(A(b))=B(B(b)).}
+\]
+
+Since \(B(b)\) is LOSS,
+
+\[
+\boxed{r\text{ is WIN},\qquad h(r)\le h(B(b))-1.}
+\]
+
+Factor the first factor numerator and form its signed/raw exits:
+
+\[
+9J(b)+1-2g=2J(w),
+\]
+
+\[
+T=Q_1^{1-g}(J(w)),\qquad S=R(T).
+\]
+
+The boundary appended-word calculation from Section 104 is universal in
+\(C\).  It gives, for an exact integer \(m\ge2\),
+
+\[
+\boxed{S=Q_m^g(J(r)).}
+\]
+
+The unbounded value of \(m\) carries no unbounded phase choice.  Every
+constant tail of length at least two and bit \(g\) has A-selecting phase
+\(1-g\), so
+
+\[
+\boxed{\alpha(S)=1-g.}
+\]
+
+The next factor numerator is also exact.  The consecutive-level recurrence
+and the identity \(S=A(w)\) give
+
+\[
+\boxed{27J(b)+1-2g=4J(S).}
+\]
+
+Consequently its signed/raw exits are
+
+\[
+U=Q_2^{1-g}(J(S)),\qquad P=Q_1^{1-g}(J(S)).
+\]
+
+Suppose the marked three/two frame over \(b\) contains a DRAW.  If either
+first exit \(S,T\) is DRAW, it remains in the exact signed/raw diamond whose
+raw member \(S\) is the displayed lift over the lower WIN token \(r\).  If
+neither is DRAW, the outcome argument of Section 106 does not require
+\(D\ge4\): \(S\) is a boundary WIN, and the second bridge is a DRAW parent
+of \(U,P\).  Thus
+
+\[
+\boxed{O(S,\alpha(S))\text{ holds}.}
+\]
+
+The former exceptional \(D=3\) row therefore enters the universal
+A-selecting obligation automaton of Sections 91--96; it does not require a
+search over \(m\).  Its coefficient source is still the marked lower WIN
+token \(r\), so the arbitrary lift is not an unrelated restart.  This is
+an exact routing lemma, not yet the global rank assembly.  The common-child
+identity, lift coordinates, phase, and second numerator are regression-
+tested for every odd \(1\le C<1000\) in both phases.
