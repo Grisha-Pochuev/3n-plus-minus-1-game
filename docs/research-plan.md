@@ -146,7 +146,18 @@ target is sharpened by Section 39: if this side state is DRAW, its next
 contracting boundary endpoint lies at least two WIN-height levels below W.
 Thus only its WIN-boundary alternative can recycle; the next task is to
 couple that alternative to the v=4 ladders and the low-valuation factor
-exits.
+exits.  Section 40 removes the outcome ambiguity inside the three v=4
+ladders: each one forces a LOSS witness among the four explicit states
+C, D, T1, T2.  The immediate symbolic target is the common WIN child below
+these witnesses.  Section 41 supplies it uniformly: every nonexceptional
+row either exposes a new boundary WIN or strictly lowers boundary height.
+Only S1=1,14 and S2=3,12 modulo 16 survive as exceptional DRAW
+continuations.  These four rows, the v=4 j=2 exponent-zero boundary, and
+the recycling WIN-boundary alternatives are now the immediate targets.
+Section 42 eliminates the S1 exceptions outright and converts every S2
+exception into a lift of exponent at most four over the explicit LOSS
+source C.  Thus the remaining v=4 DRAW continuation is finite; its
+constant-tail children should now be coupled to the two WIN children of C.
 
 ## Priority 2: finite transducer plus numerical potential
 

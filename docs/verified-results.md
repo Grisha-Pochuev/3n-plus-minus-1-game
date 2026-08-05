@@ -3504,3 +3504,267 @@ already retained by Sections 34--35.  It closes every DRAW continuation in
 the \(v=5\) side state; only the WIN-boundary alternative can re-enter the
 factor analysis.  The nonexceptionality of \(W\) and the exact side-child
 identity are regression-tested.
+
+## 40. The valuation-four ladders force a finite set of LOSS witnesses
+
+The three ladders in Section 37 admit a complete local outcome split.  Put
+
+\[
+S_r=Q_r^e(J(W)),\qquad T_r=Q_r^e(3J(W)),
+\]
+
+and denote the common boundary child of \(S_1,S_2\) by
+
+\[
+C=B(S_1)=B(S_2),\qquad D=A(S_1).
+\]
+
+For \(r\ge3\), the long-tail recurrence gives
+
+\[
+S_r\longrightarrow T_{r-1},T_{r-2}.
+\]
+
+In particular, the two upper members \(S_j,S_{j-1}\) share exactly
+\(T_{j-2}\).  The transfer proof of Section 25 supplies slightly more than
+the statement that this pair contains a DRAW:
+
+- \(S_{j-1}\) is always non-losing;
+- at least one of \(S_j,S_{j-1}\) is DRAW.
+
+Indeed, in the direct alternative they are the two children of a DRAW
+state.  In the other alternative Section 25 forces \(S_{j-1}\) DRAW (and
+may force \(S_j\) LOSS).
+
+Now use the lower WIN states supplied by the LOSS position \(M\).
+
+### The \(j=3\) ladder
+
+Here \(S_1\) is WIN.  If \(S_2\) is DRAW, both of its children \(T_1,C\)
+are non-losing, so the other child \(D\) of the WIN state \(S_1\) must be
+LOSS.  If \(S_2\) is WIN, then \(S_3\) must be DRAW.  Their common child
+\(T_1\) is non-losing, so the other child \(C\) of \(S_2\) must be LOSS.
+Thus
+
+\[
+\boxed{j=3\quad\Longrightarrow\quad D\text{ LOSS}\ \text{or}\ C\text{
+ LOSS}.}
+\]
+
+### The \(j=4\) ladder
+
+Now \(S_2,S_1\) are both WIN.  If \(S_3\) is DRAW, its child \(T_1\) is
+non-losing; the WIN state \(S_2\), whose children are \(T_1,C\), therefore
+forces \(C\) LOSS.  If \(S_3\) is WIN, then \(S_4\) must be DRAW.  Their
+common child \(T_2\) is non-losing, so the other child \(T_1\) of \(S_3\)
+is LOSS.  Hence
+
+\[
+\boxed{j=4\quad\Longrightarrow\quad C\text{ LOSS}\ \text{or}\ T_1\text{
+ LOSS}.}
+\]
+
+### The \(j=5\) ladder
+
+Here \(S_3,S_2\) are WIN.  If \(S_4\) is DRAW, its child \(T_2\) is
+non-losing, so the other child \(T_1\) of the WIN state \(S_3\) is LOSS.
+If \(S_4\) is WIN, then \(S_5\) must be DRAW.  Their common child \(T_3\)
+is non-losing, forcing the other child \(T_2\) of \(S_4\) to be LOSS.
+Therefore
+
+\[
+\boxed{j=5\quad\Longrightarrow\quad T_1\text{ LOSS}\ \text{or}\ T_2\text{
+ LOSS}.}
+\]
+
+In the second \(j=5\) alternative, the remaining WIN state \(S_2\) also
+forces at least one of \(T_1,C\) to be LOSS.  Thus every \(j=3,4,5\)
+ladder now comes with an explicit LOSS witness drawn from the fixed set
+\(\{C,D,T_1,T_2\}\).  Closing the branch no longer requires guessing which
+upper member carries the DRAW; it requires coupling only these four LOSS
+states to the next common side child.  The shared-child and lower-ladder
+identities are regression-tested.
+
+## 41. A one-sided LOSS witness either descends or meets an exception
+
+The outcome splits of Sections 39--40 are instances of one general
+boundary lemma.  Let \(x\) be WIN, let one of its ordinary children
+\(\ell\) be LOSS, and let its other child \(y\) also be a child of some
+DRAW state \(d\).  Then \(y\) is non-losing.  There are two alternatives.
+
+If \(y\) is WIN, the edge \(d\to y\) is already a boundary edge.  If \(y\)
+is DRAW and \(x\) is nonexceptional, put
+
+\[
+p=B(A(x)).
+\]
+
+The ordinary side relation at \(x\) makes \(p\) a child of both \(\ell\)
+and \(y\), irrespective of whether \(\ell=A(x)\) or \(\ell=B(x)\).  Hence
+\(p\) is WIN, \(y\to p\) is a boundary edge, and, because \(\ell\) is the
+unique LOSS child of \(x\),
+
+\[
+\boxed{h(p)\le h(x)-2.}
+\]
+
+Thus
+
+\[
+\boxed{
+\begin{array}{c}
+x\text{ WIN},\quad \ell\text{ LOSS},\quad
+y\in\operatorname{moves}(d),\quad d\text{ DRAW}\\[2mm]
+\Longrightarrow\
+y\text{ is a boundary WIN},\quad\text{or}\quad
+\bigl(x\text{ exceptional}\bigr),\quad\text{or}\quad
+\text{a strict height descent}.
+\end{array}}
+\]
+
+Apply this lemma to Section 40.  In every alternative, the relevant
+\((x,\ell,y,d)\) is one of
+
+\[
+\begin{array}{c|c|c|c}
+&x&\ell&y\\ \hline
+j=3&S_1&D&C\\
+   &S_2&C&T_1\\
+j=4&S_2&C&T_1\\
+   &S_3&T_1&T_2\\
+j=5&S_3&T_1&T_2\\
+   &S_4&T_2&T_3.
+\end{array}
+\]
+
+The DRAW state \(d\) is respectively the upper ladder member that contains
+\(y\).  Therefore every nonexceptional row either exposes a new boundary
+WIN immediately or strictly lowers its endpoint height.
+
+Only two constant-tail levels in this table can be exceptional.  Since
+\(J(W)\) is odd,
+
+\[
+\begin{aligned}
+S_1\text{ exceptional}&\Longrightarrow
+S_1\bmod16\in\{1,14\},\\
+S_2\text{ exceptional}&\Longrightarrow
+S_2\bmod16\in\{3,12\},
+\end{aligned}
+\]
+
+whereas \(S_3\bmod16\in\{7,8\}\), and
+\(S_4\bmod16\in\{0,15\}\).  Consequently the residual DRAW continuation in
+the \(v=4\), \(j=3,4,5\) ladders is confined to the four explicit rows
+
+\[
+\boxed{S_1\equiv1,14\pmod {16}\quad\text{or}\quad
+S_2\equiv3,12\pmod {16}.}
+\]
+
+All branches through a LOSS witness \(T_1\) or \(T_2\) are
+nonexceptional and hence satisfy the boundary/strict-descent dichotomy
+without a residue scan.  The residue classification and all side identities
+are regression-tested.
+
+## 42. The exceptional valuation-four rows have bounded source lifts
+
+The \(S_1\)-exception in Section 41 is impossible under the minimum-source
+hypothesis.  It occurs only in the \(j=3\) row, where the residual
+alternative makes
+
+\[
+C=B(S_1)
+\]
+
+DRAW.  Write \(a=J(W)\).  Since \(S_1=Q_1^e(a)\) is exceptional, the
+alternating suffix of \(A(S_1)\) has length at least three.  Therefore, for
+positive \(C\), its coefficient source \(\rho(C)\) satisfies
+
+\[
+\rho(C)\le\frac{C-1}{6}<\frac{a}{16}.
+\]
+
+The \(j=3\) signed identity and the bounds already used in Section 36 give
+
+\[
+a\le\frac{3J(Z)+1}{8}
+\le\frac{162t+115}{8},\qquad
+t\le\frac{81s-28}{128}.
+\]
+
+Consequently
+
+\[
+\rho(C)<\frac{162t+115}{128}
+\le\frac{13122s+10184}{16384}<s,
+\]
+
+where the last inequality holds for every residual source \(s\ge10\).
+This contradicts global source minimality.  The case \(C=0\) is even more
+immediate because a terminal state cannot be DRAW.  Thus no \(S_1\)
+exception survives.
+
+It remains to normalize an exceptional \(S_2\).  Put
+
+\[
+x=S_2=Q_2^e(a),\qquad C=B(x),\qquad y=A(x),\qquad p=B(y).
+\]
+
+The only possibilities are \(x\equiv12\pmod {16}\) for \(e=0\), and
+\(x\equiv3\pmod {16}\) for \(e=1\).  In both cases
+
+\[
+p=\frac{9a-1}{2}.
+\]
+
+Moreover \(p\) has the exact source form
+
+\[
+\boxed{p=Q_k^{1-e}(J(C)),\qquad k\ge1.}
+\]
+
+For \(e=0\), the exceptional congruence gives \(a\equiv3\pmod4\).
+Deleting one final one bit from \(9a\) does not change its constant-tail
+coefficient, while Section 18 gives
+\(\kappa(9a)=J(R(3a))=J(C)\).  For \(e=1\), one has
+\(a\equiv1\pmod4\); deleting one final zero bit from \(9a-1\) again
+preserves its coefficient, and Section 18 gives
+\(\kappa(9a-1)=J(R(3a-1))=J(C)\).  The parity of \(p\) is \(1-e\), proving
+the box.
+
+In the residual alternative \(y\) is DRAW.  If \(p\) is WIN, it is already
+a boundary endpoint.  If \(p\) is DRAW, minimum source forces \(C\ge s\).
+Using
+
+\[
+2^kJ(C)=p+1-e\le\frac{9a+1}{2}
+\]
+
+together with the preceding bounds for \(a,t\) gives the finite limits
+
+\[
+\boxed{
+\begin{array}{c|c}
+j& p\text{ DRAW}\\ \hline
+3&k\le4,\\
+4&k\le3.
+\end{array}}
+\]
+
+For example, if \(j=3\) and \(k\ge5\), then
+
+\[
+32(3s+1)\le2^kJ(C)
+\le\frac{9a+1}{2}
+\le\frac{1458t+1043}{16},
+\]
+
+which contradicts \(t\le(81s-28)/128\).  With \(j=4\), the last
+upper bound becomes \((1458t+1051)/32\), and already \(k\ge4\) is
+impossible.
+
+Hence every exceptional \(v=4\) DRAW continuation is an exponent-at-most-
+four constant-tail state over an explicit ordinary LOSS source \(C\).
+The source identity, the strict \(S_1\) source drop, and both exponent bounds
+are regression-tested in the actual residual trajectory.

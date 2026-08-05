@@ -1038,6 +1038,104 @@ class GameArithmeticTests(unittest.TestCase):
                         if selected_valuation >= 6:
                             self.assertLess(selected_win, source)
                         if selected_valuation >= 3:
+                            selected_coefficient = embedded_original_state(
+                                selected_win
+                            )
+                            upper_high = constant_tail_state(
+                                selected_coefficient,
+                                selected_valuation,
+                                phase,
+                            )
+                            upper_low = constant_tail_state(
+                                selected_coefficient,
+                                selected_valuation - 1,
+                                phase,
+                            )
+                            first_lower = constant_tail_state(
+                                selected_coefficient,
+                                1,
+                                phase,
+                            )
+                            second_lower = constant_tail_state(
+                                selected_coefficient,
+                                2,
+                                phase,
+                            )
+                            if first_lower % 16 in {1, 3, 12, 14}:
+                                self.assertIn(first_lower % 16, {1, 14})
+                            if second_lower % 16 in {1, 3, 12, 14}:
+                                self.assertIn(second_lower % 16, {3, 12})
+                            self.assertNotIn(
+                                constant_tail_state(
+                                    selected_coefficient,
+                                    3,
+                                    phase,
+                                )
+                                % 16,
+                                {1, 3, 12, 14},
+                            )
+                            if (
+                                selected_win >= source
+                                and selected_valuation == 3
+                                and first_lower % 16
+                                in {1, 3, 12, 14}
+                            ):
+                                first_side = transformed_B(first_lower)
+                                if first_side > 0:
+                                    self.assertLess(
+                                        constant_tail_source_coordinates(
+                                            first_side
+                                        )[0],
+                                        source,
+                                    )
+                            if second_lower % 16 in {3, 12}:
+                                exceptional_side = transformed_B(
+                                    transformed_A(second_lower)
+                                )
+                                common_loss = transformed_B(second_lower)
+                                (
+                                    exceptional_source,
+                                    exceptional_power,
+                                    exceptional_exponent,
+                                    exceptional_phase,
+                                ) = constant_tail_source_coordinates(
+                                    exceptional_side
+                                )
+                                self.assertEqual(
+                                    (
+                                        exceptional_source,
+                                        exceptional_power,
+                                        exceptional_phase,
+                                    ),
+                                    (common_loss, 0, 1 - phase),
+                                )
+                                if (
+                                    selected_win >= source
+                                    and common_loss >= source
+                                ):
+                                    if selected_valuation == 3:
+                                        self.assertLessEqual(
+                                            exceptional_exponent,
+                                            4,
+                                        )
+                                    elif selected_valuation == 4:
+                                        self.assertLessEqual(
+                                            exceptional_exponent,
+                                            3,
+                                        )
+                            upper_common = set(
+                                transformed_moves(upper_high)
+                            ) & set(transformed_moves(upper_low))
+                            self.assertEqual(
+                                upper_common,
+                                {
+                                    constant_tail_state(
+                                        3 * selected_coefficient,
+                                        selected_valuation - 2,
+                                        phase,
+                                    )
+                                },
+                            )
                             self.assertEqual(
                                 constant_tail_source_coordinates(
                                     transformed_A(loss_child)
