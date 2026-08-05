@@ -1037,6 +1037,30 @@ class GameArithmeticTests(unittest.TestCase):
                     if first_exponent == 4:
                         if selected_valuation >= 6:
                             self.assertLess(selected_win, source)
+                        if selected_valuation >= 3:
+                            self.assertEqual(
+                                constant_tail_source_coordinates(
+                                    transformed_A(loss_child)
+                                ),
+                                (
+                                    selected_win,
+                                    0,
+                                    selected_valuation - 2,
+                                    phase,
+                                ),
+                            )
+                        if selected_valuation >= 4:
+                            self.assertEqual(
+                                constant_tail_source_coordinates(
+                                    transformed_B(loss_child)
+                                ),
+                                (
+                                    selected_win,
+                                    0,
+                                    selected_valuation - 3,
+                                    phase,
+                                ),
+                            )
                     elif first_exponent == 5:
                         self.assertEqual(
                             lifted_side,
@@ -1049,6 +1073,23 @@ class GameArithmeticTests(unittest.TestCase):
                         self.assertEqual(loss_power, 0)
                         if loss_exponent >= 4:
                             self.assertLess(loss_source, source)
+                        if returned_win % 16 in {1, 3, 12, 14}:
+                            self.assertIn(returned_win % 16, {3, 12})
+                            self.assertGreaterEqual(loss_exponent, 2)
+                            side_loss = transformed_B(selected_win)
+                            self.assertNotIn(
+                                selected_win % 16,
+                                {1, 3, 12, 14},
+                            )
+                            self.assertIn(
+                                transformed_B(lifted_side),
+                                transformed_moves(side_loss),
+                            )
+                        else:
+                            self.assertIn(
+                                transformed_B(selected_win),
+                                transformed_moves(loss_child),
+                            )
                     else:
                         self.assertEqual(
                             lifted_side,

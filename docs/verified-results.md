@@ -3342,3 +3342,165 @@ leaves one DRAW state of exponent at most three over the explicit LOSS
 source \(M\).  Closing these finite frames and the low-valuation cases
 \(v=1,2,3\) remains necessary.  All coordinate identities and numerical
 bounds are regression-tested in the residual trajectory.
+
+## 37. The valuation-four branch has a finite WIN/DRAW ladder
+
+The \(v=4\) frame of Section 36 retains the ordinary LOSS sibling
+\(M=A(Z)\).  Let \(e=1-g\), and write its surviving B-selecting transition
+as
+
+\[
+3J(Z)+1-2g=2^jJ(W),\qquad 2\le j\le5.
+\]
+
+Because \(J(Z)=2A(Z)+1=2M+1\), this identity is equivalent to
+
+\[
+3M+2-g=2^{j-1}J(W).
+\]
+
+Its parity gives \(M\bmod2=g\).  Therefore, whenever \(j\ge3\),
+
+\[
+\begin{aligned}
+A(M)
+&=\frac{3M+g}{2}\\
+&=2^{j-2}J(W)-e\\
+&=\boxed{Q_{j-2}^e(J(W)).}
+\end{aligned}
+\]
+
+If \(j\ge4\), the displayed state has constant-tail exponent at least two,
+so the contracting move from \(M\) deletes one final bit and gives
+
+\[
+\boxed{B(M)=Q_{j-3}^e(J(W)).}
+\]
+
+Since \(M\) is LOSS, all displayed children are WIN.  On the other hand,
+Section 25 supplies an adjacent frame containing a DRAW at the upper levels
+
+\[
+Q_j^e(J(W)),\qquad Q_{j-1}^e(J(W)).
+\]
+
+Thus the surviving \(v=4\) obstruction has only the following finite ladder
+forms:
+
+\[
+\boxed{
+\begin{array}{c|c|c}
+j&\text{upper frame containing DRAW}&\text{forced lower WIN states}\\ \hline
+3&Q_3^e,Q_2^e&Q_1^e,\\
+4&Q_4^e,Q_3^e&Q_2^e,Q_1^e,\\
+5&Q_5^e,Q_4^e&Q_3^e,Q_2^e.
+\end{array}}
+\]
+
+All coefficients in the table are \(J(W)\).  The case \(j=2\) remains a
+separate signed boundary, while \(j\ge6\) was already excluded in Section
+36.  This ladder is an outcome normalization, not yet a contradiction:
+one must still propagate the upper DRAW through the long-tail recurrence
+and use the lower WIN witnesses to produce a boundary below \(h(W)\).
+The exact lower-level identities are regression-tested in every residual
+\(v=4\) row.
+
+## 38. A DRAW in the valuation-five side state is exceptional
+
+Retain the notation of the \(v=5\) case in Section 36.  Thus \(Z\) and
+\(W=A(Z)\) are WIN, \(M=B(Z)\) is LOSS, and the common non-losing side state
+is
+
+\[
+q=A(W)=Q_k^g(J(M)).
+\]
+
+Suppose first that \(q\) is DRAW.  Since \(W\) is WIN and one of its two
+children is the non-losing state \(q\), its other child
+
+\[
+N=B(W)=B(A(Z))
+\]
+
+must be LOSS.  If \(Z\) is nonexceptional, however, the ordinary side
+relation makes the same \(N\) a child of \(M=B(Z)\).  This is impossible,
+because every child of the LOSS state \(M\) is WIN.  Hence
+
+\[
+q\text{ DRAW}\quad\Longrightarrow\quad
+Z\bmod16\in\{1,3,12,14\}.
+\]
+
+Here \(Z=Q_2^e(3J(t))=12J(t)-e\).  As \(J(t)\) is odd, its possible residues
+modulo \(16\) are \(4,12\) when \(e=0\), and \(3,11\) when \(e=1\).
+Intersecting with the exceptional set leaves only
+
+\[
+\boxed{q\text{ DRAW}\quad\Longrightarrow\quad
+Z\bmod16\in\{3,12\}.}
+\]
+
+These two rows also force at least two final \(g\)-bits in \(q\).  If
+\(Z\equiv3\pmod {16}\), then \(g=0\), \(W=A(Z)\equiv5\pmod8\), and
+\(q=A(W)\equiv0\pmod4\).  If \(Z\equiv12\pmod {16}\), then \(g=1\),
+\(W\equiv2\pmod8\), and \(q\equiv-1\pmod4\).  In the exact coordinate
+\(q=Q_k^g(J(M))\), both alternatives imply \(k\ge2\).  Section 36 already
+proved \(k\le3\) whenever \(q\) is DRAW.  Therefore
+
+\[
+\boxed{
+v=5,\ q\text{ DRAW}
+\quad\Longrightarrow\quad
+Z\equiv3\text{ or }12\pmod {16},\qquad k\in\{2,3\}.}
+\]
+
+For every nonexceptional \(Z\), the common state \(q\) is consequently WIN
+and is an immediate endpoint of a new DRAW-to-WIN boundary.  The only
+valuation-five DRAW continuation is now one of two adjacent constant-tail
+levels over the explicit LOSS source \(M\).  The exceptional classification,
+the side-child identity in every nonexceptional row, and the lower bound on
+\(k\) are regression-tested.
+
+## 39. A surviving valuation-five DRAW strictly lowers boundary height
+
+The exceptional continuation isolated in Section 38 also contains the
+missing height comparison.  Suppose \(q=A(W)\) is DRAW.  Since \(W\) is WIN
+and its child \(q\) is not LOSS, the other child
+
+\[
+N=B(W)
+\]
+
+must be LOSS.  Section 38 makes \(Z\) exceptional.  Exceptional classes
+never occur consecutively on an \(A\)-orbit, so \(W=A(Z)\) is
+nonexceptional.  The ordinary side relation at \(W\) therefore makes
+
+\[
+p=B(q)=B(A(W))
+\]
+
+a child of \(N=B(W)\).  Hence \(p\) is WIN.  It is also a child of the DRAW
+state \(q\), so \(q\to p\) is a new boundary edge, and the canonical height
+recursion gives
+
+\[
+\boxed{h(p)\le h(W)-2.}
+\]
+
+Consequently the valuation-five branch has the exact dichotomy
+
+\[
+\boxed{
+v=5\quad\Longrightarrow\quad
+\begin{cases}
+q\text{ is WIN},&\text{a new boundary is already exposed},\\
+q\text{ is DRAW},&\text{a new boundary endpoint has height at most }
+                  h(W)-2.
+\end{cases}}
+\]
+
+The second alternative is a strict descent from the lower-height WIN
+already retained by Sections 34--35.  It closes every DRAW continuation in
+the \(v=5\) side state; only the WIN-boundary alternative can re-enter the
+factor analysis.  The nonexceptionality of \(W\) and the exact side-child
+identity are regression-tested.

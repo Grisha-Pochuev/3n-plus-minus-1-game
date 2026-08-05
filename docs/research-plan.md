@@ -135,7 +135,18 @@ two remaining cases finite: v=4 leaves lower exponent at most four over the
 lower-height WIN source W, while v=5 leaves exponent at most three over the
 forced LOSS source M.  The immediate target is to close these WIN/LOSS
 frames together with the low-valuation r=1,2,3 exits and their possible
-alternation with canonical A-continuations.
+alternation with canonical A-continuations.  Section 37 identifies the
+v=4, j=3,4,5 cases as three finite same-phase ladders: an upper adjacent
+DRAW frame and the exact lower WIN states supplied by the retained ordinary
+LOSS.  The next local target is to close these ladders and the separate j=2
+boundary.  Section 38 reduces a surviving v=5 DRAW still further: the side
+state must come from the exceptional rows Z=3 or 12 modulo 16 and has only
+exponent two or three over the explicit LOSS source M.  The next local
+target is sharpened by Section 39: if this side state is DRAW, its next
+contracting boundary endpoint lies at least two WIN-height levels below W.
+Thus only its WIN-boundary alternative can recycle; the next task is to
+couple that alternative to the v=4 ladders and the low-valuation factor
+exits.
 
 ## Priority 2: finite transducer plus numerical potential
 
