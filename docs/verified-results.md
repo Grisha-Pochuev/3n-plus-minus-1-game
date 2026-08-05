@@ -632,3 +632,167 @@ certificate-height decrease: it must enter an exceptional class among
 `q,A(q),B(q)`, or take the last row of the table, which strictly decreases
 the integer.  These two different decreases are not yet a single
 well-founded rank, because one component can increase when the other drops.
+
+## 12. Minimum-height DRAW/WIN boundaries touch an exception
+
+There is a stronger formulation that removes the numerical escape in the
+last row of Section 11.  Call an edge from a `DRAW` parent to a `WIN` child a
+**boundary edge**.  A nonempty draw set has at least one: the `B`-edge from
+its smallest element.  Hence the set of proof heights of the `WIN` endpoints
+of boundary edges has a minimum.
+
+Let `q` be `DRAW`, let one child `s` be `WIN`, and let the other child `t` be
+`DRAW`.  (The latter is forced: a draw has no losing child and must have a
+draw child.)  If all three of
+
+\[
+q,\qquad s,\qquad t
+\]
+
+are nonexceptional, then there is another boundary edge, with `WIN` endpoint
+`u`, such that
+
+\[
+\boxed{h(u)\le h(s)-2.}
+\]
+
+This contradicts minimum height.  Consequently, in every hypothetical
+nonempty draw set, every boundary edge whose `WIN` endpoint has globally
+minimum proof height has an exceptional vertex among its parent and its two
+children.
+
+### Proof when the WIN child is B(q)
+
+Suppose `s=B(q)` and `t=A(q)`.  Put
+
+\[
+z=B(t)=B(A(q)).
+\]
+
+The side relation at `q` makes `z` a child of `s`; it is also a child of the
+draw `t`, so it is not `LOSS`.  The other child `ell` of the winning `s` is
+therefore `LOSS`.
+
+Now put
+
+\[
+u=B(A(s)).
+\]
+
+The side relation at `s` makes `u` simultaneously a child of `z` and a child
+of `ell`: if `z=A(s)` this is direct on the first side and supplied by the
+side relation on the second, while if `z=B(s)` the roles are reversed.
+Thus `u` is `WIN` and
+
+\[
+h(u)\le h(s)-2.
+\]
+
+If `z` is `DRAW`, the edge `z -> u` is the required lower boundary.  If `z`
+is `WIN`, then its draw parent `t`, whose `B`-child is `z`, must have
+`v=A(t)` as its draw child.  The value `B(A(t))` is a non-losing child of
+`v`; by the side relation at `t` it is also a child of `z`.  But `z` already
+has the `WIN` child `u`, so its other child is `LOSS`.  Hence
+`B(A(t))=u`, and `v -> u` is the required boundary.
+
+### Proof when the WIN child is A(q)
+
+Suppose `s=A(q)` and `t=B(q)`.  Again put
+
+\[
+z=B(s)=B(A(q)).
+\]
+
+The side relation at `q` makes `z` a child of the draw `t`, so it is
+non-losing.  It is the `B`-child of the winning `s`; consequently
+`ell=A(s)` is `LOSS`.  Set
+
+\[
+u=B(A(s)).
+\]
+
+Then `u` is a `WIN` child of `ell`, has height at most `h(s)-2`, and the side
+relation at `s` also makes it a child of `z`.
+
+If `z` is `DRAW`, the edge `z -> u` is the lower boundary.  If `z` is
+`WIN`, its other sibling under the draw parent `t` is a draw `v`.  When
+`z=B(t)`, one has `v=A(t)`; the non-losing child `B(v)=B(A(t))` is also a
+child of `z` by the side relation at `t`, so it must equal the unique
+non-losing child `u` of `z`.  When `z=A(t)`, one has `v=B(t)`; now
+`B(A(t))=B(z)` is also a child of `v`.  It cannot be the losing child of
+`z`, hence again equals `u`.  In both cases `v -> u` is the desired lower
+boundary.
+
+This reduction is purely game-theoretic plus the ordinary side diamonds.  It
+leaves only boundary triples meeting the four explicit exceptional classes
+from Section 5; no tradeoff between integer size and proof height remains in
+the ordinary region.
+
+## 13. Boundary WINs of height one
+
+The smallest possible positive `WIN` proof height is one.  Such positions
+have a complete arithmetic characterization:
+
+\[
+\boxed{h(s)=1\quad\Longleftrightarrow\quad B(s)=0.}
+\]
+
+Indeed, height one means that `s` has a `LOSS` child of height zero.  The
+only such position is the terminal `0`, and only the contracting child can
+equal zero.  Conversely, moving to `0` is an immediate height-one winning
+certificate.
+
+Every height-one `WIN` is exceptional:
+
+\[
+\boxed{B(s)=0\quad\Longrightarrow\quad
+s\equiv1,3,12,14\pmod {16}.}
+\]
+
+Put `x=A(s)`.  The equality `R(x)=0` says that the whole binary word for `x`
+is alternating.  Apart from the one-bit word `1`, which is not in the image
+of `A`, such a word is congruent to `2` or `5 mod 8`: an even-length word
+ends in `010`, with the two-bit word `10` included, and an odd-length word
+ends in `101`.  The residue table for `A(s) mod 8` in Section 5 gives
+precisely `s=1,12 mod 16` in the first case and `s=3,14 mod 16` in the
+second.
+
+There is also a useful closure identity:
+
+\[
+\boxed{B(A(q))=0\quad\Longrightarrow\quad B(B(q))=0.}
+\]
+
+If `q` is nonexceptional, its side relation says that `B(A(q))` is either
+`A(B(q))` or `B(B(q))`.  In the first case equality to zero forces
+`B(q)=0`, and hence also `B(B(q))=0`; the second case is immediate.  If `q`
+is exceptional, the explicit formulas in Section 5 show that `B(A(q))` is
+one of
+
+\[
+18t+1,quad18t+4,quad18t+13,quad18t+16,
+\]
+
+and is never zero, so the implication is vacuous.
+
+Consequently, a height-one `WIN` can never be the `A`-child of a draw.  If
+`A(q)` has height one, then `B(A(q))=0`, so `B(B(q))=0`.  Moreover `B(q)>0`:
+otherwise `q` itself would be a height-one exceptional position, whose
+explicit exceptional formula makes `B(A(q))>0`.  Thus both children `A(q)`
+and `B(q)` are height-one `WIN` positions, and
+
+\[
+\boxed{q\text{ is LOSS}.}
+\]
+
+Therefore a hypothetical minimum-height boundary with height one must point
+through its `B`-edge.  Its remaining unresolved form is
+
+\[
+q\text{ DRAW},\qquad B(q)=s\text{ WIN with }B(s)=0,
+\qquad A(q)\text{ DRAW}.
+\]
+
+The exact predecessor parameterization in Section 6 describes all such
+arithmetic candidates.  Excluding this last family, and its higher-height
+exceptional analogue, remains necessary for the full theorem.

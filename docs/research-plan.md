@@ -27,6 +27,13 @@ Questions:
 2. Can one assign a secondary order so that a draw-preserving edge always descends lexicographically?
 3. Does repeated use of `B` force a contradiction with minimality after a bounded symbolic pattern rather than a bounded numerical horizon?
 
+Current sharp reduction: Section 12 of `docs/verified-results.md` shows that
+a boundary edge with minimum `WIN` proof height must have an exceptional
+vertex among its `DRAW` parent and the two children.  The immediate task is
+therefore to close those exceptional boundary triples using the explicit
+four formulas of Section 5, while retaining the forced `LOSS` witness.  A
+rank on the coarser arithmetic return graph is known to be insufficient.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

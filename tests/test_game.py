@@ -142,6 +142,14 @@ class GameArithmeticTests(unittest.TestCase):
                 (transformed_B(q), transformed_B(transformed_A(q))),
             )
 
+    def test_height_one_arithmetic(self) -> None:
+        for q in range(1, 100000):
+            if transformed_B(q) == 0:
+                self.assertIn(q % 16, {1, 3, 12, 14})
+            if transformed_B(transformed_A(q)) == 0:
+                self.assertGreater(transformed_B(q), 0)
+                self.assertEqual(transformed_B(transformed_B(q)), 0)
+
     def test_B_predecessor_parameterization(self) -> None:
         limit = 2000
         actual: dict[int, list[int]] = {}

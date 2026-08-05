@@ -70,6 +70,14 @@ class RetrogradeTests(unittest.TestCase):
                     if result.outcome(second) == Outcome.WIN:
                         self.assertEqual(second, transformed_B(transformed_A(q)))
 
+    def test_height_one_A_child_forces_loss(self) -> None:
+        result = bounded_retrograde(10000)
+        for q in range(1, 1000):
+            child_a, child_b = transformed_moves(q)
+            if transformed_B(child_a) == 0:
+                self.assertEqual(transformed_B(child_b), 0)
+                self.assertEqual(result.outcome(q), Outcome.LOSS)
+
     def test_no_certified_finite_draw_kernel_at_small_cutoff(self) -> None:
         result = bounded_retrograde(10000)
         self.assertEqual(list(certified_finite_draw_kernel(result)), [])

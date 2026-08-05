@@ -27,6 +27,9 @@ Update this table whenever the status of a substantial claim changes.
 | Every hypothetical DRAW set has a canonical base-draw skeleton; skeleton steps with two or more `B` moves strictly decrease | **PROVED** | `docs/verified-results.md`, Section 10 |
 | A smallest DRAW has the exact local `BB`/`BAB` outcome fingerprint of Section 10 | **PROVED** | `docs/verified-results.md`, Section 10 |
 | Away from exceptional classes, canonical base-DRAW transitions obey the size-change table of Section 11 | **PROVED** | `docs/verified-results.md`, Section 11 |
+| A minimum-proof-height DRAW-to-WIN boundary edge must touch an exceptional residue class | **PROVED** | `docs/verified-results.md`, Section 12 |
+| Height-one WIN positions are exactly the positive `s` with `B(s)=0`, and all are exceptional | **PROVED** | `docs/verified-results.md`, Section 13 |
+| If `A(q)` is a height-one WIN, then `B(q)` is also a height-one WIN and `q` is LOSS | **PROVED** | `docs/verified-results.md`, Section 13 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |
