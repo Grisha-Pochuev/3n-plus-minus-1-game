@@ -12,8 +12,13 @@ from optimal_3n1.game import (  # noqa: E402
     alternating_suffix_remainder_via_gray,
     alternating_word_value,
     decreasing_move,
+    constant_tail_children,
+    constant_tail_state,
+    dyadic_minus_one_children,
+    dyadic_minus_one_state,
     exceptional_side_branch_values,
     gray_code,
+    increasing_move,
     inverse_F,
     inverse_gray_code,
     long_side_branch_value,
@@ -153,6 +158,57 @@ class GameArithmeticTests(unittest.TestCase):
             if value is not None:
                 self.assertEqual(value, transformed_B(transformed_A(q)))
 
+    def test_dyadic_minus_one_recurrence(self) -> None:
+        for odd_coefficient in range(1, 1000, 2):
+            for exponent in range(3, 16):
+                state = dyadic_minus_one_state(odd_coefficient, exponent)
+                self.assertEqual(
+                    dyadic_minus_one_children(odd_coefficient, exponent),
+                    (transformed_A(state), transformed_B(state)),
+                )
+
+                for tail_bit in (0, 1):
+                    state = constant_tail_state(
+                        odd_coefficient, exponent, tail_bit
+                    )
+                    self.assertEqual(
+                        constant_tail_children(
+                            odd_coefficient, exponent, tail_bit
+                        ),
+                        (transformed_A(state), transformed_B(state)),
+                    )
+
+            first = dyadic_minus_one_state(odd_coefficient, 1)
+            second = dyadic_minus_one_state(odd_coefficient, 2)
+            self.assertEqual(transformed_B(first), transformed_B(second))
+            self.assertEqual(
+                transformed_A(first),
+                dyadic_minus_one_state(3 * odd_coefficient, 0),
+            )
+            self.assertEqual(
+                transformed_A(second),
+                dyadic_minus_one_state(3 * odd_coefficient, 1),
+            )
+
+
+    def test_constant_tail_boundary(self) -> None:
+        for odd_coefficient in range(1, 1000, 2):
+            for tail_bit in (0, 1):
+                first = constant_tail_state(odd_coefficient, 1, tail_bit)
+                second = constant_tail_state(odd_coefficient, 2, tail_bit)
+                self.assertEqual(transformed_B(first), transformed_B(second))
+
+                expanding = transformed_A(first)
+                signed_value = 3 * odd_coefficient + 1 - 2 * tail_bit
+                exponent = v2(signed_value)
+                coefficient = signed_value >> exponent
+                self.assertEqual(
+                    expanding,
+                    constant_tail_state(
+                        coefficient, exponent, 1 - tail_bit
+                    ),
+                )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:
@@ -178,14 +234,16 @@ class GameArithmeticTests(unittest.TestCase):
             self.assertIsNone(inverse_F(y))
 
     def test_descent_blocks(self) -> None:
-        from optimal_3n1.game import increasing_move
-
         for n in range(3, 100000, 2):
             d = decreasing_move(n)
             if d == 1:
                 continue
             self.assertLess(decreasing_move(d), n)
             self.assertLess(decreasing_move(increasing_move(d)), n)
+
+    def test_one_player_decreasing_strategy_can_cycle(self) -> None:
+        self.assertEqual(increasing_move(5), 7)
+        self.assertEqual(decreasing_move(7), 5)
 
 
 if __name__ == "__main__":

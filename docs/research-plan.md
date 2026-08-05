@@ -33,6 +33,14 @@ vertex among its `DRAW` parent and the two children.  The immediate task is
 therefore to close those exceptional boundary triples using the explicit
 four formulas of Section 5, while retaining the forced `LOSS` witness.  A
 rank on the coarser arithmetic return graph is known to be insufficient.
+Section 14 additionally reduces every generated family `a*2^r-1` with
+`r>=3` to the three boundary exponents `0,1,2`; exponents `1` and `2` have
+an exact shared contracting child.  The remaining rank problem is therefore
+concentrated at exponent zero and at the two shared-child boundary states,
+where the coefficient map contains the `5 <-> 7` arithmetic cycle.
+The symmetric constant-tail form shows that the same reduction covers long
+zero tails and closes every expanding transition by alternating the signed
+coefficient maps `3a+1` and `3a-1`.
 
 ## Priority 2: finite transducer plus numerical potential
 

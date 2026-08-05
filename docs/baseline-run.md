@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 25 tests
+Ran 28 tests
 OK
 ```
 
@@ -29,6 +29,7 @@ The tests cover:
 - exact side-branch identities, their suffix-state refinement, and the forbidden four-WIN block;
 - explicit formulas for all four exceptional side-branch classes;
 - the uniform full-length formula for every long exceptional suffix;
+- the closed recurrence and boundary identities for both constant-tail families;
 - the arithmetic characterization and closure of height-one WIN positions;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;
@@ -37,6 +38,7 @@ The tests cover:
 - the two-step endpoint rule for nonexceptional WIN-only paths;
 - the exact counterexample cycle to a coarse exceptional-return rank;
 - the two descent blocks for odd `n < 100000`;
+- the exact `5 -> 7 -> 5` counterexample to the one-player always-`D` termination claim;
 - soundness invariants of the bounded retrograde labels;
 - absence of a certified finite DRAW kernel at the small test cutoff;
 - strict decrease of resolution order inside extracted finite proof DAGs.

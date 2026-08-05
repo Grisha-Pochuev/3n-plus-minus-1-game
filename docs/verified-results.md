@@ -59,20 +59,31 @@ D(U(D(n)))
 
 For `n=3,5`, one has `D(n)=1`, so the game has already ended.
 
-## 3. Consequence: either player can force finite termination
+## 3. The two descent blocks do not give a termination strategy
 
-Suppose a chosen player always plays the decreasing move `D` whenever it is their turn.
+The previously claimed consequence that one chosen player can force finite
+termination by always choosing `D` is false.  There is an exact two-ply
+counterexample.  Suppose the state immediately after that player's move is
+`5`.  The opponent chooses the increasing move and the chosen player answers
+with the decreasing move:
 
-After that player's move from `n`, either the game ends, or the opponent moves from `D(n)`.
+\[
+5\xrightarrow{U}7\xrightarrow{D}5.
+\]
 
-- If the opponent chooses `D`, the chosen player's next decreasing move reaches `D(D(n))<n`.
-- If the opponent chooses `U`, the chosen player's next decreasing move reaches `D(U(D(n)))<n`.
+Repeating these choices gives infinite play even though the designated player
+uses `D` on every turn.  In particular,
 
-Therefore, after each complete pair of that player's turns, the current positive odd value strictly decreases. The play must terminate after finitely many rounds, regardless of the opponent's choices.
+\[
+D(U(5))=5.
+\]
 
-### Important limitation
-
-This proves only that the player can force the game to end. It does **not** prove that the same player can force a win. The forced terminal move may be made by the opponent.
+The gap in the old argument was a phase mismatch.  The valid inequality
+`D(U(D(n)))<n` starts before the designated player's first `D` move.  After
+their next `D` move it leaves the opponent, not the designated player, to
+move from the smaller value.  It therefore cannot be iterated as a decrease
+between equal turn phases.  Sections 4 onward do not use this false
+consequence.
 
 ## 4. Exact conjugated form
 
@@ -872,3 +883,132 @@ q\text{ DRAW},\qquad B(q)=s\text{ WIN with }B(s)=0,
 The exact predecessor parameterization in Section 6 describes all such
 arithmetic candidates.  Excluding this last family, and its higher-height
 exceptional analogue, remains necessary for the full theorem.
+
+## 14. A closed recurrence for dyadic-minus-one families
+
+Long exceptional returns naturally produce numbers with a long final block
+of one bits.  They admit a finite exact reduction.  For positive odd `a` and
+`r>=0`, put
+
+\[
+X_r(a)=a2^r-1.
+\]
+
+For every `r>=3`, both game children stay in this family:
+
+\[
+\boxed{
+A(X_r(a))=X_{r-1}(3a),\qquad
+B(X_r(a))=X_{r-2}(3a).
+}
+\]
+
+Indeed, `X_r(a)` is odd and hence
+
+\[
+A(X_r(a))=3a2^{r-1}-1=X_{r-1}(3a).
+\]
+
+When `r>=3`, this last number ends in at least two consecutive one bits.
+Its maximal alternating suffix therefore consists of its final bit alone,
+and deleting that bit gives `X_{r-2}(3a)`.
+
+Thus every play starting at `X_r(a)` reaches one of the boundary exponents
+`0,1,2` after at most `r` moves.  This statement is only an arithmetic
+reduction: the coefficient is multiplied by three at every step, so it does
+not by itself provide a decreasing numerical rank.
+
+The two positive boundary exponents share their contracting child.  More
+precisely,
+
+\[
+\begin{aligned}
+A(X_1(a))&=X_0(3a),&
+B(X_1(a))&=R(3a-1),\\
+A(X_2(a))&=X_1(3a),&
+B(X_2(a))&=R(3a-1).
+\end{aligned}
+\]
+
+For the nontrivial equality, set `y=3a-1`.  The number `y` is positive and
+even, while `6a-1=2y+1`.  Appending the bit `1` to a binary word ending in
+`0` extends its maximal alternating suffix by exactly one bit.  Deleting the
+extended suffix from `2y+1` therefore leaves exactly the same prefix as
+deleting the suffix from `y`:
+
+\[
+R(6a-1)=R(3a-1).
+\]
+
+At exponent zero there is also an exact, but non-descending, coefficient
+map.  Write
+
+\[
+c=\frac{3a-1}{2}=2^j b
+\]
+
+with `b` odd.  Then
+
+\[
+A(X_0(a))=X_j(b),\qquad B(X_0(a))=R(X_j(b)).
+\]
+
+For `j>=2`, the second value simplifies to `X_{j-1}(b)`.  For `j=0,1`,
+the longer alternating suffix remains the unresolved boundary operation.
+The coefficient map `a -> oddpart(3a-1)` contains the familiar `5 <-> 7`
+cycle, so ignoring the game-theoretic outcome obligations cannot yield a
+well-founded rank here.
+
+### Symmetric constant-tail normal form
+
+The preceding recurrence is not restricted to one bits.  For
+`epsilon in {0,1}` define
+
+\[
+Q_r^\epsilon(a)=a2^r-\epsilon.
+\]
+
+For `r>=1`, this is a word with a constant final run of `r` copies of
+`epsilon`; because `a` is odd, the bit immediately before that run is the
+opposite bit whenever it exists.  Every positive integer has exactly one
+such representation when `r` is chosen maximal.
+
+For either value of `epsilon` and every `r>=3`,
+
+\[
+\boxed{
+A(Q_r^\epsilon(a))=Q_{r-1}^\epsilon(3a),\qquad
+B(Q_r^\epsilon(a))=Q_{r-2}^\epsilon(3a).
+}
+\]
+
+The proof for `epsilon=1` is the one above.  For `epsilon=0`, the expanding
+child ends in at least two zero bits, so its maximal alternating suffix is
+again its final bit alone.
+
+The shared-child identity at the boundary is symmetric as well:
+
+\[
+B(Q_1^\epsilon(a))=B(Q_2^\epsilon(a)).
+\]
+
+To close the expanding transition at `r=1`, factor
+
+\[
+3a+1-2\epsilon=2^j b
+\]
+
+with `b` odd.  Since the left side is even, `j>=1`, and direct substitution
+gives the exact phase switch
+
+\[
+\boxed{
+A(Q_1^\epsilon(a))=Q_j^{1-\epsilon}(b).
+}
+\]
+
+Consequently, the constant-tail coordinates give a closed arithmetic
+description of every expanding transition.  Long runs have the finite
+Fibonacci-like reduction above; all unbounded difficulty is transferred to
+the signed coefficient maps `oddpart(3a+1)` and `oddpart(3a-1)` at `r=1`,
+together with the common contracting child of the `r=1,2` pair.

@@ -258,6 +258,64 @@ def long_side_branch_value(q: int) -> int | None:
     return (1 << (length - 1)) * transformed_A(remainder) + tail
 
 
+def dyadic_minus_one_state(odd_coefficient: int, exponent: int) -> int:
+    """Return ``X_r(a)=a*2**r-1`` for positive odd ``a`` and ``r>=0``."""
+    if odd_coefficient <= 0 or odd_coefficient % 2 == 0:
+        raise ValueError("odd_coefficient must be positive and odd")
+    if exponent < 0:
+        raise ValueError("exponent must be nonnegative")
+    return (odd_coefficient << exponent) - 1
+
+
+def constant_tail_state(
+    odd_coefficient: int, exponent: int, tail_bit: int
+) -> int:
+    """Return ``Q_r^e(a)=a*2**r-e`` for ``e`` equal to zero or one.
+
+    For ``r>=1`` this is exactly a binary word whose maximal constant suffix
+    has length ``r`` and bit ``e`` (apart from the harmless all-one word).
+    """
+    if odd_coefficient <= 0 or odd_coefficient % 2 == 0:
+        raise ValueError("odd_coefficient must be positive and odd")
+    if exponent < 0:
+        raise ValueError("exponent must be nonnegative")
+    if tail_bit not in (0, 1):
+        raise ValueError("tail_bit must be 0 or 1")
+    return (odd_coefficient << exponent) - tail_bit
+
+
+def constant_tail_children(
+    odd_coefficient: int, exponent: int, tail_bit: int
+) -> tuple[int, int]:
+    """Return the closed-form children of ``Q_r^e(a)`` for ``r>=3``."""
+    if exponent < 3:
+        raise ValueError("the closed recurrence requires exponent >= 3")
+    state = constant_tail_state(odd_coefficient, exponent, tail_bit)
+    expected = (
+        constant_tail_state(3 * odd_coefficient, exponent - 1, tail_bit),
+        constant_tail_state(3 * odd_coefficient, exponent - 2, tail_bit),
+    )
+    if expected != transformed_moves(state):
+        raise AssertionError((odd_coefficient, exponent, tail_bit))
+    return expected
+
+
+def dyadic_minus_one_children(
+    odd_coefficient: int, exponent: int
+) -> tuple[int, int]:
+    """Return the closed-form children of ``X_r(a)`` when ``r>=3``.
+
+    In this range the maximal alternating suffix of the expanding child is
+    its final one bit, so both children remain in the same parameterized
+    family:
+
+    ``A(X_r(a))=X_(r-1)(3a)`` and ``B(X_r(a))=X_(r-2)(3a)``.
+    """
+    if exponent < 3:
+        raise ValueError("the closed recurrence requires exponent >= 3")
+    return constant_tail_children(odd_coefficient, exponent, tail_bit=1)
+
+
 def transformed_B_predecessors(r: int, limit: int) -> tuple[int, ...]:
     """Return all ``q <= limit`` satisfying ``B(q) == r``.
 

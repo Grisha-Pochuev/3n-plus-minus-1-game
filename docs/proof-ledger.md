@@ -9,8 +9,8 @@ Update this table whenever the status of a substantial claim changes.
 | `B(q)<q` for every `q>0` | **PROVED** | `docs/normal-form.md` |
 | `D(D(n))<n` unless `D(n)=1` | **PROVED** | `docs/verified-results.md` |
 | `D(U(D(n)))<n` unless the game already ended | **PROVED** | `docs/verified-results.md` |
-| Always choosing `D` forces finite termination | **PROVED** | `docs/verified-results.md` |
-| Always choosing `D` forces a win | **FALSE AS AN INFERENCE** | The descent argument does not determine who makes the terminal move |
+| One chosen player always choosing `D` forces finite termination | **DISPROVED** | `5 -> 7 -> 5` with the opponent choosing `U`; `docs/verified-results.md`, Section 3 |
+| Always choosing `D` forces a win | **FALSE** | The same `5 -> 7 -> 5` response already prevents termination |
 | Minimal draw implies the entire chain `d,A(d),A^2(d),...` is drawn | **DISPROVED AS AN ARGUMENT** | `docs/pitfalls.md` |
 | A fixed small horizon of side branches always contains a losing node | **DISPROVED for several proposed small constants** | inherited exploratory counterexamples; see `docs/unverified-leads.md` |
 | A fixed modulus `2^K` determines `R` | **FALSE** | `docs/normal-form.md` |
@@ -31,6 +31,10 @@ Update this table whenever the status of a substantial claim changes.
 | A minimum-proof-height DRAW-to-WIN boundary edge must touch an exceptional residue class | **PROVED** | `docs/verified-results.md`, Section 12 |
 | Height-one WIN positions are exactly the positive `s` with `B(s)=0`, and all are exceptional | **PROVED** | `docs/verified-results.md`, Section 13 |
 | If `A(q)` is a height-one WIN, then `B(q)` is also a height-one WIN and `q` is LOSS | **PROVED** | `docs/verified-results.md`, Section 13 |
+| For odd `a` and `r>=3`, the children of `X_r(a)=a*2^r-1` are `X_(r-1)(3a)` and `X_(r-2)(3a)` | **PROVED** | `docs/verified-results.md`, Section 14; `dyadic_minus_one_children` |
+| The boundary states `X_1(a)` and `X_2(a)` have the same `B`-child | **PROVED** | `docs/verified-results.md`, Section 14; regression in `tests/test_game.py` |
+| Both constant-tail families `Q_r^epsilon(a)=a*2^r-epsilon` obey the same closed recurrence for `r>=3` | **PROVED** | `docs/verified-results.md`, Section 14; `constant_tail_children` |
+| At `r=1`, the expanding move flips the tail bit and uses the exact signed coefficient map `oddpart(3a+1-2epsilon)` | **PROVED** | `docs/verified-results.md`, Section 14; regression in `tests/test_game.py` |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

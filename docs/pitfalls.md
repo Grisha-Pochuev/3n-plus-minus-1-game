@@ -38,11 +38,18 @@ Every reported range must include:
 
 The cycle `5 -> 7 -> 5` exists, but from `5` a player can move directly to `1`. A graph cycle is not automatically a game-theoretic draw component.
 
-## 5. Forcing termination is not forcing victory
+## 5. The one-player `D` strategy does not even force termination
 
-The `D` strategy guarantees that someone eventually reaches `1`. It does not guarantee that the player using `D` is the winner.
+If one designated player always chooses `D`, the opponent can sustain the
+exact cycle
 
-A draw position can still contain a losing terminating strategy alongside a non-losing infinite strategy.
+\[
+5\xrightarrow{U}7\xrightarrow{D}5.
+\]
+
+The inequalities `D(D(n))<n` and `D(U(D(n)))<n` compare values at different
+turn phases and cannot be iterated to prove termination.  Consequently they
+also cannot be used to claim a winning strategy.
 
 ## 6. Fixed binary suffix classes cannot determine R globally
 
