@@ -10068,3 +10068,141 @@ lemma does not yet assemble them into the global no-DRAW theorem.  The
 three-row common-side formula, phase/valuation table, source coordinates,
 and exponents \(2\le m\le12\) are regression-tested for
 \(1\le r<1000\), both phases, and even factor powers through six.
+
+## 115. Every nonshort anchored obligation spends its boundary height
+
+The outcome split in Section 114 is stronger when the obligation source is
+already a WIN boundary endpoint, as it is in the no-first-exit branch of
+Section 113.  Retain
+
+\[
+x=Q_m^g(a),\qquad e=1-g,\qquad O(x,e),
+\]
+
+and suppose \(m\ge3\) and \(x\) is WIN.  The last three bits of \(x\) are
+constant, so
+
+\[
+x\bmod16\in\{0,7,8,15\}.
+\]
+
+In particular \(x\) is nonexceptional.  Its two ordinary children
+\[
+y=A(x),\qquad c=B(x)
+\]
+therefore have the common child
+
+\[
+\boxed{b=B(A(x))\in\operatorname{moves}(y)
+\cap\operatorname{moves}(c).}
+\]
+
+This is exactly the common side \(b=B(P)=B(U)\) of Section 114.  Choose a
+canonical LOSS child \(\ell\in\{y,c\}\) of the WIN state \(x\).  Since \(b\)
+is a child of \(\ell\),
+
+\[
+\boxed{b\text{ is WIN},\qquad h(b)\le h(\ell)-1=h(x)-2.}
+\]
+
+Thus Section 91's smaller-source DRAW alternative is impossible in every
+row \(m\ge3\).  In its canonical alternative \(P\) is DRAW and points to
+\(b\).  In its factor alternative \(U\) is DRAW and points to the same
+\(b\).  Hence both remaining branches expose the boundary
+
+\[
+\boxed{P\to b\quad\text{or}\quad U\to b,\qquad
+h(b)\le h(x)-2}
+\]
+
+before their subsequent canonical transfer or factor scan.
+
+For \(m\ge4\), Section 114 additionally retains the exact anchor
+
+\[
+b=Q_{m-3}^g(9a).
+\]
+
+Therefore every unbounded-tail obligation produced by the \(D=3\) marked
+row simultaneously preserves its coefficient-source provenance and spends
+two levels of its new boundary-WIN token before it can re-enter any
+high-return machinery.  The only no-first-exit row not covered by this
+ordinary diamond is the explicit tail \(m=2\).  This is a local two-token
+size-change edge, not yet a proof that later re-entry cannot reset both
+tokens.  The residue exclusion and both common-child incidences are
+regression-tested in the range of Section 114.
+
+## 116. The remaining two-bit obligation exports a lower finite token
+
+It remains to audit the sole no-first-exit row excluded by Section 115.
+Let
+
+\[
+x=Q_2^g(a),\qquad e=1-g,\qquad O(x,e),
+\]
+
+and suppose \(x\) is WIN.  Section 114 gives the exact states
+
+\[
+y=A(x)=Q_1^g(3a),\qquad c=B(x),
+\]
+
+\[
+b=A(y)=Q_0^g(9a),\qquad p=B(y),
+\]
+
+where \(b\) is the common side of the obligation.  Split first on the
+outcome of \(b\).
+
+Suppose \(b\) is DRAW.  Then \(y\), which has the DRAW child \(b\), is
+non-losing.  Hence the WIN state \(x\) must have the actual LOSS child
+
+\[
+\boxed{c=B(x)\text{ LOSS},\qquad h(c)=h(x)-1.}
+\]
+
+If \(x\) is ordinary, its two children \(y,c\) have the common child
+\(p=B(y)\).  Thus \(p\) is a child of the LOSS state \(c\), while the two
+children of \(y\) are \(b\) and \(p\).  It follows that
+
+\[
+\boxed{x\text{ ordinary},\ b\text{ DRAW}\Longrightarrow
+y\text{ DRAW},\quad p\text{ WIN},\quad h(p)\le h(x)-2.}
+\]
+
+Therefore \(y\to p\) is a strictly lower boundary.  If \(x\) is
+exceptional, the arithmetic identity of Section 68 applies without any
+additional outcome assumption:
+
+\[
+\boxed{
+\{b,p\}=
+\{Q_{k+1}^{\delta}(J(c)),Q_k^{\delta}(J(c))\}
+\quad(k\ge1).}
+\]
+
+Since \(b\) is DRAW, this is an actual adjacent DRAW frame over the
+height-lower LOSS token \(c\).
+
+Now suppose \(b\) is WIN.  Section 99 applies directly to the finite WIN
+obligation source \(x\).  If \(x\) is ordinary, or if its canonical LOSS
+child is \(y\), then
+
+\[
+\boxed{p\text{ WIN},\qquad h(p)\le h(x)-2.}
+\]
+
+In the only remaining orientation, \(x\) is exceptional and \(c=B(x)\) is
+its canonical LOSS child; the same adjacent-pair formula retains \(c\) with
+\(h(c)=h(x)-1\).  This conclusion holds before Section 91 chooses its
+canonical or factor alternative.
+
+Consequently every outcome orientation of the \(m=2\) row exports either a
+boundary WIN at least two proof levels lower or an exact adjacent DRAW
+frame over the actual LOSS child one level lower.  Together with
+Section 115, all no-first-exit obligations produced by the shortest marked
+row now have a strict two-token size-change edge; no tail length remains
+untyped.  This still does not prove that a later high-return edge preserves
+the same descending thread.  The four state identities, ordinary
+common-child incidence, and exceptional adjacent coordinates are covered
+by the regressions of Sections 68, 99, and 114.

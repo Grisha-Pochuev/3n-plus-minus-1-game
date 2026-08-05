@@ -688,6 +688,24 @@ length 1, 2, or 3 after finitely many canonical recycles.  The remaining
 D=3 audit is now only its common-side DRAW and factor alternatives, together
 with those three terminal tail rows; no unbounded canonical lift remains.
 
+Section 115 removes the common-side DRAW alternative whenever m>=3 and the
+lift source is the boundary WIN supplied by Section 113.  The source is
+ordinary, so its obligation common side lies below both ordinary children;
+it is WIN at least two heights lower and is itself a boundary endpoint in
+both the canonical and factor branches.  For m>=4 the exact source anchor
+is retained at the same time.  Thus the no-first-exit audit is reduced to
+the single short row m=2 plus transport of the resulting two-token
+size-change edge through later marked re-entry.
+
+Section 116 closes that last m=2 row locally.  A DRAW common side either
+exposes an ordinary boundary WIN two heights lower or remains in the exact
+exceptional adjacent frame over the actual LOSS child one height lower.
+When the common side is WIN, Section 99 exports the same alternatives before
+the canonical/factor split.  Hence every no-first-exit D=3 obligation has a
+strict two-token edge.  The remaining global issue is now precise: prove
+that the later high-return and first-exit routes preserve one of these
+descending threads instead of resetting both components.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

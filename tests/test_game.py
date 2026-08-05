@@ -1187,6 +1187,20 @@ class GameArithmeticTests(unittest.TestCase):
                                 ),
                                 selecting_phase,
                             )
+                            self.assertNotIn(
+                                obligation_source % 16,
+                                SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                            )
+                            self.assertEqual(
+                                common_side,
+                                transformed_B(selected_source),
+                            )
+                            self.assertIn(
+                                common_side,
+                                transformed_moves(
+                                    transformed_B(obligation_source)
+                                ),
+                            )
                         else:
                             self.assertEqual(transition[:2], ("B", 2))
                             self.assertEqual(
@@ -1213,6 +1227,20 @@ class GameArithmeticTests(unittest.TestCase):
                                     selected_source
                                 ),
                                 selecting_phase,
+                            )
+                            self.assertNotIn(
+                                obligation_source % 16,
+                                SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                            )
+                            self.assertEqual(
+                                common_side,
+                                transformed_B(selected_source),
+                            )
+                            self.assertIn(
+                                common_side,
+                                transformed_moves(
+                                    transformed_B(obligation_source)
+                                ),
                             )
 
     def test_high_return_obligation_common_side(self) -> None:
