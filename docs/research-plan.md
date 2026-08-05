@@ -115,7 +115,27 @@ child remains DRAW, the next level therefore contains a forced LOSS on the
 opposite tail side.  The next proof must close this DRAW/LOSS twin switch at
 the signed exponent-one boundary and feed any surviving boundary WIN back
 into the proof-height descent; neighboring integers cannot simply be
-assigned the same outcome.
+assigned the same outcome.  Section 31 supplies a first rank component at
+that boundary: an A-selecting common DRAW returns below the source that made
+the factor fork, while a source-surviving B-selection has valuation only two
+or three and stays in an explicit bounded multiple of the global minimum
+source.  Section 32 bounds the first signed transitions after the r=2,3
+twin alternatives as well: at most four after r=2, and at most three then
+four in the two r=3 continuations.  The remaining automaton is therefore
+finite at every immediate factor exit.  Section 33 further collapses the
+whole high-valuation r=3 class to one B-selecting lift at a source
+below 16s, retaining two WIN side states below s.  Section 34 turns those
+states into the exact ordinary return W=B(A(u)) and proves that its WIN
+height is at least two below the preceding boundary endpoint.  Section 35
+transfers the returned B-selecting lift with valuation two to an obligation
+whose selected child is exactly W.  For every first valuation v>=6 the
+A-selecting side diamond then exposes a still lower boundary endpoint, so
+the whole unbounded class is a strict height descent.  Section 36 makes the
+two remaining cases finite: v=4 leaves lower exponent at most four over the
+lower-height WIN source W, while v=5 leaves exponent at most three over the
+forced LOSS source M.  The immediate target is to close these WIN/LOSS
+frames together with the low-valuation r=1,2,3 exits and their possible
+alternation with canonical A-continuations.
 
 ## Priority 2: finite transducer plus numerical potential
 

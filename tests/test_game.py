@@ -865,6 +865,33 @@ class GameArithmeticTests(unittest.TestCase):
                     common_frame_child,
                     transformed_B(frame_upper),
                 )
+
+                factor_source = lifted_side
+                self.assertEqual(
+                    factor_source,
+                    transformed_A(transformed_A(current)),
+                )
+                transferred_source = constant_tail_source_coordinates(
+                    common_frame_child
+                )[0]
+                factor_phase = 1 - phase
+                if factor_phase == source_A_selecting_tail_bit(factor_source):
+                    self.assertLess(transferred_source, current)
+                else:
+                    letter, valuation, selected_source = (
+                        source_boundary_transition(
+                            factor_source,
+                            factor_phase,
+                        )
+                    )
+                    self.assertEqual(letter, "B")
+                    self.assertEqual(transferred_source, selected_source)
+                    self.assertLessEqual(
+                        selected_source,
+                        (27 * current + 19) // (1 << (valuation + 2)),
+                    )
+                    if valuation >= 4:
+                        self.assertLess(selected_source, source)
                 continue
 
             factor_coefficient = embedded_original_state(lifted_side)
@@ -891,6 +918,146 @@ class GameArithmeticTests(unittest.TestCase):
                     phase,
                 ),
             )
+
+            if lifted_side < source or lower_exponent > 3:
+                continue
+
+            factor_coefficient = embedded_original_state(lifted_side)
+            if lower_exponent == 2:
+                boundary = common_frame_child
+                boundary_source, boundary_power, boundary_exponent, _ = (
+                    constant_tail_source_coordinates(transformed_A(boundary))
+                )
+                self.assertEqual(boundary_power, 0)
+                if boundary_exponent >= 5:
+                    self.assertLess(boundary_source, source)
+            else:
+                first_boundary = constant_tail_state(
+                    3 * factor_coefficient,
+                    1,
+                    1 - phase,
+                )
+                first_source, first_power, first_exponent, _ = (
+                    constant_tail_source_coordinates(
+                        transformed_A(first_boundary)
+                    )
+                )
+                self.assertEqual(first_power, 0)
+                if first_exponent >= 4:
+                    self.assertLess(first_source, source)
+
+                second_boundary = transformed_A(common_frame_child)
+                second_source, second_power, second_exponent, _ = (
+                    constant_tail_source_coordinates(
+                        transformed_A(second_boundary)
+                    )
+                )
+                self.assertEqual(second_power, 0)
+                if second_exponent >= 5:
+                    self.assertLess(second_source, source)
+
+                if first_exponent >= 4:
+                    self.assertLess(first_source, source)
+                    self.assertEqual(second_exponent, 1)
+                    self.assertLess(second_source, 16 * source)
+                    self.assertNotEqual(
+                        phase,
+                        source_A_selecting_tail_bit(second_source),
+                    )
+                    self.assertEqual(
+                        second_source,
+                        constant_tail_state(
+                            embedded_original_state(first_source),
+                            first_exponent - 1,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            transformed_B(second_boundary)
+                        ),
+                        (
+                            first_source,
+                            1,
+                            first_exponent - 3,
+                            phase,
+                        ),
+                    )
+
+                    contracting_win = transformed_B(common_frame_child)
+                    returned_win = transformed_B(second_boundary)
+                    self.assertEqual(
+                        returned_win,
+                        transformed_B(second_source),
+                    )
+                    self.assertEqual(
+                        source_boundary_transition(second_source, phase),
+                        ("B", 2, returned_win),
+                    )
+                    self.assertEqual(
+                        transformed_B(contracting_win),
+                        returned_win,
+                    )
+                    loss_sibling = transformed_A(contracting_win)
+                    lower_common = set(transformed_moves(loss_sibling)) & set(
+                        transformed_moves(returned_win)
+                    )
+                    self.assertEqual(len(lower_common), 1)
+                    self.assertEqual(
+                        next(iter(lower_common)),
+                        transformed_B(transformed_A(second_source)),
+                    )
+                    selected_letter, selected_valuation, selected_win = (
+                        source_boundary_transition(
+                            returned_win,
+                            1 - phase,
+                        )
+                    )
+                    self.assertEqual(
+                        selected_letter,
+                        "B" if first_exponent == 4 else "A",
+                    )
+                    self.assertEqual(
+                        selected_win,
+                        next(iter(lower_common)),
+                    )
+
+                    loss_child = next(
+                        child
+                        for child in transformed_moves(returned_win)
+                        if child != selected_win
+                    )
+                    lift = constant_tail_state(
+                        embedded_original_state(returned_win),
+                        1,
+                        1 - phase,
+                    )
+                    lifted_side = transformed_B(lift)
+
+                    if first_exponent == 4:
+                        if selected_valuation >= 6:
+                            self.assertLess(selected_win, source)
+                    elif first_exponent == 5:
+                        self.assertEqual(
+                            lifted_side,
+                            transformed_A(selected_win),
+                        )
+                        loss_source, loss_power, loss_exponent, _ = (
+                            constant_tail_source_coordinates(lifted_side)
+                        )
+                        self.assertEqual(loss_source, loss_child)
+                        self.assertEqual(loss_power, 0)
+                        if loss_exponent >= 4:
+                            self.assertLess(loss_source, source)
+                    else:
+                        self.assertEqual(
+                            lifted_side,
+                            transformed_B(selected_win),
+                        )
+                        self.assertIn(
+                            lifted_side,
+                            transformed_moves(loss_child),
+                        )
 
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):

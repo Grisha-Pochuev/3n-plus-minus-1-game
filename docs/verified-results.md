@@ -2694,3 +2694,651 @@ DRAW state on one tail side and a forced LOSS on the opposite side.  At
 must control that signed transition as well as the two long-tail cases.
 The identities in this section are regression-tested throughout the actual
 residual source trajectory.
+
+## 31. The exponent-one factor switch has a strict source return
+
+Section 30 leaves a signed boundary when the lower factor exponent is
+\(r=1\).  In the actual residual trajectory this boundary has an additional
+rank property.  Retain Sections 28--30 and suppose
+
+\[
+O(x,e),\qquad e=\alpha(x),\qquad s\le x<2s,
+\]
+
+enters the factor fork with \(r=1\).  Then
+
+\[
+\boxed{b=A^2(x).}
+\]
+
+Indeed, \(V=L_g(A(x))\), where \(g=1-e\), and Section 29 writes its expanding
+child as \(Q_1^e(J(b))\).  Exponent one means exactly that \(g\) is the
+\(A\)-selecting phase at \(A(x)\).  The selected ordinary source is therefore
+\(A^2(x)\).
+
+Let
+
+\[
+X=B(Q_1^g(J(b)))=B(Q_2^g(J(b)))
+\]
+
+be the common factor child from Section 30, and let \(\rho(X)\) denote its
+coefficient source.  If \(g=\alpha(b)\), then
+
+\[
+\boxed{\rho(X)<x.}
+\]
+
+Section 24 makes \(X\) an ordinary child of \(A(b)\), so
+
+\[
+X\le A^2(b)\le\frac{9b+5}{4}.
+\]
+
+For every positive state \(q\), its coefficient source satisfies
+\(\rho(q)\le(q-1)/6\).  Also
+
+\[
+b=A^2(x)\le\frac{9x+5}{4}.
+\]
+
+Combining these estimates gives
+
+\[
+\rho(X)\le\frac{9b+1}{24}
+\le\frac{81x+49}{96}<x,
+\]
+
+where the final inequality holds for \(x\ge4\); every residual source here
+has \(x\ge19\).  Thus if \(X\) is DRAW, the factor escape has made a strict
+source descent relative to the \(A\)-selecting source that generated it.  If
+\(\rho(X)<s\), global source minimality excludes that alternative outright.
+
+Suppose instead that \(g\) is the \(B\)-selecting phase at \(b\), with signed
+valuation \(j\ge2\).  Section 25 identifies the common factor child's source
+exactly:
+
+\[
+\boxed{\rho(X)=B(b).}
+\]
+
+The valuation is one more than the alternating-suffix length of \(A(b)\), so
+
+\[
+B(b)\le\frac{3b+1}{2^j}
+\le\frac{27x+19}{2^{j+2}}.
+\]
+
+Since \(x\le2s-1\), this proves the finite trichotomy
+
+\[
+\boxed{
+\begin{array}{c|c}
+j\ge4&B(b)<s,\\
+j=3&B(b)<27s/16,\\
+j=2&B(b)<27s/8.
+\end{array}}
+\]
+
+Consequently an exponent-one factor switch cannot hide an unbounded signed
+valuation.  An \(A\)-selecting continuation strictly decreases the source
+relative to \(x\), while a source-surviving \(B\)-selection has only
+valuation two or three and remains in an explicit constant-size window over
+\(s\).  This still does not close the \(r=2,3\) DRAW/LOSS twin switch or the
+possible alternation with canonical \(A\)-continuations, but it supplies the
+first well-founded component at the signed boundary.  All displayed
+identities and bounds are regression-tested in the residual trajectory.
+
+## 32. The exponent-two and three switches have finite signed valuations
+
+The two long-tail alternatives from Section 30 also reach only finitely many
+signed valuation states.  Continue to assume
+
+\[
+s\le x<2s
+\]
+
+at the \(A\)-selecting obligation of Section 28, put \(a=J(b)\), and suppose
+the common factor child \(X\) of Section 30 is DRAW.
+
+First let the lower factor exponent be \(r=2\).  The factor equation gives
+
+\[
+8J(b)=9J(x)+1-2e.
+\]
+
+Using \(J(q)\le3q+2\) and \(J(q)\ge3q+1\) yields
+
+\[
+\boxed{b\le\frac{27x+11}{24}
+\le\frac{27s-8}{12}<\frac94s.}
+\]
+
+Here the common DRAW is
+
+\[
+X=Q_1^g(3J(b)).
+\]
+
+Factor its signed expanding transition as
+
+\[
+9J(b)+1-2g=2^vJ(t).
+\]
+
+If \(v\ge2\), both children of \(X\) have source \(t\): they are the
+adjacent states with exponents \(v\) and \(v-1\).  If \(t<s\), neither child
+can be DRAW; both are non-losing children of a DRAW and hence both are WIN,
+which would make \(X\) LOSS.  Therefore a surviving transition has
+\(t\ge s\).  But
+
+\[
+t\le\frac{(27b+19)/2^v-1}{3},
+\]
+
+and the boxed bound makes the right side strictly below \(s\) when
+\(v\ge5\).  Consequently
+
+\[
+\boxed{r=2,\ X\text{ DRAW}\quad\Longrightarrow\quad v\le4.}
+\]
+
+Now let the lower factor exponent be \(r=3\).  The same factor equation has
+one additional power of two:
+
+\[
+16J(b)=9J(x)+1-2e,
+\]
+
+so
+
+\[
+\boxed{b\le\frac{27x+3}{48}
+\le\frac{9s-4}{8}<\frac98s.}
+\]
+
+The common DRAW is
+
+\[
+X=Q_2^g(3J(b)).
+\]
+
+Its contracting child is also the boundary child of
+\(Q_1^g(3J(b))\).  Write
+
+\[
+9J(b)+1-2g=2^vJ(t).
+\]
+
+If this contracting child is DRAW, then \(t\ge s\) by the same adjacent-frame
+argument.  The last boxed estimate makes \(t<s\) for every \(v\ge4\).
+Therefore this DRAW continuation has
+
+\[
+\boxed{v\le3.}
+\]
+
+If the contracting child is WIN, the other child of \(X\) must be DRAW.  It
+is
+
+\[
+Y=Q_1^g(9J(b)).
+\]
+
+Write its signed transition as
+
+\[
+27J(b)+1-2g=2^wJ(u).
+\]
+
+For \(w\ge2\), both children of \(Y\) have source \(u\), so survival again
+requires \(u\ge s\).  The estimate
+
+\[
+u\le\frac{(81b+55)/2^w-1}{3}
+\]
+
+and \(b<(9/8)s\) give \(u<s\) for \(w\ge5\).  Hence
+
+\[
+\boxed{r=3,\ Y\text{ DRAW}\quad\Longrightarrow\quad w\le4.}
+\]
+
+Sections 31--32 therefore replace every unbounded signed scan immediately
+following the final factor fork by a finite list: valuation \(2\) or \(3\)
+at the exponent-one source return, valuation at most \(4\) after \(r=2\),
+and valuations at most \(3\) then \(4\) in the two \(r=3\) continuations.
+This is a finite-state reduction, not yet a proof that none of these states
+can cycle with the canonical \(A\)-continuation.  The arithmetic bounds are
+regression-tested in every residual row below \(100000\).
+
+## 33. A high-valuation exponent-three switch returns to a B-selecting lift
+
+The apparently unbounded valuation in the \(r=3\) case of Section 32 is
+actually one finite transition type.  Keep its notation, let
+\(g=1-e\), and write
+
+\[
+9J(b)+1-2g=2^vJ(t).
+\]
+
+Suppose \(v\ge4\).  The contracting child of the common DRAW
+
+\[
+X=Q_2^g(3J(b))
+\]
+
+is
+
+\[
+C=Q_{v-1}^e(J(t)).
+\]
+
+Section 32 gives \(t<s\), so global source minimality makes \(C\) WIN.
+Therefore the other child
+
+\[
+Y=A(X)=Q_1^g(9J(b))
+\]
+
+is forced DRAW.
+
+The next signed numerator is
+
+\[
+27J(b)+1-2g
+=3\bigl(9J(b)+1-2g\bigr)-2(1-2g).
+\]
+
+Because \(v\ge2\), the last display has 2-adic valuation exactly one.
+Consequently there is a source \(u\) such that
+
+\[
+27J(b)+1-2g=2J(u),
+\qquad
+A(Y)=Q_1^e(J(u))=L_e(u).
+\]
+
+Put \(T=J(t)\).  The source \(u\) itself has the closed form
+
+\[
+\boxed{u=Q_{v-1}^e(T).}
+\]
+
+For \(g=0\), one has
+\(J(u)=3\cdot2^{v-1}T-1\), so
+\(u=2^{v-1}T-1\).  For \(g=1\), one has
+\(J(u)=3\cdot2^{v-1}T+1\), so
+\(u=2^{v-1}T\).  These are precisely the two instances of the box.  Since
+\(v\ge4\), the last two bits of \(u\) are \(11\) when \(e=1\) and \(00\)
+when \(e=0\).  Hence
+
+\[
+\boxed{\alpha(u)=g,\qquad e=1-\alpha(u).}
+\]
+
+Thus \(L_e(u)\) is a B-selecting lift, not an A-selecting one.  Its other
+child still has a closed form:
+
+\[
+\boxed{B(Y)=Q_{v-3}^e(3J(t)).}
+\]
+
+For \(g=0\), the expanded state is
+
+\[
+A(Y)=3\cdot2^vJ(t)-3.
+\]
+
+Its last bits are the fixed suffix \(101\), preceded by another one because
+\(v\ge4\); deleting that suffix gives
+\(Q_{v-3}^1(3J(t))\).  For \(g=1\), the expanded state is
+
+\[
+A(Y)=3\cdot2^vJ(t)+2.
+\]
+
+Its last bits are \(010\), preceded by another zero, and deletion gives
+\(Q_{v-3}^0(3J(t))\).  These are the two instances of the boxed identity.
+In particular \(B(Y)\) has source \(t<s\), so it too is WIN.  Since \(Y\)
+is DRAW, its other child is forced DRAW:
+
+\[
+\boxed{L_e(u)\text{ is DRAW},\qquad e=1-\alpha(u).}
+\]
+
+The returned source remains in a fixed window.  From
+
+\[
+2J(u)=27J(b)+1-2g
+\]
+
+and Section 32's \(b\le(9s-4)/8\),
+
+\[
+u\le\frac{81b+53}{6}
+\le\frac{729s+100}{48}<16s
+\]
+
+for every residual \(s\ge10\).  Thus all valuations \(v\ge4\) collapse to
+one automaton edge:
+
+\[
+\boxed{
+r=3,\ v\ge4
+\quad\Longrightarrow\quad
+\text{a B-selecting DRAW lift at }u<16s,
+}
+\]
+
+with two explicitly known WIN side states of source below \(s\).  The size
+window is larger than the one in Section 28, so this is not yet a descent
+proof.  Its importance is that the unbounded valuation has disappeared
+without enumeration, while the two retained WIN states remain available for
+a proof-height diamond.  The exact identities and the \(16s\) bound are
+regression-tested in the residual trajectory.
+
+## 34. The high-valuation return carries a strict ordinary height drop
+
+The two small-source WIN states retained in Section 33 recover the proof
+height lost in the source lift.  Keep its notation and put
+
+\[
+C=B(X)=Q_{v-1}^e(J(t)),\qquad
+Z=B(Y)=Q_{v-3}^e(3J(t)).
+\]
+
+Both \(C\) and \(Z\) are WIN because their source \(t\) is below the globally
+minimum DRAW source \(s\).  The long-tail recurrence gives
+
+\[
+\boxed{B(C)=Z.}
+\]
+
+Therefore the other child
+
+\[
+L=A(C)=Q_{v-2}^e(3J(t))
+\]
+
+is LOSS.  The states \(L\) and \(Z\) have one exact common child.  For
+\(v=4\), they are the exponent-two/one boundary pair, so
+
+\[
+W=B(L)=B(Z).
+\]
+
+For \(v\ge5\), the long-tail formulas instead give
+
+\[
+W=B(L)=A(Z)=Q_{v-4}^e(9J(t)).
+\]
+
+In either case \(W\) is a child of the LOSS state \(L\), hence is WIN, and
+the canonical proof heights satisfy
+
+\[
+\boxed{h(W)\le h(C)-2.}
+\]
+
+The common child is not merely another lifted coordinate.  It is exactly the
+ordinary two-step return of the source \(u\) from Section 33:
+
+\[
+\boxed{W=B(A(u)).}
+\]
+
+For \(v\ge5\), direct substitution into
+\(2J(u)=27J(b)+1-2g\) gives
+
+\[
+A^2(u)=
+\begin{cases}
+2W+1,&g=0,\\
+2W,&g=1.
+\end{cases}
+\]
+
+In the first row \(W\) is odd and in the second it is even.  The appended
+bit therefore repeats the last bit of \(W\), so deleting the maximal
+alternating suffix from \(A^2(u)\) removes exactly that appended bit and
+leaves \(W\).
+
+For \(v=4\), write \(J(t)=T\).  If \(g=0\), then
+
+\[
+A(u)=12T-1,\qquad A^2(u)=18T-1,
+\]
+
+whereas \(A(Z)=9T-1\); the first value is obtained from the second by
+appending an alternating one bit.  If \(g=1\), then
+
+\[
+A(u)=12T,\qquad A^2(u)=18T,
+\]
+
+and \(A(Z)=9T\), with an alternating zero bit appended.  In both rows the
+suffix deletion from \(A^2(u)\) is therefore the same as the deletion from
+\(A(Z)\), namely \(B(Z)=W\).  This proves the boxed return identity at the
+boundary as well.
+
+Thus the high-valuation \(r=3\) escape does not merely return to a
+B-selecting lift below \(16s\).  Its ordinary source diamond has already
+produced a WIN node \(W=B(A(u))\) whose proof height is at least two below
+the preceding boundary endpoint \(C\).  A final completion still has to
+show that the lifted continuation at \(u\) exposes \(W\) (or another child
+of the same LOSS witness) as a DRAW-boundary endpoint despite the exceptional
+lift parent.  The exact common-child and return identities are
+regression-tested in all high-valuation residual rows.
+
+## 35. The returned lift transfers to the lower-height WIN source
+
+The B-selecting correction in Section 33 makes the high-valuation return
+more rigid.  Keep Sections 33--34 and write \(T=J(t)\).  Since
+
+\[
+u=Q_{v-1}^e(T),\qquad v\ge4,
+\]
+
+the long-tail recurrence gives
+
+\[
+\boxed{B(u)=Q_{v-3}^e(3T)=Z.}
+\]
+
+The B-selecting signed transition of \(L_e(u)\) has valuation exactly two.
+Indeed, for \(g=0\) one has
+
+\[
+J(u)=3\cdot2^{v-1}T-1,\qquad
+3J(u)-1=4\bigl(9\cdot2^{v-3}T-1\bigr),
+\]
+
+and the factor in parentheses is odd.  For \(g=1\),
+
+\[
+J(u)=3\cdot2^{v-1}T+1,\qquad
+3J(u)+1=4\bigl(9\cdot2^{v-3}T+1\bigr),
+\]
+
+with the same conclusion.  Hence the DRAW state \(L_e(u)\) has the exact
+children
+
+\[
+Q_2^g(J(Z)),\qquad Q_1^g(J(Z)).
+\]
+
+In the notation of Section 27 this is the obligation
+
+\[
+\boxed{O(Z,g),\qquad g=\alpha(u).}
+\]
+
+Moreover this phase selects exactly the lower-height WIN \(W=B(A(u))\) from
+Section 34.  There are two boundary forms:
+
+\[
+\boxed{
+\begin{array}{c|c|c}
+v&\text{phase at }Z&\text{selected child}\\ \hline
+4&g=1-\alpha(Z)&B(Z)=W,\\
+v\ge5&g=\alpha(Z)&A(Z)=W.
+\end{array}}
+\]
+
+For \(v=4\), the state \(Z=Q_1^e(3T)\) has
+\(\alpha(Z)=e\), and Section 34 already proved \(B(Z)=W\).  For \(v\ge5\),
+the exponent of \(Z=Q_{v-3}^e(3T)\) is at least two; its two final bits are
+both \(e\), so \(\alpha(Z)=1-e=g\), and Section 34 gives \(A(Z)=W\).
+Since \(Z\) and \(W\) are WIN, the unselected child \(M\) of \(Z\) is LOSS.
+
+All cases \(v\ge6\) now give a strict boundary-height descent.  In this
+range \(Z\) has constant-tail exponent at least three and is nonexceptional.
+The selected WIN has
+
+\[
+W=Q_{v-4}^e(9T)
+\]
+
+with at least two final bits equal to \(e\).  Consequently
+\(A(W)\bmod2\ne g\).  Section 24 therefore identifies the common side child
+of the exponent-one/two obligation as
+
+\[
+q=B(L_g(Z))=B(W).
+\]
+
+The ordinary side relation at the nonexceptional state \(Z\) makes the same
+\(q=B(A(Z))\) a child of the LOSS state \(M=B(Z)\).  Thus \(q\) is WIN and
+
+\[
+\boxed{h(q)\le h(Z)-2.}
+\]
+
+Both members of the obligation share \(q\) as their contracting child, and
+at least one member is DRAW.  Hence \(q\) is the endpoint of a new
+DRAW-to-WIN boundary.  We have proved the conditional reduction
+
+\[
+\boxed{
+r=3,\ v\ge6
+\quad\Longrightarrow\quad
+\text{a strict boundary-height descent}.}
+\]
+
+Only the two explicit high-valuation boundary cases \(v=4,5\) remain; the
+unbounded class \(v\ge6\) is closed without a modulus scan.  The transfer,
+selected-child, and common-side identities are regression-tested throughout
+the residual trajectory.
+
+## 36. The two remaining high-valuation boundaries are finite
+
+Section 35 leaves only \(v=4\) and \(v=5\).  Both have a bounded exact
+normal form.
+
+### The case \(v=4\)
+
+Here the obligation \(O(Z,g)\) is B-selecting and selects the WIN source
+\(W=B(Z)\).  Let \(j\ge2\) be this B-selecting valuation.  Section 25
+transfers the DRAW to an adjacent frame over \(W\).  If \(W<s\), global
+source minimality excludes that frame, so survival requires \(W\ge s\).
+
+The first high-valuation equation and the \(r=3\) source bound give
+
+\[
+t\le\frac{27b+3}{48}
+\le\frac{81s-28}{128}.
+\]
+
+Also \(Z=Q_1^e(3J(t))\), so \(Z\le18t+12\).  If \(j\ge6\), the signed source
+identity at \(Z\), together with \(J(q)\ge3q+1\), gives
+
+\[
+W\le\frac{54t+17}{64}
+\le\frac{4374s+664}{8192}<s.
+\]
+
+This contradicts survival.  Hence
+
+\[
+\boxed{
+v=4,\ \text{the transfer survives}\quad\Longrightarrow\quad
+\text{the transferred frame over }W\text{ has }2\le j\le5.}
+\]
+
+Thus every surviving lower exponent is one of \(1,2,3,4\); no unbounded
+suffix remains in this branch.
+
+### The case \(v=5\)
+
+Now \(O(Z,g)\) is A-selecting, with
+
+\[
+Z=Q_2^e(3J(t)),\qquad
+W=A(Z)=Q_1^e(9J(t)),
+\]
+
+and the other ordinary child
+
+\[
+M=B(Z)
+\]
+
+is LOSS.  Section 24 gives the common side child of the exponent-one/two
+obligation as
+
+\[
+q=B(L_g(Z))=A(W).
+\]
+
+This state has the exact source form
+
+\[
+\boxed{q=Q_k^g(J(M))}
+\]
+
+for some \(k\ge1\), with no factor of three in its coefficient.  To prove
+this, put \(T=J(t)\).  If \(e=0\), then \(q=27T\).  Section 18 applied to
+\(3(9T)\), together with
+\(R(18T)=R(9T)\), gives \(\kappa(q)=J(M)\).  If \(e=1\), then
+\(q=27T-1\), and Section 18 applied to \(3(9T)-1\) gives directly
+\(\kappa(q)=J(R(18T-1))=J(M)\).  The final bit of \(q\) is \(g\) in both
+cases, proving the box.
+
+The valuation-five equation sharpens the bound for \(t\):
+
+\[
+t\le\frac{27b-13}{96}
+\le\frac{243s-212}{768}.
+\]
+
+The coordinate identity
+
+\[
+2^kJ(M)=q+g=27J(t)-e+g
+\]
+
+then implies, for \(k\ge4\),
+
+\[
+M\le\frac{27t+13}{16}
+\le\frac{6561s+4260}{12288}<s.
+\]
+
+The common child \(q\) is non-losing because it belongs to a DRAW member of
+the obligation.  If it is DRAW, its source cannot be below \(s\).
+Consequently
+
+\[
+\boxed{
+v=5,\ q\text{ DRAW}\quad\Longrightarrow\quad k\le3.}
+\]
+
+If \(q\) is WIN instead, it is already the endpoint of a new boundary.
+Thus the whole former high-valuation \(r=3\) branch now has only finite
+parameters: \(v\ge6\) is a strict height descent, \(v=4\) leaves four
+adjacent exponents over the lower-height WIN source \(W\), and \(v=5\)
+leaves one DRAW state of exponent at most three over the explicit LOSS
+source \(M\).  Closing these finite frames and the low-valuation cases
+\(v=1,2,3\) remains necessary.  All coordinate identities and numerical
+bounds are regression-tested in the residual trajectory.
