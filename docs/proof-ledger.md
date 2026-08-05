@@ -18,6 +18,7 @@ Update this table whenever the status of a substantial claim changes.
 | The Gray-coordinate expanding move `Gamma` is recognized exactly by an eight-state LSB-first transducer | **PROVED** | `docs/normal-form.md`; `src/optimal_3n1/transducer.py`; exhaustive regression in `tests/test_game.py` |
 | Bounded retrograde labels and extracted proof DAGs are sound | **PROVED FOR THE IMPLEMENTATION LOGIC** | `src/optimal_3n1/retrograde.py`; `scripts/extract_proof.py`; `tests/test_retrograde.py` |
 | Outside `q=1,3,12,14 mod 16`, consecutive side branches satisfy `B(A(q))=A(B(q))` or `B(A(q))=B(B(q))` | **PROVED** | `docs/verified-results.md`, Section 5; `side_branch_relation` |
+| All four exceptional side branches have the explicit affine/reduced formulas in Section 5 | **PROVED** | `docs/verified-results.md`, Section 5; `exceptional_side_branch_values` |
 | Four consecutive positions on one `A`-ray cannot all be `WIN` | **PROVED** | `docs/verified-results.md`, Section 5 |
 | All predecessors through `B` are parameterized by attached alternating words | **PROVED** | `docs/verified-results.md`, Section 6; `transformed_B_predecessors` |
 | Every length-three word with one `A` and two `B` moves is smaller than its input | **PROVED** | `docs/verified-results.md`, Section 7; `transformed_BBA`, `transformed_BAB`, `transformed_ABB` |

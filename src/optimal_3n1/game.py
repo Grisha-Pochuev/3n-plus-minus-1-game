@@ -207,6 +207,32 @@ def side_branch_relation(q: int) -> str | None:
     return None
 
 
+def exceptional_side_branch_values(q: int) -> tuple[int, int] | None:
+    """Return the explicit ``(B(q), B(A(q)))`` exceptional formula.
+
+    The result is ``None`` outside ``1,3,12,14 mod 16``.  In an exceptional
+    class the long suffix deletion is transferred to an argument of size
+    about ``3q/8``, while the second component is affine in the quotient.
+    """
+    if q < 0:
+        raise ValueError("q must be nonnegative")
+    residue = q % 16
+    parameters = {
+        1: (0, 1),
+        3: (1, 4),
+        12: (4, 13),
+        14: (5, 16),
+    }
+    if residue not in parameters:
+        return None
+    quotient = (q - residue) // 16
+    reduced_offset, affine_offset = parameters[residue]
+    return (
+        alternating_suffix_remainder(6 * quotient + reduced_offset),
+        18 * quotient + affine_offset,
+    )
+
+
 def transformed_B_predecessors(r: int, limit: int) -> tuple[int, ...]:
     """Return all ``q <= limit`` satisfying ``B(q) == r``.
 

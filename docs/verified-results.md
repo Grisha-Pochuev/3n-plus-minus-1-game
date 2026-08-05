@@ -214,6 +214,49 @@ the first row by the four cases for `r mod 4`.  For `k=2`, the appended word
 is `10` for even `r` and `01` for odd `r`; deletion stops there exactly when
 its leading bit repeats the last bit of `A(r)`, giving the second row.
 
+The four exceptional classes also have exact formulas.  For `t>=0`,
+
+\[
+\begin{array}{c|c|c}
+q&B(q)&B(A(q))\\ \hline
+16t+1  &R(6t)   &18t+1\\
+16t+3  &R(6t+1) &18t+4\\
+16t+12 &R(6t+4) &18t+13\\
+16t+14 &R(6t+5) &18t+16.
+\end{array}
+\]
+
+For example,
+
+\[
+A(16t+1)=4(6t)+2.
+\]
+
+The appended word is `10`, and because `6t` is even the alternating suffix
+continues into that prefix; hence its deletion leaves `R(6t)`.  On the other
+hand
+
+\[
+A^2(16t+1)=36t+3=2(18t+1)+1,
+\]
+
+whose final `1` repeats the odd last bit of `18t+1`, so deletion leaves
+`18t+1`.  The other three rows follow identically from
+
+\[
+\begin{array}{c|c|c}
+q&A(q)&A^2(q)\\ \hline
+16t+3  &4(6t+1)+1&36t+8=2(18t+4),\\
+16t+12 &4(6t+4)+2&36t+27=2(18t+13)+1,\\
+16t+14 &4(6t+5)+1&36t+32=2(18t+16).
+\end{array}
+\]
+
+In the even entries of the last column the final two bits are `00`, and in
+the odd entries they are `11`, so in every case the final suffix deletion
+has length one.  The formulas are implemented by
+`exceptional_side_branch_values` and regression-tested directly.
+
 ## 6. Exact parameterization of all B-predecessors
 
 Fix `r>=0`.  The complete set of positions `q` satisfying `B(q)=r` can be

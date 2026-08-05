@@ -12,6 +12,7 @@ from optimal_3n1.game import (  # noqa: E402
     alternating_suffix_remainder_via_gray,
     alternating_word_value,
     decreasing_move,
+    exceptional_side_branch_values,
     gray_code,
     inverse_F,
     inverse_gray_code,
@@ -129,6 +130,17 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(
                     relation == "A", remainder % 4 in expected_A_residues
                 )
+
+    def test_exceptional_side_branch_formulas(self) -> None:
+        for q in range(1, 10000):
+            values = exceptional_side_branch_values(q)
+            if q % 16 not in {1, 3, 12, 14}:
+                self.assertIsNone(values)
+                continue
+            self.assertEqual(
+                values,
+                (transformed_B(q), transformed_B(transformed_A(q))),
+            )
 
     def test_B_predecessor_parameterization(self) -> None:
         limit = 2000
