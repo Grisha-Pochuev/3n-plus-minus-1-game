@@ -849,6 +849,49 @@ class GameArithmeticTests(unittest.TestCase):
                 (lifted_side, 0, lower_exponent, phase),
             )
 
+            frame_upper, frame_lower = transformed_moves(factor_three_state)
+            common_frame_children = set(transformed_moves(frame_upper)) & set(
+                transformed_moves(frame_lower)
+            )
+            self.assertEqual(len(common_frame_children), 1)
+            common_frame_child = next(iter(common_frame_children))
+
+            if lower_exponent == 1:
+                self.assertEqual(
+                    common_frame_child,
+                    transformed_B(frame_lower),
+                )
+                self.assertEqual(
+                    common_frame_child,
+                    transformed_B(frame_upper),
+                )
+                continue
+
+            factor_coefficient = embedded_original_state(lifted_side)
+            expected_common = constant_tail_state(
+                3 * factor_coefficient,
+                lower_exponent - 1,
+                1 - phase,
+            )
+            expected_twin = constant_tail_state(
+                3 * factor_coefficient,
+                lower_exponent - 1,
+                phase,
+            )
+            self.assertEqual(common_frame_child, expected_common)
+            self.assertEqual(transformed_A(selected_twin), expected_twin)
+            self.assertEqual(abs(expected_common - expected_twin), 1)
+
+            selected_prefix = transformed_B(selected_lift)
+            self.assertEqual(
+                selected_prefix,
+                constant_tail_state(
+                    factor_coefficient,
+                    lower_exponent - 1,
+                    phase,
+                ),
+            )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

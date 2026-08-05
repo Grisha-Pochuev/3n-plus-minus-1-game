@@ -2617,3 +2617,80 @@ allows their outcomes to be identified.  The remaining task is to use their
 coupled long-tail recurrences and the finite proof tree below the explicit
 LOSS state `V`, rather than assuming that neighboring integers share an
 outcome.
+
+## 30. The factor frame and the retained WIN share the next twin switch
+
+The two adjacent children of the factor DRAW in Section 29 have one common
+child.  This exposes the first exact recursive step of the twin obstruction.
+Keep the notation there and abbreviate
+
+\[
+a=J(b),\qquad
+E=Q_r^e(a)=A(V),\qquad
+H=Q_{r+1}^g(a)=A(F),\qquad
+G=Q_r^g(a)=B(F).
+\]
+
+Because \(V\) is LOSS, both \(E\) and \(B(V)=R(E)\) are WIN.  Because
+\(F\) is DRAW, \(H\) and \(G\) are non-losing and at least one of them is
+DRAW.
+
+The states \(H\) and \(G\) have the exact common child
+
+\[
+\boxed{
+X=
+\begin{cases}
+B(Q_1^g(a))=B(Q_2^g(a)),&r=1,\\
+Q_{r-1}^g(3a),&r=2,3.
+\end{cases}}
+\]
+
+For \(r=1\) this is the symmetric shared-child identity of Section 14.  For
+\(r\ge2\), the lower state has expanding child
+
+\[
+A(G)=Q_{r-1}^g(3a),
+\]
+
+while the upper state has the same contracting child
+
+\[
+B(H)=Q_{r-1}^g(3a).
+\]
+
+The latter identity uses the long-tail recurrence because \(r+1\ge3\).
+Therefore \(X\) is a child of whichever member of \(\{H,G\}\) is DRAW.  It
+cannot be LOSS.  There are exactly two outcome alternatives:
+
+- if \(X\) is WIN, that DRAW member and \(X\) form another boundary edge;
+- if \(X\) is DRAW, the factor obligation has transferred to this one
+  common state (and for \(r=2,3\) its coefficient is \(3J(b)\) and its
+  exponent is \(r-1\)).
+
+For \(r=2,3\) the retained WIN state \(E\) exposes the opposite-tail twin of
+\(X\) one step later:
+
+\[
+\boxed{A(E)=Q_{r-1}^e(3a).}
+\]
+
+Thus \(A(E)\) and \(X\) are consecutive integers with opposite constant
+tails.  Since \(E\) is WIN, either \(A(E)\) is LOSS or the other child
+\(B(E)\) is LOSS.  In the case \(r=3\) this becomes the particularly compact
+forced alternative
+
+\[
+\boxed{
+Q_2^e(3a)\text{ is LOSS}
+\quad\text{or}\quad
+Q_1^e(3a)\text{ is LOSS}.}
+\]
+
+This is a genuine recursive outcome constraint, but still not the final
+contradiction.  If the common child \(X\) is DRAW, the next level contains a
+DRAW state on one tail side and a forced LOSS on the opposite side.  At
+\(r=1\) the shared child crosses the signed boundary instead, so a completion
+must control that signed transition as well as the two long-tail cases.
+The identities in this section are regression-tested throughout the actual
+residual source trajectory.

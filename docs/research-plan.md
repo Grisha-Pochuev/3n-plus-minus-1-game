@@ -108,8 +108,14 @@ is to control alternation between the canonical `A(x)` continuation and
 these three factor frames; treating only the last two exponent values would
 leave the canonical branch open.  Section 29 identifies the retained LOSS
 child's expanding move as the exact opposite-tail twin of the lower factor
-child.  The next proof must exploit the coupled recurrences of these twins;
-neighboring integers cannot simply be assigned the same outcome.
+child.  Section 30 takes the first coupled recurrence step: both members of
+the factor frame share one child, while at exponents two and three the
+retained WIN has the exact opposite-tail twin of that child.  If the common
+child remains DRAW, the next level therefore contains a forced LOSS on the
+opposite tail side.  The next proof must close this DRAW/LOSS twin switch at
+the signed exponent-one boundary and feed any surviving boundary WIN back
+into the proof-height descent; neighboring integers cannot simply be
+assigned the same outcome.
 
 ## Priority 2: finite transducer plus numerical potential
 
