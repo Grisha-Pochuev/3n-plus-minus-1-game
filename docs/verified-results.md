@@ -1723,3 +1723,139 @@ to carry such a DRAW lift are the phase-match classes
 In those classes `p=L_{\alpha(z)}(z)` has the same canonical form at the
 larger returned source `z=B(A(s))`; it may itself be DRAW, so the LOSS/WIN
 fingerprint used above is not yet forced.
+
+## 21. Long returned suffixes exclude four phase-match subclasses
+
+The phase-match gadget has two additional exact source identities.  Retain
+
+\[
+e=\alpha(s)=\alpha(z),\quad a=J(z),\quad
+p=Q_1^e(a),\quad h=Q_2^e(a),
+\]
+
+and put
+
+\[
+d=A(p)=3a-e,qquad c=B(p)=B(h)=R(d),qquad
+k=A(h)=Q_1^e(3a).
+\]
+
+First, although the integer `c` need not be smaller than `s`, its own
+coefficient source always is.  If `rho` is the source of `c`, Section 15
+gives
+
+\[
+3\rho+1\le J(\rho)\le\kappa(c)
+\le\frac{3J(z)+1}{4}.
+\]
+
+Since `J(z)\le3z+2` and the four affine rows of Section 19 give
+`z\le(9s+3)/8`, it follows that
+
+\[
+\rho\le\frac{3z+1}{4}
+\le\frac{27s+17}{32}<s.
+\]
+
+Every phase-match source is at least ten, so the last inequality has no
+small exception.
+
+Second, the two children of `k` are adjacent constant-tail states whose
+three-free coefficient is exactly `J(c)`.  More precisely, for some `r>=1`
+and `g=1-e`,
+
+\[
+\boxed{
+A(k)=Q_{r+1}^g(J(c)),\qquad
+B(k)=Q_r^g(J(c)).
+}
+\]
+
+To prove this, observe that `A(k)=9a-e`.  If `e=0`, then `d=3a` and the
+first coefficient identity of Section 18 gives
+
+\[
+\kappa(A(k))=\kappa(9a)=J(R(3a))=J(c).
+\]
+
+If `e=1`, then `d=3a-1`.  The second coefficient identity, followed by the
+shared-child identity, gives
+
+\[
+\kappa(A(k))=\kappa(9a-1)=J(R(6a-1))=J(R(3a-1))=J(c).
+\]
+
+The equality `e=alpha(z)` also says that `a` is `3 mod 4` when `e=0` and
+`1 mod 4` when `e=1`.  Thus `9a-e` ends respectively in `11` or `00`; its
+constant suffix has length at least two and tail bit `g`.  Applying `R`
+removes just its last bit, proving the adjacent-pair formula.
+
+It remains to compare the integer `c` itself with `s`.  In the four
+phase-match classes write `s=32t+r`.  Direct substitution gives
+
+\[
+\begin{array}{c|c}
+s&d=A(p)\\ \hline
+32t    &324t+2\quad(t\ge1),\\
+32t+10 &324t+105,\\
+32t+21 &324t+218,\\
+32t+31 &324t+321.
+\end{array}
+\]
+
+The alternating suffix of `d` has length at least four exactly when its last
+four bits are `0101` or `1010`.  Reducing the table modulo 16 gives
+
+\[
+\boxed{
+\operatorname{altsuffixlen}(d)\ge4
+\quad\Longleftrightarrow\quad
+s\equiv21,63,64,106\pmod {128}.
+}
+\]
+
+In these four classes, `c=R(d)\le d/16<s`.  In every other phase-match class
+the suffix has length at most three, while the same table gives `d>8s+8`;
+hence `c\ge\lfloor d/8\rfloor>s`.  Therefore the residue test is equivalently
+
+\[
+\boxed{c<s\quad\Longleftrightarrow\quad
+s\equiv21,63,64,106\pmod {128}.}
+\]
+
+The four long-suffix classes are impossible under the globally
+minimum-source DRAW hypothesis.  Indeed, `q_1` from Section 19 is DRAW and
+has children `p,h`.  Their common child `c` has source below `s`; since at
+least one of `p,h` is DRAW, `c` is non-losing, and minimality therefore makes
+it WIN.
+
+If `p` is WIN, then its other child `d` is LOSS, while `h` is DRAW and its
+other child `k` is DRAW.  But both children of `k` have source `c<s` by the
+adjacent-pair identity, so `k` cannot have a DRAW child, a contradiction.
+
+If instead `p` is DRAW, its WIN child `c` forces `d` to be DRAW.  Let `m>=4`
+be the alternating-suffix length of `d`, so `c=R(d)`.  The long-suffix
+calculation of Section 5 can be rewritten as
+
+\[
+A(d)=Q_{m-1}^{\eta}(J(c)),\qquad
+B(d)=Q_{m-2}^{\eta}(J(c))
+\]
+
+for the appropriate tail bit `eta`.  Both children again have source
+`c<s`, contradicting that `d` is DRAW.  The two cases exhaust the
+possibilities, and hence
+
+\[
+\boxed{
+s\equiv21,63,64,106\pmod {128}
+\quad\Longrightarrow\quad
+L_{\alpha(s)}(s)
+\text{ cannot be a globally minimum-source DRAW lift}.
+}
+\]
+
+Together with Section 20, a surviving nondecreasing return must now be a
+phase match outside these four long-suffix subclasses.  There the returned
+integer `c` is larger than `s`, even though the coefficient source of `c`
+is smaller; that split between the two orders is the remaining obstruction.

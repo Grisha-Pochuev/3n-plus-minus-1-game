@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 35 tests
+Ran 36 tests
 OK
 ```
 
@@ -36,6 +36,7 @@ The tests cover:
 - the two lifted source-coefficient identities and the exact lifted side return;
 - the exact nondecreasing source-return classes and their phase-mismatch fork;
 - the larger diamond excluding every phase-mismatch return;
+- the long-suffix filter excluding four phase-match subclasses modulo 128;
 - the arithmetic characterization and closure of height-one WIN positions;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;

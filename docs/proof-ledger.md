@@ -49,6 +49,8 @@ Update this table whenever the status of a substantial claim changes.
 | The ensuing factor-three DRAW has valuation-one expanding child with exact source `3A(B(A(s)))+1` | **PROVED ARITHMETIC IDENTITY; DRAW CONTINUATION OPEN** | `docs/verified-results.md`, Section 19; regression in `tests/test_game.py` |
 | The competing child of that factor-three DRAW closes a larger diamond and contradicts the forced LOSS sibling | **PROVED** | `docs/verified-results.md`, Section 20; regression in `tests/test_game.py` |
 | A globally minimum-source DRAW lift can make a nondecreasing side return only in the phase-match classes `0,10,21,31 mod 32` | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Sections 18--20 |
+| In every phase-match return, the common child's coefficient source is below `s`, while the factor-three state's children are adjacent lifts with source equal to that common child | **PROVED** | `docs/verified-results.md`, Section 21; regression in `tests/test_game.py` |
+| A long returned suffix occurs exactly for `s=21,63,64,106 mod 128`, and all four classes contradict the minimum-source DRAW hypothesis | **PROVED CONDITIONAL EXCLUSION** | `docs/verified-results.md`, Section 21; regression in `tests/test_game.py` |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

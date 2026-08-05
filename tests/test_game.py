@@ -514,6 +514,65 @@ class GameArithmeticTests(unittest.TestCase):
             )
             self.assertEqual(transformed_B(factor_three_state), other_child)
 
+    def test_phase_match_long_suffix_filter(self) -> None:
+        long_suffix_residues = {21, 63, 64, 106}
+        for source in range(1, 100000):
+            if source % 32 not in {0, 10, 21, 31}:
+                continue
+
+            returned_source = transformed_B(transformed_A(source))
+            phase = source_A_selecting_tail_bit(source)
+            lower = constant_tail_state(
+                embedded_original_state(returned_source), 1, phase
+            )
+            upper = constant_tail_state(
+                embedded_original_state(returned_source), 2, phase
+            )
+            lower_expanding = transformed_A(lower)
+            common_child = transformed_B(lower)
+            suffix_length = alternating_suffix_length(lower_expanding)
+
+            self.assertLess(
+                constant_tail_source_coordinates(common_child)[0],
+                source,
+            )
+            self.assertEqual(
+                suffix_length >= 4,
+                source % 128 in long_suffix_residues,
+            )
+            self.assertEqual(
+                common_child < source,
+                source % 128 in long_suffix_residues,
+            )
+
+            factor_three_state = transformed_A(upper)
+            factor_children = transformed_moves(factor_three_state)
+            factor_coordinates = [
+                constant_tail_source_coordinates(child)
+                for child in factor_children
+            ]
+            self.assertEqual(
+                {coordinates[0] for coordinates in factor_coordinates},
+                {common_child},
+            )
+            self.assertEqual(
+                {coordinates[1] for coordinates in factor_coordinates},
+                {0},
+            )
+            self.assertEqual(
+                abs(factor_coordinates[0][2] - factor_coordinates[1][2]),
+                1,
+            )
+
+            if suffix_length >= 4:
+                self.assertEqual(
+                    {
+                        constant_tail_source_coordinates(child)[0]
+                        for child in transformed_moves(lower_expanding)
+                    },
+                    {common_child},
+                )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

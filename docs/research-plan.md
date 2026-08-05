@@ -67,10 +67,13 @@ child, and a new DRAW `Q_1^e(3J(B(A(s))))`.  Section 20 identifies the
 competing child of this DRAW with the forced LOSS branch of a larger diamond,
 excluding all four mismatch classes.  Only the phase-match classes
 `s=0,10,21,31 mod 32` remain.  There the side child is another canonical
-minimum-source lift at the larger source `B(A(s))`.  The immediate target is
-to prove that repeated phase-match returns must eventually leave these
-classes or create a lower-height boundary, while retaining the forced
-siblings rather than seeking a rank for the arithmetic return alone.
+minimum-source lift at the larger source `B(A(s))`.  Section 21 excludes the
+four long-returned-suffix subclasses `21,63,64,106 mod 128`.  In every other
+phase-match class, the returned common child is numerically larger than `s`
+but has coefficient source below `s`; the next adjacent pair has source equal
+to that larger integer.  The immediate target is to combine those two orders
+with minimum boundary proof height, or prove that iteration must enter one
+of the now-excluded residue classes.
 
 ## Priority 2: finite transducer plus numerical potential
 
