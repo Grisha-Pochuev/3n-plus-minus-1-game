@@ -7057,3 +7057,70 @@ unmarked restart.  This still does not compare the coupled returned source
 with the proof-height token carried into the factor frame.  The strict raw
 source inequality is regression-tested for every source below \(10000\)
 and both phases.
+
+## 82. A high valuation returns through one exact ordinary child
+
+The valuation-one successor of Section 79 has an exact raw exit.  Retain
+its notation, suppose \(v\ge2\), and put
+
+\[
+g=1-e,\qquad u=Q_{v-1}^g(J(t)).
+\]
+
+The next signed state and its raw sibling are
+
+\[
+S=Q_1^g(J(u)),\qquad C=R(S).
+\]
+
+Since \(J(u)=2A(u)+1\), the binary word for \(S\) is obtained from
+\(A(u)\) by appending `10` when \(g=0\), and by appending `01` when
+\(g=1\).  If the last bit of \(A(u)\) equals the first appended bit
+\(1-g\), the alternating suffix stops at that boundary and
+\(C=A(u)\).  Otherwise it continues through precisely the maximal
+alternating suffix of \(A(u)\), and \(C=B(u)\).  Thus
+
+\[
+C=
+\begin{cases}
+A(u),&A(u)\equiv1-g\pmod2,\\
+B(u),&A(u)\equiv g\pmod2.
+\end{cases}
+\]
+
+Now \(u=2^{v-1}J(t)-g\), with \(J(t)\) odd.  When \(v=2\), direct
+reduction modulo four gives \(A(u)\equiv1-g\pmod2\).  When \(v\ge3\),
+it gives \(A(u)\equiv g\pmod2\).  Therefore
+
+\[
+\boxed{
+R\!\left(Q_1^g(J(u))\right)=
+\begin{cases}
+A(u),&v=2,\\
+B(u),&v\ge3.
+\end{cases}}
+\]
+
+There is a further exact return when \(v\ge4\).  Then the constant suffix
+of \(u\) has length at least three.  Applying \(A\) removes one constant
+bit and applying \(R\) removes one more, so
+
+\[
+\boxed{B(u)=Q_{v-3}^g(3J(t))\qquad(v\ge4).}
+\]
+
+Hence the raw exit following any valuation at least four has source
+coordinates
+
+\[
+\boxed{(t,1,v-3,g)}.
+\]
+
+Here \(J(t)\) is not divisible by three, so the displayed factor exponent
+is exactly one.  The exit preserves the returned source, adds only one factor of three,
+and lowers the dyadic exponent by three.  The two small rows are explicit:
+valuation two exits through \(A(u)\), while valuation three exits through
+\(B(u)\) at the short-tail boundary.  Thus the high resonant quotient of
+Section 78 cannot hide an arbitrary new raw source at its valuation-one
+successor.  These identities are regression-tested for every source below
+\(1000\), both phases, and valuations two through ten.

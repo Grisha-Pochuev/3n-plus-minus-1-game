@@ -417,6 +417,13 @@ raw DRAW has coefficient source strictly below the signed returned source
 therefore reduced to an adjacent frame, an exponent-one lift, or strict
 source descent.  The remaining global step is to compare the two coupled
 signed sources with the carried proof-height token.
+Section 82 removes the apparent freedom in the valuation-one raw successor.
+After a valuation v>=2 it is exactly A(u) at v=2 and B(u) at v>=3.  For
+v>=4 the latter has coordinates (t,1,v-3,1-e): it returns to the same
+source t with one factor of three and three fewer dyadic levels.  Thus only
+the explicit v=2 and v=3 short-tail rows can change the source at this
+successor.  The next task is to attach those two rows, and the decreasing
+dyadic counter in every larger row, to the carried boundary proof height.
 
 ## Priority 2: finite transducer plus numerical potential
 

@@ -480,6 +480,50 @@ class GameArithmeticTests(unittest.TestCase):
                             next_source, selected_source
                         )
 
+    def test_high_valuation_successor_raw_return(self) -> None:
+        for source in range(1000):
+            coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                return_phase = 1 - phase
+                for valuation in range(2, 11):
+                    successor_source = constant_tail_state(
+                        coefficient,
+                        valuation - 1,
+                        return_phase,
+                    )
+                    successor_signed = constant_tail_state(
+                        embedded_original_state(successor_source),
+                        1,
+                        return_phase,
+                    )
+                    successor_raw = alternating_suffix_remainder(
+                        successor_signed
+                    )
+
+                    if valuation == 2:
+                        self.assertEqual(
+                            successor_raw,
+                            transformed_A(successor_source),
+                        )
+                    else:
+                        self.assertEqual(
+                            successor_raw,
+                            transformed_B(successor_source),
+                        )
+
+                    if valuation >= 4:
+                        self.assertEqual(
+                            constant_tail_source_coordinates(
+                                successor_raw
+                            ),
+                            (
+                                source,
+                                1,
+                                valuation - 3,
+                                return_phase,
+                            ),
+                        )
+
     def test_valuation_one_raw_exit_strict_source_drop(self) -> None:
         for source in range(1, 10000):
             coefficient = embedded_original_state(source)
