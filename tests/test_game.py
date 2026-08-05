@@ -2118,6 +2118,37 @@ class GameArithmeticTests(unittest.TestCase):
             self.assertEqual(upper_coordinates[2], lower_coordinates[2] + 1)
             self.assertEqual(upper_coordinates[3], lower_coordinates[3])
 
+    def test_height_one_source_has_dyadic_signed_transition(self) -> None:
+        for source in range(1, 100000):
+            if transformed_B(source) != 0:
+                continue
+            alternating = transformed_A(source)
+            length = alternating.bit_length()
+            phase = 0 if length % 2 else 1
+            self.assertEqual(source_A_selecting_tail_bit(source), phase)
+            self.assertEqual(
+                3 * embedded_original_state(source),
+                2 ** (length + 2) + 1 - 2 * phase,
+            )
+
+            letter, valuation, child_source = source_boundary_transition(
+                source, phase
+            )
+            self.assertEqual((letter, valuation, child_source), (
+                "A",
+                1,
+                alternating,
+            ))
+
+            letter, valuation, child_source = source_boundary_transition(
+                source, 1 - phase
+            )
+            self.assertEqual((letter, valuation, child_source), (
+                "B",
+                length + 2,
+                0,
+            ))
+
     def test_zero_source_factor_boundary_valuations(self) -> None:
         for power in range(1, 100):
             coefficient = 3 ** (power - 1)

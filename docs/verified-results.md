@@ -6695,3 +6695,76 @@ is the row where the original parent \(D\) itself is exceptional and
 Section 69 produces an adjacent DRAW frame over \(s\).  The four-row table
 and the absence of exceptional spine residues are regression-tested for
 all parent states below \(100000\).
+
+## 77. A height-one source has one dyadic signed transition
+
+The source arithmetic in the exceptional row of Section 69 has only two
+phases.  Let
+
+\[
+B(s)=0,\qquad q=A(s),\qquad
+L=\lfloor\log_2q\rfloor+1,
+\]
+
+and retain the phase \(\delta\) of Section 70:
+
+\[
+\delta=
+\begin{cases}
+0,&L\text{ odd},\\
+1,&L\text{ even}.
+\end{cases}
+\]
+
+The all-alternating formula for \(q\) is
+
+\[
+3q=2^{L+1}-1-\delta.
+\]
+
+Since \(J(s)=2q+1\), it follows immediately that
+
+\[
+\boxed{3J(s)=2^{L+2}+1-2\delta.}
+\]
+
+The A-selecting source phase is exactly
+
+\[
+\boxed{\alpha(s)=\delta.}
+\]
+
+One way to see this without a residue table is to factor the two signed
+transitions.  In phase \(1-\delta\),
+
+\[
+3J(s)+1-2(1-\delta)=2^{L+2}.
+\]
+
+Its odd coefficient is \(1=J(0)\), so this phase selects \(B(s)=0\), with
+exact valuation \(L+2\).  The other phase must select \(A(s)=q\), and
+indeed
+
+\[
+3J(s)+1-2\delta=2J(q).
+\]
+
+Thus
+
+\[
+\boxed{
+\begin{array}{c|c|c}
+\text{phase}&\text{valuation}&\text{returned source}\\ \hline
+\delta&1&A(s)=q\\
+1-\delta&L+2&B(s)=0.
+\end{array}}
+\]
+
+Consequently the exceptional adjacent DRAW frame over the height-one
+source \(s\) has only two source-boundary orientations: a valuation-one
+lift over the explicit alternating state \(q\), or a possibly long but
+purely dyadic return to source zero.  This does not yet control factors of
+three accumulated while a long frame descends, but it removes any
+untyped signed transition at its original source.  The identities, phases,
+valuations, and selected sources are regression-tested for every
+height-one source below \(100000\).

@@ -383,6 +383,12 @@ DRAW-spine states are ordinary, so Section 74 forces the height descent.
 The only remaining height-one orientation is therefore the exceptional
 original-parent row, whose adjacent DRAW frame over the height-one WIN
 source s must be coupled to the terminal LOSS child of s.
+Section 77 reduces that exceptional frame to two exact source phases.  The
+A phase has valuation one and returns the explicit alternating state A(s);
+the B phase is the pure power 2^(L+2) and returns source zero.  What remains
+is to control the factors of three accumulated while the adjacent frame
+descends before reaching this signed boundary; its starting transition is
+now dyadic rather than an arbitrary source jump.
 
 ## Priority 2: finite transducer plus numerical potential
 
