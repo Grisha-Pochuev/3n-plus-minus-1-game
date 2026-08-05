@@ -483,6 +483,13 @@ The remaining rank question is only provenance: prove that the marked LOSS
 sibling in the factor row is spent before a later A-obligation is allowed
 to replace it by a higher token.
 
+Section 92 adds the numerical half of that provenance.  Both ordinary
+children of the factor row's WIN source b have coefficient source below
+the A-obligation source x.  Therefore only a genuinely accumulated-factor
+signed transition can still bypass the source decrease.  The transition
+audit can now focus on the Sections 79--90 high-to-one coupling with the
+marked LOSS sibling; ordinary source exits are already ranked.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

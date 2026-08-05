@@ -7745,3 +7745,61 @@ return from the third row cannot increase the distinguished token before
 the first or a proof-height descent occurs.  The source inequality, common
 child, and factor-frame coordinates are regression-tested for every
 \(1\le x<100000\).
+
+## 92. Both ordinary children of the factor token have smaller source
+
+The WIN source \(b\) in the third row of Section 91 carries a second
+universal numerical mark.  Its two ordinary children may be larger as
+integers, but their coefficient sources are both strictly below the
+A-obligation source \(x\).
+
+Retain the notation of Section 91.  Its arithmetic bound gives
+
+\[
+b\le A^2(x)\le\frac{9x+5}{4}.
+\]
+
+For the expanding child,
+
+\[
+A(b)\le\frac{3b+1}{2},
+\]
+
+and the universal source bound therefore yields
+
+\[
+\rho(A(b))
+\le\frac{A(b)-1}{6}
+\le\frac{3b-1}{12}
+\le\frac{27x+11}{48}<x.
+\]
+
+For the contracting child, either \(B(b)=0\), or
+
+\[
+\rho(B(b))
+\le\frac{B(b)-1}{6}
+<\frac{b}{6}
+\le\frac{9x+5}{24}<x
+\]
+
+for \(x\ge1\), since \(9x+5<24x\).  Thus
+
+\[
+\boxed{
+q\in\{A(b),B(b)\},\ q>0
+\Longrightarrow \rho(q)<x.}
+\]
+
+In the factor fork \(b\) is WIN.  Consequently every chosen LOSS child
+of \(b\), and also its other ordinary child if that state is DRAW, has
+coefficient source below \(x\).  The first case transports a strictly
+smaller-source finite proof token; the second is already a strict DRAW
+source transition.  Hence a return through an ordinary child of \(b\)
+cannot reset the numerical component of the marked rank above \(x\).
+
+This does not yet cover a signed transition after factors of three have
+accumulated: Sections 79--90 are still needed to show that such a
+transition either comes back to this ordinary fork or spends the marked
+LOSS token.  The two strict source inequalities are regression-tested for
+every \(1\le x<100000\).

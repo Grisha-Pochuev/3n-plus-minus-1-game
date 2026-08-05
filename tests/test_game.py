@@ -1504,6 +1504,13 @@ class GameArithmeticTests(unittest.TestCase):
                     constant_tail_source_coordinates(lifted_side)[0],
                     source,
                 )
+                for child in transformed_moves(lifted_side):
+                    if child == 0:
+                        continue
+                    self.assertLess(
+                        constant_tail_source_coordinates(child)[0],
+                        source,
+                    )
 
             factor_state = transformed_A(upper)
             factor_coordinates = [
