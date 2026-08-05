@@ -25,6 +25,13 @@ from optimal_3n1.game import (  # noqa: E402
     transformed_B_predecessors,
     v2,
 )
+from optimal_3n1.transducer import (  # noqa: E402
+    GRAY_A_ACCEPTING_STATE,
+    GRAY_A_STATES,
+    gray_A_transducer_accepts,
+    gray_A_transducer_path,
+    gray_A_transition,
+)
 
 
 class GameArithmeticTests(unittest.TestCase):
@@ -56,6 +63,26 @@ class GameArithmeticTests(unittest.TestCase):
             self.assertEqual(
                 stripped, gray_code(alternating_suffix_remainder(value))
             )
+
+    def test_gray_A_eight_state_transducer(self) -> None:
+        self.assertEqual(len(GRAY_A_STATES), 8)
+        for state in GRAY_A_STATES:
+            for input_bit in (0, 1):
+                for output_bit in (0, 1):
+                    following = gray_A_transition(state, input_bit, output_bit)
+                    self.assertTrue(following is None or following in GRAY_A_STATES)
+
+        for q in range(256):
+            input_gray = gray_code(q)
+            expected = gray_code(transformed_A(q))
+            path = gray_A_transducer_path(input_gray, expected)
+            self.assertIsNotNone(path)
+            self.assertEqual(path[-1], GRAY_A_ACCEPTING_STATE)  # type: ignore[index]
+            for proposed in range(512):
+                self.assertEqual(
+                    gray_A_transducer_accepts(input_gray, proposed),
+                    proposed == expected,
+                )
 
     def test_normal_form(self) -> None:
         for m in range(1, 10000):

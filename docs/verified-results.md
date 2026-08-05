@@ -313,3 +313,71 @@ reverse reachability pass.  A nonempty result is therefore a rigorous finite
 countercertificate.  An empty result only says that no such certificate is
 isolated from the selected boundary; it does not exclude an unbounded draw
 kernel.
+
+## 9. Two steps along a WIN-only path
+
+Every `WIN` or `LOSS` position has a finite proof height.  This follows
+directly from the least fixed-point construction of the two outcomes; since
+there are only two children, the union of the finite stages is already a
+fixed point.  Equivalently, a winning strategy tree is finitely branching,
+and if all its plays terminate then Koenig's lemma makes the tree finite.
+
+Choose the canonical height
+
+\[
+h(0)=0,
+\]
+
+\[
+h(x)=1+\min\{h(y):y\text{ is a LOSS child of }x\}
+\quad(x\text{ WIN}),
+\]
+
+and
+
+\[
+h(x)=1+\max\{h(y):y\text{ is a child of }x\}
+\quad(x\text{ LOSS}).
+\]
+
+Let `x_0,x_1,x_2` be three `WIN` positions such that each is a child of the
+preceding position.  If
+
+\[
+x_0\not\equiv1,3,12,14\pmod {16},
+\]
+
+then
+
+\[
+\boxed{x_2=B(A(x_0))}
+\qquad\hbox{and}\qquad
+\boxed{h(x_2)\le h(x_0)-2}.
+\]
+
+Indeed, because `x_0` and its selected child `x_1` are both `WIN`, the other
+child `ell` of `x_0` must be `LOSS`.  If `x_1=A(x_0)`, then
+`ell=B(x_0)`.  The side-branch identity makes `B(A(x_0))` a child of `ell`,
+so it is `WIN`; it is also the `B`-child of `x_1`.  Hence it is the unique
+`WIN` child of `x_1` and equals `x_2`.
+
+If `x_1=B(x_0)`, then `ell=A(x_0)`.  Now `B(A(x_0))` is directly a child of
+the losing `ell`, hence is `WIN`, while the side-branch identity makes it a
+child of `x_1`.  It again has to equal `x_2`.
+
+In both cases `x_2` is a child of the losing position `ell`.  The height
+recursion gives
+
+\[
+h(x_0)=1+h(ell)\ge h(x_2)+2.
+\]
+
+Consequently, an infinite path containing only `WIN` positions must visit
+the four exceptional residue classes infinitely often.  Otherwise a tail
+would be entirely nonexceptional, and the displayed inequality on either
+parity subsequence of the path would give an infinite descending sequence of
+nonnegative proof heights.
+
+This does not yet exclude such a path: an exceptional visit can reset the
+proof height.  It reduces the remaining obstruction to the exceptional
+returns of the finite binary transducer.

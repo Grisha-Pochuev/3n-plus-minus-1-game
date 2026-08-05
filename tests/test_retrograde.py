@@ -5,7 +5,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from optimal_3n1.game import transformed_A, transformed_moves  # noqa: E402
+from optimal_3n1.game import (  # noqa: E402
+    SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+    transformed_A,
+    transformed_B,
+    transformed_moves,
+)
 from optimal_3n1.retrograde import (  # noqa: E402
     Outcome,
     bounded_retrograde,
@@ -50,6 +55,20 @@ class RetrogradeTests(unittest.TestCase):
             for _ in range(3):
                 ray.append(transformed_A(ray[-1]))
             self.assertFalse(all(result.outcome(node) == Outcome.WIN for node in ray))
+
+    def test_nonexceptional_win_path_two_step_target(self) -> None:
+        result = bounded_retrograde(10000)
+        for q in range(1, 1000):
+            if q % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                continue
+            if result.outcome(q) != Outcome.WIN:
+                continue
+            for first in transformed_moves(q):
+                if result.outcome(first) != Outcome.WIN:
+                    continue
+                for second in transformed_moves(first):
+                    if result.outcome(second) == Outcome.WIN:
+                        self.assertEqual(second, transformed_B(transformed_A(q)))
 
     def test_no_certified_finite_draw_kernel_at_small_cutoff(self) -> None:
         result = bounded_retrograde(10000)

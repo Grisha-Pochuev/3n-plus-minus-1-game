@@ -167,3 +167,59 @@ Thus the unbounded alternating-suffix scan becomes the simple operation
 "delete the terminal run of ones and the zero immediately to its left" in
 Gray coordinates.  Multiplication by `3` and its carry state remain in
 `Gamma`; this identity alone is not a rank proof.
+
+## An eight-state transducer for Gamma
+
+The remaining map `Gamma` is an exact finite-state relation.  Read the Gray
+digits from least significant to most significant.  Write `b_i` for the
+binary digits of `q`, `c_i` for those of `A(q)`, and use the identity
+
+\[
+2A(q)=3q+b_0.
+\]
+
+A state at position `i` is
+
+\[
+(b_i,c_i,d_{i+1})\in\{0,1\}^3,
+\]
+
+where `d` is the carry into column `i+1` of the addition `q+2q+b_0`.
+If the next input and output Gray digits are `g_i` and `h_i`, put
+
+\[
+b_{i+1}=b_i\mathbin{\mathtt{xor}}g_i,
+\qquad
+c_{i+1}=c_i\mathbin{\mathtt{xor}}h_i.
+\]
+
+The transition is legal exactly when
+
+\[
+c_i\equiv b_{i+1}+b_i+d_{i+1}\pmod2,
+\]
+
+and its new carry is
+
+\[
+d_{i+2}=\left\lfloor
+\frac{b_{i+1}+b_i+d_{i+1}}2
+\right\rfloor.
+\]
+
+There are only eight possible states.  Initially `b_0` is guessed and the
+carry is forced to equal it; `c_0` is also guessed.  After one leading-zero
+padding column the accepting state is `(0,0,0)`.  The accepting condition
+makes both guesses unique, because Gray digits together with a leading zero
+uniquely reconstruct the binary digits.  Column-by-column addition then
+proves that the accepted pairs are exactly
+
+\[
+\boxed{(G(q),G(A(q)))}.
+\]
+
+The complete transition predicate and an exhaustive functional regression
+test are in `src/optimal_3n1/transducer.py` and `tests/test_game.py`.  Together
+with the preceding suffix-deletion machine, both game edges are therefore
+rational binary relations.  A well-founded game-theoretic rank is still
+needed; finite-state representability alone does not exclude `DRAW`.
