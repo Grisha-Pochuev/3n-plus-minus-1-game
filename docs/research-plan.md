@@ -584,6 +584,23 @@ and exactly two thereafter.  The next proof must use the two outcome marks
 through the valuation-two recycle rather than revive the fixed-depth
 shortcut already ruled out by Section 67.
 
+Section 103 supplies the correct height order at the entry to that
+recycle.  A single token is insufficient, but the pair of high-return
+WIN branches is not reset: (u,c) becomes (p,b), then the marked
+(q WIN,y LOSS), with both components strictly lower at each macrostep and
+the sum lower by at least seven overall.  Cross-comparing h(y) with h(p)
+is unnecessary and is not justified by local recursion.  The remaining
+task is now a paired transport lemma through the factor scan, followed by
+the bounded v=5 and exceptional v=6 rows.
+
+Section 104 closes the first raw branch of that transport for v>=9.  The
+marked children q WIN and y LOSS have a common WIN child r one height below
+y, and the first ninefold raw exit is an exact lift over r (exponent at
+least two for v=9, exactly one thereafter).  Hence that raw branch strictly
+lowers the second component of the pair.  The remaining exits are the
+nested signed lift over y and the coupled twenty-sevenfold level, together
+with v=7,8 and the two short exceptional rows.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

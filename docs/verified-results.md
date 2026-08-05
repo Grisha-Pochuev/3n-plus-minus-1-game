@@ -8529,6 +8529,197 @@ nonexceptional residue of \(u\), and common-child identity are
 regression-tested for every \(1\le t<10000\), both phases, and valuations
 five through ten.
 
+## 103. A high-return factor fork strictly lowers a two-token height
+
+The apparent height reset in Section 102 disappears if the two finite
+branches of the high return are retained together.  Continue with its
+factor alternative and first suppose \(v\ge7\).  Section 100 gives
+
+\[
+u,c,p=A(c)\text{ WIN},\qquad B(c)\text{ LOSS},qquad
+h(p)\le h(u)-2.
+\]
+
+Here \(c\) is ordinary and Section 101 gives
+
+\[
+b=B(p)=B(A(c))\text{ WIN}.
+\]
+
+The ordinary side relation at \(c\) makes \(b\) a child of the LOSS state
+\(B(c)\).  Consequently
+
+\[
+\boxed{h(b)\le h(c)-2.}
+\]
+
+Thus the ordered pair of finite tokens has already fallen componentwise:
+
+\[
+\boxed{(h(u),h(c))\longmapsto(h(p),h(b)),\qquad
+h(p)+h(b)\le h(u)+h(c)-4.}
+\]
+
+There is a second simultaneous fall before the factor scan.  The state
+\(p\) is ordinary for every \(v\ge7\).  Since both \(p\) and its child
+\(b\) are WIN, the other child \(\ell\) of \(p\) is LOSS.  Their ordinary
+common child
+
+\[
+q=B(A(p))
+\]
+
+is a child of \(\ell\), so
+
+\[
+q\text{ is WIN},\qquad h(q)\le h(p)-2.
+\]
+
+Let \(y\) be the other child of \(b\).  Section 102 shows that \(q\) is
+one child of \(b\), and the factor phase selects \(y\).  Because \(b\) and
+\(q\) are both WIN, this selected sibling is the unique LOSS child of
+\(b\).  Hence
+
+\[
+\boxed{y\text{ is LOSS},\qquad h(y)=h(b)-1.}
+\]
+
+The second pair therefore also falls componentwise:
+
+\[
+\boxed{(h(p),h(b))\longmapsto(h(q),h(y)),\qquad
+h(q)+h(y)\le h(p)+h(b)-3.}
+\]
+
+Combining the two displays gives the strict scalar mark
+
+\[
+\boxed{h(q)+h(y)\le h(u)+h(c)-7.}
+\]
+
+No comparison between \(h(y)\) and \(h(p)\), or between \(h(q)\) and
+\(h(b)\), is used.  Such a cross-comparison is not supplied by the game
+recursion: the two WIN states use different LOSS witnesses.  The correct
+local rank is the sum, or equivalently the componentwise product order, on
+the two carried proof tokens.
+
+The same proof works at \(v=6\) whenever \(p\) is ordinary, although its
+factor exponent can be at least three and its next selected source is not
+covered by Section 102's \(v\ge7\) table.  The only failures of the
+two ordinary side relations are therefore the already bounded exceptional
+rows: \(c\) at \(v=5\), and \(p\bmod16\in\{3,12\}\) at \(v=6\).
+
+This proves the missing height comparison at entry to the marked factor
+scan; it does not yet prove that the scan returns another pair with no
+increase.  The next lemma must transport the pair \((q\text{ WIN},
+y\text{ LOSS})\), not replace it by the height of either source alone.
+All arithmetic child and phase identities used here are regression-tested
+in Sections 100--102.
+
+## 104. The first raw factor exit lowers the selected token
+
+The pair from Section 103 already controls the first raw exit in every
+stable high row.  Suppose \(v\ge9\), and retain
+
+\[
+b\text{ WIN},\qquad q=A(b)\text{ WIN},\qquad
+y=B(b)\text{ LOSS}.
+\]
+
+The state \(b=Q_{v-6}^g(27J(t))\) is ordinary.  Hence
+
+\[
+r:=B(q)=B(A(b))
+\]
+
+is a child of both \(q\) and \(y\).  Since \(y\) is LOSS,
+
+\[
+\boxed{r\text{ is WIN},\qquad h(r)\le h(y)-1.}
+\]
+
+Write \(s=v-8\ge1\).  The two children of \(b\) have the adjacent
+coordinates
+
+\[
+q=Q_{s+1}^g(81J(t)),\qquad
+y=Q_s^g(81J(t)).
+\]
+
+For \(s\ge2\), their common child is explicitly
+
+\[
+r=A(y)=B(q)=Q_{s-1}^g(243J(t)).
+\]
+
+At \(s=1\), the same common-child identity holds with
+\(r=B(y)=B(q)\) at the signed boundary.
+
+Now take the first ninefold boundary of the exponent-three/two factor
+frame.  Factor
+
+\[
+9J(b)+1-2g=2J(w).
+\]
+
+Direct substitution, or the valuation-one row of Section 54, gives
+
+\[
+\boxed{w=Q_1^{1-g}(J(y)).}
+\]
+
+Thus the signed exit and its raw sibling are
+
+\[
+T=Q_1^{1-g}(J(w)),\qquad S=R(T).
+\]
+
+The appended-bit calculation is exact.  Put \(a=A(y)\).  From the two
+successive exponent-one lifts,
+
+\[
+T=24a+9+5g.
+\]
+
+If \(s\ge2\), then \(a=r\).  For \(g=0\), put \(K=3r+1\); one has
+
+\[
+T=8K+1,qquad Q_1^0(J(r))=2K.
+\]
+
+The final bits are `001`, while \(K\) is odd, so deleting the maximal
+alternating suffix removes exactly the last two bits and leaves \(2K\).
+For \(g=1\), put \(K=Q_1^1(J(r))=6r+3\); then
+
+\[
+T=4K+2.
+\]
+
+Here \(K\) is odd, so the appended `10` is again the exact maximal
+alternating suffix.  Therefore
+
+\[
+\boxed{v\ge10\Longrightarrow S=Q_1^g(J(r)).}
+\]
+
+When \(s=1\), the same appended suffix continues through the maximal
+alternating suffix of \(A(y)\).  Its remainder is \(B(y)=r\), and at least
+the two appended bits have been removed.  Consequently, for an exact
+integer \(m\ge2\),
+
+\[
+\boxed{v=9\Longrightarrow S=Q_m^g(J(r)).}
+\]
+
+Thus a DRAW on the first raw exit enters an exact factor-free lift over
+the WIN token \(r\), whose height is strictly below the selected LOSS
+token \(y\).  In the paired rank it replaces \((q,y)\) by \((q,r)\) and
+strictly lowers the second component.  This does not yet settle a DRAW on
+the signed exit \(T\), nor either exit at the next factor level.  The
+nested source \(w\), raw source \(r\), phase, and exponent split are
+regression-tested for every \(1\le t<10000\), both phases, and valuations
+nine and ten.
+
 ## 101. The high-return common side touches the lower predecessor token
 
 The lower token in Section 100 is not arbitrary relative to the new

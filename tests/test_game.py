@@ -1056,6 +1056,57 @@ class GameArithmeticTests(unittest.TestCase):
                                 2,
                             )
 
+                    if valuation < 9:
+                        continue
+
+                    common_token = transformed_B(lower_child)
+                    self.assertIn(
+                        common_token,
+                        transformed_moves(other_factor_child),
+                    )
+                    first_factor_numerator = (
+                        9 * embedded_original_state(common_side)
+                        + 1
+                        - 2 * phase
+                    )
+                    first_factor_valuation = v2(
+                        first_factor_numerator
+                    )
+                    self.assertEqual(first_factor_valuation, 1)
+                    first_factor_coefficient = (
+                        first_factor_numerator
+                        >> first_factor_valuation
+                    )
+                    first_factor_source = inverse_F(
+                        (first_factor_coefficient - 1) // 2
+                    )
+                    self.assertEqual(
+                        first_factor_source,
+                        constant_tail_state(
+                            embedded_original_state(other_factor_child),
+                            1,
+                            1 - phase,
+                        ),
+                    )
+                    first_signed_exit = constant_tail_state(
+                        embedded_original_state(first_factor_source),
+                        first_factor_valuation,
+                        1 - phase,
+                    )
+                    first_raw_exit = alternating_suffix_remainder(
+                        first_signed_exit
+                    )
+                    raw_coordinates = constant_tail_source_coordinates(
+                        first_raw_exit
+                    )
+                    self.assertEqual(raw_coordinates[0], common_token)
+                    self.assertEqual(raw_coordinates[1], 0)
+                    self.assertEqual(raw_coordinates[3], phase)
+                    if valuation == 9:
+                        self.assertGreaterEqual(raw_coordinates[2], 2)
+                    else:
+                        self.assertEqual(raw_coordinates[2], 1)
+
     def test_short_high_return_token_diamonds(self) -> None:
         for source in range(1, 10000):
             coefficient = embedded_original_state(source)
