@@ -332,6 +332,12 @@ therefore replaced by the same two marked frame types used in the
 positive-height analysis plus one oriented boundary successor.  The next
 rank must show that repeated A(s) successors cannot alternate indefinitely
 with the adjacent height-one frames.
+Section 70 shows that this successor is not unmarked: both children of
+A(s) form an adjacent source-zero frame.  A DRAW A(s) marks that frame by
+DRAW, while a WIN A(s) marks it by a required LOSS witness.  Thus the
+height-one base can be represented by a finite outcome flag on one
+zero-source adjacent-frame type; the next local target is the transition of
+that marked frame through its first factor-three boundary.
 
 ## Priority 2: finite transducer plus numerical potential
 

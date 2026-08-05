@@ -6144,3 +6144,58 @@ larger proof height, and the two adjacent-frame rows still require the
 global marked rank.  It does remove the raw B-predecessor family from the
 base case.  All arithmetic identities are regression-tested for
 \(D<100000\).
+
+## 70. The A-child of every height-one WIN is an adjacent zero-source gate
+
+The explicit endpoint \(A(s)\) in Section 69 retains the same zero-source
+geometry even when it is WIN.  Let
+
+\[
+B(s)=0,qquad q=A(s),qquad L=\lfloor\log_2q\rfloor+1.
+\]
+
+The equality \(B(s)=R(A(s))=0\) says exactly that the whole binary word for
+\(q\) is alternating.  Its leading bit is one.  Hence
+
+\[
+3q=
+\begin{cases}
+2^{L+1}-1,&L\text{ odd},\\
+2^{L+1}-2,&L\text{ even}.
+\end{cases}
+\]
+
+Put \(\delta=0\) for odd \(L\) and \(\delta=1\) for even \(L\).  Directly
+from \(A(q)=\lceil3q/2\rceil\),
+
+\[
+A(q)=Q_L^\delta(1).
+\]
+
+This is a constant binary word of length \(L\).  Its maximal alternating
+suffix consists of the final bit alone, so
+
+\[
+B(q)=Q_{L-1}^\delta(1).
+\]
+
+Thus
+
+\[
+\boxed{
+\operatorname{moves}(A(s))
+=\{Q_L^\delta(J(0)),Q_{L-1}^\delta(J(0))\}.}
+\]
+
+The two children are an adjacent factor-free frame over source zero.  This
+has an exact outcome interpretation:
+
+- if \(A(s)\) is DRAW, the frame contains a DRAW and no LOSS;
+- if \(A(s)\) is WIN, the frame contains at least one LOSS witness of that
+  WIN (the other member can be WIN or DRAW).
+
+Consequently the ordinary successor in Section 69 does not discard the
+height-one provenance.  It converts the terminal LOSS child of \(s\) into
+an adjacent zero-source child frame of \(A(s)\), marked either by a DRAW or
+by a LOSS witness according to the endpoint outcome.  The exact coordinates
+are regression-tested for every height-one endpoint \(s<100000\).

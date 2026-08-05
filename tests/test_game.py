@@ -2033,6 +2033,19 @@ class GameArithmeticTests(unittest.TestCase):
             )
             self.assertEqual(continuation_coordinates[3], side_coordinates[3])
 
+    def test_height_one_endpoint_has_adjacent_zero_source_children(self) -> None:
+        for endpoint in range(1, 100000):
+            if transformed_B(endpoint) != 0:
+                continue
+            lifted_endpoint = transformed_A(endpoint)
+            upper, lower = transformed_moves(lifted_endpoint)
+            upper_coordinates = constant_tail_source_coordinates(upper)
+            lower_coordinates = constant_tail_source_coordinates(lower)
+            self.assertEqual(upper_coordinates[:2], (0, 0))
+            self.assertEqual(lower_coordinates[:2], (0, 0))
+            self.assertEqual(upper_coordinates[2], lower_coordinates[2] + 1)
+            self.assertEqual(upper_coordinates[3], lower_coordinates[3])
+
     def test_B_predecessor_parameterization(self) -> None:
         limit = 2000
         actual: dict[int, list[int]] = {}
