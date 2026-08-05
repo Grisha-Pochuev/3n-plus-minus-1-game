@@ -200,6 +200,13 @@ form a barrier that no DRAW parent may touch.  The next abstraction must
 therefore distinguish a boundary endpoint whose minimum-height provenance is
 known from an arbitrary later endpoint.  Merely carrying the label LOSS for
 the witness, without this provenance, is insufficient.
+Section 52 adds the first type-sensitive rank edge.  The ordinary source x
+of the A-selecting obligation is never DRAW.  For factor exponents two and
+three, a WIN orientation of x makes the factor boundary endpoint
+B(A(x)) a child of either possible LOSS witness of x and hence lowers
+height by two.  Rank synthesis can therefore restrict the r=2,3 recycling
+problem to obligations whose ordinary source is LOSS; exponent one remains
+the separate one-sided return A^2(x).
 
 ## Priority 2: finite transducer plus numerical potential
 

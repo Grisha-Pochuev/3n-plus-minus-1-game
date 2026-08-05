@@ -838,6 +838,20 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertLessEqual(factor_coordinates[1][2], 3)
 
             lower_exponent = factor_coordinates[1][2]
+            if lower_exponent == 1:
+                self.assertEqual(
+                    lifted_side,
+                    transformed_A(transformed_A(current)),
+                )
+            else:
+                self.assertEqual(
+                    lifted_side,
+                    transformed_B(transformed_A(current)),
+                )
+                self.assertNotIn(
+                    current % 16,
+                    SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                )
             opposite_twin = transformed_B(factor_three_state)
             selected_twin = transformed_A(selected_lift)
             self.assertEqual(

@@ -4574,3 +4574,72 @@ Thus the boxed barrier cannot simply be attached to every factor fork.
 A completion must either transport the originally minimum endpoint through
 the return graph or prove a genuine height descent before restarting the
 argument.
+
+## 52. The \(r=2,3\) factor source is a two-sided ordinary return
+
+The source \(x\) in the final A-selecting obligation carries more
+game-theoretic information than was used in Sections 28--50.  First, it is
+itself a finite-outcome position.  Indeed, Section 28 has
+
+\[
+s\le x<2s.
+\]
+
+For every positive state \(q\), its coefficient source satisfies
+\(\rho(q)\le(q-1)/6\).  Consequently
+
+\[
+\rho(x)\le\frac{x-1}{6}<s.
+\]
+
+Global source minimality therefore excludes \(x\) from DRAW:
+
+\[
+\boxed{x\text{ is WIN or LOSS}.}
+\]
+
+Now retain the factor alternative and its lower exponent \(r\).  Put
+\(y=A(x)\), \(e=\alpha(x)\), and \(g=1-e\).  The state
+
+\[
+V=Q_1^g(J(y))
+\]
+
+has expanding child
+
+\[
+A(V)=Q_r^e(J(b)).
+\]
+
+This is exactly the signed source transition at \(y\) in phase \(g\).
+Its valuation is \(r\), and its selected ordinary source is \(b\).
+Section 17 therefore gives the dichotomy
+
+\[
+\boxed{
+r=1\Longrightarrow b=A^2(x),\qquad
+r\ge2\Longrightarrow b=B(A(x)).}
+\]
+
+The first identity recovers Section 31.  In the second case, \(x\) is
+necessarily nonexceptional.  Direct substitution in the four exceptional
+classes \(1,3,12,14\pmod {16}\) shows that \(g=\alpha(A(x))\), so the
+transition at \(A(x)\) would instead have valuation one.
+
+Suppose now that \(r\ge2\) and \(x\) is WIN.  The value
+\(b=B(A(x))\) is directly a child of \(A(x)\).  Since \(x\) is
+nonexceptional, the ordinary side relation makes the same \(b\) a child of
+\(B(x)\).  Let \(\ell\) be a LOSS child realizing the canonical height of
+\(x\).  Whichever of \(A(x),B(x)\) is \(\ell\), the value \(b\) is its
+WIN child.  Hence
+
+\[
+\boxed{h(b)\le h(x)-2.}
+\]
+
+In the factor alternative \(U\) is DRAW and \(b=B(U)\) is WIN, so \(b\) is
+also a boundary endpoint.  Thus every \(r=2,3\) factor fork whose ordinary
+source \(x\) is WIN already pays a strict proof-height descent from \(x\).
+The unresolved orientation is correspondingly sharper: it is enough to
+transport provenance through the case where \(x\) is LOSS, together with
+the one-sided \(r=1\) return \(b=A^2(x)\).
