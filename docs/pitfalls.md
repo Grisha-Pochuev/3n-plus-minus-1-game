@@ -83,3 +83,25 @@ This is not a draw counterexample and not a `WIN`-only path: the required
 outcome labels of the intermediate vertices are inconsistent.  It disproves
 only the coarse proposed rank.  Any successful exceptional-return argument
 must retain the forced `LOSS` siblings or their finite proof heights.
+
+## 10. A minimum-height boundary does not minimize every LOSS child
+
+If a `WIN` position `z` has two `LOSS` children, its proof height uses the
+smaller of their two proof heights.  A `WIN` grandchild below the other,
+larger-height `LOSS` child need not have smaller height than `z`.
+
+Consequently, at a globally minimum-height `DRAW -> WIN` boundary one may
+not argue
+
+```text
+x is a LOSS child of z
+and c is a WIN child of x
+therefore h(c) <= h(z)-2.
+```
+
+The conclusion is valid only when `x` is known to be a minimum-height LOSS
+witness for `z`, or when the same `c` lies below every possible LOSS child.
+Section 22 uses the latter, stronger two-sided diamond.  The returned
+suffix-length-two case has only a one-sided diamond, so the same height
+argument cannot be reused there without an additional comparison of the two
+LOSS witnesses.
