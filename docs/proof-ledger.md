@@ -55,6 +55,8 @@ Update this table whenever the status of a substantial claim changes.
 | An indefinitely surviving phase-match boundary reduction must eventually enter one of eight suffix-length-two classes modulo 128 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Sections 20--22 |
 | The eight suffix-length-two classes reduce to the exact lifted WIN-source / adjacent LOSS-source fork of Section 23 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 23; regression in `tests/test_game.py` |
 | In that fork the ordinary returned source `c` has a forced WIN child `r` and forced LOSS child `ell`, with the two lifted phases selecting them respectively | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 23 |
+| The side child of every `A`-selecting source lift is an ordinary child of the selected source `A(x)` | **PROVED** | `docs/verified-results.md`, Section 24; regression in `tests/test_game.py` |
+| In the `31,53,74,96 mod 128` LOSS-source fork, the adjacent DRAW pair creates a boundary whose WIN height drops by at least two | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 24 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

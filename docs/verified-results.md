@@ -2060,3 +2060,82 @@ continues a DRAW through the lifted phase selecting the ordinary WIN child
 which selects the ordinary LOSS child `ell`.  Closing this WIN-source versus
 LOSS-source switch, while retaining their proof heights, is sufficient to
 finish the canonical minimum-source lift analysis.
+
+## 24. The A-selecting lift closes one half of the final switch
+
+There is a universal two-bit diamond behind the `A`-selecting phase.  Let
+`x>0`, put
+
+\[
+e=\alpha(x),\qquad w=L_e(x),\qquad y=A(x),\qquad u=A(y).
+\]
+
+Then
+
+\[
+\boxed{B(w)\in\{A(y),B(y)\}.}
+\]
+
+In other words, the side child of the `A`-selecting source lift is always
+an ordinary child of the selected source `A(x)`.  More precisely,
+
+\[
+B(w)=
+\begin{cases}
+A(y),&A(y)\bmod2=e,\\
+B(y),&A(y)\bmod2\ne e.
+\end{cases}
+\]
+
+Indeed, the source-boundary identity gives
+
+\[
+A(w)=L_{1-e}(y)=4A(y)+1+e.
+\]
+
+For `e=0` the last two appended bits are `01`, and for `e=1` they are
+`10`.  If the last bit of `A(y)` equals `e`, the first appended bit repeats
+it, so the maximal alternating suffix consists of exactly the appended two
+bits and its deletion leaves `A(y)`.  Otherwise the alternation continues
+into `A(y)`, and deleting it leaves `R(A(y))=B(y)`.  This proves both the
+boxed identity and the refined formula.
+
+The diamond retains exactly the proof-height information needed when the
+selected source is losing.  Suppose `x` is WIN, `A(x)` is LOSS, and
+`B(x)` is WIN.  Write
+
+\[
+b=B(L_{\alpha(x)}(x)).
+\]
+
+The boxed identity makes `b` a child of the unique LOSS child `A(x)` of
+`x`.  Hence
+
+\[
+\boxed{b\text{ is WIN},\qquad h(b)\le h(x)-2.}
+\]
+
+Moreover `Q_1^{\alpha(x)}(J(x))` and
+`Q_2^{\alpha(x)}(J(x))` share this same `B`-child.  Consequently, if either
+member of that adjacent pair is DRAW, it supplies a DRAW-to-WIN boundary
+whose endpoint height is at most `h(x)-2`.
+
+Apply this to the second fork of Section 23 in the four rows
+
+\[
+s\equiv31,53,74,96\pmod {128}.
+\]
+
+There `e\ne\alpha(c)`, so the opposite phase in the adjacent pair is
+`1-e=\alpha(c)`, while
+
+\[
+r=B(c)\text{ is WIN},\qquad \ell=A(c)\text{ is LOSS}.
+\]
+
+At least one member of the pair is DRAW.  Taking `x=c` in the preceding
+diamond therefore produces a new boundary whose WIN endpoint has height at
+most `h(c)-2`.  Thus this entire fork is a strict height descent.  This is a
+conditional reduction, not yet the global no-DRAW theorem: the
+`B`-selecting LOSS-source fork in the other four rows and the two
+WIN-source continuations still have to be closed.

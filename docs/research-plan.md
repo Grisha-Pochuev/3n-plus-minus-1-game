@@ -80,7 +80,11 @@ form: a DRAW must continue either through a lift whose phase selects a forced
 ordinary WIN child `r`, or through the opposite adjacent pair whose phase
 selects the forced ordinary LOSS child `ell`.  The immediate target is to
 show that the LOSS-source fork creates a lower-height boundary and that the
-WIN-source fork cannot repeat without entering it.
+WIN-source fork cannot repeat without entering it.  Section 24 proves the
+universal two-bit diamond for an `A`-selecting lift and thereby closes the
+LOSS-source fork in the four `31,53,74,96 mod 128` rows by a strict height
+drop.  The remaining local cases are the `B`-selecting LOSS-source fork in
+the other four rows and the two WIN-source continuations.
 
 ## Priority 2: finite transducer plus numerical potential
 

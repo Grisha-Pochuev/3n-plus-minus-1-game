@@ -678,6 +678,29 @@ class GameArithmeticTests(unittest.TestCase):
                 {1 - phase},
             )
 
+    def test_A_selecting_lift_side_diamond(self) -> None:
+        for source in range(1, 100000):
+            phase = source_A_selecting_tail_bit(source)
+            lift = constant_tail_state(
+                embedded_original_state(source), 1, phase
+            )
+            selected_source = transformed_A(source)
+            selected_expanding = transformed_A(selected_source)
+            lifted_side = transformed_B(lift)
+
+            self.assertEqual(
+                transformed_A(lift),
+                4 * selected_expanding + 1 + phase,
+            )
+            self.assertIn(lifted_side, transformed_moves(selected_source))
+            if selected_expanding % 2 == phase:
+                self.assertEqual(lifted_side, selected_expanding)
+            else:
+                self.assertEqual(
+                    lifted_side,
+                    transformed_B(selected_source),
+                )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:
