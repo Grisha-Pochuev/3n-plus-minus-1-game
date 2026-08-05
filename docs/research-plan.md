@@ -158,6 +158,15 @@ Section 42 eliminates the S1 exceptions outright and converts every S2
 exception into a lift of exponent at most four over the explicit LOSS
 source C.  Thus the remaining v=4 DRAW continuation is finite; its
 constant-tail children should now be coupled to the two WIN children of C.
+Section 43 also normalizes the separate j=2 row: it returns to an obligation
+at a WIN source W<10s with an explicit LOSS sibling, and reaches an
+A-selecting phase, a source drop, or an exponent-two/three frame after at
+most eight preserving B transfers.  The next rank must retain that LOSS
+sibling across these bounded transfers and the recycling WIN-boundary
+alternative.  In the immediate A-selecting half, Section 44 already gives
+the boundary/strict-descent dichotomy and leaves only an exceptional WIN
+source R.  The unresolved B half and that exceptional R row should be
+merged with the bounded exceptional lifts of Section 42.
 
 ## Priority 2: finite transducer plus numerical potential
 

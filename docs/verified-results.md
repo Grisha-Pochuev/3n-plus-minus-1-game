@@ -3768,3 +3768,165 @@ Hence every exceptional \(v=4\) DRAW continuation is an exponent-at-most-
 four constant-tail state over an explicit ordinary LOSS source \(C\).
 The source identity, the strict \(S_1\) source drop, and both exponent bounds
 are regression-tested in the actual residual trajectory.
+
+## 43. The valuation-four \(j=2\) boundary returns to a bounded WIN source
+
+It remains to normalize the exponent-zero row omitted from Section 37.
+Keep \(a=J(W)\).  The \(j=2\) signed identity at \(Z\) gives
+
+\[
+3J(Z)+1-2g=4a.
+\]
+
+Since \(M=A(Z)\) is LOSS, its two children are WIN.  They have the exact
+form
+
+\[
+\boxed{
+E=A(M)=a-e=Q_0^e(a),\qquad
+R=B(M)=R(a-e).
+}
+\]
+
+The transferred upper pair is \(S_2,S_1\), so it is again the exact
+obligation \(O(W,e)\).  Crucially, the phase \(e\) at \(W\) selects the
+ordinary WIN source \(R\):
+
+\[
+\boxed{\operatorname{selected}_e(W)=R=B(M).}
+\]
+
+For a direct proof, write \(T=J(t)\).  From
+\(Z=Q_1^e(3T)=6T-e\), the valuation-two equation gives
+
+\[
+a=J(W)=\frac{27T+1-2e}{2},
+\qquad
+M=9T-e,
+\qquad
+A(M)=a-e.
+\]
+
+For every odd \(a\), the odd coefficient of the signed expression
+\(3a+1-2e\) is \(J(R(a-e))\).  When \(e=0\), this is the first coefficient
+identity of Section 18 after deleting the final one bit; when \(e=1\), it
+is its zero-bit symmetric form.  Section 17 then identifies the selected
+ordinary source as \(R(a-e)=B(M)\), proving the box.
+
+The same valuation condition leaves only
+
+\[
+\boxed{Z\bmod16\in\{2,5,10,13\}.}
+\]
+
+Thus \(Z\) is nonexceptional.  Its ordinary side relation makes
+\(R=B(A(Z))\) the corresponding child of \(W=B(Z)\).  Since \(R\) is a
+child of the LOSS state \(M\), it is WIN.  The other ordinary child of the
+WIN state \(W\) is consequently LOSS.  More precisely, the four rows are
+
+\[
+\begin{array}{c|c|c}
+Z\bmod16&e\text{ selects at }W&R\\ \hline
+2,13&B&B(W),\\
+5,10&A&A(W).
+\end{array}
+\]
+
+Finally this returned WIN source is numerically bounded.  Section 36 gives
+\(t\le(81s-28)/128\), while
+
+\[
+J(W)=\frac{27J(t)+1-2e}{2}\le\frac{81t+55}{2}.
+\]
+
+Using \(J(W)\ge3W+1\) yields
+
+\[
+W\le\frac{6561s+4516}{768}<10s
+\qquad(s\ge10).
+\]
+
+If the phase at \(W\) is already A-selecting, the residual object is an
+A-selecting obligation whose selected ordinary source is the explicit WIN
+\(R\), with a retained LOSS sibling.  If it is B-selecting, Section 27
+preserves the exact obligation when the signed valuation is two.  Every
+such transfer satisfies
+
+\[
+x_{i+1}\le\frac{3x_i+1}{4}.
+\]
+
+Starting from \(x_0=W<10s\), nine such transfers give
+
+\[
+x_9\le1+\left(\frac34\right)^9(W-1)<s.
+\]
+
+Therefore at most eight B-source transfers can survive before the source
+drops below \(s\) or the A-selecting phase is reached.
+
+There is one necessary qualification.  A B-selecting valuation at least
+three transfers the DRAW to a higher adjacent frame rather than preserving
+\(O\).  This exit is still finite here.  If its selected source \(y\)
+survives with \(y\ge s\), then
+
+\[
+2^jJ(y)=3J(x)+1-2\epsilon<90s+7
+\qquad(x<10s).
+\]
+
+Since \(J(y)\ge3s+1\), a valuation \(j\ge5\) is impossible.  Thus every
+surviving B-phase step has exactly one of the forms
+
+\[
+\boxed{
+j=2\text{ and }O\text{ is preserved},\qquad
+j=3,4\text{ and the process enters a finite exponent-}2,3\text{ frame}.}
+\]
+
+The \(j=2\) branch therefore has no unbounded B escape: after at most eight
+preserving transfers it reaches the A-phase, drops below \(s\), or enters
+one of the two finite adjacent frames.  All exact identities, residue rows,
+valuation bounds, and the source bound are regression-tested.
+
+## 44. The A-selecting half of the \(j=2\) return is a one-sided descent
+
+In the A-selecting rows \(Z\equiv5,10\pmod {16}\) of Section 43, write
+
+\[
+P=Q_1^e(J(W)),\qquad U=Q_2^e(J(W)),\qquad
+q=B(P)=B(U).
+\]
+
+The exact obligation \(O(W,e)\) makes \(q\) non-losing and makes it a child
+of at least one DRAW member among \(P,U\).  Section 24 also makes the same
+\(q\) an ordinary child of the selected source
+
+\[
+R=A(W),
+\]
+
+which is WIN by Section 43.
+
+If \(q\) is WIN, it is immediately the endpoint of a boundary edge from the
+DRAW member.  If \(q\) is DRAW, the other ordinary child of the WIN state
+\(R\) must be LOSS.  Section 41 now applies with \(x=R\), \(y=q\), and the
+DRAW member of the obligation as the second parent.  Hence
+
+\[
+\boxed{
+\begin{array}{c}
+v=4,\ j=2,\ e=\alpha(W)\\
+\Longrightarrow\
+q\text{ is a boundary WIN},\quad\text{or}\quad
+R\text{ is exceptional},\quad\text{or}\quad
+\text{a boundary endpoint of height at most }h(R)-2.
+\end{array}}
+\]
+
+Thus the only DRAW continuation in the A-selecting half has
+\(R\bmod16\in\{1,3,12,14\}\).  The B-selecting half is already covered by
+Section 43: it either drops below \(s\), reaches this A-selecting form, or
+enters an exponent-two/three frame after a bounded number of
+valuation-two transfers.  The common-child occurrence under \(R\) is
+regression-tested.

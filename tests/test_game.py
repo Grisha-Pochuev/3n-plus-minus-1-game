@@ -1037,6 +1037,91 @@ class GameArithmeticTests(unittest.TestCase):
                     if first_exponent == 4:
                         if selected_valuation >= 6:
                             self.assertLess(selected_win, source)
+                        if selected_valuation == 2:
+                            selected_coefficient = embedded_original_state(
+                                selected_win
+                            )
+                            exponent_zero_win = transformed_A(loss_child)
+                            returned_source_win = transformed_B(loss_child)
+                            self.assertEqual(
+                                exponent_zero_win,
+                                selected_coefficient - phase,
+                            )
+                            self.assertEqual(
+                                returned_source_win,
+                                alternating_suffix_remainder(
+                                    exponent_zero_win
+                                ),
+                            )
+                            self.assertNotIn(
+                                returned_win % 16,
+                                {1, 3, 12, 14},
+                            )
+                            self.assertIn(
+                                returned_win % 16,
+                                {2, 5, 10, 13},
+                            )
+                            self.assertEqual(
+                                source_boundary_transition(
+                                    selected_win,
+                                    phase,
+                                )[2],
+                                returned_source_win,
+                            )
+                            if (
+                                phase
+                                == source_A_selecting_tail_bit(
+                                    selected_win
+                                )
+                            ):
+                                lifted_common = transformed_B(
+                                    constant_tail_state(
+                                        selected_coefficient,
+                                        1,
+                                        phase,
+                                    )
+                                )
+                                self.assertIn(
+                                    lifted_common,
+                                    transformed_moves(
+                                        returned_source_win
+                                    ),
+                                )
+                            if selected_win >= source:
+                                self.assertLess(selected_win, 10 * source)
+                                bounded_source = selected_win
+                                bounded_phase = phase
+                                surviving_valuation_two = 0
+                                while (
+                                    bounded_phase
+                                    != source_A_selecting_tail_bit(
+                                        bounded_source
+                                    )
+                                ):
+                                    (
+                                        bounded_letter,
+                                        bounded_valuation,
+                                        following_source,
+                                    ) = source_boundary_transition(
+                                        bounded_source,
+                                        bounded_phase,
+                                    )
+                                    self.assertEqual(bounded_letter, "B")
+                                    if following_source < source:
+                                        break
+                                    self.assertLessEqual(
+                                        bounded_valuation,
+                                        4,
+                                    )
+                                    if bounded_valuation != 2:
+                                        break
+                                    surviving_valuation_two += 1
+                                    self.assertLessEqual(
+                                        surviving_valuation_two,
+                                        8,
+                                    )
+                                    bounded_source = following_source
+                                    bounded_phase = 1 - bounded_phase
                         if selected_valuation >= 3:
                             selected_coefficient = embedded_original_state(
                                 selected_win
