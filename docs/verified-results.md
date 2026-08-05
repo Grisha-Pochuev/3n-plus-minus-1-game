@@ -5225,3 +5225,271 @@ There is no unmarked A-side restart.  The first row is now the sole factor
 escape; the second retains either the lower WIN token or the exceptional
 LOSS-lift token of Section 57.  The displayed arithmetic identities are
 regression-tested in the four surviving residue families for \(b<100000\).
+
+## 59. The factor-one escape reaches a signed boundary in two levels
+
+The first row of Section 58 cannot climb through unbounded powers of three
+before exposing another source.  Retain
+
+\[
+x=A(q),\qquad a=J(x),\qquad s\le x<2s,
+\]
+
+and for \(k=1,2\) define
+
+\[
+P_k=Q_2^f(3^ka),\qquad R_k=Q_1^f(3^ka),
+\]
+
+\[
+S_k=B(P_k)=B(R_k),\qquad
+R_{k+1}=A(P_k),\qquad T_k=A(R_k).
+\]
+
+The exact moves are
+
+\[
+\boxed{
+\operatorname{moves}(P_k)=\{R_{k+1},S_k\},\qquad
+\operatorname{moves}(R_k)=\{T_k,S_k\}.}
+\]
+
+Section 58 leaves the adjacent factor frame
+\(\{P_1,R_1\}\) containing a DRAW.  Its common child \(S_1\) cannot be
+LOSS, since that would make both frame members WIN.  If \(S_1\) is DRAW,
+the factor frame has already exited.  If \(S_1\) is WIN, there are two
+possibilities:
+
+- if \(R_1\) is DRAW, then \(T_1\) is DRAW;
+- otherwise \(P_1\) must be DRAW, so \(R_2\) is DRAW.
+
+In the last case \(S_2\) cannot be LOSS.  It is either DRAW, or it is WIN
+and forces \(T_2\) to be DRAW.  Therefore
+
+\[
+\boxed{\text{at least one of }S_1,T_1,S_2,T_2\text{ is DRAW}.}
+\]
+
+This conclusion uses only the outcome recursion; it does not impose a
+fixed numerical search depth.
+
+The four exits have finite exact arithmetic types.  Factor
+
+\[
+3^{k+1}J(x)+1-2f=2^{j_k}J(u_k),\qquad j_k\ge1.
+\]
+
+The signed exit and, when \(j_k\ge2\), its side sibling are
+
+\[
+\boxed{
+T_k=Q_{j_k}^{\,1-f}(J(u_k)),\qquad
+S_k=Q_{j_k-1}^{\,1-f}(J(u_k)).}
+\]
+
+When \(j_k=1\), \(T_k\) still has the first displayed exact lift form,
+while \(S_k=R(T_k)\) is the single raw-side type.
+
+Global source minimality bounds both signed scans.  Since
+
+\[
+J(x)\le3x+2\le6s-1,
+\]
+
+the two numerators satisfy
+
+\[
+9J(x)+1\le54s-8,\qquad
+27J(x)+1\le162s-26.
+\]
+
+Whenever \(T_k\) is DRAW, its exact source \(u_k\) is at least \(s\).
+The same is true when \(S_k\) is DRAW and \(j_k\ge2\).  Since
+\(J(u_k)\ge3s+1\), comparison in the two displayed factorizations gives
+
+\[
+\boxed{j_1\le4,\qquad j_2\le5.}
+\]
+
+Thus the sole factor escape of Section 58 has no unbounded factor-power
+counter and no unbounded valuation at its DRAW exit.  It reaches, after at
+most one further factor level, one of:
+
+- a factor-free lift or adjacent frame of exponent at most four from the
+  \(9J(x)\) transition;
+- a factor-free lift or adjacent frame of exponent at most five from the
+  \(27J(x)\) transition;
+- one of the two corresponding valuation-one raw-side states.
+
+The remaining rank problem is finite at this immediate exit, but the
+carried WIN/LOSS proof-height token must still be connected to these
+returned types.  All arithmetic identities are regression-tested in the
+four residual residue families for \(b<100000\).
+
+## 60. The ninefold and twenty-sevenfold sources form one coupled switch
+
+The two signed rows in Section 59 are not independent.  Put \(a=J(x)\)
+and first factor
+
+\[
+9a+1-2f=2^vJ(t),\qquad v\ge1.
+\]
+
+Then
+
+\[
+27a+1-2f
+=3\bigl(9a+1-2f\bigr)-2(1-2f).
+\]
+
+If \(v\ge2\), the right-hand side has valuation exactly one.  More
+precisely, with
+
+\[
+u=Q_{v-1}^{\,1-f}(J(t)),
+\]
+
+the parity of \(u\) is \(1-f\), and direct substitution gives
+
+\[
+J(u)=3\cdot2^{v-1}J(t)-1+2f.
+\]
+
+Therefore
+
+\[
+\boxed{
+v\ge2\Longrightarrow
+27J(x)+1-2f=2J(u),\qquad
+u=Q_{v-1}^{\,1-f}(J(t)).}
+\]
+
+Thus the second-level source is an exact factor-free lift over the
+first-level source; the possibly large exponent \(v-1\) remains marked
+rather than being discarded as an arbitrary numerical jump.
+
+If \(v=1\), Section 54 gives
+
+\[
+\boxed{
+t=3A(x)+1=Q_m^\delta(J(B(x)))
+\quad\text{for some }m\ge1.}
+\]
+
+The same coupling identity becomes
+
+\[
+27J(x)+1-2f
+=2\bigl(3J(t)+1-2(1-f)\bigr).
+\]
+
+Factor the bracket as
+
+\[
+3J(t)+1-2(1-f)=2^jJ(u).
+\]
+
+This is exactly the ordinary source-boundary transition at \(t\) in phase
+\(1-f\).  Consequently
+
+\[
+\boxed{
+v=1\Longrightarrow
+w=j+1,\qquad
+u=
+\begin{cases}
+A(t),&1-f=\alpha(t),\\
+B(t),&1-f\ne\alpha(t).
+\end{cases}}
+\]
+
+In words, the valuation-one ninefold row first produces the explicit lift
+over the token \(B(x)\), and the twenty-sevenfold row then takes exactly
+one ordinary selected-source step from that lifted state.  Conversely,
+every \(v\ge2\) row makes the twenty-sevenfold transition a valuation-one
+lift over its already typed ninefold source.
+
+This couples every second-level exit of Section 59 to the Section 54
+trichotomy and, in the \(v=1\) row, directly to the carried ordinary token
+\(B(x)\).  What remains open is to turn these nested lift/source types into
+a strictly well-founded proof-height transition.  The identities are
+regression-tested in the residual families for \(b<100000\).
+
+## 61. A LOSS factor source gives every exit a lower-height provenance
+
+The orientation left open in Section 52 has a uniform rank interpretation
+through the coupled switch.  Suppose the finite source \(x\) is LOSS and
+put
+
+\[
+c_A=A(x),\qquad c_B=B(x).
+\]
+
+Both ordinary children are WIN, and
+
+\[
+\boxed{h(c_A),h(c_B)\le h(x)-1.}
+\]
+
+Keep the first factorization from Section 60,
+
+\[
+9J(x)+1-2f=2^vJ(t).
+\]
+
+If \(v=1\), Section 54 gives
+
+\[
+\boxed{
+t=Q_m^\delta(J(c_B))\quad(m\ge1),}
+\]
+
+so the returned source is an exact factor-free lift over the lower-height
+WIN token \(c_B\).
+
+If \(v\ge2\), the same trichotomy gives
+
+\[
+t=
+\begin{cases}
+A(c_A),&v=2,\\
+B(c_A),&v\ge3.
+\end{cases}
+\]
+
+Thus \(t\) is one of the two ordinary children of the lower-height WIN
+\(c_A\).  Choose a canonical LOSS child of \(c_A\) and put
+
+\[
+p=B(A(c_A)).
+\]
+
+Section 57 types this side return without assuming which child the signed
+phase selected:
+
+\[
+\boxed{
+\begin{array}{ll}
+p\text{ is WIN},\quad h(p)\le h(c_A)-2\le h(x)-3,
+&\text{or}\\
+p\text{ is an exact factor-free lift over a canonical LOSS }\ell,
+\quad h(\ell)=h(c_A)-1\le h(x)-2.
+\end{array}}
+\]
+
+The second factor level preserves this provenance.  Section 60 says:
+
+- for \(v\ge2\), its source \(u\) is an exact lift over \(t\), while the
+  typed token \(p\) remains attached to the ordinary fork at \(c_A\);
+- for \(v=1\), the source \(t\) is already the displayed lift over \(c_B\),
+  and \(u\) is exactly one ordinary selected-source child of \(t\).
+
+Consequently neither level of the factor escape creates an unmarked source
+when \(x\) is LOSS.  Every returned type carries a WIN token lower than
+\(x\) by at least one proof level, and the only exceptional orientation
+instead carries a canonical LOSS token lower by at least two levels.
+
+This is provenance and rank transport, not yet a descent theorem for DRAW
+boundaries: an additional outcome diamond must expose the carried token as
+the WIN endpoint of a DRAW edge.  It does, however, rule out treating the
+LOSS-source factor fork as a fresh numerical restart.

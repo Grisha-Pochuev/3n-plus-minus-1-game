@@ -203,6 +203,99 @@ class GameArithmeticTests(unittest.TestCase):
                     (transformed_B(source), 0),
                 )
 
+    def test_factor_frame_exits_within_two_levels(self) -> None:
+        for b in range(1, 100000):
+            if b % 64 not in {4, 25, 38, 59}:
+                continue
+            q = transformed_B(transformed_A(b))
+            source = transformed_A(q)
+            phase = source_A_selecting_tail_bit(
+                transformed_A(transformed_A(b))
+            )
+            base_coefficient = embedded_original_state(source)
+
+            for factor_power in (1, 2):
+                coefficient = (3**factor_power) * base_coefficient
+                upper = constant_tail_state(coefficient, 2, phase)
+                lower = constant_tail_state(coefficient, 1, phase)
+                following_factor = constant_tail_state(
+                    3 * coefficient, 1, phase
+                )
+                side = transformed_B(lower)
+                signed = transformed_A(lower)
+
+                self.assertEqual(
+                    transformed_moves(upper),
+                    (following_factor, side),
+                )
+                self.assertEqual(
+                    transformed_moves(lower),
+                    (signed, side),
+                )
+                returned_source, returned_power, exponent, tail = (
+                    constant_tail_source_coordinates(signed)
+                )
+                self.assertEqual(returned_power, 0)
+                self.assertEqual(tail, 1 - phase)
+                if exponent >= 2:
+                    self.assertEqual(
+                        constant_tail_source_coordinates(side),
+                        (
+                            returned_source,
+                            0,
+                            exponent - 1,
+                            1 - phase,
+                        ),
+                    )
+
+    def test_ninefold_twenty_sevenfold_source_coupling(self) -> None:
+        for b in range(1, 100000):
+            if b % 64 not in {4, 25, 38, 59}:
+                continue
+            q = transformed_B(transformed_A(b))
+            source = transformed_A(q)
+            phase = source_A_selecting_tail_bit(
+                transformed_A(transformed_A(b))
+            )
+            base_coefficient = embedded_original_state(source)
+
+            first = transformed_A(
+                constant_tail_state(3 * base_coefficient, 1, phase)
+            )
+            first_source, first_power, valuation, _ = (
+                constant_tail_source_coordinates(first)
+            )
+            self.assertEqual(first_power, 0)
+
+            second = transformed_A(
+                constant_tail_state(9 * base_coefficient, 1, phase)
+            )
+            second_source, second_power, second_valuation, _ = (
+                constant_tail_source_coordinates(second)
+            )
+            self.assertEqual(second_power, 0)
+
+            if valuation >= 2:
+                self.assertEqual(second_valuation, 1)
+                self.assertEqual(
+                    second_source,
+                    constant_tail_state(
+                        embedded_original_state(first_source),
+                        valuation - 1,
+                        1 - phase,
+                    ),
+                )
+            else:
+                self.assertEqual(
+                    constant_tail_source_coordinates(first_source)[:2],
+                    (transformed_B(source), 0),
+                )
+                _, selected_valuation, selected_source = (
+                    source_boundary_transition(first_source, 1 - phase)
+                )
+                self.assertEqual(second_valuation, selected_valuation + 1)
+                self.assertEqual(second_source, selected_source)
+
     def test_long_side_branch_formula(self) -> None:
         for q in range(1, 100000):
             value = long_side_branch_value(q)

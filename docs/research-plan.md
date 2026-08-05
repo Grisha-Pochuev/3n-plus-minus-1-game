@@ -248,6 +248,24 @@ remaining escape is therefore the marked factor-one two/one frame over the
 same finite source.  Rank synthesis should close that factor frame without
 discarding whether the carried token is a lower WIN or an exceptional lift
 over a canonical LOSS.
+Section 59 proves that this factor frame cannot climb indefinitely: a DRAW
+reaches a signed or side exit after at most one more factor level, and every
+source-surviving valuation is at most four in the 9J(x) row and at most five
+in the 27J(x) row.  The next target is now a finite typed return table for
+these two rows, with the Section 57 token attached to every edge; a purely
+numerical window would again lose the rank information.
+Section 60 couples the two rows without a residue table.  A first valuation
+of at least two makes the 27J(x) source an exact lift over the 9J(x) source;
+a first valuation of one makes that source a lift over B(x), followed by
+one ordinary selected-source step.  The remaining rank state therefore
+needs one nested-lift flag plus the WIN/LOSS token orientation, not two
+independent signed-transition counters.
+Section 61 supplies the LOSS-source height component: the valuation-one
+row is marked by the lower WIN B(x), while every higher valuation is marked
+by A(x) and then by its canonical side-return token.  The token height
+strictly falls, but a completion still has to prove that the nested
+lift/source exit exposes this token at a DRAW boundary before another
+factor switch.  This boundary-exposure lemma is now the immediate target.
 
 ## Priority 2: finite transducer plus numerical potential
 
