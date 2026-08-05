@@ -5493,3 +5493,234 @@ This is provenance and rank transport, not yet a descent theorem for DRAW
 boundaries: an additional outcome diamond must expose the carried token as
 the WIN endpoint of a DRAW edge.  It does, however, rule out treating the
 LOSS-source factor fork as a fresh numerical restart.
+
+## 62. A WIN factor source has only the valuation-two one-sided return
+
+There is an analogous provenance statement in the other source
+orientation.  Keep the residual setting
+
+\[
+q\text{ WIN},\qquad x=A(q)\text{ finite},
+\qquad p=B(x)=B(A(q)).
+\]
+
+Suppose now that \(x\) is WIN.  Then the other child \(B(q)\) is necessarily
+LOSS.  Section 57 therefore types \(p\) as either the lower-height ordinary
+WIN token
+
+\[
+h(p)\le h(q)-2,
+\]
+
+or, only when \(q\) is exceptional, an exact factor-free lift over the
+canonical LOSS \(B(q)\), whose height is \(h(q)-1\).
+
+Factor the first signed exit as in Sections 54 and 60:
+
+\[
+9J(x)+1-2f=2^vJ(t).
+\]
+
+For \(v=1\), Section 54 immediately gives
+
+\[
+\boxed{t=Q_m^\delta(J(p))\quad(m\ge1).}
+\]
+
+Thus valuation one is an exact lift over the already carried token.
+
+For \(v\ge3\),
+
+\[
+t=B(A(x)).
+\]
+
+If \(x\) is nonexceptional, the ordinary side relation makes this same
+state a child of \(p=B(x)\):
+
+\[
+\boxed{x\text{ nonexceptional},\ v\ge3
+\Longrightarrow t\in\operatorname{moves}(p).}
+\]
+
+If \(x\) is exceptional, write its formulas from Section 5 as
+
+\[
+p=R(z),\qquad t=3z+1.
+\]
+
+The universal identity of Section 53 then gives
+
+\[
+\boxed{x\text{ exceptional},\ v\ge3
+\Longrightarrow t=Q_m^\delta(J(p))\quad(m\ge1).}
+\]
+
+Consequently every first factor exit from a WIN source is attached to
+\(p=B(x)\), except for the single valuation-two source
+
+\[
+t=A^2(x).
+\]
+
+That exceptional one-sided valuation is exactly the row normalized in
+Sections 55--60: off the four exceptions it returns through
+\(B(A(x))\), which is the ordinary child of \(p\) displayed above, and
+then enters the fixed three/two frame; on the exceptions it enters the
+already typed A-selecting obligation.
+
+Section 60 carries the same provenance through the possible
+twenty-sevenfold exit.  Hence a WIN-source factor fork cannot reset to an
+arbitrary source: valuation one and every valuation at least three are
+direct lift/child forms over \(p\), while valuation two is the unique
+recursive frame type already isolated by Sections 55--59.  Exposing this
+carried \(p\)-token at a DRAW boundary remains the final rank step.
+
+## 63. An ordinary valuation-two recycle becomes lower WIN or LOSS
+
+The valuation-two recursive type from Section 62 has a universal
+game-theoretic closure away from one more exception.  Let \(p\) and \(q'\)
+be WIN, suppose \(q'\) is one of the two ordinary children of \(p\), and
+assume that \(p\) is nonexceptional.  Put
+
+\[
+r=B(A(p)).
+\]
+
+Since \(p\) and \(q'\) are both WIN, the other child \(\ell\) of \(p\) is
+LOSS.  The ordinary side relation at \(p\) makes \(r\) a child of both
+\(q'\) and \(\ell\).  Hence
+
+\[
+\boxed{r\text{ is WIN},\qquad h(r)\le h(p)-2.}
+\]
+
+Now inspect which child of \(q'\) equals \(r\).  If
+\(r=A(q')\), its next A-source is already the displayed lower-height WIN.
+If \(r=B(q')\), then \(A(q')\) must be LOSS: the WIN state \(q'\) already
+has the WIN child \(r\), so its required LOSS child can only be the other
+one.  Thus
+
+\[
+\boxed{
+A(q')=
+\begin{cases}
+r\text{ WIN with }h(r)\le h(p)-2,&r=A(q'),\\
+\text{LOSS},&r=B(q').
+\end{cases}}
+\]
+
+Apply this to the nonexceptional valuation-two row of Section 62.  There
+
+\[
+p=B(x),\qquad q'=B(A(x)),
+\]
+
+and the side relation at the nonexceptional \(x\) makes \(q'\) a child of
+\(p\).  Section 55 makes \(q'\) WIN in the retained WIN-source
+orientation.  Assume also that Section 57 supplied the ordinary token row,
+so \(p\) is WIN.  After Sections 55--58, the recursive three/two frame has
+ordinary source
+
+\[
+A(q').
+\]
+
+Therefore, whenever this WIN \(p\) is also nonexceptional, the new source is
+exactly one of the two boxed rank types:
+
+1. a WIN at least two proof levels below \(p\); or
+2. a LOSS source, to which Section 61 applies.
+
+Consequently an all-ordinary valuation-two recycle cannot return to an
+unmarked WIN source.  Within this ordinary WIN-token row, the only
+remaining failure of the closure is the explicit case
+
+\[
+\boxed{p=B(x)\equiv1,3,12,14\pmod {16},}
+\]
+
+where the ordinary side diamond at \(p\) must be replaced by the
+exceptional exact-lift formulas of Section 57.  The arithmetic
+two-sided-child identity used above is already regression-tested by the
+canonical side-return test.  The separate exceptional lift-token row from
+Section 57 remains marked rather than being silently included here.
+
+## 64. The exceptional valuation-two token strictly lowers the source
+
+The exceptional \(p\)-rows left by Section 63 have a strict numerical
+return.  Let \(x\) be nonexceptional, put
+
+\[
+p=B(x),\qquad q'=B(A(x)),
+\]
+
+and suppose \(p\) is exceptional.  Retain the valuation-two condition for
+the first factor exit,
+
+\[
+9J(x)+1-2f=4J(A^2(x)).
+\]
+
+Because \(x\) is nonexceptional, the alternating suffix of \(A(x)\) has
+length one or two.  Direct reduction modulo \(256\) gives the complete
+table
+
+\[
+\begin{array}{c|c|c|c}
+p\bmod16&f&x\bmod256&q'\\ \hline
+1&1&4,89,132,217&A(p)\\
+3&1&9,52,137,180&B(p)\\
+12&0&75,118,203,246&B(p)\\
+14&0&38,123,166,251&A(p).
+\end{array}
+\]
+
+Every row has alternating-suffix length exactly two at \(A(x)\).  This is
+a bounded residue calculation only because the nonexceptional hypothesis
+has already bounded that suffix length; no fixed modulus is being used to
+decide an unbounded suffix.  In particular
+
+\[
+\boxed{p\le\frac{3x+1}{8}.}
+\]
+
+If \(p=1\) or \(14\pmod {16}\), then \(q'=A(p)\), and the next source in
+the recursive frame is
+
+\[
+A(q')=A^2(p)
+\le\frac{9p+5}{4}
+\le\frac{27x+49}{32}<x
+\]
+
+for \(x\ge10\).  The only smaller table entry is \(x=4\), where
+\(p=1,\ q'=2,\ A(q')=3<4\).
+
+If \(p=3\) or \(12\pmod {16}\), then \(q'=B(p)<p\).  Hence
+
+\[
+A(q')\le\frac{3q'+1}{2}
+\le\frac{3p-2}{2}
+\le\frac{9x-13}{16}<x,
+\]
+
+with the possible terminal value handled directly.  Thus all sixteen rows
+give
+
+\[
+\boxed{A(B(A(x)))<x.}
+\]
+
+Combine this with Section 63.  Along a valuation-two recursive chain:
+
+- a nonexceptional ordinary WIN token sends the next factor source to a
+  lower-height WIN or to LOSS;
+- an exceptional token strictly decreases the current integer source
+  \(x\).
+
+Therefore valuation two cannot recycle indefinitely while avoiding both
+rank alternatives: an all-exceptional tail would be a strictly descending
+sequence of positive integers, while its first ordinary row enters the
+height/LOSS dichotomy of Section 63.  The exact residue table and strict
+inequality are regression-tested for \(x<100000\).

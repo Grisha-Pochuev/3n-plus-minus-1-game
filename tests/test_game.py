@@ -296,6 +296,98 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(second_valuation, selected_valuation + 1)
                 self.assertEqual(second_source, selected_source)
 
+    def test_win_factor_source_return_provenance(self) -> None:
+        for b in range(1, 100000):
+            if b % 64 not in {4, 25, 38, 59}:
+                continue
+            q = transformed_B(transformed_A(b))
+            source = transformed_A(q)
+            phase = source_A_selecting_tail_bit(
+                transformed_A(transformed_A(b))
+            )
+            coefficient = embedded_original_state(source)
+            signed = transformed_A(
+                constant_tail_state(3 * coefficient, 1, phase)
+            )
+            returned, returned_power, valuation, _ = (
+                constant_tail_source_coordinates(signed)
+            )
+            self.assertEqual(returned_power, 0)
+            token = transformed_B(source)
+
+            if valuation == 1:
+                self.assertEqual(
+                    constant_tail_source_coordinates(returned)[:2],
+                    (token, 0),
+                )
+            elif valuation >= 3:
+                if source % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                    self.assertEqual(
+                        constant_tail_source_coordinates(returned)[:2],
+                        (token, 0),
+                    )
+                else:
+                    self.assertIn(returned, transformed_moves(token))
+
+    def test_exceptional_token_valuation_two_strict_return(self) -> None:
+        observed = set()
+        for source in range(1, 100000):
+            if source % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                continue
+            token = transformed_B(source)
+            if token % 16 not in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                continue
+            coefficient = embedded_original_state(source)
+
+            for phase in (0, 1):
+                signed = transformed_A(
+                    constant_tail_state(3 * coefficient, 1, phase)
+                )
+                _, _, valuation, _ = constant_tail_source_coordinates(signed)
+                if valuation != 2:
+                    continue
+
+                returned = transformed_B(transformed_A(source))
+                relation = (
+                    "A"
+                    if returned == transformed_A(token)
+                    else "B"
+                    if returned == transformed_B(token)
+                    else None
+                )
+                observed.add((source % 256, phase, token % 16, relation))
+                self.assertEqual(
+                    alternating_suffix_length(transformed_A(source)),
+                    2,
+                )
+                self.assertEqual(
+                    relation,
+                    "A" if token % 16 in {1, 14} else "B",
+                )
+                self.assertLess(transformed_A(returned), source)
+
+        self.assertEqual(
+            observed,
+            {
+                (4, 1, 1, "A"),
+                (9, 1, 3, "B"),
+                (38, 0, 14, "A"),
+                (52, 1, 3, "B"),
+                (75, 0, 12, "B"),
+                (89, 1, 1, "A"),
+                (118, 0, 12, "B"),
+                (123, 0, 14, "A"),
+                (132, 1, 1, "A"),
+                (137, 1, 3, "B"),
+                (166, 0, 14, "A"),
+                (180, 1, 3, "B"),
+                (203, 0, 12, "B"),
+                (217, 1, 1, "A"),
+                (246, 0, 12, "B"),
+                (251, 0, 14, "A"),
+            },
+        )
+
     def test_long_side_branch_formula(self) -> None:
         for q in range(1, 100000):
             value = long_side_branch_value(q)

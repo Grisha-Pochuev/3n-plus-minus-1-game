@@ -266,6 +266,27 @@ by A(x) and then by its canonical side-return token.  The token height
 strictly falls, but a completion still has to prove that the nested
 lift/source exit exposes this token at a DRAW boundary before another
 factor switch.  This boundary-exposure lemma is now the immediate target.
+Section 62 supplies the WIN-source half.  Its valuation-one and
+valuation-at-least-three exits are respectively an exact lift over, or an
+ordinary child of, the retained token B(x); only valuation two recurses
+through the already normalized three/two frame.  Thus both finite source
+outcomes now preserve explicit provenance.  The unresolved theorem is
+sharply concentrated in showing that an indefinitely recycled
+valuation-two/nested-lift path must expose one of these strictly lower
+tokens as a DRAW-boundary endpoint.
+Section 63 closes the all-ordinary valuation-two recycle at the source
+level.  If the retained p and the returned q' are WIN and p is
+nonexceptional, the next A-source is either a WIN two height levels below p
+or a LOSS source.  Only the exceptional p rows and the already marked
+exceptional lift-token orientation can avoid this dichotomy.  These
+explicit exceptional rows are now the immediate target; another generic
+factor analysis is unnecessary.
+Section 64 closes those exceptional p rows numerically: valuation two
+forces a length-two suffix and the next recursive source is strictly
+smaller.  Hence an indefinitely pure valuation-two recycle is impossible;
+it must terminate in the lower-WIN/LOSS rank types of Sections 61 and 63.
+The remaining proof obligation is no longer the valuation-two loop itself,
+but boundary exposure for the finite nested-lift exits that terminate it.
 
 ## Priority 2: finite transducer plus numerical potential
 
