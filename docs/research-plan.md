@@ -103,8 +103,10 @@ transfer its source is below `2s`, and at most two further valuation-two
 28 forces its common side node to be WIN.  Either the DRAW continues through
 the canonical lift of `A(x)`, or a retained LOSS sibling and factor-three
 DRAW produce an adjacent frame over the WIN side node.  A source-surviving
-factor frame has lower exponent only `1`, `2`, or `3`; collapsing the last
-two values while retaining that LOSS sibling is the immediate target.
+factor frame has lower exponent only `1`, `2`, or `3`.  The immediate target
+is to control alternation between the canonical `A(x)` continuation and
+these three factor frames; treating only the last two exponent values would
+leave the canonical branch open.
 
 ## Priority 2: finite transducer plus numerical potential
 

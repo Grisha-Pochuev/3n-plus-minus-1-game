@@ -2543,6 +2543,10 @@ a contradiction.  Therefore the only surviving factor frames are
 
 All arithmetic identities and the exponent bound are regression-tested in
 the actual residual source trajectory.  The first pair is again an exact
-obligation `O(b,g)`.  The last unresolved task is to collapse the two
-higher adjacent frames, using the retained LOSS state `V`, or to show that
-their boundary WIN `b` has lower proof height than the original endpoint.
+obligation `O(b,g)`.  Two mechanisms therefore remain open: the canonical
+continuation `O(A(x),g)` from the first case, and the factor continuation at
+one of the three displayed exponents from the second case.  A completion
+must control their possible alternation, using the retained LOSS state `V`,
+or show that the resulting boundary WIN `b` has lower proof height than the
+original endpoint.  The exponent bound alone does not exclude the canonical
+continuation.
