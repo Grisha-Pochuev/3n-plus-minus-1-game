@@ -2139,3 +2139,90 @@ most `h(c)-2`.  Thus this entire fork is a strict height descent.  This is a
 conditional reduction, not yet the global no-DRAW theorem: the
 `B`-selecting LOSS-source fork in the other four rows and the two
 WIN-source continuations still have to be closed.
+
+## 25. Every B-selecting fork transfers the DRAW to the selected source
+
+The large diamond of Section 20 is not special to the phase-mismatch rows.
+It gives a universal transfer rule for a `B`-selecting source phase.  Let
+`x>0`, put
+
+\[
+e=1-\alpha(x),\qquad a=J(x),\qquad g=1-e,
+\]
+
+and factor the `B`-selecting signed transition as
+
+\[
+3a+1-2e=2^jJ(y),qquad j\ge2,qquad y=B(x).
+\]
+
+Define
+
+\[
+P=Q_1^e(a),\qquad U=Q_2^e(a),
+\]
+
+and their shared child and expanding siblings by
+
+\[
+D=A(P)=Q_j^g(J(y)),\qquad
+C=B(P)=B(U)=Q_{j-1}^g(J(y)),\qquad
+F=A(U)=Q_1^e(3a).
+\]
+
+The states `D` and `C` are an adjacent constant-tail frame over the ordinary
+selected source `y=B(x)`.  Let `X` be their common child and `Y` the other
+child of `C`.  Then
+
+\[
+\boxed{B(F)=Y.}
+\]
+
+The arithmetic proof in Section 20 used only the displayed valuation
+identity, split into `j=2`, `j=3`, and `j>=4`; none of its steps used an
+outcome or a special residue of `x`.  It therefore proves this universal
+form verbatim.  The source and adjacent-exponent identities, as well as the
+large diamond, are regression-tested for every `x<100000`.
+
+This arithmetic identity has a useful outcome consequence.  Suppose first
+that `P` is DRAW.  Its child `C` is non-losing, and at least one of `D,C`
+must be DRAW.  Thus the lower adjacent frame over `B(x)` contains a DRAW.
+
+There is a second version needed by Section 23.  Suppose some DRAW state
+`K` has exactly `U` and `P` as its two children.  Again `C`, being a child
+of every DRAW member among `U,P`, cannot be LOSS.  If `P` is DRAW, the
+previous paragraph applies.  Otherwise `P` cannot be LOSS because it is a
+child of `K`.  If both `P,U` were WIN, then `K` would be LOSS, so the only
+remaining case is
+
+\[
+P\text{ WIN},\qquad U\text{ DRAW}.
+\]
+
+If `C` were WIN, then `D` would be LOSS and `F` would be DRAW.  The common
+child `X` of the LOSS state `D` is WIN.  Since `C` is WIN and already has
+the WIN child `X`, its other child `Y` must be LOSS.  But the universal
+diamond makes `Y=B(F)` a child of the DRAW state `F`, a contradiction.
+Therefore `C` is DRAW, and the lower adjacent frame again contains a DRAW.
+We have proved the transfer rule
+
+\[
+\boxed{
+\begin{array}{c}
+P\text{ DRAW},\quad\text{or}\quad
+K\text{ DRAW with children }U,P
+\end{array}
+\Longrightarrow
+\{D,C\}\text{ contains a DRAW}.}
+\]
+
+This unifies all cases left after Section 24.  In the
+`31,53,74,96 mod 128` rows, the first fork of Section 23 has
+`P=L_e(c)` DRAW with `e` selecting `B(c)=r`, which is WIN.  In the
+`10,32,95,117 mod 128` rows, the second fork has a DRAW parent whose two
+children are the `B`-selecting pair over `c`; here `B(c)=ell` is LOSS.  In
+both cases the boxed rule transfers the obligation to an adjacent frame
+whose ordinary source is exactly `B(c)`.  What remains is to prove that an
+indefinite sequence of these transferred adjacent frames must either drop
+below the globally minimum DRAW source or expose a child of the retained
+LOSS witness and hence lower the boundary proof height.

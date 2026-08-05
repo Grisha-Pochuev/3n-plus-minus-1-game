@@ -701,6 +701,48 @@ class GameArithmeticTests(unittest.TestCase):
                     transformed_B(selected_source),
                 )
 
+    def test_B_selecting_source_frame_diamond(self) -> None:
+        for source in range(1, 100000):
+            phase = 1 - source_A_selecting_tail_bit(source)
+            coefficient = embedded_original_state(source)
+            lower = constant_tail_state(coefficient, 1, phase)
+            upper = constant_tail_state(coefficient, 2, phase)
+            lower_expanding = transformed_A(lower)
+            common_child = transformed_B(lower)
+
+            selected_source = transformed_B(source)
+            selected_coordinates = [
+                constant_tail_source_coordinates(lower_expanding),
+                constant_tail_source_coordinates(common_child),
+            ]
+            self.assertEqual(
+                {coordinates[0] for coordinates in selected_coordinates},
+                {selected_source},
+            )
+            self.assertEqual(
+                {coordinates[1] for coordinates in selected_coordinates},
+                {0},
+            )
+            self.assertEqual(
+                selected_coordinates[0][2],
+                selected_coordinates[1][2] + 1,
+            )
+
+            common_grandchildren = set(
+                transformed_moves(lower_expanding)
+            ) & set(transformed_moves(common_child))
+            self.assertEqual(len(common_grandchildren), 1)
+            other_grandchild = next(
+                child
+                for child in transformed_moves(common_child)
+                if child not in common_grandchildren
+            )
+            factor_three_state = transformed_A(upper)
+            self.assertEqual(
+                transformed_B(factor_three_state),
+                other_grandchild,
+            )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:
