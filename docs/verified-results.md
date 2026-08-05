@@ -2226,3 +2226,121 @@ whose ordinary source is exactly `B(c)`.  What remains is to prove that an
 indefinite sequence of these transferred adjacent frames must either drop
 below the globally minimum DRAW source or expose a child of the retained
 LOSS witness and hence lower the boundary proof height.
+
+## 26. The transferred B-source survives only at valuation two
+
+In the eight length-two rows of Section 23, the transfer of Section 25 can
+be compared directly with the globally minimum DRAW source `s`.  Retain
+
+\[
+z=B(A(s)),\qquad c=A^2(z),\qquad y=B(c),
+\]
+
+and let `j>=2` be the valuation of the `B`-selecting signed source
+transition at `c`.  Then
+
+\[
+\boxed{
+y\ge s
+\quad\Longleftrightarrow\quad
+j=2
+\quad\Longleftrightarrow\quad
+s\bmod256\in
+\{10,31,53,95,160,202,224,245\}.}
+\]
+
+Here is a proof that does not assume a fixed modulus determines an
+unbounded suffix.  In the eight rows of Section 23, direct substitution
+first gives
+
+\[
+\begin{array}{c|c}
+s=128t+r&r\mapsto c\text{ offset in }c=324t+C_r\\ \hline
+10&26\\
+31&80\\
+32&81\\
+53&135\\
+74&188\\
+95&242\\
+96&243\\
+117&297.
+\end{array}
+\]
+
+The valuation `j` is one more than the alternating-suffix length of
+`A(c)`.  To see this, write `v=A(c)`, so `J(c)=2v+1`.  According to the
+parity of `v`, the decreasing original move divides either
+`3J(c)+1=2(3v+2)` or `3J(c)-1=2(3v+1)`.  Section 1's arithmetic formula for
+`R(v)` says that the valuation of the expression in parentheses is exactly
+the alternating-suffix length of `v`.  The extra displayed factor two proves
+the claim about `j`.
+
+Thus `j=2` exactly when that suffix has length one, a condition decided by
+the last two bits of `A(c)`.  Substitution in the displayed table gives
+precisely the eight residue classes modulo 256 in the box.  In those classes
+write `s=256u+r`; deletion of the one-bit suffix gives the exact affine rows
+
+\[
+\begin{array}{c|c|c}
+r&c&y=B(c)\\ \hline
+10 &648u+26 &486u+19\\
+31 &648u+80 &486u+60\\
+53 &648u+135&486u+101\\
+95 &648u+242&486u+181\\
+160&648u+405&486u+304\\
+202&648u+512&486u+384\\
+224&648u+567&486u+425\\
+245&648u+621&486u+466.
+\end{array}
+\]
+
+Every right-hand entry is at least `256u+r`, proving `y>=s` in these
+classes.  In all other rows `j>=3`, so the alternating suffix of `A(c)` has
+length at least two and
+
+\[
+y\le\frac{3c+1}{8}.
+\]
+
+The bounds `z<=(9s+3)/8` and `c=A^2(z)<=(9z+5)/4` give
+
+\[
+y\le\frac{243s+233}{256}<s
+\]
+
+for every remaining residual source, all of which are at least 31.  This
+proves the converse without making any assumption about how much farther
+the suffix may continue.
+
+Now impose the globally minimum-source hypothesis and either of the two
+`B`-selecting forks left after Section 24.  Section 25 transfers a DRAW to
+an adjacent frame whose source is `y=B(c)`.  If `y<s`, this contradicts the
+definition of `s`.  Therefore only the eight boxed classes survive, and in
+all of them the transferred frame is exactly the exponent-two/one pair
+
+\[
+\boxed{Q_2^{\alpha(c)}(J(y)),\qquad
+Q_1^{\alpha(c)}(J(y)),}
+\]
+
+with at least one DRAW member.
+
+One further phase bit is also finite.  Comparing `alpha(c)` with `alpha(y)`
+in the eight affine rows, split once more modulo 512, gives
+
+\[
+\boxed{
+\alpha(c)=\alpha(y)
+\quad\Longleftrightarrow\quad
+s\bmod512\in\{10,31,160,202,309,351,480,501\}.}
+\]
+
+The complementary surviving classes
+
+\[
+53,95,224,245,266,287,416,458\pmod {512}
+\]
+
+remain in the `B`-selecting phase at `y`.  Thus the final obstruction is no
+longer an arbitrary-exponent frame: it is one exact exponent-one/two pair,
+with its next ordinary source letter and phase completely specified.

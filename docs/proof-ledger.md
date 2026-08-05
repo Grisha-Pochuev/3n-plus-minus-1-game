@@ -59,6 +59,8 @@ Update this table whenever the status of a substantial claim changes.
 | In the `31,53,74,96 mod 128` LOSS-source fork, the adjacent DRAW pair creates a boundary whose WIN height drops by at least two | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 24 |
 | The factor-three escape from every `B`-selecting source lift closes the universal large diamond of Section 25 | **PROVED** | `docs/verified-results.md`, Section 25; regression in `tests/test_game.py` |
 | A DRAW in a `B`-selecting boundary lift, or in a parent of its exponent-one/two pair, transfers to an adjacent DRAW frame over the ordinary source `B(x)` | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 25 |
+| In the final eight length-two rows, the transferred source `B(c)` is nondecreasing exactly in eight classes modulo 256, equivalently exactly when the signed valuation is two | **PROVED** | `docs/verified-results.md`, Section 26; regression in `tests/test_game.py` |
+| Under the minimum-source hypothesis, every surviving B-transfer is an exponent-one/two pair whose next phase is fixed by eight classes modulo 512 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 26 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

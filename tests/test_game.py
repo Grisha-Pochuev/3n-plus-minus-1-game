@@ -743,6 +743,39 @@ class GameArithmeticTests(unittest.TestCase):
                 other_grandchild,
             )
 
+    def test_final_B_source_return_filter(self) -> None:
+        residual_classes = {10, 31, 32, 53, 74, 95, 96, 117}
+        nondecreasing_classes = {10, 31, 53, 95, 160, 202, 224, 245}
+        matching_classes = {10, 31, 160, 202, 309, 351, 480, 501}
+
+        for source in range(1, 100000):
+            if source % 128 not in residual_classes:
+                continue
+
+            returned_source = transformed_B(transformed_A(source))
+            common_source = transformed_A(transformed_A(returned_source))
+            next_source = transformed_B(common_source)
+            selecting_phase = 1 - source_A_selecting_tail_bit(common_source)
+            letter, valuation, decoded_source = source_boundary_transition(
+                common_source, selecting_phase
+            )
+
+            self.assertEqual(letter, "B")
+            self.assertEqual(decoded_source, next_source)
+            self.assertEqual(
+                next_source >= source,
+                source % 256 in nondecreasing_classes,
+            )
+            self.assertEqual(valuation == 2, next_source >= source)
+
+            if next_source < source:
+                continue
+            transferred_phase = 1 - selecting_phase
+            self.assertEqual(
+                transferred_phase == source_A_selecting_tail_bit(next_source),
+                source % 512 in matching_classes,
+            )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

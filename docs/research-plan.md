@@ -89,7 +89,13 @@ unifies exactly those cases: the universal factor-three diamond transfers
 either kind of surviving `B`-selecting fork to an adjacent frame over the
 ordinary source `B(c)`.  The immediate target is now to normalize arbitrary
 adjacent exponents in that transferred frame without losing the source
-outcome or the minimum boundary height.
+outcome or the minimum boundary height.  Section 26 completes that
+normalization in the actual residual rows: a source-nondecreasing transfer
+has valuation exactly two, so its frame already has exponents one and two.
+Only eight classes modulo 256 survive, and their next `A`/`B` source phase
+is split exactly by eight classes modulo 512.  The remaining task is to
+iterate this boundary-pair transfer while proving that a visit to the
+retained LOSS branch lowers the globally minimum WIN proof height.
 
 ## Priority 2: finite transducer plus numerical potential
 
