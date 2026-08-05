@@ -505,11 +505,66 @@ class GameArithmeticTests(unittest.TestCase):
                             successor_raw,
                             transformed_A(successor_source),
                         )
+                        self.assertEqual(
+                            successor_raw,
+                            constant_tail_state(
+                                3 * coefficient,
+                                0,
+                                return_phase,
+                            ),
+                        )
+                        if source > 0:
+                            (
+                                _,
+                                selected_valuation,
+                                selected_source,
+                            ) = source_boundary_transition(
+                                source,
+                                return_phase,
+                            )
+                            self.assertEqual(
+                                constant_tail_source_coordinates(
+                                    successor_raw
+                                ),
+                                (
+                                    selected_source,
+                                    0,
+                                    selected_valuation,
+                                    1 - return_phase,
+                                ),
+                            )
                     else:
                         self.assertEqual(
                             successor_raw,
                             transformed_B(successor_source),
                         )
+                        self.assertNotEqual(
+                            return_phase,
+                            source_A_selecting_tail_bit(
+                                successor_source
+                            ),
+                        )
+
+                    if valuation == 3:
+                        self.assertEqual(
+                            successor_raw,
+                            alternating_suffix_remainder(
+                                constant_tail_state(
+                                    3 * coefficient,
+                                    1,
+                                    return_phase,
+                                )
+                            ),
+                        )
+                        if source > 0:
+                            raw_source = (
+                                0
+                                if successor_raw == 0
+                                else constant_tail_source_coordinates(
+                                    successor_raw
+                                )[0]
+                            )
+                            self.assertLess(raw_source, source)
 
                     if valuation >= 4:
                         self.assertEqual(
@@ -522,6 +577,26 @@ class GameArithmeticTests(unittest.TestCase):
                                 valuation - 3,
                                 return_phase,
                             ),
+                        )
+
+                    if valuation >= 5:
+                        upper_reverse = constant_tail_state(
+                            coefficient,
+                            valuation - 1,
+                            return_phase,
+                        )
+                        lower_reverse = constant_tail_state(
+                            coefficient,
+                            valuation - 2,
+                            return_phase,
+                        )
+                        self.assertIn(
+                            successor_raw,
+                            transformed_moves(upper_reverse),
+                        )
+                        self.assertIn(
+                            successor_raw,
+                            transformed_moves(lower_reverse),
                         )
 
     def test_valuation_one_raw_exit_strict_source_drop(self) -> None:

@@ -420,10 +420,21 @@ signed sources with the carried proof-height token.
 Section 82 removes the apparent freedom in the valuation-one raw successor.
 After a valuation v>=2 it is exactly A(u) at v=2 and B(u) at v>=3.  For
 v>=4 the latter has coordinates (t,1,v-3,1-e): it returns to the same
-source t with one factor of three and three fewer dyadic levels.  Thus only
-the explicit v=2 and v=3 short-tail rows can change the source at this
-successor.  The next task is to attach those two rows, and the decreasing
-dyadic counter in every larger row, to the carried boundary proof height.
+source t with one factor of three and three fewer dyadic levels.
+Section 83 places the two short rows at that same factor-one boundary:
+Q_0^(1-e)(3J(t)) for v=2 and the raw suffix of Q_1^(1-e)(3J(t)) for v=3.
+Only the latter explicit suffix deletion can change the canonical source.
+Section 84 observes that the actual height-one resonance always has v>=5.
+Its four-exit outcome scan therefore returns an adjacent DRAW frame either
+over t itself or over the explicit B-child Q_(v-3)^(1-e)(3J(t)); the
+current pair, next raw alternative, and B-selecting signed alternative are
+all typed.
+Section 85 also closes the unused small rows universally: v=2 is one exact
+ordinary selected-source lift, and the only raw suffix at v=3 strictly
+lowers the coefficient source.  The same-source exponent-one row v=4 does
+not occur in the height-one resonance.
+The next task is to compare that sole B-child-frame alternative with the
+terminal token and force a boundary-height descent.
 
 ## Priority 2: finite transducer plus numerical potential
 

@@ -7117,10 +7117,177 @@ coordinates
 \]
 
 Here \(J(t)\) is not divisible by three, so the displayed factor exponent
-is exactly one.  The exit preserves the returned source, adds only one factor of three,
-and lowers the dyadic exponent by three.  The two small rows are explicit:
+is exactly one.  The exit preserves the returned source, adds only one
+factor of three, and lowers the dyadic exponent by three.  The two small rows are explicit:
 valuation two exits through \(A(u)\), while valuation three exits through
 \(B(u)\) at the short-tail boundary.  Thus the high resonant quotient of
 Section 78 cannot hide an arbitrary new raw source at its valuation-one
 successor.  These identities are regression-tested for every source below
 \(1000\), both phases, and valuations two through ten.
+
+## 83. The two short returns remain in the same factor layer
+
+The valuation-two and valuation-three rows left explicit in Section 82
+also retain the old source before canonical suffix deletion.  Indeed,
+substitution in \(u=Q_{v-1}^g(J(t))\) gives
+
+\[
+A(u)=Q_{v-2}^g(3J(t)).
+\]
+
+For \(v=2\), Section 82 says that the raw successor equals \(A(u)\).
+For \(v=3\), it equals \(B(u)=R(A(u))\).  Combining these with the
+long-tail row of that section gives the complete formula
+
+\[
+\boxed{
+C=
+\begin{cases}
+Q_0^g(3J(t)),&v=2,\\
+R\!\left(Q_1^g(3J(t))\right),&v=3,\\
+Q_{v-3}^g(3J(t)),&v\ge4.
+\end{cases}}
+\]
+
+Thus neither short row is an arbitrary source reset.  The valuation-two
+row is the exponent-zero factor-one boundary over \(t\), and the
+valuation-three row is the sole raw suffix deletion at the exponent-one
+factor-one boundary over \(t\).  Only that explicit \(R\)-operation can
+change the canonical coefficient source; every other valuation-one raw
+successor remains in exact coordinates over \(t\).  The two short
+identities are included in the regression range of Section 82.
+
+## 84. Every genuinely high four-exit scan returns to a typed frame
+
+Combine the preceding identities with the outcome scan of Section 80.
+Suppose its current signed valuation is \(v\ge5\), put \(g=1-e\), and
+retain
+
+\[
+u=Q_{v-1}^g(J(t)).
+\]
+
+The current signed/raw pair is the adjacent factor-free frame
+
+\[
+Q_v^g(J(t)),\qquad Q_{v-1}^g(J(t)).
+\]
+
+The next signed exit is \(L_g(u)=Q_1^g(J(u))\), while Section 83 gives
+its raw sibling as
+
+\[
+c=Q_{v-3}^g(3J(t))=B(u).
+\]
+
+Section 80 says that at least one of these four exits is DRAW.  If a
+current exit is DRAW, the first displayed adjacent frame contains a DRAW.
+If the next raw exit \(c\) is DRAW, its exponent \(v-3\) is at least two,
+so the reverse factor-frame lemma of Section 16 implies that
+
+\[
+\{Q_{v-1}^g(J(t)),Q_{v-2}^g(J(t))\}
+\]
+
+contains a DRAW.  This is again an adjacent factor-free frame over \(t\).
+
+It remains only for the next signed exit \(L_g(u)\) to be DRAW.  Since
+\(v\ge3\), the last two bits of \(u\) are both \(g\), and hence
+
+\[
+g=1-\alpha(u).
+\]
+
+Thus this lift is B-selecting.  The universal transfer diamond of
+Section 25 sends its DRAW to an adjacent factor-free frame over its
+selected source
+
+\[
+B(u)=c=Q_{v-3}^g(3J(t)).
+\]
+
+Consequently
+
+\[
+\boxed{
+v\ge5\Longrightarrow
+\begin{array}{l}
+\text{the four-exit scan yields an adjacent DRAW frame over }t,\\
+\text{or an adjacent DRAW frame over }
+Q_{v-3}^g(3J(t)).
+\end{array}}
+\]
+
+No raw or signed exit remains untyped.  In the height-one resonance of
+Section 78 one has \(v>M=L+2\ge4\), and therefore \(v\ge5\); the boxed
+normal form applies to every resonant row.  This is an outcome
+normalization, not yet a height descent, because its second displayed
+source still has to be compared with the terminal token.  The phase and
+two reverse-parent identities are regression-tested in the range of
+Section 82.
+
+## 85. The valuation-two return is ordinary and valuation three descends
+
+For completeness, the two source-changing rows of Section 83 have exact
+source types.  In the valuation-two row put
+
+\[
+C=Q_0^g(3J(t))=A(Q_1^g(J(t))).
+\]
+
+For \(t>0\), factor the ordinary signed transition at \(t\) in phase
+\(g\) as
+
+\[
+3J(t)+1-2g=2^jJ(y).
+\]
+
+The source-boundary identity of Section 17 says
+
+\[
+y=
+\begin{cases}
+A(t),&g=\alpha(t),\\
+B(t),&g=1-\alpha(t).
+\end{cases}
+\]
+
+Direct substitution, separately for \(g=0,1\), gives
+
+\[
+\boxed{C=Q_j^{1-g}(J(y)).}
+\]
+
+Thus valuation two is exactly one ordinary selected-source transition.  It
+is an A-lift in the A-selecting phase, and a strict ordinary source descent
+to \(B(t)<t\) in the other phase.
+
+In the valuation-three row,
+
+\[
+C=R(Q_1^g(3J(t)))=R(6J(t)-g).
+\]
+
+The last two bits of \(6J(t)-g\) are alternating for both phases, so \(R\)
+deletes at least two bits.  If \(C>0\) and \(\rho(C)\) denotes its
+coefficient source, then
+
+\[
+\rho(C)<\frac C6
+\le\frac{J(t)}4<t
+\qquad(t\ge2).
+\]
+
+Here \(J(t)<4t\) follows directly from
+\(J(t)=2\lceil3t/2\rceil+1\); the case \(t=1\) is direct, and a zero raw
+exit is terminal.  Hence
+
+\[
+\boxed{v=3,\ C\text{ positive}\Longrightarrow\rho(C)<t.}
+\]
+
+Together with Sections 83--84, the only universal small row that can retain
+the same source at exponent one is \(v=4\).  It never occurs in the
+height-one resonance, whose valuation is at least five.  The exact
+valuation-two coordinates and valuation-three strict descent are
+regression-tested for every positive source below \(1000\) and both phases.
