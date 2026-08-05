@@ -44,6 +44,9 @@ Update this table whenever the status of a substantial claim changes.
 | For odd `w`, the canonical coefficients of `3w` and `3w-1` are `J(R(w))` and `J(R(2w-1))` | **PROVED** | `docs/verified-results.md`, Section 18; regression in `tests/test_game.py` |
 | Two exponent-one source lifts return to source `B(A(s))` outside the four exceptional classes; an exceptional return has strictly smaller source | **PROVED** | `docs/verified-results.md`, Section 18; `constant_tail_source_coordinates`; regression in `tests/test_game.py` |
 | A minimum-source lifted DRAW can escape its second side child only through a nondecreasing ordinary source return `B(A(s))>=s` | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 18 |
+| The ordinary side return is nondecreasing exactly for `s=0,5,10,15 mod 16`, with the four affine formulas of Section 19 | **PROVED** | `docs/verified-results.md`, Section 19; regression in `tests/test_game.py` |
+| In the four phase-mismatch subclasses modulo 32, a minimum-source lifted DRAW forces the exact `LOSS/WIN/DRAW` adjacent-pair fingerprint of Section 19 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 19 |
+| The ensuing factor-three DRAW has valuation-one expanding child with exact source `3A(B(A(s)))+1` | **PROVED ARITHMETIC IDENTITY; DRAW CONTINUATION OPEN** | `docs/verified-results.md`, Section 19; regression in `tests/test_game.py` |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

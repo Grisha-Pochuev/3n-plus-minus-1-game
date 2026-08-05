@@ -1458,3 +1458,160 @@ drop rather than an uncontrolled affine jump.  This does not yet rule out an
 infinite sequence of nondecreasing ordinary side returns.  The forced LOSS
 siblings or the minimum boundary proof height must still be retained to close
 that last case.
+
+## 19. The exact nondecreasing return and its phase-mismatch fork
+
+The source-level escape left by Section 18 has only four residue classes.
+For every positive nonexceptional `s`, put
+
+\[
+b=B(s),\qquad z=B(A(s)).
+\]
+
+Then
+
+\[
+\boxed{
+z\ge s
+\quad\Longleftrightarrow\quad
+s\equiv0,5,10,15\pmod {16}.
+}
+\]
+
+In fact the four cases have the exact affine form
+
+\[
+\begin{array}{c|c|c}
+s&b&z\\ \hline
+16t   &12t   &18t\quad(t\ge1),\\
+16t+5 &12t+4 &18t+6,\\
+16t+10&12t+7 &18t+11,\\
+16t+15&12t+11&18t+17.
+\end{array}
+\]
+
+To prove the classification, let `m` be the alternating-suffix length of
+`A(s)`.  Outside the exceptional classes, `m` is one or two.  If `m=2`,
+then `A(s)=4b+a` with `a` equal to one or two.  Section 5 gives
+`z` as either `A(b)` or `B(b)`, and therefore
+
+\[
+z\le A(b)\le\frac{3b+1}{2}
+\le\frac{3A(s)+1}{8}
+\le\frac{9s+5}{16}<s.
+\]
+
+If `m=1`, then `A(s)=2b+(b\bmod2)`.  The refined side-branch table in
+Section 5 says that `z=A(b)` exactly when `b mod 4` is zero or three;
+otherwise `z=B(b)<s`.  Since a value is in the image of `A` exactly when it
+is not `1 mod 3`, the `A(b)` cases have
+
+\[
+b\equiv0,4,7,11\pmod {12}.
+\]
+
+Substitution and inversion of `A` give precisely the four rows above.  Each
+displayed `z` is strictly larger than the corresponding positive `s`.
+
+The lifted geometry in these rows is also exact.  Let
+
+\[
+e=\alpha(s),\quad q_0=L_e(s),\quad q_1=A(q_0),\quad
+p=B(q_1),\quad h=A(q_1).
+\]
+
+For the four nondecreasing classes, `u=A(s)` is `0` or `7 mod 8`.
+Consequently `1-e` is the `B`-selecting phase at `u`, and its signed
+valuation is exactly two.  The two children of `q_1` are therefore
+
+\[
+\boxed{
+p=Q_1^e(J(z))=L_e(z),\qquad
+h=Q_2^e(J(z)).
+}
+\]
+
+The phase at the returned source either agrees with `e` or flips, according
+to one more binary bit:
+
+\[
+\begin{array}{c|c}
+e=\alpha(z)&s\equiv0,10,21,31\pmod {32},\\
+e\ne\alpha(z)&s\equiv5,15,16,26\pmod {32}.
+\end{array}
+\]
+
+This follows immediately from the four affine rows by separating even and
+odd `t`.
+
+The phase-mismatch rows retain enough outcome information to force another
+DRAW.  Suppose `s` is the globally least coefficient source of any DRAW and
+`q_0=L_{\alpha(s)}(s)` is DRAW.  In a mismatch row, Section 17 and the
+identities above force
+
+\[
+\boxed{
+q_1\text{ is DRAW},\quad p\text{ is WIN},\quad h\text{ is DRAW}.
+}
+\]
+
+Indeed, `p=L_e(z)` is now in the `B`-selecting phase at `z`.  Both its
+children have source `B(z)`.  The general bound for `B`, together with
+`z\le(9s+3)/8`, gives
+
+\[
+B(z)\le\frac{3z+1}{4}
+\le\frac{27s+17}{32}<s,
+\]
+
+where every mismatch row has `s>=5`.  Thus neither child of `p` is DRAW.
+Since a child of a DRAW cannot be LOSS, `p` is WIN, and the other child `h`
+of `q_1` must be DRAW.
+
+There is a sharper forced fingerprint.  The exponent-one and exponent-two
+states `p` and `h` share their `B`-child.  Denote it by `c`, and put
+`d=A(p)`.  Both `c` and `d` have source `B(z)<s`.  Since `h` is DRAW, `c`
+cannot be LOSS; hence `c` is WIN.  Since `p` is WIN, its remaining child is
+then LOSS.  Finally the remaining child of `h` must be DRAW:
+
+\[
+\boxed{
+d=A(p)\text{ is LOSS},\quad
+c=B(p)=B(h)\text{ is WIN},\quad
+k=A(h)=Q_1^e(3J(z))\text{ is DRAW}.
+}
+\]
+
+The expanding child of this last factor-three state has another exact source
+formula.  Write `delta=1-2e`.  Because `e` is the `B`-selecting phase at
+`z`,
+
+\[
+3J(z)+\delta\equiv0\pmod4.
+\]
+
+As `9` is one modulo four, this implies
+
+\[
+9J(z)+\delta\equiv2\pmod4,
+\]
+
+so its valuation is exactly one.  Moreover `e` is the parity of `A(z)` in
+the mismatch rows.  A direct parity split therefore gives
+
+\[
+\frac{9J(z)+\delta}{2}=J(3A(z)+1).
+\]
+
+With `t=3A(z)+1`, the exact arithmetic transition is
+
+\[
+\boxed{
+A(k)=Q_1^{1-e}(J(t))=L_{\alpha(z)}(t).
+}
+\]
+
+This last identity does not by itself say that `A(k)` is DRAW: the other
+child of the proved-DRAW state `k` can still carry the DRAW continuation.
+Controlling that competing child, and the phase-match rows above, is the
+remaining source-level obstruction.

@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 33 tests
+Ran 34 tests
 OK
 ```
 
@@ -34,6 +34,7 @@ The tests cover:
 - the exact second-boundary fork and divisible-coefficient frame identities;
 - the unique coefficient-source conjugacy and its signed boundary transitions;
 - the two lifted source-coefficient identities and the exact lifted side return;
+- the exact nondecreasing source-return classes and their phase-mismatch fork;
 - the arithmetic characterization and closure of height-one WIN positions;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;

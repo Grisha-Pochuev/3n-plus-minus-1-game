@@ -60,9 +60,14 @@ remaining exponent-one transition with `k>0` is expressed by
 three-free lifted steps return exactly to the ordinary source side branch
 `B(A(s))`; at the four exceptional residues the source instead drops
 strictly.  The surviving case is therefore a nondecreasing ordinary side
-return `B(A(s))>=s`.  The immediate target is to combine that return with
-the forced LOSS sibling from the minimum-height boundary, rather than seek
-a rank for the arithmetic return alone.
+return `B(A(s))>=s`.  Section 19 classifies it exactly as
+`s=0,5,10,15 mod 16`.  In the four phase-mismatch subclasses modulo 32, the
+adjacent lifted pair forces a smaller-source LOSS sibling, a shared WIN
+child, and a new DRAW `Q_1^e(3J(B(A(s))))`.  Its expanding child has exact
+source `3A(B(A(s)))+1`, but need not itself be DRAW.  The immediate target
+is to control the competing child of that factor-three DRAW and the four
+phase-match subclasses, while retaining the forced LOSS witness rather than
+seeking a rank for the arithmetic return alone.
 
 ## Priority 2: finite transducer plus numerical potential
 

@@ -423,6 +423,69 @@ class GameArithmeticTests(unittest.TestCase):
                     side_source, transformed_B(transformed_A(source))
                 )
 
+    def test_nondecreasing_lifted_source_return(self) -> None:
+        nondecreasing_residues = {0, 5, 10, 15}
+        matching_phase_residues = {0, 10, 21, 31}
+
+        for source in range(1, 100000):
+            returned_source = transformed_B(transformed_A(source))
+            if source % 16 not in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                self.assertEqual(
+                    returned_source >= source,
+                    source % 16 in nondecreasing_residues,
+                )
+
+            if source % 16 not in nondecreasing_residues:
+                continue
+
+            phase = source_A_selecting_tail_bit(source)
+            first = constant_tail_state(
+                embedded_original_state(source), 1, phase
+            )
+            second = transformed_A(first)
+            lower = transformed_B(second)
+            upper = transformed_A(second)
+            self.assertEqual(
+                constant_tail_source_coordinates(lower),
+                (returned_source, 0, 1, phase),
+            )
+            self.assertEqual(
+                constant_tail_source_coordinates(upper),
+                (returned_source, 0, 2, phase),
+            )
+
+            phases_match = phase == source_A_selecting_tail_bit(returned_source)
+            self.assertEqual(
+                phases_match,
+                source % 32 in matching_phase_residues,
+            )
+            if phases_match:
+                continue
+
+            smaller_source = transformed_B(returned_source)
+            self.assertLess(smaller_source, source)
+            self.assertEqual(
+                constant_tail_source_coordinates(transformed_A(lower))[0],
+                smaller_source,
+            )
+            self.assertEqual(
+                constant_tail_source_coordinates(transformed_B(lower))[0],
+                smaller_source,
+            )
+
+            factor_three_state = transformed_A(upper)
+            self.assertEqual(
+                constant_tail_source_coordinates(factor_three_state),
+                (returned_source, 1, 1, phase),
+            )
+            next_source = 3 * transformed_A(returned_source) + 1
+            self.assertEqual(
+                constant_tail_source_coordinates(
+                    transformed_A(factor_three_state)
+                ),
+                (next_source, 0, 1, 1 - phase),
+            )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:
