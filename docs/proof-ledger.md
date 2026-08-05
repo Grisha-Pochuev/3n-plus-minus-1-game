@@ -51,6 +51,8 @@ Update this table whenever the status of a substantial claim changes.
 | A globally minimum-source DRAW lift can make a nondecreasing side return only in the phase-match classes `0,10,21,31 mod 32` | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Sections 18--20 |
 | In every phase-match return, the common child's coefficient source is below `s`, while the factor-three state's children are adjacent lifts with source equal to that common child | **PROVED** | `docs/verified-results.md`, Section 21; regression in `tests/test_game.py` |
 | A long returned suffix occurs exactly for `s=21,63,64,106 mod 128`, and all four classes contradict the minimum-source DRAW hypothesis | **PROVED CONDITIONAL EXCLUSION** | `docs/verified-results.md`, Section 21; regression in `tests/test_game.py` |
+| Every phase-match returned suffix of length at least three creates another DRAW/WIN boundary whose WIN proof height drops by at least two | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 22; regression in `tests/test_game.py` |
+| An indefinitely surviving phase-match boundary reduction must eventually enter one of eight suffix-length-two classes modulo 128 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Sections 20--22 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

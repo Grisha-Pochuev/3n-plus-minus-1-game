@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 36 tests
+Ran 37 tests
 OK
 ```
 
@@ -37,6 +37,7 @@ The tests cover:
 - the exact nondecreasing source-return classes and their phase-mismatch fork;
 - the larger diamond excluding every phase-mismatch return;
 - the long-suffix filter excluding four phase-match subclasses modulo 128;
+- the proof-height descent diamond for every returned suffix of length at least three;
 - the arithmetic characterization and closure of height-one WIN positions;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;

@@ -573,6 +573,44 @@ class GameArithmeticTests(unittest.TestCase):
                     {common_child},
                 )
 
+    def test_phase_match_height_descent_diamond(self) -> None:
+        for source in range(1, 100000):
+            if source % 32 not in {0, 10, 21, 31}:
+                continue
+
+            phase = source_A_selecting_tail_bit(source)
+            first = constant_tail_state(
+                embedded_original_state(source), 1, phase
+            )
+            first_side = transformed_B(first)
+            self.assertEqual(
+                first_side,
+                transformed_B(transformed_A(source)),
+            )
+            self.assertLess(
+                constant_tail_source_coordinates(first_side)[0],
+                source,
+            )
+
+            second = transformed_A(first)
+            lower = transformed_B(second)
+            upper = transformed_A(second)
+            common_child = transformed_B(lower)
+            self.assertEqual(common_child, transformed_B(upper))
+            self.assertLess(
+                constant_tail_source_coordinates(common_child)[0],
+                source,
+            )
+
+            lower_expanding = transformed_A(lower)
+            if alternating_suffix_length(lower_expanding) < 3:
+                continue
+            for child_of_first_side in transformed_moves(first_side):
+                self.assertIn(
+                    common_child,
+                    transformed_moves(child_of_first_side),
+                )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

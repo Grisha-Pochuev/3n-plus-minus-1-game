@@ -71,9 +71,12 @@ minimum-source lift at the larger source `B(A(s))`.  Section 21 excludes the
 four long-returned-suffix subclasses `21,63,64,106 mod 128`.  In every other
 phase-match class, the returned common child is numerically larger than `s`
 but has coefficient source below `s`; the next adjacent pair has source equal
-to that larger integer.  The immediate target is to combine those two orders
-with minimum boundary proof height, or prove that iteration must enter one
-of the now-excluded residue classes.
+to that larger integer.  Section 22 restores the proof-height component: a
+returned suffix of length at least three always creates a new boundary whose
+WIN height drops by at least two.  Therefore only the eight suffix-length-two
+classes modulo 128 can persist without an immediate source contradiction or
+height drop.  The immediate target is to close the unused LOSS-witness
+orientation in that final length-two diamond.
 
 ## Priority 2: finite transducer plus numerical potential
 

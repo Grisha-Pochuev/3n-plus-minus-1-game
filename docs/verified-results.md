@@ -1859,3 +1859,102 @@ Together with Section 20, a surviving nondecreasing return must now be a
 phase match outside these four long-suffix subclasses.  There the returned
 integer `c` is larger than `s`, even though the coefficient source of `c`
 is smaller; that split between the two orders is the remaining obstruction.
+
+## 22. Every returned suffix of length at least three lowers boundary height
+
+The phase-match gadget also carries the proof-height component that was
+deliberately retained in Section 12.  Use the notation of Section 21 and
+write
+
+\[
+q_0=L_e(s),\qquad q_1=A(q_0),\qquad z=B(A(s)).
+\]
+
+In every phase-match row there is an exact identity
+
+\[
+\boxed{B(q_0)=z.}
+\]
+
+It follows directly by writing `q_1=L_{1-e}(A(s))` and continuing the
+alternating suffix through its final appended bit.  The coefficient source
+of the integer `z` is below `s`.  Indeed, if `sigma(z)` denotes that source,
+then
+
+\[
+3\sigma(z)+1\le\kappa(z)\le\frac{z+1}{2},
+\]
+
+while Section 19 gives `z\le(9s+3)/8`; hence `sigma(z)<s` for every relevant
+`s>=10`.
+
+Now retain
+
+\[
+p=B(q_1),\qquad h=A(q_1),\qquad
+d=A(p),\qquad c=B(p)=B(h),
+\]
+
+and let `m` be the alternating-suffix length of `d`.  If `m>=3`, the
+following larger diamond is exact:
+
+\[
+\boxed{
+c\in\operatorname{moves}(A(z))
+\quad\text{and}\quad
+c\in\operatorname{moves}(B(z)).
+}
+
+For a direct arithmetic proof, put `u=A(z)`.  In a phase match, the parity
+of `u` is `1-e`.  Since `p=4u+2-e`, direct substitution gives
+
+\[
+d=A(p)=
+\begin{cases}
+4A(u)+1,&e=0,\\
+4A(u)+2,&e=1.
+\end{cases}
+\]
+
+Thus `d` is obtained from `A^2(z)` by appending respectively `01` or `10`.
+The condition `m>=3` says exactly that its alternating suffix continues
+through the boundary into `A^2(z)`.  Therefore
+
+\[
+c=R(d)=R(A^2(z))=B(A(z)).
+\]
+
+In the eight residue classes where `m>=3`, direct reduction of the affine
+rows modulo 16 gives `z=0,7,8,15 mod 16`.  Hence `z` is nonexceptional, and
+the side relation of Section 5 makes this same `c=B(A(z))` a child of
+`B(z)` as well.  This proves the boxed diamond.  The identity is also
+regression-tested without assuming any outcomes.
+
+There is a useful game-theoretic consequence.  Suppose again that `s` is
+the globally least coefficient source of a DRAW and `q_0` is DRAW.  Its
+child `z` has source below `s`; it is non-losing and cannot be DRAW, so it is
+WIN.  Section 17 makes `q_1` DRAW.  At least one of its children `p,h` is
+DRAW, and their common child `c` likewise has source below `s`; therefore
+`c` is WIN and is the endpoint of another DRAW-to-WIN boundary.
+
+Let `ell` be a LOSS child witnessing that `z` is WIN.  When `m>=3`, the
+boxed diamond makes `c` a child of `ell` regardless of which child of `z`
+is `ell`.  Consequently
+
+\[
+\boxed{h(c)\le h(z)-2.}
+\]
+
+Thus every phase-match gadget with returned suffix length at least three
+replaces the current boundary by one with strictly smaller finite WIN proof
+height.  Such replacements cannot occur infinitely often.  In particular,
+after the outright exclusions of Sections 20--21, any indefinitely surviving
+phase-match reduction must eventually enter the suffix-length-two rows
+
+\[
+s\equiv10,31,32,53,74,95,96,117\pmod {128}.
+\]
+
+This is a height descent, not yet a contradiction: the length-two diamond
+contains only one of the two possible LOSS witnesses of `z`.  Closing that
+remaining witness orientation is the next boundary problem.
