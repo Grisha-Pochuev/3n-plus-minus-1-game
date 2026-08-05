@@ -171,6 +171,38 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertIn(returned, transformed_moves(expanding))
                 self.assertIn(returned, transformed_moves(contracting))
 
+    def test_residual_three_two_frame_transfer(self) -> None:
+        for b in range(1, 100000):
+            if b % 64 not in {4, 25, 38, 59}:
+                continue
+            q = transformed_B(transformed_A(b))
+            source = transformed_A(q)
+            phase = source_A_selecting_tail_bit(
+                transformed_A(transformed_A(b))
+            )
+            coefficient = embedded_original_state(source)
+            upper = constant_tail_state(coefficient, 3, phase)
+            lower = constant_tail_state(coefficient, 2, phase)
+            factor_upper = constant_tail_state(3 * coefficient, 2, phase)
+            factor_lower = constant_tail_state(3 * coefficient, 1, phase)
+            side = transformed_B(lower)
+
+            self.assertEqual(
+                transformed_moves(upper),
+                (factor_upper, factor_lower),
+            )
+            self.assertEqual(
+                transformed_moves(lower),
+                (factor_lower, side),
+            )
+            if phase == source_A_selecting_tail_bit(source):
+                self.assertIn(side, transformed_moves(transformed_A(source)))
+            else:
+                self.assertEqual(
+                    constant_tail_source_coordinates(side)[:2],
+                    (transformed_B(source), 0),
+                )
+
     def test_long_side_branch_formula(self) -> None:
         for q in range(1, 100000):
             value = long_side_branch_value(q)

@@ -5133,3 +5133,95 @@ proof-tree token into one of exactly two typed forms:
 This is a rank-transport lemma, not yet a boundary-descent theorem: the
 returned state has not been proved to be a DRAW boundary endpoint.  The
 arithmetic identities above are regression-tested for \(q<100000\).
+
+## 58. The residual three/two frame has only one side escape
+
+Return to the surviving nonexceptional row of Section 56 and write
+
+\[
+x=A(q),\qquad a=J(x),\qquad
+D=Q_3^f(a),\qquad C=Q_2^f(a).
+\]
+
+At least one of \(D,C\) is DRAW, and Section 56 also gives
+
+\[
+s\le x<2s,
+\]
+
+where \(s\) is the globally minimum coefficient source of a DRAW.  Define
+
+\[
+Z=Q_2^f(3a),\qquad X=Q_1^f(3a),\qquad Y=B(C).
+\]
+
+The long-tail recurrence and the shared-child identity give the exact
+diamond
+
+\[
+\boxed{
+\operatorname{moves}(D)=\{Z,X\},\qquad
+\operatorname{moves}(C)=\{X,Y\}.}
+\]
+
+The outcome recursion now has a useful consequence.  The common child
+\(X\) cannot be LOSS, since then both \(D\) and \(C\) would be WIN.  If
+\(X\) is DRAW, the factor frame \(\{Z,X\}\) already contains a DRAW.  If
+\(X\) is WIN, every DRAW among \(D,C\) forces its other child to be DRAW.
+Consequently
+
+\[
+\boxed{
+\{D,C\}\text{ contains a DRAW}
+\Longrightarrow
+\{Z,X\}\text{ contains a DRAW}\quad\text{or}\quad Y\text{ is DRAW}.}
+\]
+
+The side alternative has an exact source type.  If \(f=\alpha(x)\), then
+Section 24 makes \(Y\) an ordinary child of \(A(x)\).  Hence
+
+\[
+Y\le A^2(x)\le\frac{9x+5}{4}.
+\]
+
+Because \(x\le2s-1\), every positive such \(Y\) satisfies
+
+\[
+\rho(Y)\le\frac{Y-1}{6}
+\le\frac{9s-4}{12}<s.
+\]
+
+The terminal case is also not DRAW.  Global source minimality therefore
+excludes the side alternative in the A-selecting phase.
+
+If \(f=1-\alpha(x)\), let \(j\ge2\) be the signed valuation selecting
+\(B(x)\).  The source-boundary transition and deletion of the final bit of
+its constant tail give
+
+\[
+\boxed{
+Y=Q_{j-1}^{\,1-f}(J(B(x))).}
+\]
+
+Since \(x=A(q)\), the source in this exact factor-free lift is
+
+\[
+B(x)=B(A(q)),
+\]
+
+which is precisely the canonical side-return token typed in Section 57.
+Thus the residual frame has the sharpened transition
+
+\[
+\boxed{
+\begin{array}{l}
+\{Q_2^f(3J(x)),Q_1^f(3J(x))\}\text{ contains a DRAW},\\
+\text{or }f=1-\alpha(x)\text{ and a DRAW is an exact lift over }
+B(A(q)).
+\end{array}}
+\]
+
+There is no unmarked A-side restart.  The first row is now the sole factor
+escape; the second retains either the lower WIN token or the exceptional
+LOSS-lift token of Section 57.  The displayed arithmetic identities are
+regression-tested in the four surviving residue families for \(b<100000\).

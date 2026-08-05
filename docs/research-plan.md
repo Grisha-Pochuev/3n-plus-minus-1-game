@@ -241,6 +241,13 @@ proof-tree token: it produces either a WIN of height lower by two, or the
 single exceptional lift type over a canonical LOSS of height lower by one.
 The remaining local target is to expose the carried WIN/LOSS token at an
 actual DRAW boundary before any unmarked factor restart.
+Section 58 removes the unmarked side restart from the residual three/two
+frame.  Its A-selecting side child has source below the global minimum; its
+B-selecting side child is an exact lift over the Section 57 token.  The sole
+remaining escape is therefore the marked factor-one two/one frame over the
+same finite source.  Rank synthesis should close that factor frame without
+discarding whether the carried token is a lower WIN or an exceptional lift
+over a canonical LOSS.
 
 ## Priority 2: finite transducer plus numerical potential
 
