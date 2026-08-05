@@ -5938,3 +5938,62 @@ not yet prohibit alternation with a nested exceptional lift, but it removes
 an unbounded B counter from that alternation.  The nine-step contraction is
 regression-tested for the extremal sources \(x_0=s,2s-1\), all
 \(10\le s<5000\), and all five possible A-streak positions.
+
+## 67. The total A/B phase horizon is genuinely unbounded
+
+Section 66 bounds each consecutive B-run, not the total number of
+alternations between A and valuation-two B transitions.  There are exact
+arithmetic prefixes of arbitrary length
+
+\[
+A,B_2,A,B_2,\ldots,A,B_2.
+\]
+
+For any \(k\ge1\), choose
+
+\[
+m=
+\begin{cases}
+2,&k\text{ even},\\
+4,&k\text{ odd},
+\end{cases}
+\qquad a_0=8^k m-1.
+\]
+
+Then \(a_0\) is positive, odd, and not divisible by three, so it has a
+unique source \(x_0\) with \(a_0=J(x_0)\).  Start in phase zero.  More
+generally, before pair \(i\), put
+
+\[
+a_i=9^i8^{k-i}m-1=8t_i-1,qquad
+t_i=9^i8^{k-i-1}m
+\]
+
+for \(0\le i<k\).  Every \(t_i\) is even.  The phase-zero signed transition
+therefore satisfies
+
+\[
+3a_i+1=2(12t_i-1),
+\]
+
+with valuation exactly one.  After the phase flip, the phase-one transition
+is
+
+\[
+3(12t_i-1)-1=4(9t_i-1),
+\]
+
+with valuation exactly two, because \(9t_i-1\) is odd.  Its returned
+coefficient is
+
+\[
+a_{i+1}=9t_i-1=9^{i+1}8^{k-i-1}m-1,
+\]
+
+and the phase has returned to zero.  Induction supplies all \(k\) pairs.
+
+Thus no proof may replace Sections 63--64 by a fixed phase-only search
+horizon.  These long prefixes are not DRAW paths or counterexamples: they
+carry no outcome constraints, while Sections 63--64 prove that the retained
+WIN/LOSS token prevents an infinite valuation-two recycle.  The construction
+is regression-tested for \(1\le k<25\).

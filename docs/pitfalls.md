@@ -151,3 +151,22 @@ It is invalid to conclude that the returned obligation has already lowered
 the boundary height.  A completion must carry the distinguished
 lower-height predecessor through the next obligation and expose one of its
 certified descendants as an actual DRAW-to-WIN endpoint.
+
+## 13. Bounded phase runs do not give a bounded total A/B horizon
+
+Section 66 proves that a consecutive valuation-two B-run after the canonical
+A-streak has length at most eight.  It is tempting to combine this with the
+four-step A-streak bound and conclude that the whole phase alternation has a
+fixed horizon.  That is false arithmetically.
+
+Section 67 constructs, for every \(k\), a three-free coefficient whose first
+\(2k\) signed source transitions are exactly
+
+\[
+A,B_2,A,B_2,\ldots,A,B_2.
+\]
+
+These prefixes are not DRAW counterexamples; they omit the forced outcome
+tokens.  They show that the final argument must use the WIN/LOSS provenance
+of Sections 57 and 61--64, rather than only the sequence of phases and
+valuations.

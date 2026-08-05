@@ -303,6 +303,11 @@ valuation-two B-transfers fall below s, while any source-surviving larger
 valuation is only three or four.  Thus the entire A/B phase alternation has
 bounded local counters.  The remaining issue is genuinely the rank carried
 by the exceptional nested lift, not an omitted long phase run.
+Section 67 records the necessary qualification: the *total* number of
+alternations has no fixed arithmetic horizon.  Exact prefixes
+`A,B2,A,B2,...` exist at every length.  Hence the final rank must spend the
+retained proof-height token on each valuation-two macrocycle; multiplying
+the separate local counter bounds is not a valid completion.
 
 ## Priority 2: finite transducer plus numerical potential
 

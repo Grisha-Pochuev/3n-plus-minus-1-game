@@ -216,6 +216,29 @@ class GameArithmeticTests(unittest.TestCase):
                     self.assertLess(returned, minimum_source)
                     current = transformed_A(current)
 
+    def test_arbitrarily_long_phase_only_AB_prefixes(self) -> None:
+        for pair_count in range(1, 25):
+            multiplier = 2 if pair_count % 2 == 0 else 4
+            coefficient = multiplier * 8**pair_count - 1
+            source, power_of_three = constant_tail_coefficient_source(
+                coefficient
+            )
+            self.assertEqual(power_of_three, 0)
+            self.assertEqual(embedded_original_state(source), coefficient)
+
+            phase = 0
+            for _ in range(pair_count):
+                letter, valuation, source = source_boundary_transition(
+                    source, phase
+                )
+                self.assertEqual((letter, valuation), ("A", 1))
+                phase = 1 - phase
+                letter, valuation, source = source_boundary_transition(
+                    source, phase
+                )
+                self.assertEqual((letter, valuation), ("B", 2))
+                phase = 1 - phase
+
     def test_residual_three_two_frame_transfer(self) -> None:
         for b in range(1, 100000):
             if b % 64 not in {4, 25, 38, 59}:
