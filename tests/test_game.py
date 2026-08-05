@@ -7,6 +7,7 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from optimal_3n1.game import (  # noqa: E402
     F,
+    SIDE_RELATION_EXCEPTIONAL_RESIDUES,
     alternating_suffix_length,
     alternating_suffix_remainder,
     alternating_suffix_remainder_via_gray,
@@ -15,6 +16,7 @@ from optimal_3n1.game import (  # noqa: E402
     constant_tail_children,
     constant_tail_coordinates,
     constant_tail_coefficient_source,
+    constant_tail_source_coordinates,
     constant_tail_state,
     dyadic_minus_one_children,
     dyadic_minus_one_state,
@@ -372,6 +374,54 @@ class GameArithmeticTests(unittest.TestCase):
                 odd_coefficient,
                 (3**exponent_of_three) * embedded_original_state(source),
             )
+
+    def test_lifted_source_side_diamond(self) -> None:
+        for odd_value in range(1, 10000, 2):
+            coefficient = constant_tail_coordinates(3 * odd_value)[0]
+            self.assertEqual(
+                coefficient,
+                embedded_original_state(
+                    alternating_suffix_remainder(odd_value)
+                ),
+            )
+
+            coefficient = constant_tail_coordinates(3 * odd_value - 1)[0]
+            self.assertEqual(
+                coefficient,
+                embedded_original_state(
+                    alternating_suffix_remainder(2 * odd_value - 1)
+                ),
+            )
+
+        for source in range(1, 100000):
+            phase = source_A_selecting_tail_bit(source)
+            first_lift = constant_tail_state(
+                embedded_original_state(source), 1, phase
+            )
+            second_lift = transformed_A(first_lift)
+            self.assertEqual(
+                second_lift,
+                constant_tail_state(
+                    embedded_original_state(transformed_A(source)),
+                    1,
+                    1 - phase,
+                ),
+            )
+
+            lifted_side = transformed_B(second_lift)
+            if lifted_side == 0:
+                self.assertIn(source % 16, SIDE_RELATION_EXCEPTIONAL_RESIDUES)
+                continue
+            side_source, power_of_three, _, _ = (
+                constant_tail_source_coordinates(lifted_side)
+            )
+            if source % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                self.assertLess(side_source, source)
+            else:
+                self.assertEqual(power_of_three, 0)
+                self.assertEqual(
+                    side_source, transformed_B(transformed_A(source))
+                )
 
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):

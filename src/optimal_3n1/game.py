@@ -333,6 +333,20 @@ def constant_tail_coefficient_source(odd_coefficient: int) -> tuple[int, int]:
     return source, exponent_of_three
 
 
+def constant_tail_source_coordinates(q: int) -> tuple[int, int, int, int]:
+    """Return ``(s, k, r, e)`` with ``q=Q_r^e(3**k * J(s))``.
+
+    This combines the canonical constant-tail coordinates with the unique
+    source factorization of their odd coefficient.  It is the coordinate
+    system used by the source-level reductions in the proof notes.
+    """
+    odd_coefficient, exponent, tail_bit = constant_tail_coordinates(q)
+    source, exponent_of_three = constant_tail_coefficient_source(
+        odd_coefficient
+    )
+    return source, exponent_of_three, exponent, tail_bit
+
+
 def source_A_selecting_tail_bit(source: int) -> int:
     """Return the boundary phase whose signed coefficient move selects A."""
     if source <= 0:

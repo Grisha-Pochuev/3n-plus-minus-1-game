@@ -1284,3 +1284,177 @@ remaining non-well-founded transition is concentrated at exponent one with
 can increase the source `t`.  Controlling this source/valuation exchange,
 together with the adjacent pair from Section 16, is still required for a
 complete proof.
+
+## 18. The lifted side branch returns to the ordinary source diamond
+
+Write `kappa(q)` for the odd coefficient in the canonical constant-tail
+coordinates of a positive state, and retain
+
+\[
+J(s)=2A(s)+1.
+\]
+
+Two elementary identities explain the next level of the source embedding.
+For every positive odd `w`,
+
+\[
+\boxed{
+\kappa(3w)=J(R(w)),\qquad
+\kappa(3w-1)=J(R(2w-1)).
+}
+\]
+
+For the first identity, write
+
+\[
+w=2^m z+a,\qquad z=R(w),
+\]
+
+where `a` is the maximal alternating suffix.  It ends in one, and, when
+`z>0`, its leading bit is `z mod 2`.  Hence
+
+\[
+3a+1=
+\begin{cases}
+2^m,&z\text{ even},\\
+2^{m+1},&z\text{ odd}.
+\end{cases}
+\]
+
+Since `J(z)=3z+1+(z mod 2)`, substitution gives
+
+\[
+3w=J(z)2^m-1.
+\]
+
+If the whole word is alternating, then `z=0` and the exponent is `m+1`
+instead; the coefficient is still `J(0)=1`.  This proves the first identity.
+
+For the second, put `y=2w-1`.  Except for the immediate case `w=1`, the
+odd word `y` ends in `01`, so its alternating-suffix length `m` is at least
+two.  Applying the same calculation to
+
+\[
+A(y)=\frac{3y+1}{2}=3w-1
+\]
+
+gives
+
+\[
+A(y)=J(R(y))2^{m-1}
+\]
+
+when a prefix remains.  In the complete-word case only the exponent changes.
+Thus the second canonical coefficient is `J(R(y))`, as claimed.  Both
+identities are regression-tested for odd `w<10000`.
+
+Now define the exponent-one **source lift**
+
+\[
+L_e(s)=Q_1^e(J(s)).
+\]
+
+Let `alpha(s)` be the `A`-selecting phase from Section 17, and put
+
+\[
+u=A(s),\qquad f=1-\alpha(s),\qquad
+p=B(L_f(u)),\qquad z=B(u)=B(A(s)).
+\]
+
+The first source transition is exactly
+
+\[
+A(L_{\alpha(s)}(s))=L_f(u).
+\]
+
+The side child `p` has the following exact source:
+
+\[
+\boxed{
+s\not\equiv1,3,12,14\pmod {16}
+\quad\Longrightarrow\quad
+\operatorname{source}(p)=z,
+\quad 3\nmid\kappa(p).
+}
+\]
+
+If `f` is the `B`-selecting phase at `u`, Section 17 gives
+
+\[
+A(L_f(u))=Q_j^{1-f}(J(B(u))),\qquad j\ge2.
+\]
+
+The last two bits are then equal, so applying `R` merely lowers `j` by one;
+the side child has source `B(u)=z`.
+
+It remains to consider when `f` is the `A`-selecting phase at `u`.  Outside
+the four exceptional residues this happens only in the following four rows.
+Directly deleting the displayed fixed two-bit alternating suffix reduces the
+claim to one of the two boxed identities above:
+
+\[
+\begin{array}{c|c|c|c}
+u & p & w & B(u)\\ \hline
+16t+1  &3(12t+1)       &12t+1  &R(w)\\
+16t+6  &3(12t+5)-1     &12t+5  &R(2w-1)\\
+16t+9  &3(12t+7)       &12t+7  &R(w)\\
+16t+14 &3(12t+11)-1    &12t+11 &R(2w-1).
+\end{array}
+\]
+
+For example, in the first row
+`A(L_1(16t+1))=144t+14`, whose maximal alternating suffix is the final
+`10`, leaving `p=36t+3`.  The other three rows have exactly the same fixed
+two-bit deletion.  The coefficient identities therefore give
+`kappa(p)=J(B(u))` in all four rows.
+
+The exceptional source residues do strictly better:
+
+\[
+\boxed{
+s\equiv1,3,12,14\pmod {16},\ p>0
+\quad\Longrightarrow\quad
+\operatorname{source}(p)<s.
+}
+\]
+
+Indeed, for `s=16t+c` the four arguments from which `p` is obtained by `R`
+are respectively
+
+\[
+216t+21,\quad216t+50,\quad216t+165,\quad216t+194.
+\]
+
+Their final three bits are `101`, `010`, `101`, `010`, so `R` deletes at
+least three bits.  Hence `p` is at most one eighth of the corresponding
+argument.  If `x` is the source of `p`, then
+
+\[
+3x+1\le J(x)\le\kappa(p)\le\frac{p+1}{2},
+\]
+
+which gives `x<(216t+d)/48<16t+c` in each of the four rows.  This proves the
+strict source drop.  The possible terminal value `p=0` is handled separately.
+
+There is a useful conditional consequence.  Suppose a DRAW exists and `s`
+is the globally least coefficient source of any DRAW.  If
+
+\[
+L_{\alpha(s)}(s)
+\]
+
+is DRAW, Section 17 forces its `A`-child `L_f(A(s))` to be DRAW.  Its side
+child `p` is non-losing.  Therefore:
+
+- at an exceptional `s`, `p=0` is immediately impossible, while a positive
+  `p` has smaller source and is consequently WIN;
+- at a nonexceptional `s` with `B(A(s))<s`, the same argument makes `p` WIN;
+- the only source-level escape is a DRAW side child whose source is exactly
+  `B(A(s))>=s`.
+
+Thus two lifted boundary steps reproduce the ordinary side return
+`s -> B(A(s))`; the four old exceptional classes now cause a strict source
+drop rather than an uncontrolled affine jump.  This does not yet rule out an
+infinite sequence of nondecreasing ordinary side returns.  The forced LOSS
+siblings or the minimum boundary proof height must still be retained to close
+that last case.
