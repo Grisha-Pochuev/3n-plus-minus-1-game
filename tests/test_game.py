@@ -886,6 +886,33 @@ class GameArithmeticTests(unittest.TestCase):
                     )
                     self.assertEqual(letter, "B")
                     self.assertEqual(transferred_source, selected_source)
+                    if selected_source >= source:
+                        self.assertIn(valuation, {2, 3})
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            common_frame_child
+                        ),
+                        (
+                            selected_source,
+                            0,
+                            valuation - 1,
+                            phase,
+                        ),
+                    )
+                    if valuation == 3:
+                        returned_common = transformed_B(
+                            common_frame_child
+                        )
+                        if returned_common > 0:
+                            returned_common_source = (
+                                constant_tail_source_coordinates(
+                                    returned_common
+                                )[0]
+                            )
+                            self.assertLessEqual(
+                                4 * returned_common_source,
+                                3 * selected_source + 1,
+                            )
                     self.assertLessEqual(
                         selected_source,
                         (27 * current + 19) // (1 << (valuation + 2)),
@@ -1090,6 +1117,51 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(first_power, 0)
                 if first_exponent >= 4:
                     self.assertLess(first_source, source)
+                contracting_boundary = transformed_B(common_frame_child)
+                if first_exponent >= 2:
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            contracting_boundary
+                        ),
+                        (
+                            first_source,
+                            0,
+                            first_exponent - 1,
+                            phase,
+                        ),
+                    )
+                    if first_exponent == 2:
+                        self.assertLess(
+                            96 * first_source,
+                            243 * source + 44,
+                        )
+                    elif first_exponent == 3:
+                        self.assertLess(
+                            192 * first_source,
+                            243 * source + 44,
+                        )
+                elif first_exponent == 1:
+                    canonical_boundary = transformed_A(first_boundary)
+                    self.assertEqual(
+                        contracting_boundary,
+                        alternating_suffix_remainder(
+                            canonical_boundary
+                        ),
+                    )
+                    self.assertLess(
+                        48 * first_source,
+                        243 * source + 44,
+                    )
+                    if contracting_boundary > 0:
+                        contracting_source = (
+                            constant_tail_source_coordinates(
+                                contracting_boundary
+                            )[0]
+                        )
+                        self.assertLess(
+                            192 * contracting_source,
+                            243 * source + 44,
+                        )
 
                 second_boundary = transformed_A(common_frame_child)
                 second_source, second_power, second_exponent, _ = (
@@ -1100,6 +1172,52 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(second_power, 0)
                 if second_exponent >= 5:
                     self.assertLess(second_source, source)
+                self.assertLess(
+                    24 * (1 << second_exponent) * second_source,
+                    729 * source + 116,
+                )
+                expanding_second, contracting_second = transformed_moves(
+                    second_boundary
+                )
+                if second_exponent >= 2:
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            expanding_second
+                        ),
+                        (
+                            second_source,
+                            0,
+                            second_exponent,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            contracting_second
+                        ),
+                        (
+                            second_source,
+                            0,
+                            second_exponent - 1,
+                            phase,
+                        ),
+                    )
+                elif second_exponent == 1:
+                    canonical_second = transformed_A(second_boundary)
+                    self.assertEqual(
+                        contracting_second,
+                        alternating_suffix_remainder(canonical_second),
+                    )
+                    if contracting_second > 0:
+                        second_raw_source = (
+                            constant_tail_source_coordinates(
+                                contracting_second
+                            )[0]
+                        )
+                        self.assertLess(
+                            192 * second_raw_source,
+                            729 * source + 116,
+                        )
 
                 if first_exponent >= 4:
                     self.assertLess(first_source, source)

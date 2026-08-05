@@ -180,7 +180,20 @@ valuation two is an exact obligation below 81s/16, while valuation one is
 either an obligation below 81s/8 or a raw-side DRAW with coefficient source
 below about 2.54s.  Thus every r=2 exit is bounded; the next task is to show
 that repeated bounded returns cannot recycle without a strict height or
-source descent.
+source descent.  Section 48 also normalizes r=1 completely: it gives either
+a strict source return, an obligation below 27s/8, or one exponent-two
+DRAW below 27s/16 whose next side source lies below about 1.27s (unless its
+explicit exponent-one factor sibling carries the DRAW).  The remaining
+local arithmetic is now concentrated in low r=3; after that the core task is
+to synthesize a well-founded rank for the finite return types.  Section 49
+handles the contracting-DRAW half of low r=3: it returns either to an
+obligation below about 2.54s or to a Q2/raw-side DRAW below about 1.27s.
+Section 50 handles the expanding-DRAW half as well: it produces only
+obligations or adjacent frames of exponent at most four with explicit
+constant source windows, or a raw-side return below about 3.80s.  All local
+factor exits are now finite.  The central remaining task is to synthesize
+and prove a well-founded rank for their possible recycling, retaining the
+explicit LOSS witnesses and boundary-WIN heights.
 
 ## Priority 2: finite transducer plus numerical potential
 

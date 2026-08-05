@@ -4204,3 +4204,314 @@ returns to \(O(t,e)\) with \(t<81s/8\), or makes a raw-side DRAW return whose
 coefficient source is below \(81s/32+1/24\).  Together with Sections 45--46,
 this gives a finite source/exponent normalization for every \(r=2\)
 continuation.  All coordinate identities and bounds are regression-tested.
+
+## 48. The exponent-one factor switch has three bounded continuation types
+
+Return to the \(r=1\) factor switch of Section 31.  Put
+
+\[
+b=A^2(x),\qquad a=J(b),\qquad
+G=Q_1^g(a),\qquad H=Q_2^g(a),
+\]
+
+and suppose their common child
+
+\[
+X=B(G)=B(H)
+\]
+
+is DRAW.  Section 31 already proves that the signed phase \(g\) at \(b\)
+has only three source-surviving forms.
+
+### A-selecting phase
+
+If \(g=\alpha(b)\), the coefficient source \(\rho(X)\) satisfies
+
+\[
+\boxed{s\le\rho(X)<x.}
+\]
+
+The upper inequality is Section 31; the lower one follows from global
+source minimality because \(X\) is DRAW.  Thus every A-selecting \(r=1\)
+continuation strictly decreases the source relative to the obligation
+source \(x\) that created the factor fork.
+
+### B-selecting valuation two
+
+Let \(y=B(b)\).  If the signed valuation is two, the exact boundary formula
+and one-bit raw deletion give
+
+\[
+A(G)=Q_2^e(J(y)),\qquad
+X=B(G)=Q_1^e(J(y)).
+\]
+
+Consequently
+
+\[
+\boxed{O(y,e)}
+\]
+
+holds through its first alternative.  Section 31 gives
+
+\[
+\boxed{s\le y<\frac{27}{8}s}
+\]
+
+whenever this source survives.  Thus valuation two is a direct return to
+the existing obligation automaton.
+
+### B-selecting valuation three
+
+For valuation three the common DRAW has the exact form
+
+\[
+\boxed{X=Q_2^e(J(y)),\qquad s\le y<\frac{27}{16}s.}
+\]
+
+Put
+
+\[
+C=B(X)=B(Q_1^e(J(y))),\qquad F=A(X)=Q_1^e(3J(y)).
+\]
+
+The common-boundary coefficient estimate of Section 15 gives, for the
+coefficient source \(u=\rho(C)\),
+
+\[
+\boxed{u\le\frac{3y+1}{4}
+<\frac{81s+16}{64}.}
+\]
+
+Since \(X\) is DRAW, \(C,F\) are non-losing and at least one is DRAW.  If
+\(C\) is DRAW, minimum source also gives \(u\ge s\), so this is a raw-side
+return in the narrow interval
+
+\[
+s\le u<\frac{81s+16}{64}.
+\]
+
+If \(C\) is WIN, the other child \(F\) is forced DRAW.  This is one explicit
+exponent-one factor state with source \(y<27s/16\); it contains no
+unbounded suffix or source choice.
+
+We have therefore proved the finite trichotomy
+
+\[
+\boxed{
+r=1,\ X\text{ DRAW}\Longrightarrow
+\begin{cases}
+\rho(X)<x,&g\text{ A-selecting},\\
+O(y,e),\ y<27s/8,&g\text{ B-selecting},\ j=2,\\
+Q_2^e(J(y))\text{ DRAW},\ y<27s/16,&g\text{ B-selecting},\ j=3.
+\end{cases}}
+\]
+
+The last row either returns through a source below
+\((81s+16)/64\) or enters the displayed exponent-one factor state.
+All source coordinates and inequalities are regression-tested.
+
+## 49. The low contracting continuations of \(r=3\) return near the minimum source
+
+Return to the exponent-three factor switch of Section 32.  Write
+
+\[
+a=J(b),\qquad
+X=Q_2^g(3a)\text{ DRAW},\qquad
+G=Q_1^g(3a),
+\]
+
+and suppose the shared contracting child
+
+\[
+K=B(X)=B(G)
+\]
+
+is DRAW.  Factor
+
+\[
+9a+1-2g=2^vJ(t).
+\]
+
+Section 32 proves \(v\le3\).  The factor-source bound there also gives
+
+\[
+b\le\frac{9s-4}{8},\qquad
+a=J(b)\le\frac{27s+4}{8},
+\]
+
+and therefore
+
+\[
+9a+1\le\frac{243s+44}{8}.
+\]
+
+The three valuations now have exact forms.
+
+### Valuation three
+
+Here
+
+\[
+A(G)=Q_3^e(J(t)),\qquad
+K=B(G)=Q_2^e(J(t))\text{ DRAW}.
+\]
+
+Moreover
+
+\[
+\boxed{t<\frac{243s+44}{192}.}
+\]
+
+Thus the exponent-two DRAW returns with source only slightly above the
+global minimum.
+
+### Valuation two
+
+Now
+
+\[
+A(G)=Q_2^e(J(t)),\qquad
+K=Q_1^e(J(t))\text{ DRAW}.
+\]
+
+The latter is the first alternative of the exact obligation
+
+\[
+\boxed{O(t,e),\qquad
+t<\frac{243s+44}{96}.}
+\]
+
+### Valuation one
+
+Put
+
+\[
+P=A(G)=Q_1^e(J(t)).
+\]
+
+The DRAW child is the raw side
+
+\[
+K=R(P).
+\]
+
+The source itself satisfies
+
+\[
+t<\frac{243s+44}{48}.
+\]
+
+As in Section 47, the word \(P\) has an alternating suffix of length at
+least two, so \(K\le P/4\le J(t)/2\).  If \(u\) is the coefficient source
+of the positive DRAW state \(K\), then
+
+\[
+\boxed{s\le u<\frac{243s+44}{192}.}
+\]
+
+Consequently every contracting-DRAW continuation of the low \(r=3\) switch
+either returns to an obligation below roughly \(2.54s\), or returns a
+single exponent-two/raw-side DRAW whose coefficient source is below roughly
+\(1.27s\).  No low contracting row contains an unbounded exponent or source
+jump.  The exact coordinates and all three bounds are regression-tested.
+
+## 50. The low expanding continuations of \(r=3\) are finite adjacent frames
+
+Keep the exponent-three notation of Section 49, but now suppose the common
+contracting child \(K=B(X)\) is WIN.  Since
+
+\[
+X=Q_2^g(3J(b))
+\]
+
+is DRAW, its other child
+
+\[
+Y=A(X)=Q_1^g(9J(b))
+\]
+
+is DRAW.  Factor its signed transition as
+
+\[
+27J(b)+1-2g=2^wJ(u).
+\]
+
+Section 32 proves that every source-surviving transition has \(w\le4\).
+The same source bound as in Section 49 gives
+
+\[
+J(b)\le\frac{27s+4}{8},
+\qquad
+27J(b)+1\le\frac{729s+116}{8}.
+\]
+
+Therefore, for every \(w\ge1\),
+
+\[
+\boxed{u<\frac{729s+116}{24\cdot2^w}.}
+\]
+
+The outcome normal forms are now explicit.
+
+### Valuations two, three, and four
+
+For \(w\ge2\), the two children of \(Y\) are the adjacent frame
+
+\[
+\boxed{
+Q_w^e(J(u)),\qquad Q_{w-1}^e(J(u)).}
+\]
+
+They are non-losing and at least one is DRAW.  In particular:
+
+- \(w=2\) is exactly the second alternative of \(O(u,e)\), with
+  \(u<(729s+116)/96\);
+- \(w=3\) is the exponent-three/two frame with
+  \(u<(729s+116)/192\);
+- \(w=4\) is the exponent-four/three frame with
+  \(u<(729s+116)/384\).
+
+These are precisely the finite adjacent frames already treated by the
+ladder and factor reductions; no additional suffix type appears.
+
+### Valuation one
+
+Put
+
+\[
+P=A(Y)=Q_1^e(J(u)),\qquad Z=B(Y)=R(P).
+\]
+
+Both are non-losing and at least one is DRAW.  If \(P\) is DRAW, the first
+alternative \(O(u,e)\) holds, with
+
+\[
+u<\frac{729s+116}{48}.
+\]
+
+If \(P\) is WIN, then \(Z\) is DRAW.  Its coefficient source \(\rho(Z)\)
+is much smaller.  The word \(P\) has an alternating suffix of length at
+least two, so
+
+\[
+Z\le\frac{P}{4}\le\frac{J(u)}2,
+\qquad
+\rho(Z)<\frac{J(u)}{12}
+\le\frac{729s+116}{192}.
+\]
+
+Thus
+
+\[
+\boxed{
+Z\text{ DRAW}\quad\Longrightarrow\quad
+s\le\rho(Z)<\frac{729s+116}{192}.}
+\]
+
+Combining both outcome branches, every low expanding \(r=3\) continuation
+is an obligation or an adjacent frame of exponent at most four, with the
+displayed constant source windows, or a raw-side DRAW whose source is below
+roughly \(3.80s\).  Together with Sections 33--39 and 49, this exhausts all
+signed valuations following the \(r=3\) factor switch.  All coordinates and
+source bounds are regression-tested.
