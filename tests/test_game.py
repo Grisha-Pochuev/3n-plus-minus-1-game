@@ -817,6 +817,7 @@ class GameArithmeticTests(unittest.TestCase):
             upper = constant_tail_state(coefficient, 2, phase)
             lifted_side = transformed_B(lower)
             factor_three_state = transformed_A(upper)
+            selected_lift = transformed_A(lower)
             factor_coordinates = [
                 constant_tail_source_coordinates(child)
                 for child in transformed_moves(factor_three_state)
@@ -835,6 +836,18 @@ class GameArithmeticTests(unittest.TestCase):
             )
             if lifted_side >= source:
                 self.assertLessEqual(factor_coordinates[1][2], 3)
+
+            lower_exponent = factor_coordinates[1][2]
+            opposite_twin = transformed_B(factor_three_state)
+            selected_twin = transformed_A(selected_lift)
+            self.assertEqual(
+                constant_tail_source_coordinates(opposite_twin),
+                (lifted_side, 0, lower_exponent, 1 - phase),
+            )
+            self.assertEqual(
+                constant_tail_source_coordinates(selected_twin),
+                (lifted_side, 0, lower_exponent, phase),
+            )
 
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):

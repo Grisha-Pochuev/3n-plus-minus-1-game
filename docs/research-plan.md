@@ -106,7 +106,10 @@ DRAW produce an adjacent frame over the WIN side node.  A source-surviving
 factor frame has lower exponent only `1`, `2`, or `3`.  The immediate target
 is to control alternation between the canonical `A(x)` continuation and
 these three factor frames; treating only the last two exponent values would
-leave the canonical branch open.
+leave the canonical branch open.  Section 29 identifies the retained LOSS
+child's expanding move as the exact opposite-tail twin of the lower factor
+child.  The next proof must exploit the coupled recurrences of these twins;
+neighboring integers cannot simply be assigned the same outcome.
 
 ## Priority 2: finite transducer plus numerical potential
 

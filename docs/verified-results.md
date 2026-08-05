@@ -2550,3 +2550,70 @@ must control their possible alternation, using the retained LOSS state `V`,
 or show that the resulting boundary WIN `b` has lower proof height than the
 original endpoint.  The exponent bound alone does not exclude the canonical
 continuation.
+
+## 29. The factor escape is an opposite-tail twin switch
+
+The retained LOSS state in Section 28 is not merely auxiliary.  It produces
+the opposite tail twin of the lower factor-frame child.  Keep all notation
+from that section.  If
+
+\[
+B(F)=Q_r^g(J(b)),\qquad g=1-e,
+\]
+
+then
+
+\[
+\boxed{A(V)=Q_r^e(J(b)).}
+\]
+
+For `e=0`, one has `V=3J(x)` and
+
+\[
+A(V)=\frac{9J(x)+1}{2}.
+\]
+
+The factor identity
+
+\[
+A(F)=9J(x)=Q_{r+1}^1(J(b))
+
+\]
+
+says that `J(b)2^(r+1)=9J(x)+1`; division by two proves the box.  For
+`e=1`, one has `V=3J(x)-1` and
+
+\[
+A(V)=\frac{9J(x)-3}{2}.
+\]
+
+Now `A(F)=9J(x)-1=Q_{r+1}^0(J(b))`, so division by two followed by
+subtraction of one again gives exactly `Q_r^1(J(b))`.  These two cases
+prove the identity.
+
+The forced outcomes in the factor fork therefore have the exact form
+
+\[
+\boxed{
+V\text{ LOSS},\qquad
+Q_r^e(J(b))=A(V)\text{ WIN},\qquad
+Q_r^{1-e}(J(b))=B(F)\text{ is non-losing},
+}
+\]
+
+while the DRAW parent `F` has children
+
+\[
+Q_{r+1}^{1-e}(J(b)),\qquad Q_r^{1-e}(J(b))
+\]
+
+and at least one of them is DRAW.  By Section 28 only `r=1,2,3` can survive
+at source `b>=s`.
+
+This is a structural normalization, not an outcome contradiction.  Two
+opposite-tail twins are consecutive integers, but consecutive positions can
+have any of the relevant finite outcome combinations; no rule proved so far
+allows their outcomes to be identified.  The remaining task is to use their
+coupled long-tail recurrences and the finite proof tree below the explicit
+LOSS state `V`, rather than assuming that neighboring integers share an
+outcome.
