@@ -808,6 +808,19 @@ class GameArithmeticTests(unittest.TestCase):
                         SIDE_RELATION_EXCEPTIONAL_RESIDUES,
                     )
 
+    def test_exponent_one_lift_B_child_source_decreases(self) -> None:
+        for source in range(1, 100000):
+            coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                lifted = constant_tail_state(coefficient, 1, phase)
+                selected = transformed_B(lifted)
+                if selected == 0:
+                    continue
+                selected_source = constant_tail_source_coordinates(
+                    selected
+                )[0]
+                self.assertLess(selected_source, source)
+
     def test_high_return_obligation_common_side(self) -> None:
         for source in range(1, 1000):
             coefficient = embedded_original_state(source)

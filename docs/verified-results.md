@@ -9127,3 +9127,80 @@ splitting the outcome of \(k\) while retaining \(r\), and the \(v=9\) row
 remains separate because its first raw exponent can exceed one.  All
 displayed identities and the valuation split are regression-tested for
 every \(1\le t<10000\), both phases, and valuations ten through twelve.
+
+## 107. The selected child of an exponent-one lift has a smaller nested source
+
+The child \(k=B(S)\) in Section 106 has a universal numerical mark that
+does not depend on the high-return formulas.  Let \(r>0\), fix
+\(g\in\{0,1\}\), and put
+
+\[
+S=Q_1^g(J(r))=2J(r)-g,qquad k=B(S).
+\]
+
+If \(k=0\), its source is terminal.  Otherwise let \(\rho(k)\) denote its
+coefficient source.  The universal bounds for the contracting move and
+for coefficient sources give
+
+\[
+k=B(S)\le\left\lfloor\frac{3S+1}{4}\right\rfloor,
+\qquad
+\rho(k)\le\frac{k-1}{6}.
+\]
+
+Since \(J(r)\le3r+2\), one has \(S\le6r+3\), and therefore
+
+\[
+\rho(k)
+\le\frac{3S-3}{24}
+=\frac{S-1}{8}
+\le\frac{6r+2}{8}<r
+\qquad(r>1).
+\]
+
+The remaining case \(r=1\) is direct: the two lifts are \(S=10,9\), and
+their B-children \(7,3\) have coefficient source zero.  Hence
+
+\[
+\boxed{\rho\!\left(B(Q_1^g(J(r)))\right)<r}
+\]
+
+whenever the B-child is positive, with source zero in the terminal case.
+This is strict descent of the nested coefficient source, not a claim that
+the child \(k\) itself is numerically below \(r\).
+
+Apply this to Section 106.  Its first raw exit \(S\) is a boundary WIN
+endpoint with coefficient source \(r\), while the B-selecting obligation
+uses the actual child \(k=B(S)\).  Thus
+
+\[
+\boxed{k\text{ DRAW}\Longrightarrow \rho(k)<r,}
+\]
+
+so the DRAW outcome of the selected child is an immediate strict nested-
+source exit.  If \(k\) is finite instead, the WIN state \(S\) retains an
+actual LOSS child: it is necessarily \(A(S)\) whenever \(k\) is WIN, and
+one of \(A(S),k\) realizes the canonical height \(h(S)-1\) whenever
+\(k\) is LOSS.  No height comparison between \(S\) and \(r\) is inferred.
+
+Only the shortest row can make \(S\) exceptional.  The explicit formula
+in Section 106 gives
+
+\[
+S\bmod16\in
+\begin{cases}
+\{6,14\},&v=10, g=0,\\
+\{1,9\},&v=10, g=1,\\
+\{10\},&v=11, g=0,\\
+\{5\},&v=11, g=1,\\
+\{2\},&v\ge12, g=0,\\
+\{13\},&v\ge12, g=1.
+\end{cases}
+\]
+
+Consequently every \(v\ge11\) row is ordinary; at \(v=10\) only residues
+\(14\) and \(1\) require the exceptional side formulas.  The remaining
+transport problem is therefore confined to the finite outcomes of \(k\),
+with a strict lower numerical anchor \(\rho(k)<r\), plus two explicit short
+exceptional orientations.  The universal strict inequality is regression-
+tested for every \(1\le r<100000\) and both phases.

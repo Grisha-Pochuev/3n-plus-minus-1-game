@@ -620,6 +620,15 @@ rank question is now precise: split the outcome of B(S) while retaining
 the lower coefficient token r, rather than treating the second level as a
 fresh factor scan.  The arbitrary-exponent v=9 row remains separate.
 
+Section 107 supplies the numerical half of that split.  Universally, the
+B-child of an exponent-one lift Q_1^g(J(r)) has its own coefficient source
+strictly below r.  Hence B(S) DRAW is already a strict nested-source exit;
+if B(S) is finite, the WIN boundary endpoint S retains an actual LOSS
+child, but its height still cannot be compared with h(r).  All v>=11 rows
+are ordinary, and only the v=10 residues S=14 or 1 mod 16 need exceptional
+geometry.  The next lemma must combine the finite outcome of B(S) with the
+lower-height token r, rather than replacing one mark by the other.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
