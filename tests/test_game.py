@@ -20,7 +20,9 @@ from optimal_3n1.game import (  # noqa: E402
     odd_part,
     side_branch_relation,
     transformed_A,
+    transformed_ABB,
     transformed_B,
+    transformed_BAB,
     transformed_BBA,
     transformed_B_predecessors,
     v2,
@@ -96,6 +98,18 @@ class GameArithmeticTests(unittest.TestCase):
         for q in range(1, 100000):
             self.assertLess(transformed_BBA(q), q)
 
+    def test_every_three_move_two_B_block_decreases(self) -> None:
+        for q in range(1, 100000):
+            self.assertLess(transformed_BBA(q), q)
+            self.assertLess(transformed_BAB(q), q)
+            self.assertLess(transformed_ABB(q), q)
+
+    def test_coarse_exception_return_cycle(self) -> None:
+        q = 17
+        for letter in "ABAAAAAAABBB":
+            q = transformed_A(q) if letter == "A" else transformed_B(q)
+        self.assertEqual(q, 17)
+
     def test_side_branch_relation(self) -> None:
         for q in range(1, 10000):
             relation = side_branch_relation(q)
@@ -107,6 +121,14 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(next_side, transformed_B(transformed_B(q)))
             else:
                 self.assertIsNotNone(side_branch_relation(transformed_A(q)))
+            if relation is not None:
+                suffix_length = alternating_suffix_length(transformed_A(q))
+                remainder = transformed_B(q)
+                expected_A_residues = {0, 3} if suffix_length == 1 else {1, 2}
+                self.assertIn(suffix_length, {1, 2})
+                self.assertEqual(
+                    relation == "A", remainder % 4 in expected_A_residues
+                )
 
     def test_B_predecessor_parameterization(self) -> None:
         limit = 2000

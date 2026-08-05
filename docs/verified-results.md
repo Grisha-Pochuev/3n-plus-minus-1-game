@@ -196,6 +196,24 @@ regression-tested in `tests/test_game.py`.  The outcome consequence is also
 checked on the boundary-safe finite table in `tests/test_retrograde.py`; the
 proof above, rather than that finite check, establishes the general result.
 
+For later finite-state work, the ordinary `A/B` choice can be refined.  With
+`x=A(q)`, let `k` be its alternating-suffix length and `r=R(x)=B(q)`.  Outside
+the exceptional classes `k` is `1` or `2`, and
+
+\[
+\begin{array}{c|cc}
+ & B(A(q))=A(B(q)) & B(A(q))=B(B(q))\\ \hline
+k=1 & r\bmod4\in\{0,3\} & r\bmod4\in\{1,2\}\\
+k=2 & r\bmod4\in\{1,2\} & r\bmod4\in\{0,3\}.
+\end{array}
+\]
+
+For `k=1`, `A(x)` is `A(r)` with the bit `r mod 2` appended.  Deletion stops
+at that bit exactly when its value equals the last bit of `A(r)`, which gives
+the first row by the four cases for `r mod 4`.  For `k=2`, the appended word
+is `10` for even `r` and `01` for odd `r`; deletion stops there exactly when
+its leading bit repeats the last bit of `A(r)`, giving the second row.
+
 ## 6. Exact parameterization of all B-predecessors
 
 Fix `r>=0`.  The complete set of positions `q` satisfying `B(q)=r` can be
@@ -247,7 +265,7 @@ The bounded formula enumeration is implemented by
 `transformed_B_predecessors` and compared with exhaustive enumeration in
 `tests/test_game.py`.
 
-## 7. A descending BBA block
+## 7. Three descending two-B blocks
 
 For every `q>0`,
 
@@ -279,6 +297,48 @@ loss because its parent is a draw.  Hence it is `WIN`.  Thus in this case
 `B(A(d))` is another draw with a winning `B`-child.  This sharply limits the
 first draw-preserving descent from a minimal counterexample, but does not by
 itself exclude later draw branches.
+
+The other two orderings of one `A` and two `B` moves also decrease:
+
+\[
+\boxed{B(A(B(q)))<q},
+\qquad
+\boxed{A(B(B(q)))<q}
+\qquad(q>0).
+\]
+
+Using
+
+\[
+A(z)\le\frac{3z+1}{2},
+\qquad
+B(z)\le\frac{3z+1}{4},
+\]
+
+successive substitution gives
+
+\[
+B(A(B(q)))\le
+\left\lfloor\frac{27q+29}{32}\right\rfloor<q
+\]
+
+for `q>=6`, and
+
+\[
+A(B(B(q)))\le
+\left\lfloor\frac{27q+37}{32}\right\rfloor<q
+\]
+
+for `q>=8`.  The remaining positive inputs are direct.  Thus every
+three-move word containing two `B` moves and one `A` move is uniformly
+descending.  The all-`B` word descends already on its first move.
+
+Explicitly, the exceptional small outputs for `B(A(B(q)))`, at `q=1,...,5`,
+are `0,1,0,1,0`; those for `A(B(B(q)))`, at `q=1,...,7`, are
+`0,0,0,0,2,2,3`.
+
+This is stronger than a drift estimate, but still does not control paths
+whose `B` moves are separated by two or more `A` moves.
 
 ## 8. A sound finite DRAW-kernel certificate
 
@@ -381,3 +441,151 @@ nonnegative proof heights.
 This does not yet exclude such a path: an exceptional visit can reset the
 proof height.  It reduces the remaining obstruction to the exceptional
 returns of the finite binary transducer.
+
+## 10. The canonical base-DRAW skeleton
+
+Call a hypothetical `DRAW` position `q` a **base draw** when `B(q)` is
+`WIN`.  Every nonempty draw set has a base draw: its smallest element `d`
+has `B(d)<d`, and this child can be neither `DRAW` nor `LOSS`.
+
+Starting from any base draw `q`, put
+
+\[
+r_j=B^j(A(q))\qquad(j\ge0).
+\]
+
+Here `r_0=A(q)` is `DRAW`, because the other child `B(q)` is `WIN`.  Follow
+the `B`-children while they remain `DRAW`.  This process must stop: the
+values strictly decrease, while a `DRAW` position cannot have the terminal
+loss `0` as a child.  Thus for a unique `k>=0`,
+
+\[
+r_0,\ldots,r_k\text{ are DRAW},
+\qquad
+r_{k+1}\text{ is WIN}.
+\]
+
+The last draw `r_k` is the next base draw.  If `k>=2`, the two-B descent
+gives
+
+\[
+r_k\le B(B(A(q)))<q.
+\]
+
+For the smallest draw `d`, this is impossible, so its first skeleton step
+has only the alternatives
+
+\[
+\begin{array}{ll}
+k=0:& A(d)\text{ is a base draw and }B(A(d))\text{ is WIN},\\
+k=1:& B(A(d))\text{ is a base draw and }B(B(A(d)))\text{ is WIN}.
+\end{array}
+\]
+
+There is also an exact local fingerprint below `d`.  Set
+
+\[
+x=B(B(d)),
+\qquad
+y=B(A(B(d))).
+\]
+
+Both are smaller than `d`.  Since `B(d)` is `WIN`, either
+
+\[
+\boxed{x\text{ is LOSS}}
+\]
+
+or
+
+\[
+\boxed{x\text{ and }y\text{ are both WIN}}.
+\]
+
+Indeed, if `x` is not `LOSS`, minimality makes it `WIN`.  The other child
+`A(B(d))` must then be `LOSS`, because `B(d)` itself is `WIN`; consequently
+both children of `A(B(d))`, including `y`, are `WIN`.
+
+If `d` is nonexceptional, the side-branch relation sharpens this dichotomy:
+
+- if `B(A(d))=A(B(d))`, then `x` is `LOSS`;
+- if `B(A(d))=B(B(d))`, then `x=B(A(d))` is `WIN`, `A(B(d))` is `LOSS`,
+  `y` is `WIN`, and `A^2(d)` is `DRAW`.
+
+For the first bullet, `B(A(d))` is a non-losing child of the winning
+position `B(d)`, so its other child `x` must be losing.  For the second,
+`B(A(d))=x<d` is neither a loss (it is a child of a draw) nor a draw (by
+minimality), hence it is winning.  The remaining assertions follow from the
+two-child outcome recursion.
+
+This skeleton is well founded between successive `A` moves, but its `k=0`
+and `k=1` steps may increase the integer.  A final proof still needs a rank
+that controls those two cases and the exceptional residue classes.
+
+## 11. Ordinary transitions of the base-DRAW skeleton
+
+The canonical skeleton admits a sharper size-change table away from the
+exceptional classes.  Let `q` be a base draw, put `s=B(q)`, and let `k` be
+the index from Section 10.  Write `C(u)` for the letter `A` or `B` in the
+ordinary side relation
+
+\[
+B(A(u))=C(u)(B(u)).
+\]
+
+First suppose `k>=1`, so `z=B(A(q))` is `DRAW`.  If both `q` and `s` are
+nonexceptional, exactly one of the following holds:
+
+\[
+\begin{array}{c|c|c}
+C(q)&C(s)&\text{consequence}\\ \hline
+A&A\text{ or }B&k=1\text{ and }h(B(z))\le h(s)-2,\\
+B&B&k=1\text{ and }h(B(z))\le h(s)-2,\\
+B&A&k\ge2\text{ and the next base draw is smaller than }q.
+\end{array}
+\]
+
+To prove the table, `z=C(q)(s)` is a non-losing child of the winning
+position `s`; its other child `ell` is therefore `LOSS`.
+
+If `C(q)=A`, then `z=A(s)` and `ell=B(s)`.  The value
+
+\[
+t=B(A(s))=B(z)
+\]
+
+is a child of `ell` by the side relation at `s`, so it is `WIN` and
+`h(t)<=h(s)-2`.  Hence the first `B`-child of `z` already ends the draw run,
+which is `k=1`.
+
+If `C(q)=B`, then `z=B(s)` and `ell=A(s)`.  Again
+`t=B(A(s))` is a `WIN` child of `ell`.  The side relation at `s` says that
+`t` is a child of `z`.  When `C(s)=B`, it is `B(z)`, giving the second row.
+When `C(s)=A`, it is `A(z)`.  Since `z` is `DRAW` and its `A`-child is
+`WIN`, its `B`-child must be `DRAW`; thus `k>=2`, and Section 10 gives the
+strict numerical decrease in the third row.
+
+Now suppose `k=0`, so `z=B(A(q))` is `WIN` and `A(q)` is the next base draw.
+If `q`, `A(q)`, and `s=B(q)` are all nonexceptional, then the following
+skeleton step is forced to have `k=0` as well, and
+
+\[
+\boxed{
+h(B(A^2(q)))\le h(B(q))-2.
+}
+\]
+
+Indeed, `z=C(q)(s)` is the `WIN` child of the winning position `s`; the
+other child `ell` of `s` is `LOSS`.  As in both cases above,
+`t=B(A(s))` is simultaneously a child of `ell` and a child of `z`, so it is
+`WIN` and has height at most `h(s)-2`.  The side relation at `A(q)` makes
+`B(A^2(q))` a child of `z`.  It cannot be `LOSS`, because its parent
+`A^2(q)` is `DRAW`.  Since `t` is already the unique `WIN` child of the
+winning position `z`, the two values coincide.  Therefore `A^2(q)` is the
+next base draw and the displayed height decrease follows.
+
+Thus an ordinary skeleton has only two escape mechanisms from a strict
+certificate-height decrease: it must enter an exceptional class among
+`q,A(q),B(q)`, or take the last row of the table, which strictly decreases
+the integer.  These two different decreases are not yet a single
+well-founded rank, because one component can increase when the other drops.

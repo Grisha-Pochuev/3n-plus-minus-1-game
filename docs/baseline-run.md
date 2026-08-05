@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 17 tests
+Ran 21 tests
 OK
 ```
 
@@ -26,10 +26,13 @@ The tests cover:
 - equality of the original and normal-form children for `m < 10000`;
 - strict descent `B(q)<q` for `q < 10000`;
 - inversion of `F`;
-- exact side-branch identities and the forbidden four-WIN block;
+- exact side-branch identities, their suffix-state refinement, and the forbidden four-WIN block;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;
-- strict descent of the `BBA` block;
+- the exact eight-state Gray transducer for the expanding move;
+- strict descent of all length-three blocks with one `A` and two `B` moves;
+- the two-step endpoint rule for nonexceptional WIN-only paths;
+- the exact counterexample cycle to a coarse exceptional-return rank;
 - the two descent blocks for odd `n < 100000`;
 - soundness invariants of the bounded retrograde labels;
 - absence of a certified finite DRAW kernel at the small test cutoff;

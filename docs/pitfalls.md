@@ -55,3 +55,24 @@ Early experiments suggested that along an expanding chain a losing side branch a
 ## 8. Do not preserve unverified numerical claims as facts
 
 Several large bounds and exceptional starting values arose in conversation before a durable script and output were committed. They are recorded only as leads in `docs/unverified-leads.md`.
+
+## 9. Arithmetic exceptional returns alone do not give a rank
+
+Section 9 of `docs/verified-results.md` forces a nonexceptional two-step
+`WIN` path from `q` to `B(A(q))`.  It is tempting to allow an arbitrary
+two-move word at the four exceptional classes and seek a numerical rank for
+that coarse transition system.  This abstraction already contains the exact
+cycle
+
+\[
+17\xrightarrow{AB}19\xrightarrow{AA}44\xrightarrow{AA}99
+\xrightarrow{AA}224\xrightarrow{AB}252\xrightarrow{BB}17.
+\]
+
+Equivalently, the legal game word `ABAAAAAAABBB` fixes `17`.  The identity
+is regression-tested in `tests/test_game.py`.
+
+This is not a draw counterexample and not a `WIN`-only path: the required
+outcome labels of the intermediate vertices are inconsistent.  It disproves
+only the coarse proposed rank.  Any successful exceptional-return argument
+must retain the forced `LOSS` siblings or their finite proof heights.

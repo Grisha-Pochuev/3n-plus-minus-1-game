@@ -243,6 +243,20 @@ def transformed_BBA(q: int) -> int:
     return transformed_B(transformed_B(transformed_A(q)))
 
 
+def transformed_BAB(q: int) -> int:
+    """The uniformly descending block ``B(A(B(q)))``."""
+    if q < 0:
+        raise ValueError("q must be nonnegative")
+    return transformed_B(transformed_A(transformed_B(q)))
+
+
+def transformed_ABB(q: int) -> int:
+    """The uniformly descending block ``A(B(B(q)))``."""
+    if q < 0:
+        raise ValueError("q must be nonnegative")
+    return transformed_A(transformed_B(transformed_B(q)))
+
+
 def inverse_F(y: int) -> int | None:
     """Return the unique x with F(x)=y, or None if y is not in the image."""
     if y < 0:
