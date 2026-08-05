@@ -53,6 +53,8 @@ Update this table whenever the status of a substantial claim changes.
 | A long returned suffix occurs exactly for `s=21,63,64,106 mod 128`, and all four classes contradict the minimum-source DRAW hypothesis | **PROVED CONDITIONAL EXCLUSION** | `docs/verified-results.md`, Section 21; regression in `tests/test_game.py` |
 | Every phase-match returned suffix of length at least three creates another DRAW/WIN boundary whose WIN proof height drops by at least two | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 22; regression in `tests/test_game.py` |
 | An indefinitely surviving phase-match boundary reduction must eventually enter one of eight suffix-length-two classes modulo 128 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Sections 20--22 |
+| The eight suffix-length-two classes reduce to the exact lifted WIN-source / adjacent LOSS-source fork of Section 23 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 23; regression in `tests/test_game.py` |
+| In that fork the ordinary returned source `c` has a forced WIN child `r` and forced LOSS child `ell`, with the two lifted phases selecting them respectively | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 23 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

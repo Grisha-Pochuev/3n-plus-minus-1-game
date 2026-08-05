@@ -611,6 +611,73 @@ class GameArithmeticTests(unittest.TestCase):
                     transformed_moves(child_of_first_side),
                 )
 
+    def test_length_two_boundary_normal_form(self) -> None:
+        same_phase_residues = {10, 32, 95, 117}
+        opposite_phase_residues = {31, 53, 74, 96}
+        for source in range(1, 100000):
+            if source % 128 not in same_phase_residues | opposite_phase_residues:
+                continue
+
+            phase = source_A_selecting_tail_bit(source)
+            first = constant_tail_state(
+                embedded_original_state(source), 1, phase
+            )
+            middle = transformed_B(first)
+            second = transformed_A(first)
+            lower = transformed_B(second)
+            upper = transformed_A(second)
+            lower_expanding = transformed_A(lower)
+            common_child = transformed_B(lower)
+            self.assertEqual(alternating_suffix_length(lower_expanding), 2)
+            self.assertEqual(common_child, transformed_A(transformed_A(middle)))
+
+            lifted_win_source = transformed_A(lower_expanding)
+            returned_win_child = transformed_B(lower_expanding)
+            self.assertEqual(
+                constant_tail_source_coordinates(lifted_win_source),
+                (common_child, 0, 1, phase),
+            )
+            self.assertIn(returned_win_child, transformed_moves(common_child))
+            self.assertLess(
+                constant_tail_source_coordinates(returned_win_child)[0],
+                source,
+            )
+
+            other_child = next(
+                child
+                for child in transformed_moves(common_child)
+                if child != returned_win_child
+            )
+            phases_match = phase == source_A_selecting_tail_bit(common_child)
+            self.assertEqual(
+                phases_match,
+                source % 128 in same_phase_residues,
+            )
+            if phases_match:
+                self.assertEqual(returned_win_child, transformed_A(common_child))
+                self.assertEqual(other_child, transformed_B(common_child))
+            else:
+                self.assertEqual(returned_win_child, transformed_B(common_child))
+                self.assertEqual(other_child, transformed_A(common_child))
+
+            factor_three_state = transformed_A(upper)
+            factor_children = [
+                constant_tail_source_coordinates(child)
+                for child in transformed_moves(factor_three_state)
+            ]
+            self.assertEqual(
+                {coordinates[0] for coordinates in factor_children},
+                {common_child},
+            )
+            self.assertEqual(
+                {coordinates[2] for coordinates in factor_children},
+                {1, 2},
+            )
+            self.assertEqual(
+                {coordinates[3] for coordinates in factor_children},
+                {1 - phase},
+            )
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

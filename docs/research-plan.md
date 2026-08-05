@@ -75,8 +75,12 @@ to that larger integer.  Section 22 restores the proof-height component: a
 returned suffix of length at least three always creates a new boundary whose
 WIN height drops by at least two.  Therefore only the eight suffix-length-two
 classes modulo 128 can persist without an immediate source contradiction or
-height drop.  The immediate target is to close the unused LOSS-witness
-orientation in that final length-two diamond.
+height drop.  Section 23 puts those eight classes in one exact outcome normal
+form: a DRAW must continue either through a lift whose phase selects a forced
+ordinary WIN child `r`, or through the opposite adjacent pair whose phase
+selects the forced ordinary LOSS child `ell`.  The immediate target is to
+show that the LOSS-source fork creates a lower-height boundary and that the
+WIN-source fork cannot repeat without entering it.
 
 ## Priority 2: finite transducer plus numerical potential
 

@@ -1958,3 +1958,105 @@ s\equiv10,31,32,53,74,95,96,117\pmod {128}.
 This is a height descent, not yet a contradiction: the length-two diamond
 contains only one of the two possible LOSS witnesses of `z`.  Closing that
 remaining witness orientation is the next boundary problem.
+
+## 23. Exact outcome normal form at returned suffix length two
+
+The eight length-two classes left by Section 22 have a finite exact normal
+form.  Keep all its notation.  Since the alternating suffix of
+
+\[
+d=A(p)
+\]
+
+has length exactly two, the two appended bits in the proof of Section 22 are
+deleted and no more.  Hence
+
+\[
+\boxed{c=A^2(z).}
+\]
+
+Moreover the final two bits are `01` for `e=0` and `10` for `e=1`.  Thus
+`c mod 2=e`, and direct substitution gives
+
+\[
+\boxed{v:=A(d)=L_e(c).}
+\]
+
+Put
+
+\[
+r:=B(d),
+\]
+
+and let `ell` be the other child of `c`.  The side relation at the
+length-two diamond makes `r` one of the two ordinary children of `c`.  Its
+coefficient source is below `s`.  One convenient bound is as follows.  The
+canonical source `rho(r)` satisfies
+
+\[
+\rho(r)\le\frac{r-1}{6},
+\]
+
+while `r<=A(c)`, `c=A^2(z)`, and `z<=(9s+3)/8`.  Successive use of
+`A(q)<=(3q+1)/2` gives
+
+\[
+\rho(r)\le\frac{243s+169}{384}<s.
+\]
+
+The eight residue rows split into two symmetric groups:
+
+\[
+\begin{array}{c|c|c|c}
+s\bmod128&e=\alpha(c)?&r&\ell\\ \hline
+10,32,95,117&\text{yes}&A(c)&B(c),\\
+31,53,74,96&\text{no}&B(c)&A(c).
+\end{array}
+\]
+
+Thus the phase `e` of `v=L_e(c)` always selects the ordinary child `r`,
+while the opposite phase selects `ell`.  These identities are obtained by
+substituting the eight residues modulo 128; no higher bits enter because all
+suffix deletions used here have already stopped at length two.
+
+Now impose the globally minimum-source DRAW hypothesis.  Sections 21--22
+already make `c` WIN.  The two possible outcomes of `p` give a complete
+forced fork.
+
+If `p` is DRAW, then its other child `d` is DRAW.  Since `r` has source below
+`s`, it is not DRAW; as a child of `d` it is not LOSS, so it is WIN.  Hence
+the other child is forced DRAW:
+
+\[
+\boxed{p,d,v=L_e(c)\text{ are DRAW},\qquad r\text{ is WIN}.}
+\]
+
+If `p` is WIN, its other child `d` is LOSS because `c` is WIN.  The other
+child `h` of `q_1` is DRAW, and its WIN child `c` forces
+`k=A(h)` to be DRAW.  The children of `k` are exactly
+
+\[
+Q_2^{1-e}(J(c)),\qquad Q_1^{1-e}(J(c)),
+\]
+
+so at least one of this adjacent pair is DRAW.  In this case
+
+\[
+\boxed{p\text{ is WIN},\quad d\text{ is LOSS},\quad
+h,k\text{ are DRAW}.}
+\]
+
+In either fork `r` is WIN: in the second fork it is a child of the LOSS
+state `d`.  Since `c` is WIN and its other child `r` is WIN, the remaining
+ordinary child is forced LOSS:
+
+\[
+\boxed{\ell\text{ is LOSS}.}
+\]
+
+The obstruction is therefore reduced to one exact switch.  The first fork
+continues a DRAW through the lifted phase selecting the ordinary WIN child
+`r`; the second continues through an adjacent pair in the opposite phase,
+which selects the ordinary LOSS child `ell`.  Closing this WIN-source versus
+LOSS-source switch, while retaining their proof heights, is sufficient to
+finish the canonical minimum-source lift analysis.
