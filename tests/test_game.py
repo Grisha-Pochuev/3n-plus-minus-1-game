@@ -809,6 +809,33 @@ class GameArithmeticTests(unittest.TestCase):
             else:
                 self.assertGreaterEqual(current, source)
 
+            if phase != source_A_selecting_tail_bit(current):
+                continue
+
+            coefficient = embedded_original_state(current)
+            lower = constant_tail_state(coefficient, 1, phase)
+            upper = constant_tail_state(coefficient, 2, phase)
+            lifted_side = transformed_B(lower)
+            factor_three_state = transformed_A(upper)
+            factor_coordinates = [
+                constant_tail_source_coordinates(child)
+                for child in transformed_moves(factor_three_state)
+            ]
+            self.assertEqual(
+                {coordinates[0] for coordinates in factor_coordinates},
+                {lifted_side},
+            )
+            self.assertEqual(
+                {coordinates[1] for coordinates in factor_coordinates},
+                {0},
+            )
+            self.assertEqual(
+                factor_coordinates[0][2],
+                factor_coordinates[1][2] + 1,
+            )
+            if lifted_side >= source:
+                self.assertLessEqual(factor_coordinates[1][2], 3)
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

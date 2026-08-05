@@ -99,7 +99,12 @@ retained LOSS branch lowers the globally minimum WIN proof height.  Section
 27 shows that the `B` part cannot iterate indefinitely: after the first
 transfer its source is below `2s`, and at most two further valuation-two
 `B` transfers can stay above `s`.  The obstruction is now an exact
-`A`-selecting exponent-one/two obligation with source in `[s,2s)`.
+`A`-selecting exponent-one/two obligation with source in `[s,2s)`.  Section
+28 forces its common side node to be WIN.  Either the DRAW continues through
+the canonical lift of `A(x)`, or a retained LOSS sibling and factor-three
+DRAW produce an adjacent frame over the WIN side node.  A source-surviving
+factor frame has lower exponent only `1`, `2`, or `3`; collapsing the last
+two values while retaining that LOSS sibling is the immediate target.
 
 ## Priority 2: finite transducer plus numerical potential
 

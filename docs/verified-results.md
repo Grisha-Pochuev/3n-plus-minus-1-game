@@ -2435,3 +2435,114 @@ places its common side child below the ordinary selected source `A(x)`;
 the outstanding step is to retain enough of the WIN/LOSS proof tree when
 the exponent-two member, rather than the exponent-one member, carries the
 DRAW.
+
+## 28. The A-selecting obligation has one bounded factor escape
+
+Let `s` remain the globally minimum coefficient source of a DRAW, and let
+
+\[
+O(x,e),\qquad e=\alpha(x),\qquad s\le x<2s
+\]
+
+be the `A`-selecting obligation reached in Section 27.  Put
+
+\[
+P=Q_1^e(J(x)),\qquad U=Q_2^e(J(x)),\qquad
+y=A(x),\qquad g=1-e,
+\]
+
+and
+
+\[
+V=A(P)=Q_1^g(J(y)),\qquad
+b=B(P)=B(U),\qquad F=A(U)=Q_1^e(3J(x)).
+\]
+
+Section 24 says that `b` is an ordinary child of `y=A(x)`.  Its own
+coefficient source is below `s`.  Indeed, for positive `b`, if `rho(b)` is
+that source, then
+
+\[
+\rho(b)\le\frac{b-1}{6},
+\]
+
+while
+
+\[
+b\le A(y)=A^2(x)\le\frac{9x+5}{4}.
+\]
+
+Since the integer inequality `x<2s` means `x<=2s-1`, it follows that
+
+\[
+\boxed{\rho(b)\le\frac{9x+1}{24}<s.}
+\]
+
+Now apply the two alternatives in the definition of `O`.  Whenever `P` is
+DRAW, its child `b` is non-losing.  The boxed source inequality makes it
+non-DRAW, so it is WIN, and the other child `V` is forced DRAW.  Thus
+
+\[
+\boxed{P\text{ DRAW}\Longrightarrow O(A(x),1-e)}
+\]
+
+through the first alternative of `O`.
+
+Otherwise `O(x,e)` is witnessed by a DRAW parent `K` of `U,P`.  The state
+`P` cannot be LOSS.  If it is DRAW, the preceding paragraph applies.  The
+only other possibility is therefore
+
+\[
+P\text{ WIN},\qquad U\text{ DRAW}.
+\]
+
+The common child `b` is again WIN.  Hence `V`, the other child of `P`, is
+LOSS, while `F`, the other child of `U`, is DRAW:
+
+\[
+\boxed{P,b\text{ WIN},\quad V\text{ LOSS},\quad U,F\text{ DRAW}.}
+\]
+
+The factor state `F` has an exact source frame.  For some `r>=1`,
+
+\[
+\boxed{
+A(F)=Q_{r+1}^g(J(b)),\qquad
+B(F)=Q_r^g(J(b)).}
+\]
+
+This is the universal form of Section 21's coefficient calculation.  For
+`e=0`, the identity `kappa(9J(x))=J(R(3J(x)))` gives source `b`; for `e=1`,
+the identity for `9J(x)-1`, together with the shared-child formula, gives
+the same result.  The final two equal bits then make the two children
+adjacent.  Since `F` is DRAW, this adjacent frame contains a DRAW.
+
+If `b<s`, the frame contradicts minimum source immediately.  If `b>=s`,
+its lower exponent is at most three.  To prove this, the displayed frame
+identity gives
+
+\[
+J(b)2^{r+1}=9J(x)-e+g\le27x+19.
+\]
+
+As `J(b)>=3b+1`, an exponent `r>=4` would imply
+
+\[
+b\le\frac{27x-13}{96}
+\le\frac{54s-40}{96}<s,
+\]
+
+a contradiction.  Therefore the only surviving factor frames are
+
+\[
+\boxed{
+\{Q_2^g(J(b)),Q_1^g(J(b))\},\quad
+\{Q_3^g(J(b)),Q_2^g(J(b))\},\quad
+\{Q_4^g(J(b)),Q_3^g(J(b))\}.}
+\]
+
+All arithmetic identities and the exponent bound are regression-tested in
+the actual residual source trajectory.  The first pair is again an exact
+obligation `O(b,g)`.  The last unresolved task is to collapse the two
+higher adjacent frames, using the retained LOSS state `V`, or to show that
+their boundary WIN `b` has lower proof height than the original endpoint.

@@ -63,6 +63,8 @@ Update this table whenever the status of a substantial claim changes.
 | Under the minimum-source hypothesis, every surviving B-transfer is an exponent-one/two pair whose next phase is fixed by eight classes modulo 512 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 26 |
 | A valuation-two B-selection preserves the exact exponent-one/two DRAW obligation at the ordinary source `B(x)` | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 27 |
 | After the final length-two fork, at most two additional B-source transfers can survive before either dropping below the minimum DRAW source or reaching the A-selecting phase | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 27; regression in `tests/test_game.py` |
+| At the final A-selecting obligation, the common side child's own coefficient source is below `s`, forcing the exact canonical-lift/factor-frame outcome fork of Section 28 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 28 |
+| A surviving factor-three escape from that A-selecting fork is an adjacent frame over its WIN side child with lower exponent at most three | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 28; regression in `tests/test_game.py` |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |
