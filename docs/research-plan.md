@@ -552,14 +552,28 @@ What remains is now genuinely a global size-change argument: define one
 well-founded order for the already proved source and height decreases and
 verify every entry type against it.
 
-Section 100 removes the last local height reset inside a high return.  The
-state u immediately preceding the new obligation and c=B(u) are both WIN,
-while the ordinary common child B(A(u)) is a WIN token at least two
-heights below u.  Therefore the
-Section 90 re-entry preserves both the old source anchor (Section 97) and
-a strictly descending finite proof token (Section 100).  No internal
-high-return transition is now unmarked; only the global entry and
-size-change induction remain to be written and audited.
+Section 100 identifies, but does not yet close, the local height reset
+inside a high return.  The state u immediately preceding the new
+obligation and c=B(u) are both WIN, while A(u) is LOSS and the common
+child B(A(u)) is a WIN token at least two heights below u.  That lower
+token is only a WIN child of c: it is not a member or common side of
+O(c,alpha(c)), and the proof height of c may be controlled by its other
+child.  The next task is therefore exact rather than a generic entry
+audit: force this carried child, or one of its certified descendants, to
+become a DRAW-boundary endpoint before Sections 97--99 are allowed to
+replace the token.
+
+Section 101 attaches that child to the obligation's common side.  With
+p=A(c), the common side is exactly A(p) at v=5 and B(p) thereafter.  A
+DRAW common side therefore exposes a boundary four levels below u in
+every ordinary row; the only exceptional DRAW rows occur at v=5,6 and
+have explicit lift/frame forms.  With a WIN common side, the canonical
+continuation has source p itself and therefore inherits its lower height;
+the other orientation is the parent-witnessed factor alternative, whose
+ordinary factor source has the explicit lower-height WIN child B(A(p)).
+The remaining universal gap is now a marked-factor lemma for a WIN source
+with a known lower WIN child and LOSS sibling, plus the two bounded
+exceptional families; no generic high-return source reset remains.
 
 ## Priority 2: finite transducer plus numerical potential
 

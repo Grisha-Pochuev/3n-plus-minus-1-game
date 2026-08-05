@@ -914,10 +914,71 @@ class GameArithmeticTests(unittest.TestCase):
                     lower_win = transformed_B(
                         transformed_A(predecessor_token)
                     )
+                    self.assertEqual(
+                        lower_win,
+                        transformed_A(returned_source),
+                    )
                     self.assertIn(
                         lower_win,
                         transformed_moves(returned_source),
                     )
+
+                    selecting_phase = source_A_selecting_tail_bit(
+                        returned_source
+                    )
+                    obligation_lower = constant_tail_state(
+                        embedded_original_state(returned_source),
+                        1,
+                        selecting_phase,
+                    )
+                    common_side = transformed_B(obligation_lower)
+                    self.assertIn(
+                        common_side,
+                        transformed_moves(lower_win),
+                    )
+                    if valuation == 5:
+                        self.assertEqual(
+                            common_side,
+                            transformed_A(lower_win),
+                        )
+                    else:
+                        self.assertEqual(
+                            common_side,
+                            transformed_B(lower_win),
+                        )
+
+                    if valuation == 5:
+                        exceptional_residues = {1, 14}
+                    elif valuation == 6:
+                        exceptional_residues = {3, 12}
+                    else:
+                        exceptional_residues = set()
+                    if (
+                        lower_win % 16
+                        in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                    ):
+                        self.assertIn(
+                            lower_win % 16,
+                            exceptional_residues,
+                        )
+                    elif exceptional_residues:
+                        self.assertNotIn(
+                            lower_win % 16,
+                            SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                        )
+
+                    if (
+                        lower_win % 16
+                        not in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                    ):
+                        common_descendant = transformed_B(
+                            transformed_A(lower_win)
+                        )
+                        for child in transformed_moves(lower_win):
+                            self.assertIn(
+                                common_descendant,
+                                transformed_moves(child),
+                            )
 
     def test_short_high_return_token_diamonds(self) -> None:
         for source in range(1, 10000):

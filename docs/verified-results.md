@@ -8462,7 +8462,7 @@ height descents while resetting the other component.  The child
 partition, ordinary common-child identity, and exceptional adjacent
 coordinates are regression-tested for every \(1\le x<100000\).
 
-## 100. A high-return obligation inherits the predecessor token height
+## 100. The high-return predecessor has an exact lower-token diamond
 
 The finite token \(c\) in Section 86 is also tied directly to the finite
 state immediately before the high return.  Retain Section 84's notation
@@ -8514,16 +8514,138 @@ canonical LOSS child of \(u\), and
 p\in\operatorname{moves}(c).}
 \]
 
-Thus the obligation \(O(c,\alpha(c))\) never introduces a fresh,
-height-unrelated finite token.  It inherits the explicit ordinary child
-\(p\) of \(c\), at least two proof levels below \(u\).  Sections 97--99
-then transport or spend that inherited token through every common-side
-outcome.
+This is an exact lower-token diamond adjacent to the re-entry source, but
+it is not yet proof-height transport through the obligation.  The state
+\(p\) is a WIN child of the WIN state \(c\); it is neither a member nor the
+common side of \(O(c,\alpha(c))\).  In particular the canonical height of
+\(c\) is determined by its other, LOSS child, and need not be bounded by
+\(h(p)\).  Therefore Sections 97--99 cannot be invoked as though their
+tokens were descendants of \(p\).
 
-This closes the proof-height reset that remained in the high-return
-re-entry.  It is still a local transition theorem; the final proof must
-place it in the global size-change order together with the initial
-height-one and minimum-source entries.  The exact source \(c\),
+The remaining high-return gap is now precise: expose \(p\), or a certified
+descendant of it, as a DRAW-boundary endpoint before the obligation can
+restart its proof-height mark.  The exact source \(c\),
 nonexceptional residue of \(u\), and common-child identity are
 regression-tested for every \(1\le t<10000\), both phases, and valuations
 five through ten.
+
+## 101. The high-return common side touches the lower predecessor token
+
+The lower token in Section 100 is not arbitrary relative to the new
+obligation.  Retain
+
+\[
+u=Q_{v-1}^g(J(t)),\qquad
+c=Q_{v-3}^g(3J(t)),\qquad v\ge5,
+\]
+
+and put
+
+\[
+p=B(A(u)).
+\]
+
+Direct constant-tail reduction gives
+
+\[
+A(u)=Q_{v-2}^g(3J(t)),\qquad
+p=Q_{v-4}^g(9J(t))=A(c).
+\]
+
+Thus Section 100's outcome information sharpens to
+
+\[
+\boxed{u,c,p\text{ are WIN},\qquad B(c)\text{ is LOSS},
+\qquad h(p)\le h(u)-2.}
+\]
+
+Let \(b\) be the common side of the re-entry obligation
+\(O(c,\alpha(c))\).  Section 97's three coordinate rows become the
+single ordinary-child statement
+
+\[
+\boxed{
+b=
+\begin{cases}
+A(p),&v=5,\\
+B(p),&v\ge6.
+\end{cases}}
+\]
+
+In particular \(b\) is not merely source-anchored: it is one of the two
+actual children of the lower WIN token \(p\).  The only possible
+exceptional residues of \(p\) are also bounded exactly.  Since its tail
+exponent is \(v-4\),
+
+\[
+\boxed{
+p\text{ exceptional}\Longrightarrow
+\begin{cases}
+v=5,\quad p\bmod16\in\{1,14\},\\
+v=6,\quad p\bmod16\in\{3,12\}.
+\end{cases}}
+\]
+
+For \(v\ge7\), the residues are \(7,8,15,0\pmod {16}\), according to
+the phase and whether the remaining tail exponent is three or at least
+four, and hence are ordinary.
+
+This attachment has an immediate outcome consequence.  Suppose first
+that \(b\) is DRAW, and let \(\ell\) be the other child of \(p\).  Since
+\(p\) is WIN and \(b\) is non-losing,
+
+\[
+\ell\text{ is LOSS},\qquad h(\ell)=h(p)-1.
+\]
+
+If \(p\) is ordinary, the side relation makes
+
+\[
+q=B(A(p))
+\]
+
+a child of both \(b\) and \(\ell\).  Therefore
+
+\[
+\boxed{b\to q\text{ is a boundary},\qquad
+h(q)\le h(p)-2\le h(u)-4.}
+\]
+
+The exceptional DRAW rows remain typed rather than unmarked.  At \(v=5\)
+one has \(b=A(p)\) DRAW and \(B(p)=\ell\) LOSS, so Section 68 produces an
+adjacent DRAW frame over the lower LOSS source \(\ell\).  At \(v=6\) one
+has \(b=B(p)\) DRAW and \(A(p)=\ell\) LOSS; the exceptional formula of
+Section 57 makes \(q=B(A(p))\) an exact factor-free lift over \(b\), while
+
+\[
+q\text{ is WIN},\qquad h(q)\le h(p)-2.
+\]
+
+Now suppose that \(b\) is WIN.  If the exponent-one member of the
+obligation is DRAW, Section 91 takes the canonical continuation, but its
+new source is exactly
+
+\[
+A(c)=p.
+\]
+
+Thus this row enters \(O(p,g)\) at the already lower WIN token
+\(h(p)\le h(u)-2\); it does not restart at \(c\).  Otherwise the explicit
+DRAW parent from Section 90 forces Section 91's factor alternative over
+\(b\).  If \(p\) is ordinary, its other child \(\ell\) is again LOSS and
+the same common child \(q=B(A(p))\) satisfies
+
+\[
+\boxed{q\in\operatorname{moves}(b),\qquad
+q\text{ is WIN},\qquad h(q)\le h(p)-2.}
+\]
+
+Thus a canonical continuation inherits \(p\) itself, while the universal
+ordinary factor fork is a WIN source \(b\) with an explicit lower-height
+WIN child \(q\) and a LOSS other child.  The only rows where the ordinary
+common-child link can fail are the two bounded exceptional families above.
+The exact remaining transport problem is the factor row: its scan must
+expose the marked child \(q\), or a certified descendant, before it can
+replace the proof-height token.  The identities, ordinary diamonds, and
+exceptional residue filter are regression-tested for every
+\(1\le t<10000\), both phases, and valuations five through ten.
