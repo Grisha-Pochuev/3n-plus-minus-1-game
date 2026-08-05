@@ -39,6 +39,8 @@ Update this table whenever the status of a substantial claim changes.
 | A minimum-coefficient DRAW at constant-tail exponent one must take the valuation-one signed transition | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 15 |
 | The second signed transition of a minimum-coefficient exponent-one DRAW has the `v=2`, adjacent-pair `v=3`, or impossible `v>=4` trichotomy | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 16; arithmetic regression in `tests/test_game.py` |
 | A DRAW with coefficient divisible by three and exponent at least two forces a DRAW with coefficient divided by three | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 16; frame identities in `tests/test_game.py` |
+| Every odd coefficient is uniquely `3^k J(s)`, and at `k=0,r=1` the signed transition selects exactly `A(s)` or `B(s)` | **PROVED** | `docs/verified-results.md`, Section 17; `constant_tail_coefficient_source`; `source_boundary_transition` |
+| A minimum-source DRAW at `k=0,r=1` must use the phase selecting `A(s)` | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 17 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

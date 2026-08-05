@@ -52,6 +52,12 @@ division-by-three lemma for every exponent at least two.  The surviving
 arithmetic obstruction is now an adjacent `r=1,2` pair with coefficient
 less than `9a/8`, whose shared child is already known to be WIN, plus the
 valuation-two growth branch.
+Section 17 replaces raw odd coefficients by unique source coordinates
+`a=3^k J(s)`.  Long-tail moves preserve `s`, and the three-free signed
+boundary is exactly one `A/B` move of the original transformed game.  The
+remaining target is the exponent-one transition with `k>0`, expressed by
+`3^(k+1) J(s) +/- 1 = 2^j J(t)`, and its interaction with the forced
+minimum-height boundary.
 
 ## Priority 2: finite transducer plus numerical potential
 

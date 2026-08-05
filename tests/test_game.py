@@ -14,9 +14,11 @@ from optimal_3n1.game import (  # noqa: E402
     decreasing_move,
     constant_tail_children,
     constant_tail_coordinates,
+    constant_tail_coefficient_source,
     constant_tail_state,
     dyadic_minus_one_children,
     dyadic_minus_one_state,
+    embedded_original_state,
     exceptional_side_branch_values,
     gray_code,
     increasing_move,
@@ -27,6 +29,8 @@ from optimal_3n1.game import (  # noqa: E402
     normal_form_children,
     odd_part,
     side_branch_relation,
+    source_A_selecting_tail_bit,
+    source_boundary_transition,
     transformed_A,
     transformed_ABB,
     transformed_B,
@@ -337,6 +341,37 @@ class GameArithmeticTests(unittest.TestCase):
                             child in transformed_moves(lower_sibling)
                             or child in transformed_moves(upper_sibling)
                         )
+
+    def test_constant_tail_coefficient_source_conjugacy(self) -> None:
+        for source in range(10000):
+            original = embedded_original_state(source)
+            self.assertEqual(constant_tail_coefficient_source(original), (source, 0))
+            if source > 0:
+                original_children = {
+                    embedded_original_state(child)
+                    for child in transformed_moves(source)
+                }
+                self.assertEqual(
+                    original_children,
+                    {odd_part(3 * original - 1), odd_part(3 * original + 1)},
+                )
+
+                selecting_tail = source_A_selecting_tail_bit(source)
+                selected = source_boundary_transition(source, selecting_tail)
+                other = source_boundary_transition(source, 1 - selecting_tail)
+                self.assertEqual(selected, ("A", 1, transformed_A(source)))
+                self.assertEqual(other[0], "B")
+                self.assertGreaterEqual(other[1], 2)
+                self.assertEqual(other[2], transformed_B(source))
+
+        for odd_coefficient in range(1, 10000, 2):
+            source, exponent_of_three = constant_tail_coefficient_source(
+                odd_coefficient
+            )
+            self.assertEqual(
+                odd_coefficient,
+                (3**exponent_of_three) * embedded_original_state(source),
+            )
 
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):

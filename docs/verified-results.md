@@ -1191,3 +1191,96 @@ coefficient of a DRAW at exponent at least two.  In particular, if `a` is
 the globally minimum DRAW coefficient and `3` divides `a`, then every DRAW
 with that coefficient must have exponent exactly one.  The exponent-one
 case is not covered by the reverse frame and remains open.
+
+## 17. Every three-free coefficient contains a copy of the game
+
+Define the increasing embedding
+
+\[
+J(s)=2A(s)+1.
+\]
+
+This is exactly the original odd state represented by the transformed state
+`s`.  Consequently its two original children are
+
+\[
+\boxed{J(A(s)),\qquad J(B(s)).}
+\]
+
+This follows either from the conjugacy in `docs/normal-form.md` or by direct
+substitution.  It is regression-tested by `embedded_original_state`.
+
+Every positive odd constant-tail coefficient has a unique representation
+
+\[
+\boxed{a=3^kJ(s)},
+\qquad k\ge0,quad s\ge0.
+\]
+
+To prove existence, remove all factors of three from `a`, leaving an odd
+integer `c` not divisible by three.  Then `(c-1)/2` is `0` or `2 mod 3`, so
+it lies in the image of `A=F`; its unique inverse is `s`, and `c=J(s)`.
+Uniqueness follows from unique factorization and injectivity of `A`.  The
+function `constant_tail_coefficient_source` returns `(s,k)`.  We call `s`
+the **source** of the coefficient.
+
+At the signed `r=1` boundary of a three-free coefficient, the apparent
+coefficient map is literally one move of the embedded game.  For `s>0`,
+
+\[
+\operatorname{oddpart}(3J(s)+1-2\epsilon)
+\in\{J(A(s)),J(B(s))\}.
+\]
+
+The phase selecting `A(s)` is
+
+\[
+\boxed{\alpha(s)=1-\left(\left\lfloor s/2\right\rfloor\bmod2\right).}
+\]
+
+For `epsilon=alpha(s)` the valuation is exactly one and the source child is
+`A(s)`.  The other phase has valuation at least two and selects `B(s)`.
+Indeed, `J(A(s))>J(s)>J(B(s))`; in the original game the increasing move
+removes exactly one factor of two, while the decreasing move removes at
+least two.  The sign of the increasing move is determined by `s mod 4`,
+which gives the displayed formula for `alpha`.  The function
+`source_boundary_transition` checks the exact identity, not merely the
+inequalities.
+
+This gives another conditional reduction for a hypothetical draw kernel.
+Choose a DRAW whose coefficient source `s` is globally minimum.  If a state
+
+\[
+Q_1^\epsilon(J(s))
+\]
+
+is DRAW, its common `B`-child has coefficient below `J(s)` by Section 15,
+hence has source below `s`.  It cannot be DRAW and, as a child of a DRAW,
+cannot be LOSS; it is WIN.  The expanding child must therefore be DRAW.  It
+cannot select `B(s)`, whose source is smaller, so necessarily
+
+\[
+\boxed{
+\epsilon=\alpha(s),\qquad
+Q_1^{1-\epsilon}(J(A(s)))\text{ is DRAW}.
+}
+
+Likewise, if `Q_2^epsilon(J(s))` is DRAW, its common child is WIN and
+`Q_1^epsilon(3J(s))` is DRAW.  At every exponent `r>=3`, both children have
+the same source as their parent because the coefficient is merely multiplied
+by three.  Finally, Section 16 implies that any DRAW with exponent at least
+two and coefficient `3^kJ(s)` can be pulled back repeatedly to a DRAW with
+coefficient `J(s)` and a larger exponent.
+
+Thus multiplication by three in the long-tail recurrence is no longer an
+uncontrolled numerical growth: it preserves the exact source state.  The
+remaining non-well-founded transition is concentrated at exponent one with
+`k>0`, where
+
+\[
+3^{k+1}J(s)\mathbin{\pm}1=2^jJ(t)
+\]
+
+can increase the source `t`.  Controlling this source/valuation exchange,
+together with the adjacent pair from Section 16, is still required for a
+complete proof.

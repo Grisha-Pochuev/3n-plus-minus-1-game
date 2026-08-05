@@ -302,6 +302,73 @@ def constant_tail_coordinates(q: int) -> tuple[int, int, int]:
     return odd_coefficient, exponent, tail_bit
 
 
+def embedded_original_state(q: int) -> int:
+    """Embed a transformed state as the corresponding original odd state.
+
+    The image ``J(q)=2*A(q)+1`` is closed under both original game moves,
+    and the induced children are exactly ``J(A(q))`` and ``J(B(q))``.
+    """
+    if q < 0:
+        raise ValueError("q must be nonnegative")
+    return 2 * transformed_A(q) + 1
+
+
+def constant_tail_coefficient_source(odd_coefficient: int) -> tuple[int, int]:
+    """Return the unique ``(s, k)`` with ``a=3**k * J(s)``.
+
+    Here ``a`` is a positive odd constant-tail coefficient and
+    ``J(s)=2*A(s)+1``.  Removing all factors of three leaves an odd integer
+    in the image of ``J``.
+    """
+    if odd_coefficient <= 0 or odd_coefficient % 2 == 0:
+        raise ValueError("odd_coefficient must be positive and odd")
+    exponent_of_three = 0
+    reduced = odd_coefficient
+    while reduced % 3 == 0:
+        reduced //= 3
+        exponent_of_three += 1
+    source = inverse_F((reduced - 1) // 2)
+    if source is None or embedded_original_state(source) != reduced:
+        raise AssertionError(odd_coefficient)
+    return source, exponent_of_three
+
+
+def source_A_selecting_tail_bit(source: int) -> int:
+    """Return the boundary phase whose signed coefficient move selects A."""
+    if source <= 0:
+        raise ValueError("source must be positive")
+    return 1 - ((source >> 1) & 1)
+
+
+def source_boundary_transition(source: int, tail_bit: int) -> tuple[str, int, int]:
+    """Decode a signed boundary transition through the embedded game.
+
+    Return ``(letter, valuation, child_source)``.  At coefficient ``J(s)``,
+    the two signs select exactly ``A(s)`` and ``B(s)``.  The A-selection has
+    valuation one, while the B-selection has valuation at least two.
+    """
+    if source <= 0:
+        raise ValueError("source must be positive")
+    if tail_bit not in (0, 1):
+        raise ValueError("tail_bit must be 0 or 1")
+    coefficient = embedded_original_state(source)
+    signed_value = 3 * coefficient + 1 - 2 * tail_bit
+    valuation = v2(signed_value)
+    child_coefficient = signed_value >> valuation
+    child_source, power_of_three = constant_tail_coefficient_source(
+        child_coefficient
+    )
+    if power_of_three != 0:
+        raise AssertionError((source, tail_bit))
+    if child_source == transformed_A(source):
+        letter = "A"
+    elif child_source == transformed_B(source):
+        letter = "B"
+    else:
+        raise AssertionError((source, tail_bit, child_source))
+    return letter, valuation, child_source
+
+
 def constant_tail_children(
     odd_coefficient: int, exponent: int, tail_bit: int
 ) -> tuple[int, int]:

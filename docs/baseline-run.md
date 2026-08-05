@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 31 tests
+Ran 32 tests
 OK
 ```
 
@@ -32,6 +32,7 @@ The tests cover:
 - the closed recurrence and boundary identities for both constant-tail families;
 - canonical constant-tail coordinates and coefficient descent at their shared boundary;
 - the exact second-boundary fork and divisible-coefficient frame identities;
+- the unique coefficient-source conjugacy and its signed boundary transitions;
 - the arithmetic characterization and closure of height-one WIN positions;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;
