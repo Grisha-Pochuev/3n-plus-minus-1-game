@@ -380,6 +380,72 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(second_valuation, selected_valuation + 1)
                 self.assertEqual(second_source, selected_source)
 
+    def test_all_consecutive_factor_levels_are_coupled(self) -> None:
+        for source in range(100):
+            base_coefficient = embedded_original_state(source)
+            for phase in (0, 1):
+                for factor_exponent in range(9):
+                    current_value = (
+                        3 ** (factor_exponent + 1) * base_coefficient
+                        + 1
+                        - 2 * phase
+                    )
+                    current_valuation = v2(current_value)
+                    current_coefficient = (
+                        current_value >> current_valuation
+                    )
+                    current_source, current_power = (
+                        constant_tail_coefficient_source(
+                            current_coefficient
+                        )
+                    )
+                    self.assertEqual(current_power, 0)
+
+                    next_value = (
+                        3 ** (factor_exponent + 2) * base_coefficient
+                        + 1
+                        - 2 * phase
+                    )
+                    next_valuation = v2(next_value)
+                    next_coefficient = next_value >> next_valuation
+                    next_source, next_power = (
+                        constant_tail_coefficient_source(next_coefficient)
+                    )
+                    self.assertEqual(next_power, 0)
+
+                    if current_valuation >= 2:
+                        self.assertEqual(next_valuation, 1)
+                        self.assertEqual(
+                            next_source,
+                            constant_tail_state(
+                                embedded_original_state(current_source),
+                                current_valuation - 1,
+                                1 - phase,
+                            ),
+                        )
+                    else:
+                        if current_source == 0:
+                            selected_value = 2 + 2 * phase
+                            self.assertEqual(
+                                next_valuation,
+                                v2(selected_value) + 1,
+                            )
+                            self.assertEqual(next_source, 0)
+                            continue
+                        (
+                            _,
+                            selected_valuation,
+                            selected_source,
+                        ) = source_boundary_transition(
+                            current_source, 1 - phase
+                        )
+                        self.assertEqual(
+                            next_valuation, selected_valuation + 1
+                        )
+                        self.assertEqual(
+                            next_source, selected_source
+                        )
+
     def test_win_factor_source_return_provenance(self) -> None:
         for b in range(1, 100000):
             if b % 64 not in {4, 25, 38, 59}:

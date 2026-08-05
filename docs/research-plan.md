@@ -396,6 +396,14 @@ LTE counter v2(3^k-1), except only when v2(k)=L; exactly there cancellation
 raises the valuation further.  The next target is therefore the single
 resonant quotient and its raw sibling, rather than an arbitrary long-frame
 transition.
+Section 79 shows that even this resonance cannot repeat: every valuation at
+least two is followed by valuation one whose source is an exact lift over
+the resonant source, while every valuation-one row takes one ordinary
+selected-source step next (or remains at the directly factored terminal
+source zero).  The remaining proof obligation is now an
+outcome diamond forcing a DRAW-marked factor scan to expose the carried
+height-one terminal token before it can restart through that ordinary
+source step.
 
 ## Priority 2: finite transducer plus numerical potential
 

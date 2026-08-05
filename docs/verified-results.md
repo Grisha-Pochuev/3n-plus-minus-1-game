@@ -6858,3 +6858,79 @@ where the factor counter \(k\) is divisible by \(2^L\) but not
 outcomes of the raw/signed siblings must be coupled.  The full filter is
 regression-tested for every height-one source below \(10000\) and
 \(1\le k\le256\).
+
+## 79. Every pair of consecutive factor levels is coupled
+
+The switch of Section 60 is not restricted to its original ninefold and
+twenty-sevenfold rows.  Let \(a=J(x)\), fix a phase \(e\), and for any
+\(k\ge0\) factor
+
+\[
+N_k:=3^{k+1}a+1-2e=2^vJ(t).
+\]
+
+The next factor level satisfies the universal recurrence
+
+\[
+N_{k+1}=3N_k-2(1-2e).
+\]
+
+If \(v\ge2\), put
+
+\[
+u=Q_{v-1}^{\,1-e}(J(t)).
+\]
+
+Direct substitution in the definition of \(J\) gives
+
+\[
+J(u)=3\cdot2^{v-1}J(t)-1+2e,
+\]
+
+and therefore
+
+\[
+\boxed{v\ge2\Longrightarrow N_{k+1}=2J(u).}
+\]
+
+Thus the next valuation is exactly one and its source is the displayed
+factor-free lift over \(t\).
+
+If \(v=1\), then
+
+\[
+N_{k+1}
+=2\bigl(3J(t)+1-2(1-e)\bigr).
+\]
+
+Factor the bracket as
+
+\[
+3J(t)+1-2(1-e)=2^jJ(u).
+\]
+
+For \(t>0\), it is precisely the ordinary source-boundary transition at
+\(t\) in phase \(1-e\).  Hence
+
+\[
+\boxed{
+v=1\Longrightarrow
+v_2(N_{k+1})=j+1,\quad
+u\in\{A(t),B(t)\}
+}
+\]
+
+with the selected letter determined by that source phase.
+
+For the terminal source \(t=0\), the bracket is instead \(2+2e\);
+direct factorization leaves returned source zero and gives bracket
+valuation one for \(e=0\), two for \(e=1\).  No ordinary move from the
+terminal state is being asserted.
+
+Consequently no two consecutive factor levels can both have valuation at
+least two.  In particular the high resonant valuation of Section 78 is
+immediately followed by a valuation-one exact lift over its returned
+source; it cannot form an unmarked high-valuation run.  This is a complete
+arithmetic coupling, not yet an outcome descent, because a DRAW may choose
+between side and signed exits.  It is regression-tested for all sources
+below \(100\), both phases, and nine consecutive factor levels.
