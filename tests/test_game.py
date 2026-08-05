@@ -200,7 +200,8 @@ class GameArithmeticTests(unittest.TestCase):
                 )
 
     def test_canonical_A_streak_side_returns(self) -> None:
-        for source in range(10, 100000):
+        small_exceptional_rows = set()
+        for source in range(1, 100000):
             ray = [source]
             for _ in range(5):
                 ray.append(transformed_A(ray[-1]))
@@ -232,6 +233,38 @@ class GameArithmeticTests(unittest.TestCase):
                         constant_tail_source_coordinates(returned)[:2],
                         (loss_token, 0),
                     )
+                    upper_returned = transformed_A(
+                        transformed_A(preceding_win)
+                    )
+                    upper_coordinates = constant_tail_source_coordinates(
+                        upper_returned
+                    )
+                    lower_coordinates = constant_tail_source_coordinates(
+                        returned
+                    )
+                    self.assertEqual(upper_coordinates[:2], (loss_token, 0))
+                    self.assertEqual(
+                        upper_coordinates[2],
+                        lower_coordinates[2] + 1,
+                    )
+                    self.assertEqual(
+                        upper_coordinates[3],
+                        lower_coordinates[3],
+                    )
+                    if source < 12:
+                        small_exceptional_rows.add(
+                            (source, index, preceding_win, loss_token)
+                        )
+
+        self.assertEqual(
+            small_exceptional_rows,
+            {
+                (4, 2, 14, 0),
+                (6, 1, 14, 0),
+                (9, 0, 14, 0),
+                (11, 0, 17, 1),
+            },
+        )
 
     def test_post_canonical_B_run_contracts_in_nine_steps(self) -> None:
         for minimum_source in range(10, 5000):
@@ -243,6 +276,50 @@ class GameArithmeticTests(unittest.TestCase):
                         returned = transformed_B(returned)
                     self.assertLess(returned, minimum_source)
                     current = transformed_A(current)
+
+    def test_canonical_A_to_B_switch_rank_geometry(self) -> None:
+        observed_valuations = set()
+        for source in range(1, 100000):
+            phase = source_A_selecting_tail_bit(source)
+            selected_source = transformed_A(source)
+            opposite_phase = 1 - phase
+            if (
+                opposite_phase
+                == source_A_selecting_tail_bit(selected_source)
+            ):
+                continue
+
+            letter, valuation, returned_source = source_boundary_transition(
+                selected_source, opposite_phase
+            )
+            observed_valuations.add(valuation)
+            self.assertEqual(letter, "B")
+            self.assertEqual(
+                returned_source,
+                transformed_B(selected_source),
+            )
+            self.assertNotIn(
+                source % 16,
+                SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+            )
+            self.assertIn(
+                returned_source,
+                transformed_moves(transformed_B(source)),
+            )
+
+            lift = constant_tail_state(
+                embedded_original_state(source), 1, phase
+            )
+            self.assertEqual(transformed_B(lift), returned_source)
+
+            if valuation >= 3:
+                self.assertLess(returned_source, source)
+            else:
+                self.assertEqual(valuation, 2)
+
+        self.assertIn(2, observed_valuations)
+        self.assertIn(3, observed_valuations)
+        self.assertTrue(any(value >= 10 for value in observed_valuations))
 
     def test_arbitrarily_long_phase_only_AB_prefixes(self) -> None:
         for pair_count in range(1, 25):

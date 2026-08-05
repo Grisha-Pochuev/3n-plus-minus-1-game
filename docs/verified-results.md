@@ -7804,7 +7804,117 @@ transition either comes back to this ordinary fork or spends the marked
 LOSS token.  The two strict source inequalities are regression-tested for
 every \(1\le x<100000\).
 
-## 93. The exponent-one factor fork spends its retained LOSS token
+## 93. The canonical A-continuation has a universal four-step marked exit
+
+The source window in Section 65 is unnecessary for its canonical-streak
+argument.  Retain the canonical alternative of Section 91 at an arbitrary
+source \(x>0\).  Put
+
+\[
+x_i=A^i(x),\qquad
+e_i=\alpha(x)\mathbin{\mathsf{xor}}(i\bmod2),\qquad
+P_i=Q_1^{e_i}(J(x_i)).
+\]
+
+As long as \(e_i=\alpha(x_i)\) and the next phase is also A-selecting, the
+exact side identity from Section 65 is
+
+\[
+\boxed{B(P_i)=x_{i+2}.}
+\]
+
+The WIN common-side case preceding the canonical alternative makes \(x_2\) WIN,
+while outcome recursion makes every continued \(P_i\) DRAW.  Therefore
+each displayed side child is non-losing.  If
+
+\[
+x_2,x_3,x_4,x_5
+\]
+
+were all WIN, they would be four consecutive WIN states on one A-ray,
+contrary to Section 5.  Hence before or during the first four side tests
+either the source phase becomes B-selecting, or some
+
+\[
+d=x_{j+2}\quad(1\le j\le3)
+\]
+
+is DRAW.  In the latter case put
+
+\[
+q=x_{j+1},\qquad \ell=B(q),\qquad p=B(d).
+\]
+
+The preceding DRAW lift has the WIN child \(q\), while \(d=A(q)\) is DRAW.
+Thus \(\ell\) is the unique LOSS child of \(q\), and
+
+\[
+h(\ell)=h(q)-1.
+\]
+
+If \(q\) is nonexceptional, the ordinary side relation makes \(p\) a
+child of both \(d\) and \(\ell\).  Consequently
+
+\[
+\boxed{d\to p\text{ is a boundary},\qquad
+h(p)\le h(q)-2.}
+\]
+
+If \(q\) is exceptional, Section 68 gives, for some \(m\ge1\) and phase
+\(\delta\), an actual adjacent DRAW frame
+
+\[
+\boxed{
+\{Q_m^\delta(J(\ell)),Q_{m+1}^\delta(J(\ell))\}
+\text{ contains a DRAW}.}
+\]
+
+The LOSS source in this frame is strictly below the source at the start of
+the streak:
+
+\[
+\boxed{\ell<x.}
+\]
+
+For \(x\ge12\), the exceptional formulas and \(q=A^{j+1}(x)\), \(j\le3\),
+give exactly the estimate from Section 65,
+
+\[
+\ell\le\frac{3q-3}{16}
+\le\frac{243x+147}{256}<x.
+\]
+
+For \(1\le x<12\), the phase-compatible exceptional rows with
+\(1\le j\le3\) are only
+
+\[
+\begin{array}{c|c|c|c}
+x&j&q&\ell\\ \hline
+4&2&14&0\\
+6&1&14&0.
+\end{array}
+\]
+
+They satisfy the same strict inequality directly.  This is a finite check
+of already bounded iterates, not a modulus claim about an unbounded
+suffix.
+
+Thus an arbitrary canonical A-continuation has, after at most four side
+tests, one of three marked exits:
+
+1. a B-selecting source phase;
+2. a boundary endpoint whose proof height drops by at least two;
+3. an adjacent DRAW frame over an actual LOSS token of lower height and
+   strictly smaller integer source.
+
+Together with Sections 91--92 and 94--95, no A-selecting obligation introduced
+by a high return has an untyped A- or factor continuation.  The remaining
+global assembly problem is the alternation through B-selecting transfers.
+The side identities, adjacent exceptional frame, strict source inequality,
+and all four broader small exceptional arithmetic rows are regression-tested
+for every \(1\le x<100000\).
+
+## 94. The exponent-one factor fork spends its retained LOSS token
 
 The lowest factor row of Section 91 has a complete marked exit.  Retain
 its third alternative, put \(g=1-e\), and suppose the adjacent frame over
@@ -7883,9 +7993,9 @@ Only the \(r\ge2\) opposite-twin rows remain in the factor-fork audit.  All
 displayed arithmetic identities and both phase alternatives are
 regression-tested for every \(1\le x<100000\).
 
-## 94. Every higher factor fork pays source or finite proof height
+## 95. Every higher factor fork pays source or finite proof height
 
-The opposite-tail rows left by Section 93 do not require following the
+The opposite-tail rows left by Section 94 do not require following the
 two tails indefinitely.  Their generating source itself supplies a
 well-founded split.  Retain the third alternative of Section 91 and
 suppose its lower frame exponent satisfies \(r\ge2\).  Put
@@ -7961,10 +8071,114 @@ z=A^2(x)\text{ is LOSS and }h(z)\le h(x)-2.}
 Thus every \(r\ge2\) factor fork exposes exactly the kind of marked event
 needed by a lexicographic rank: a smaller-source DRAW, a boundary WIN at
 strictly smaller finite proof height, or an actual LOSS token at strictly
-smaller finite proof height.  Together with Section 93 this closes the
+smaller finite proof height.  Together with Section 94 this closes the
 local provenance audit for every lower factor exponent.  It is not yet the
 global no-DRAW theorem: the canonical A-continuation and re-entry through
 the high-return obligation must still be assembled into a single
 well-founded transition system.  The common-child identity,
 nonexceptional filter, and rows \(r=2,3,\ge4\) are regression-tested for
 every \(1\le x<100000\).
+
+## 96. Every canonical A-to-B switch pays source or proof height
+
+The unbounded arithmetic prefixes of Section 67 admit a well-founded
+outcome rank once the WIN common-side state is retained.  Let an
+A-selecting obligation at source \(p>0\) take the canonical alternative.
+Put
+
+\[
+e=\alpha(p),\qquad y=A(p),\qquad g=1-e,
+\]
+
+and suppose the output phase \(g\) is B-selecting at \(y\).  Let
+
+\[
+P=Q_1^e(J(p)),\qquad z=B(P).
+\]
+
+In the canonical alternative \(P\) is DRAW and \(z\) is WIN.  The refined
+A-selecting side identity of Section 24, together with
+\(g\ne\alpha(y)\), gives
+
+\[
+\boxed{z=B(y)=B(A(p)).}
+\]
+
+The source \(p\) is necessarily nonexceptional.  Indeed, Section 52's
+four-row calculation shows that every exceptional \(p\) instead has
+\(g=\alpha(A(p))\).  The ordinary side relation at \(p\) now makes \(z\)
+a common child:
+
+\[
+\boxed{z\in\operatorname{moves}(A(p))\cap
+\operatorname{moves}(B(p)).}
+\]
+
+Factor the B-selecting transition at \(y\) as
+
+\[
+3J(y)+1-2g=2^jJ(z),\qquad j\ge2.
+\]
+
+Section 25 transfers the DRAW to the adjacent frame
+
+\[
+\boxed{Q_j^e(J(z)),\qquad Q_{j-1}^e(J(z)),}
+\]
+
+and when \(j=2\) this is exactly the next obligation \(O(z,e)\).
+
+Every row \(j\ge3\) is already a strict source descent.  Since
+\(J(y)\le3y+2\), \(J(z)\ge3z+1\), and
+\(y=A(p)\le(3p+1)/2\),
+
+\[
+8(3z+1)\le 3J(y)+1\le9y+7,
+\]
+
+so
+
+\[
+\boxed{j\ge3\Longrightarrow
+z\le\frac{9y-1}{24}
+\le\frac{27p+7}{48}<p.}
+\]
+
+It remains only to rank the valuation-two recycle.  Split on the outcome
+of \(p\).
+
+- If \(p\) is DRAW, then its coefficient source satisfies
+  \(\rho(p)\le(p-1)/6<p\), giving a strict DRAW-source exit.
+- If \(p\) is WIN, choose a canonical LOSS child
+  \(\ell\in\{A(p),B(p)\}\).  The common-child identity makes \(z\) a
+  child of \(\ell\), while the DRAW state \(P\) also has the WIN child
+  \(z\).  Hence
+
+  \[
+  \boxed{P\to z\text{ is a boundary},\qquad
+  h(z)\le h(p)-2.}
+  \]
+
+- If \(p\) is LOSS, both \(y=A(p)\) and \(B(p)\) are WIN.  The children
+  of \(y\) are the WIN state \(z=B(y)\) and \(w=A(y)=A^2(p)\).
+  Therefore
+
+  \[
+  \boxed{w\text{ is LOSS},\qquad h(w)\le h(p)-2.}
+  \]
+
+Thus every canonical A-to-B switch either strictly lowers the source or,
+in the sole valuation-two row, strictly lowers the finite proof-height
+token.  After the first valuation-two transfer the new obligation source
+\(z\) is itself WIN, so every further \(A,B_2\) pair lowers the height of
+the next WIN source by at least two.  Consequently the arbitrarily long
+finite prefixes constructed in Section 67 cannot become an infinite
+outcome-compatible recycle.
+
+This closes the phase-alternation part of the obligation automaton.  It
+does not by itself state the global theorem: the remaining task is to join
+the now-ranked obligation automaton to the initial minimum-source boundary
+and the height-one zero-source entry without omitting an entry type.  The
+common-child identity, all valuations from two through the observed
+unbounded tail, and the strict \(j\ge3\) inequality are regression-tested
+for every \(1\le p<100000\).

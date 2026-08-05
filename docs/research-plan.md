@@ -490,7 +490,14 @@ signed transition can still bypass the source decrease.  The transition
 audit can now focus on the Sections 79--90 high-to-one coupling with the
 marked LOSS sibling; ordinary source exits are already ranked.
 
-Section 93 closes the lower-exponent-one factor fork completely.  The
+Section 93 makes the canonical A-continuation universal.  Within four side
+tests it reaches a B-selecting phase, an actual boundary-height descent,
+or an adjacent DRAW frame over a lower-height LOSS source strictly below
+the source at the start of the streak.  Hence a high-return obligation can
+use the old four-step A-ray argument without re-entering the original
+minimum-source window.
+
+Section 94 closes the lower-exponent-one factor fork completely.  The
 retained LOSS sibling forces one ordinary child of b to be WIN and the
 phase-selected child to be LOSS.  In the A-selecting orientation this
 spends the token in an immediate two-level boundary-height descent; in the
@@ -499,7 +506,7 @@ that actual LOSS source, whose coefficient coordinate is below x.  The
 remaining provenance audit is therefore confined to the opposite-tail
 twin rows with lower exponent at least two.
 
-Section 94 closes those higher-exponent rows without an unbounded twin
+Section 95 closes those higher-exponent rows without an unbounded twin
 walk.  Their source x is nonexceptional and the factor WIN b is the common
 child of A(x) and B(x).  Splitting on the outcome of x yields respectively
 a strict DRAW source drop, a boundary-WIN height drop, or the lower-height
@@ -507,6 +514,17 @@ LOSS token A^2(x).  The complete factor fork is now locally ranked for
 every exponent.  Priority 1 is reduced to assembling this fork with the
 canonical A-continuation and the Section 90 high-return re-entry in one
 lexicographic transition invariant.
+
+Section 96 supplies the missing rank for A/B phase alternation.  At an
+A-to-B switch the returned WIN source B(A(p)) is a common child of A(p)
+and B(p).  Valuation at least three makes it numerically smaller than p;
+valuation two either exposes a lower-source DRAW or lowers the finite
+WIN/LOSS proof token by two.  In particular every repeated A,B2 pair after
+the first lowers the height of its WIN obligation source, so the
+arbitrarily long arithmetic prefixes of Section 67 cannot form an infinite
+outcome-compatible escape.  The remaining work is now an entry audit:
+connect the initial minimum-source/height-one cases to this ranked
+obligation automaton and verify that Sections 69--90 cover every entry.
 
 ## Priority 2: finite transducer plus numerical potential
 
