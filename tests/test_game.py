@@ -406,6 +406,48 @@ class GameArithmeticTests(unittest.TestCase):
                         returned_source,
                         transformed_A(transformed_A(source)),
                     )
+                    returned_phase = 1 - phase
+                    self.assertEqual(
+                        returned_phase
+                        == source_A_selecting_tail_bit(returned_source),
+                        source % 16
+                        in SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                    )
+                    if (
+                        source % 16
+                        not in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                    ):
+                        next_letter, next_valuation, next_source = (
+                            source_boundary_transition(
+                                returned_source,
+                                returned_phase,
+                            )
+                        )
+                        self.assertEqual(next_letter, "B")
+                        middle = transformed_A(source)
+                        lower_return = transformed_B(middle)
+                        if (
+                            middle % 16
+                            in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                        ):
+                            self.assertEqual(next_valuation, 2)
+                            self.assertEqual(
+                                constant_tail_source_coordinates(
+                                    next_source
+                                )[:2],
+                                (lower_return, 0),
+                            )
+                        else:
+                            self.assertGreaterEqual(next_valuation, 3)
+                            self.assertIn(
+                                next_source,
+                                transformed_moves(lower_return),
+                            )
+                            if next_valuation == 3:
+                                self.assertEqual(
+                                    next_source,
+                                    transformed_A(lower_return),
+                                )
                 else:
                     self.assertEqual(
                         returned_source,

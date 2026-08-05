@@ -4889,3 +4889,184 @@ lift over the ordinary child \(B(b)\).  Valuation two remains the sole
 one-sided row \(A^2(b)\).  These statements do not by themselves make
 \(t\) a boundary endpoint; the adjacent DRAW frame over \(t\) must still
 be coupled to the retained lower-height witness.
+
+## 55. Valuation two returns in the opposite phase exactly off the exceptions
+
+The one-sided row \(v=2\) of Section 54 also has a finite phase and outcome
+normal form.  Retain
+
+\[
+9J(b)+1-2g=4J(t),\qquad
+t=A^2(b),\qquad e=1-g.
+\]
+
+Direct reduction modulo \(16\) gives
+
+\[
+\boxed{
+e=\alpha(t)
+\quad\Longleftrightarrow\quad
+b\equiv1,3,12,14\pmod {16}.}
+\]
+
+Thus an exceptional \(b\) returns an A-selecting obligation over
+\(t=A^2(b)\), while every nonexceptional \(b\) returns in the B-selecting
+phase.  This calculation uses only the exact condition \(v=2\) and the two
+bits defining \(\alpha(t)\); it does not attempt to determine an unbounded
+alternating suffix from a fixed modulus.
+
+There is a useful outcome split in the nonexceptional rows.  Suppose \(b\)
+is WIN and put
+
+\[
+w=A(b),\qquad z=B(b),\qquad
+t=A(w),\qquad q=B(w)=B(A(b)).
+\]
+
+Section 54 gives
+
+\[
+q\text{ WIN},\qquad h(q)\le h(b)-2.
+\]
+
+Whenever the global minimum-source bounds make \(t\) finite, its outcome
+determines that of \(w\):
+
+\[
+\boxed{
+t\text{ WIN}\Longrightarrow w\text{ LOSS},\qquad
+t\text{ LOSS}\Longrightarrow w\text{ WIN and }z\text{ LOSS}.}
+\]
+
+Indeed, if \(t\) is WIN, then both children \(t,q\) of \(w\) are WIN, so
+\(w\) is LOSS.  If \(t\) is LOSS, then \(w\) is WIN.  Since its parent
+\(b\) is WIN as well, the other child \(z\) of \(b\) must be LOSS.
+
+The required finiteness holds in both valuation-two returns that use the
+equation of Section 54.  In the \(r=2\) branch, Section 47 gives
+
+\[
+t<\frac{81}{16}s<6s.
+\]
+
+In the contracting \(r=3\) branch, Section 49 gives
+
+\[
+t<\frac{243s+44}{96}<3s
+\]
+
+for every residual \(s\ge10\).  Since every positive state \(r\) has
+coefficient source at most \((r-1)/6\), both inequalities place the
+coefficient source of \(t\) below the globally minimum DRAW source \(s\).
+Consequently \(t\) is WIN or LOSS, never DRAW.
+
+The valuation-two return is therefore no longer an untyped \(A^2\) jump.
+Off the four exceptional classes it first enters a B-selecting obligation
+over a known finite source, while carrying the strict lower WIN token
+\(q=B(A(b))\).  On the four exceptional classes it enters the A-selecting
+obligation directly.  The remaining work is to transport \(q\) through
+the B-source transfer or normalize the exceptional A-selecting row.
+
+## 56. One B-transfer closes the ordinary valuation-two ambiguity
+
+Continue with the nonexceptional valuation-two row of Section 55.  Thus
+
+\[
+t=A^2(b),\qquad e=1-g=1-\alpha(t),
+\]
+
+and the obligation over \(t\) is B-selecting.  Put
+
+\[
+w=A(b),\qquad q=B(w)=B(A(b)),
+\]
+
+so Section 55 retains
+
+\[
+q\text{ WIN},\qquad h(q)\le h(b)-2.
+\]
+
+Factor the B-selecting transition at \(t=A(w)\) as
+
+\[
+3J(t)+1-2e=2^jJ(y),\qquad y=B(t),\qquad j\ge2,
+\]
+
+and put \(f=1-e\).  Section 25 transfers the DRAW to the adjacent frame
+
+\[
+Q_j^f(J(y)),\qquad Q_{j-1}^f(J(y)).
+\]
+
+The first transfer has only two source-surviving forms.  Direct reduction
+modulo \(64\) proves
+
+\[
+\boxed{
+\begin{array}{c|c|c}
+&j&y\\ \hline
+w\text{ exceptional}&2&
+Q_m^\delta(J(q))\text{ for some }m\ge1,\\
+w\text{ nonexceptional}&\ge3&
+y\in\operatorname{moves}(q).
+\end{array}}
+\]
+
+For the first row, use the four exceptional formulas of Section 5:
+\(q=B(w)=R(z)\) and \(y=B(A(w))=3z+1\) in every row.  The universal
+\(3z+1\) identity of Section 53 gives the displayed constant-tail source
+and shows that no factor of three occurs.
+
+For the second row, the ordinary side relation at \(w\) makes
+\(y=B(A(w))\) a child of \(q=B(w)\).  The residue calculation is used only
+to distinguish valuation exactly two from valuation at least three:
+the former occurs precisely when \(w\) is exceptional.
+
+The numerical bound removes every valuation above three.  In the \(r=2\)
+branch Section 55 gives \(t<81s/16\), and the contracting \(r=3\) branch
+has the stronger \(t<3s\).  Hence in either branch
+
+\[
+j\ge4
+\Longrightarrow
+y\le\frac{3t+1}{16}<s
+\]
+
+for every residual \(s\ge10\).  A DRAW frame cannot have source below
+\(s\), so a surviving nonexceptional row has exactly \(j=3\).
+Substitution in its four residue classes gives the sharper identity
+
+\[
+\boxed{y=A(q),\qquad
+b\bmod64\in\{4,25,38,59\}.}
+\]
+
+Moreover
+
+\[
+y\le\frac{3t+1}{8}<2s,
+\]
+
+and \(y\) is finite because already \(y<t<6s\) gives
+\(\rho(y)<s\).
+
+We have therefore proved the exact return graph
+
+\[
+\boxed{
+\begin{array}{c|c}
+w=A(b)\text{ exceptional}&
+O(y,f),\quad y=Q_m^\delta(J(q)),\\
+w=A(b)\text{ nonexceptional}&
+\{Q_3^f(J(A(q))),Q_2^f(J(A(q)))\}
+\text{ contains a DRAW},
+\end{array}}
+\]
+
+where in both rows \(q\) is the already retained WIN with
+\(h(q)\le h(b)-2\).  Thus valuation two cannot iterate as an unstructured
+\(A^2\) source jump: after one B-transfer it is either an explicit lift
+over the lower-height token \(q\), or a fixed exponent-three/two frame over
+its ordinary A-child.  The remaining rank step is to transport that token
+through these two displayed frame types.

@@ -223,6 +223,19 @@ three is the two-sided return B(A(b)).  For a nonexceptional factor endpoint
 b, the last source is WIN and lower than b by two proof levels.  Rank
 synthesis can now treat only valuation two as a genuinely one-sided source
 and valuation one as an explicit lower-source lift type.
+Section 55 types the valuation-two row further.  Its source A^2(b) is
+finite in the r=2 and contracting r=3 occurrences.  The returned phase is
+A only when b is exceptional; otherwise it is B and carries the strict
+lower-height WIN q=B(A(b)).  The next local target is now precise: prove
+that the first B-transfer over A^2(b) exposes a descendant of q, or isolate
+the finite exceptional residue rows where that common-child link fails.
+Section 56 completes that local target.  After the first B-transfer, the
+exceptional row is an exact lift over q, while the ordinary row is the
+single exponent-three/two frame over A(q); every larger valuation is below
+the minimum source.  Both successors retain the same strict token
+h(q)<=h(b)-2.  Rank synthesis should now use two marked frame states,
+\"lift over a lower WIN\" and \"3/2 frame over its A-child\", rather than
+another numerical source window.
 
 ## Priority 2: finite transducer plus numerical potential
 
