@@ -175,7 +175,12 @@ local targets.  Section 46 converts the E=3,12 orientation itself into an
 exponent-at-most-three lift over an explicit LOSS source below 81s/16.
 Thus valuations three/four are finite in every orientation; valuations
 one/two and the common treatment of these bounded LOSS-source lifts are the
-next local targets.
+next local targets.  Section 47 now normalizes valuations one/two as well:
+valuation two is an exact obligation below 81s/16, while valuation one is
+either an obligation below 81s/8 or a raw-side DRAW with coefficient source
+below about 2.54s.  Thus every r=2 exit is bounded; the next task is to show
+that repeated bounded returns cannot recycle without a strict height or
+source descent.
 
 ## Priority 2: finite transducer plus numerical potential
 

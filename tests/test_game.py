@@ -931,6 +931,64 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertEqual(boundary_power, 0)
                 if boundary_exponent >= 5:
                     self.assertLess(boundary_source, source)
+                if boundary_exponent == 2:
+                    expanding_boundary, contracting_boundary = (
+                        transformed_moves(boundary)
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            expanding_boundary
+                        ),
+                        (
+                            boundary_source,
+                            0,
+                            2,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            contracting_boundary
+                        ),
+                        (
+                            boundary_source,
+                            0,
+                            1,
+                            phase,
+                        ),
+                    )
+                    self.assertLess(
+                        16 * boundary_source,
+                        81 * source,
+                    )
+                if boundary_exponent == 1:
+                    canonical_lift = transformed_A(boundary)
+                    raw_side = transformed_B(boundary)
+                    self.assertEqual(
+                        constant_tail_source_coordinates(canonical_lift),
+                        (
+                            boundary_source,
+                            0,
+                            1,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        raw_side,
+                        alternating_suffix_remainder(canonical_lift),
+                    )
+                    self.assertLess(
+                        8 * boundary_source,
+                        81 * source,
+                    )
+                    if raw_side > 0:
+                        raw_source = constant_tail_source_coordinates(
+                            raw_side
+                        )[0]
+                        self.assertLess(
+                            96 * raw_source,
+                            243 * source + 4,
+                        )
                 if boundary_exponent >= 3:
                     boundary_coefficient = embedded_original_state(
                         boundary_source

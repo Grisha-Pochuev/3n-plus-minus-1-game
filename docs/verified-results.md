@@ -4108,3 +4108,99 @@ valuation is hidden in the exceptional orientation.  Thus all
 \(r=2,\ v=3,4\) branches are reduced to boundary/height alternatives or
 finite exponent-at-most-three LOSS-source lifts.  The source identity,
 window, and exponent bound are regression-tested.
+
+## 47. The \(r=2\) valuations one and two have bounded source returns
+
+Keep the notation of Sections 45--46:
+
+\[
+X=Q_1^g(3J(b))\text{ DRAW},\qquad
+9J(b)+1-2g=2^vJ(t),
+\]
+
+with \(b<9s/4\).  The two low signed valuations have exact normal forms.
+
+### Valuation two
+
+If \(v=2\), then
+
+\[
+\boxed{
+A(X)=Q_2^e(J(t)),\qquad
+B(X)=Q_1^e(J(t)).}
+\]
+
+The first equality is the signed boundary formula.  The first state ends
+in two equal \(e\)-bits, so applying the raw suffix deletion in the
+definition of \(B(X)\) removes exactly one bit and proves the second.
+Because \(X\) is DRAW, its two children are non-losing and at least one is
+DRAW.  They are therefore exactly the second alternative of the obligation
+
+\[
+\boxed{O(t,e).}
+\]
+
+The source is bounded.  Section 32 gives
+\(J(b)\le3b+2\le27s/4\), and hence
+
+\[
+J(t)\le\frac{9J(b)+1}{4}\le\frac{243s+4}{16}.
+\]
+
+Using \(J(t)\ge3t+1\) yields
+
+\[
+\boxed{t<\frac{81}{16}s.}
+\]
+
+Thus valuation two returns directly to the already studied obligation
+automaton in a fixed source window.
+
+### Valuation one
+
+If \(v=1\), put
+
+\[
+P=A(X)=Q_1^e(J(t)),\qquad K=B(X)=R(P).
+\]
+
+Again \(P,K\) are non-losing and at least one is DRAW.  If \(P\) is DRAW,
+the first alternative of \(O(t,e)\) holds.  If \(P\) is WIN, then \(K\)
+must be DRAW.  This second possibility is not silently identified with a
+source lift: \(K\) uses the raw alternating-suffix deletion, and may have
+a different canonical coefficient source.
+
+The two possible sources are nevertheless bounded.  First,
+
+\[
+J(t)\le\frac{9J(b)+1}{2}\le\frac{243s+4}{8},
+\]
+
+so
+
+\[
+\boxed{t<\frac{81}{8}s.}
+\]
+
+Second, the exponent-one word \(P=Q_1^e(J(t))\) always ends in a two-bit
+alternating suffix: the bit before its final \(e\)-bit is \(1-e\).
+Consequently
+
+\[
+K=R(P)\le\frac{P}{4}\le\frac{J(t)}2.
+\]
+
+If \(u\) is the coefficient source of a positive \(K\), then
+\(u\le(K-1)/6<K/6\).  Therefore
+
+\[
+\boxed{
+K\text{ DRAW}\quad\Longrightarrow\quad
+s\le u<\frac{243s+4}{96}.}
+\]
+
+The lower bound is global source minimality.  Hence valuation one either
+returns to \(O(t,e)\) with \(t<81s/8\), or makes a raw-side DRAW return whose
+coefficient source is below \(81s/32+1/24\).  Together with Sections 45--46,
+this gives a finite source/exponent normalization for every \(r=2\)
+continuation.  All coordinate identities and bounds are regression-tested.
