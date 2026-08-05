@@ -1012,3 +1012,83 @@ description of every expanding transition.  Long runs have the finite
 Fibonacci-like reduction above; all unbounded difficulty is transferred to
 the signed coefficient maps `oddpart(3a+1)` and `oddpart(3a-1)` at `r=1`,
 together with the common contracting child of the `r=1,2` pair.
+
+## 15. Coefficient descent at the constant-tail boundary
+
+Every positive `q` has unique canonical constant-tail coordinates
+
+\[
+q=Q_r^\epsilon(a)=a2^r-\epsilon,
+\qquad a\text{ odd},\quad r\ge1,\quad \epsilon\in\{0,1\},
+\]
+
+where `epsilon` is the last bit and `r` is the length of the maximal constant
+binary suffix.  Write `kappa(q)=a` for its odd coefficient.  The function
+`constant_tail_coordinates` computes this representation exactly.
+
+Let `p` be the common contracting child of the two boundary states:
+
+\[
+p=B(Q_1^\epsilon(a))=B(Q_2^\epsilon(a))=R(3a-\epsilon).
+\]
+
+If `p>0`, then
+
+\[
+\boxed{\kappa(p)\le\frac{3a+1}{4}.}
+\]
+
+Indeed, `R` deletes at least one binary bit, so
+
+\[
+p\le\left\lfloor\frac{3a-\epsilon}{2}\right\rfloor.
+\]
+
+For every positive integer `y`, its constant-tail coefficient is at most
+`(y+1)/2`: if `y` is even, at least one zero is removed, and if it is odd,
+at least one factor of two is removed from `y+1`.  Combining the two bounds
+gives the box.  In particular,
+
+\[
+\kappa(p)<a\qquad(a\ge3).
+\]
+
+For `a=1`, the only equality is `epsilon=0`, when `p=1`.  The corresponding
+states `Q_1^0(1)=2` and `Q_2^0(1)=4` are both `LOSS`: `1` and `3` are `WIN`,
+so `2` is `LOSS`; then `6` is `WIN` through its child `2`, and both children
+of `4` are `WIN`.  For `epsilon=1`, the `r=1` state is terminal and the
+common child is zero.
+
+There is a second descent at the expanding boundary.  Factor
+
+\[
+3a+1-2\epsilon=2^j b,
+\qquad b\text{ odd}.
+\]
+
+If `j>=2` and `a>=3`, then
+
+\[
+b\le\frac{3a+1}{4}<a.
+\]
+
+The only equality at `a=1` is again the already resolved state `2`.
+
+These inequalities have a game-theoretic consequence.  Suppose a DRAW set
+exists and choose a DRAW whose canonical coefficient `a` is minimum among
+all DRAW positions.
+
+- If its exponent is `r=1` or `r=2`, its common `B`-child has smaller
+  coefficient (or is terminal), hence is not DRAW.  A child of a DRAW cannot
+  be LOSS, so this common child is WIN.
+- At `r=1`, the expanding child must therefore be DRAW.  Its coefficient
+  cannot be smaller than `a`; the preceding bound forces
+  `v2(3a+1-2epsilon)=1`.
+- At `r=2`, the expanding child `Q_1^epsilon(3a)` must be DRAW.
+
+Thus a minimum-coefficient DRAW can cross the signed `r=1` boundary only
+through the valuation-one branch.  This is a genuine narrowing of a
+hypothetical draw kernel, but not yet a contradiction: the valuation-one
+map increases the coefficient for every nonterminal case, and a DRAW with a
+larger coefficient can later use its contracting child without violating
+global minimality.

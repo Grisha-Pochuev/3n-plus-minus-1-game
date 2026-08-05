@@ -34,7 +34,25 @@ Official page:
 
 <https://althofer.de/collatz-prizes.html>
 
-The game is called the `3n+-1 game` on that page and is stated to have been created in July 2023.
+The game is called the `3n+-1 game` on that page and is stated there to have
+been created in July 2023.  The mathematical rules, however, are not new:
+they are exactly John Conway's **Beans-Don't-Talk** game, documented by
+Richard K. Guy in 1986.  Guy's later 1996 problem survey explicitly asks
+whether this game has any `O`-positions, his term for positions of infinite
+remoteness.  Thus the prize question is a modern restatement of that older
+open problem.
+
+Historical references:
+
+- R. K. Guy, *John Isbell's Game of Beanstalk and John Conway's Game of
+  Beans-Don't-Talk*, Mathematics Magazine 59 (1986), 259--269,
+  <https://doi.org/10.1080/0025570X.1986.11977258>.
+- R. K. Guy, *Unsolved Problems in Combinatorial Games*, problem 42,
+  Games of No Chance, MSRI Publications 29 (1996),
+  <https://library.slmath.org/books/Book29/files/unsolved.pdf>.
+- OEIS records several known finite-remoteness layers under the same game
+  name; for example <https://oeis.org/A005698> gives remoteness two.  These
+  layers do not settle whether every position has finite remoteness.
 
 ## Publication
 

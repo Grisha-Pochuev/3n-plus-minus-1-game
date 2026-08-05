@@ -13,6 +13,7 @@ from optimal_3n1.game import (  # noqa: E402
     alternating_word_value,
     decreasing_move,
     constant_tail_children,
+    constant_tail_coordinates,
     constant_tail_state,
     dyadic_minus_one_children,
     dyadic_minus_one_state,
@@ -208,6 +209,41 @@ class GameArithmeticTests(unittest.TestCase):
                         coefficient, exponent, 1 - tail_bit
                     ),
                 )
+
+    def test_constant_tail_coordinates_and_boundary_core_drop(self) -> None:
+        for state in range(1, 100000):
+            coefficient, exponent, tail_bit = constant_tail_coordinates(state)
+            self.assertEqual(
+                constant_tail_state(coefficient, exponent, tail_bit),
+                state,
+            )
+            self.assertGreaterEqual(exponent, 1)
+
+        for odd_coefficient in range(1, 1000, 2):
+            for tail_bit in (0, 1):
+                first = constant_tail_state(odd_coefficient, 1, tail_bit)
+                common_child = transformed_B(first)
+                if common_child > 0:
+                    child_coefficient, _, _ = constant_tail_coordinates(
+                        common_child
+                    )
+                    if odd_coefficient == 1 and tail_bit == 0:
+                        self.assertEqual(child_coefficient, odd_coefficient)
+                    else:
+                        self.assertLess(child_coefficient, odd_coefficient)
+
+                signed_value = 3 * odd_coefficient + 1 - 2 * tail_bit
+                exponent = v2(signed_value)
+                expanding_coefficient = signed_value >> exponent
+                if exponent >= 2:
+                    if odd_coefficient == 1 and tail_bit == 0:
+                        self.assertEqual(
+                            expanding_coefficient, odd_coefficient
+                        )
+                    else:
+                        self.assertLess(
+                            expanding_coefficient, odd_coefficient
+                        )
 
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):

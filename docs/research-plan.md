@@ -41,6 +41,12 @@ where the coefficient map contains the `5 <-> 7` arithmetic cycle.
 The symmetric constant-tail form shows that the same reduction covers long
 zero tails and closes every expanding transition by alternating the signed
 coefficient maps `3a+1` and `3a-1`.
+Section 15 gives a strict coefficient drop at the common `r=1,2` contracting
+child.  In particular a DRAW with globally minimum constant-tail coefficient
+can leave `r=1` only through a valuation-one signed transition.  The next
+target is to show that repeated valuation-one growth and long-tail reduction
+must either create a smaller-coefficient DRAW or create a lower-height
+DRAW/WIN boundary.
 
 ## Priority 2: finite transducer plus numerical potential
 

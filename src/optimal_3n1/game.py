@@ -284,6 +284,24 @@ def constant_tail_state(
     return (odd_coefficient << exponent) - tail_bit
 
 
+def constant_tail_coordinates(q: int) -> tuple[int, int, int]:
+    """Return the canonical ``(a, r, e)`` with ``q=Q_r^e(a)``.
+
+    For every positive ``q``, ``a`` is positive and odd, ``r>=1``, and
+    ``e`` is the final binary bit of ``q``.  Thus ``r`` is the length of the
+    maximal constant binary suffix and ``a`` is the prefix coefficient.
+    """
+    if q <= 0:
+        raise ValueError("constant-tail coordinates require q > 0")
+    tail_bit = q & 1
+    shifted_value = q + tail_bit
+    exponent = v2(shifted_value)
+    odd_coefficient = shifted_value >> exponent
+    if constant_tail_state(odd_coefficient, exponent, tail_bit) != q:
+        raise AssertionError(q)
+    return odd_coefficient, exponent, tail_bit
+
+
 def constant_tail_children(
     odd_coefficient: int, exponent: int, tail_bit: int
 ) -> tuple[int, int]:

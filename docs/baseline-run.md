@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 28 tests
+Ran 29 tests
 OK
 ```
 
@@ -30,6 +30,7 @@ The tests cover:
 - explicit formulas for all four exceptional side-branch classes;
 - the uniform full-length formula for every long exceptional suffix;
 - the closed recurrence and boundary identities for both constant-tail families;
+- canonical constant-tail coordinates and coefficient descent at their shared boundary;
 - the arithmetic characterization and closure of height-one WIN positions;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;

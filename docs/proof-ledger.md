@@ -35,6 +35,8 @@ Update this table whenever the status of a substantial claim changes.
 | The boundary states `X_1(a)` and `X_2(a)` have the same `B`-child | **PROVED** | `docs/verified-results.md`, Section 14; regression in `tests/test_game.py` |
 | Both constant-tail families `Q_r^epsilon(a)=a*2^r-epsilon` obey the same closed recurrence for `r>=3` | **PROVED** | `docs/verified-results.md`, Section 14; `constant_tail_children` |
 | At `r=1`, the expanding move flips the tail bit and uses the exact signed coefficient map `oddpart(3a+1-2epsilon)` | **PROVED** | `docs/verified-results.md`, Section 14; regression in `tests/test_game.py` |
+| The common `B`-child of `Q_1^epsilon(a),Q_2^epsilon(a)` has canonical coefficient at most `(3a+1)/4`, with one resolved equality case | **PROVED** | `docs/verified-results.md`, Section 15; `constant_tail_coordinates`; regression in `tests/test_game.py` |
+| A minimum-coefficient DRAW at constant-tail exponent one must take the valuation-one signed transition | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 15 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |
