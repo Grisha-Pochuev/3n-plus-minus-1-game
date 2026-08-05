@@ -4643,3 +4643,249 @@ source \(x\) is WIN already pays a strict proof-height descent from \(x\).
 The unresolved orientation is correspondingly sharper: it is enough to
 transport provenance through the case where \(x\) is LOSS, together with
 the one-sided \(r=1\) return \(b=A^2(x)\).
+
+## 53. The exponent-one factor return selects a LOSS source
+
+The exponent-one switch retains more outcome information than the source
+bounds of Sections 31 and 48 record.  Keep the factor alternative of
+Sections 28--30, let
+
+\[
+u=A(x),\qquad b=A(u)=A^2(x),\qquad c=B(u),
+\]
+
+and retain \(g=1-\alpha(x)=\alpha(u)\).  Thus
+
+\[
+V=L_g(u)\text{ is LOSS},\qquad b\text{ is WIN}.
+\]
+
+Put
+
+\[
+D=B(V),\qquad G=L_g(b),\qquad X=B(G)=B(Q_2^g(J(b))).
+\]
+
+There is an exact nested-source identity:
+
+\[
+\boxed{
+D=
+\begin{cases}
+B(b),&g=\alpha(b),\\
+A(b),&g=1-\alpha(b).
+\end{cases}}
+\]
+
+In words, \(D\) is the ordinary child of \(b\) not selected by phase
+\(g\).  To prove this, apply the refined formula of Section 24 to
+\(V=L_g(u)\).  The condition \(g=\alpha(u)\), together with the
+exponent-one condition \(g=1-\alpha(x)\), leaves
+
+\[
+x\equiv1,3,4,6,9,11,12,14\pmod {16}.
+\]
+
+Substitution in these eight rows shows that \(A(b)\bmod2=1-g\) in the
+four rows where \(g=\alpha(b)\), and \(A(b)\bmod2=g\) in the other four.
+Section 24 then gives exactly the boxed identity.  No unbounded suffix is
+being decided by this residue calculation.
+
+Because \(V\) is LOSS, \(D\) is WIN.  The state \(b\) is also WIN, so its
+other, phase-selected child must be LOSS.  This immediately resolves the
+A-selecting continuation.  If \(g=\alpha(b)\), then \(A(b)\) is LOSS and
+Section 24 makes \(X=B(L_g(b))\) one of its children.  Hence
+
+\[
+\boxed{X\text{ is WIN},\qquad h(X)\le h(b)-2.}
+\]
+
+At least one of the two factor-frame parents of \(X\) is DRAW, so \(X\)
+is a new boundary endpoint.  In particular the A-selecting, \(X\)-DRAW
+row of Section 48 is arithmetically possible in isolation but impossible
+with the retained factor outcomes.
+
+It remains to consider \(g=1-\alpha(b)\).  Now the selected ordinary
+source
+
+\[
+\boxed{y=B(b)}
+\]
+
+is LOSS.  The four possible residue classes are
+
+\[
+x\equiv4,6,9,11\pmod {16},
+\]
+
+so \(x\) is nonexceptional.  Consequently \(c=B(A(x))\) is a child of
+both \(u=A(x)\) and \(B(x)\).  The factor outcome \(b=A(u)\) WIN now gives
+the following exact outcome and height return:
+
+\[
+\boxed{
+\operatorname{outcome}(c)=\operatorname{outcome}(x),\qquad
+h(c)\le h(x)-2.}
+\]
+
+Indeed, if \(x\) is LOSS, then \(u\) and \(B(x)\) are WIN.  Since \(u\)
+has the WIN child \(b\), its other child \(c\) is LOSS, and
+\(h(c)=h(u)-1\le h(x)-2\).  If \(x\) is WIN and \(u\) were WIN, then
+\(c\) would be LOSS while \(B(x)\) would also be LOSS.  This contradicts
+the fact that \(c\) is a child of the LOSS state \(B(x)\).  Thus \(u\) is
+LOSS and \(c\) is WIN.  If \(B(x)\) is WIN, \(u\) is the only LOSS child
+of \(x\); if \(B(x)\) is also LOSS, \(c\) is a child of both LOSS children.
+The canonical height recursion gives the displayed bound in either case.
+
+The next split is finite.  The B-selecting condition at \(b=A(u)\) forces
+
+\[
+u\equiv1,6,9,14\pmod {16}.
+\]
+
+For \(u\equiv6,9\pmod {16}\), the state \(u\) is nonexceptional and the
+side relation makes the LOSS state \(y=B(A(u))\) a child of \(c=B(u)\).
+Therefore \(c\) cannot be LOSS, and the preceding box forces \(x\) to be
+WIN.  Direct evaluation of the signed valuation gives \(j\ge3\); the
+source-survival bound of Section 31 then leaves exactly \(j=3\).
+
+For \(u\equiv1,14\pmod {16}\), the state \(u\) is exceptional and the
+signed valuation is exactly \(j=2\).  The returned LOSS source is a
+constant-tail lift over the lower-height state \(c\):
+
+\[
+\boxed{y=Q_m^\delta(J(c))\quad\text{for some }m\ge1,}
+\]
+
+with no factor of three in its coefficient.  Here is a general identity
+that proves the claim.  For every \(z\ge0\), if \(R(z)\) is its alternating
+suffix remainder, then
+
+\[
+\boxed{
+3z+1=Q_m^{\,1-(z\bmod2)}(J(R(z)))
+\quad\text{for some }m\ge1.}
+\]
+
+Write \(z\) as its prefix \(R(z)\) followed by its maximal alternating
+suffix.  Multiplication of that suffix by three and addition of one turns
+it into a constant terminal block; the remaining odd coefficient is
+(3R(z)+1+(R(z)\bmod2)=J(R(z))\).  If the whole word is alternating, the
+constant block is one bit longer and the same formula holds with
+\(R(z)=0\).  This proves the identity.  In the two exceptional rows,
+
+\[
+\begin{array}{c|c|c}
+u&c=B(u)&y=B(A(u))\\ \hline
+16t+1&R(6t)&18t+1=3(6t)+1,\\
+16t+14&R(6t+5)&18t+16=3(6t+5)+1,
+\end{array}
+\]
+
+so the boxed lift follows.
+
+Combining these facts sharpens Section 48 to the type-sensitive dichotomy
+
+\[
+\boxed{
+r=1,\ X\text{ DRAW}\Longrightarrow
+\begin{cases}
+j=3,\ x\text{ WIN},\ y\text{ LOSS},\ y\in\operatorname{moves}(c),
+&u\text{ nonexceptional},\\
+j=2,\ y\text{ LOSS},\ y=Q_m^\delta(J(c)),
+&u\text{ exceptional},
+\end{cases}}
+\]
+
+where in both rows \(c\) has the same finite outcome as \(x\) and
+\(h(c)\le h(x)-2\).  Thus the only exponent-one continuation not already
+paying a boundary-height descent is an exact LOSS-source return carrying a
+strictly lower finite witness; its sole failure of the ordinary side
+diamond is the displayed exceptional constant-tail lift.
+
+## 54. The second factor coefficient has three exact ordinary sources
+
+The signed transitions following the \(r=2,3\) factor switch have a
+universal source trichotomy that is hidden by the numerical bounds in
+Sections 32 and 45--50.  Let \(b>0\), \(g\in\{0,1\}\), and factor
+
+\[
+9J(b)+1-2g=2^vJ(t).
+\]
+
+Then
+
+\[
+\boxed{
+\begin{array}{c|c}
+v&t\\ \hline
+1&3A(b)+1,\\
+2&A^2(b),\\
+v\ge3&B(A(b)).
+\end{array}}
+\]
+
+In the first row the returned ordinary state is itself an exact
+constant-tail lift over \(B(b)\):
+
+\[
+\boxed{
+t=3A(b)+1=Q_m^\delta(J(B(b)))
+\quad\text{for some }m\ge1.}
+\]
+
+To prove the trichotomy, put \(w=A(b)\), so \(J(b)=2w+1\).  The signed
+numerator is
+
+\[
+9J(b)+1-2g=2(9w+5-g).
+\]
+
+If its valuation is one, parity forces \(g=w\bmod2\), and direct
+substitution gives
+
+\[
+J(t)=9w+5-g=J(3w+1).
+\]
+
+Thus \(t=3w+1\).  Section 53's identity for \(3z+1\), applied to
+\(z=w=A(b)\), gives the displayed lift over
+\(R(A(b))=B(b)\).
+
+If \(v\ge2\), parity instead gives \(g=1-(w\bmod2)\).  After removing the
+first factor two, one has
+
+\[
+9w+5-g
+=3J(w)+1-2(w\bmod2).
+\]
+
+This is exactly a signed source transition at \(w=A(b)\), with valuation
+\(v-1\).  Valuation one selects \(A(w)=A^2(b)\), while valuation at least
+two selects \(B(w)=B(A(b))\), proving the remaining rows.
+
+There is an immediate proof-height consequence in the last row.  Suppose
+\(b\) is WIN and nonexceptional.  The value
+
+\[
+t=B(A(b))
+\]
+
+is a child of both ordinary children \(A(b)\) and \(B(b)\).  At least one
+of those children is LOSS, and whichever LOSS child realizes the canonical
+height of \(b\) has \(t\) as a WIN child.  Hence
+
+\[
+\boxed{
+v\ge3,\quad b\text{ WIN and nonexceptional}
+\Longrightarrow
+t\text{ WIN},\qquad h(t)\le h(b)-2.}
+\]
+
+This applies directly to the \(v=3,4\) ladders following \(r=2\), and to
+the corresponding low and high signed transitions following \(r=3\).
+Valuation one is no longer an untyped raw source jump: it is an explicit
+lift over the ordinary child \(B(b)\).  Valuation two remains the sole
+one-sided row \(A^2(b)\).  These statements do not by themselves make
+\(t\) a boundary endpoint; the adjacent DRAW frame over \(t\) must still
+be coupled to the retained lower-height witness.

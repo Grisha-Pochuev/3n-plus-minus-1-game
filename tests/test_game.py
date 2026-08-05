@@ -375,6 +375,43 @@ class GameArithmeticTests(unittest.TestCase):
                 (3**exponent_of_three) * embedded_original_state(source),
             )
 
+    def test_three_z_plus_one_has_alternating_remainder_source(self) -> None:
+        for z in range(100000):
+            source, power, _, tail = constant_tail_source_coordinates(
+                3 * z + 1
+            )
+            self.assertEqual(source, alternating_suffix_remainder(z))
+            self.assertEqual(power, 0)
+            self.assertEqual(tail, 1 - (z & 1))
+
+    def test_factor_coefficient_second_source_trichotomy(self) -> None:
+        for source in range(1, 100000):
+            coefficient = 3 * embedded_original_state(source)
+            for phase in (0, 1):
+                lifted = constant_tail_state(coefficient, 1, phase)
+                returned_source, power, valuation, _ = (
+                    constant_tail_source_coordinates(transformed_A(lifted))
+                )
+                self.assertEqual(power, 0)
+
+                if valuation == 1:
+                    returned_state = 3 * transformed_A(source) + 1
+                    self.assertEqual(returned_source, returned_state)
+                    self.assertEqual(
+                        constant_tail_source_coordinates(returned_state)[:2],
+                        (transformed_B(source), 0),
+                    )
+                elif valuation == 2:
+                    self.assertEqual(
+                        returned_source,
+                        transformed_A(transformed_A(source)),
+                    )
+                else:
+                    self.assertEqual(
+                        returned_source,
+                        transformed_B(transformed_A(source)),
+                    )
+
     def test_lifted_source_side_diamond(self) -> None:
         for odd_value in range(1, 10000, 2):
             coefficient = constant_tail_coordinates(3 * odd_value)[0]
@@ -885,10 +922,56 @@ class GameArithmeticTests(unittest.TestCase):
                     factor_source,
                     transformed_A(transformed_A(current)),
                 )
+                factor_phase = 1 - phase
+                letter, valuation, selected_at_factor_source = (
+                    source_boundary_transition(
+                        factor_source,
+                        factor_phase,
+                    )
+                )
+                unselected_at_factor_source = next(
+                    child
+                    for child in transformed_moves(factor_source)
+                    if child != selected_at_factor_source
+                )
+                self.assertEqual(
+                    transformed_B(selected_lift),
+                    unselected_at_factor_source,
+                )
+
+                if letter == "A":
+                    self.assertIn(
+                        common_frame_child,
+                        transformed_moves(selected_at_factor_source),
+                    )
+                else:
+                    selected_source = transformed_A(current)
+                    hidden_return = transformed_B(selected_source)
+                    self.assertNotIn(
+                        current % 16,
+                        SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                    )
+                    if (
+                        selected_source % 16
+                        in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                    ):
+                        self.assertEqual(valuation, 2)
+                        self.assertEqual(
+                            constant_tail_source_coordinates(
+                                selected_at_factor_source
+                            )[:2],
+                            (hidden_return, 0),
+                        )
+                    else:
+                        self.assertGreaterEqual(valuation, 3)
+                        self.assertIn(
+                            selected_at_factor_source,
+                            transformed_moves(hidden_return),
+                        )
+
                 transferred_source = constant_tail_source_coordinates(
                     common_frame_child
                 )[0]
-                factor_phase = 1 - phase
                 if factor_phase == source_A_selecting_tail_bit(factor_source):
                     self.assertLess(transferred_source, current)
                 else:

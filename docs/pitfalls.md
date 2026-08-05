@@ -130,3 +130,24 @@ Section 51's two-WIN barrier applies only after proving that this particular
 distinguished witness to it.  A correct rank proof must record that
 provenance rather than silently restarting minimum-height reasoning at each
 factor fork.
+
+## 12. A lower-height ordinary predecessor is not yet a lower boundary
+
+Section 53 retains a finite state \(c=B(A(x))\) with
+
+\[
+h(c)\le h(x)-2
+\]
+
+through every exponent-one B-selecting factor return.  The returned
+ordinary source \(y=B(A^2(x))\) is LOSS, but \(c\) is generally only its
+ordinary parent (or, in the exceptional row, its constant-tail coefficient
+source).  The state \(c\) need not itself be the child of a DRAW position.
+Moreover, when \(c\) is WIN, \(y\) need not be the minimum-height LOSS
+child used by the canonical proof of \(c\); its height can therefore be
+larger than \(h(c)\).
+
+It is invalid to conclude that the returned obligation has already lowered
+the boundary height.  A completion must carry the distinguished
+lower-height predecessor through the next obligation and expose one of its
+certified descendants as an actual DRAW-to-WIN endpoint.

@@ -207,6 +207,22 @@ B(A(x)) a child of either possible LOSS witness of x and hence lowers
 height by two.  Rank synthesis can therefore restrict the r=2,3 recycling
 problem to obligations whose ordinary source is LOSS; exponent one remains
 the separate one-sided return A^2(x).
+Section 53 removes most of that one-sided ambiguity.  Its A-selecting
+continuation cannot carry a DRAW and instead lowers the boundary height.
+Every B-selecting continuation selects an ordinary LOSS source and carries
+a hidden state c=B(A(x)) with the same outcome as x and height lower by two.
+The nonexceptional row has valuation three and an ordinary parent-child
+link between c and the returned LOSS source; the exceptional row has
+valuation two and is an exact constant-tail lift over c.  The next rank
+state should therefore remember a lower-height finite predecessor, not
+only the outcome and height of the returned obligation source itself.
+Section 54 supplies the analogous type edge after the exponent-two and
+three switches.  Their next signed source is not arbitrary: valuation one
+is a lift over B(b), valuation two is A^2(b), and every valuation at least
+three is the two-sided return B(A(b)).  For a nonexceptional factor endpoint
+b, the last source is WIN and lower than b by two proof levels.  Rank
+synthesis can now treat only valuation two as a genuinely one-sided source
+and valuation one as an explicit lower-source lift type.
 
 ## Priority 2: finite transducer plus numerical potential
 
