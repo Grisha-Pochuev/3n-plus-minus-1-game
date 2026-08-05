@@ -16,6 +16,7 @@ from optimal_3n1.game import (  # noqa: E402
     gray_code,
     inverse_F,
     inverse_gray_code,
+    long_side_branch_value,
     m_coordinates_children,
     normal_form_children,
     odd_part,
@@ -141,6 +142,16 @@ class GameArithmeticTests(unittest.TestCase):
                 values,
                 (transformed_B(q), transformed_B(transformed_A(q))),
             )
+
+    def test_long_side_branch_formula(self) -> None:
+        for q in range(1, 100000):
+            value = long_side_branch_value(q)
+            self.assertEqual(
+                value is not None,
+                alternating_suffix_length(transformed_A(q)) >= 3,
+            )
+            if value is not None:
+                self.assertEqual(value, transformed_B(transformed_A(q)))
 
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):

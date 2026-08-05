@@ -15,7 +15,7 @@ python -m unittest discover -s tests -v
 Result:
 
 ```text
-Ran 24 tests
+Ran 25 tests
 OK
 ```
 
@@ -28,6 +28,7 @@ The tests cover:
 - inversion of `F`;
 - exact side-branch identities, their suffix-state refinement, and the forbidden four-WIN block;
 - explicit formulas for all four exceptional side-branch classes;
+- the uniform full-length formula for every long exceptional suffix;
 - the arithmetic characterization and closure of height-one WIN positions;
 - exact bounded enumeration of all `B`-predecessors;
 - the Gray-code normal form for alternating-suffix deletion;

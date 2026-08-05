@@ -257,6 +257,82 @@ the odd entries they are `11`, so in every case the final suffix deletion
 has length one.  The formulas are implemented by
 `exceptional_side_branch_values` and regression-tested directly.
 
+There is a uniform version that retains the whole suffix length.  Put
+
+\[
+x=A(q)=2^k r+a,
+\qquad r=B(q),
+\]
+
+where `k>=3` is the alternating-suffix length and `a` is that suffix.  First
+suppose `r>0`, and let `e=r mod 2`, the leading bit of `a`.  Then
+
+\[
+A(x)=2^k A(r)+c_{k,e},
+\]
+
+where
+
+\[
+c_{k,e}=
+\begin{cases}
+2^{k-1},&e\equiv k\pmod2,\\
+2^{k-1}-1,&e\not\equiv k\pmod2.
+\end{cases}
+\]
+
+Indeed, for a leading-zero alternating word
+`a=floor(2^k/3)`, while for a leading-one word
+`a=floor(2^(k+1)/3)`.  Substitution in
+`A(x)=ceil(3x/2)` gives exactly the two displayed values of `c`.
+In `k` binary positions these are respectively
+
+```text
+100...0    and    011...1.
+```
+
+For `k>=3` the last two bits repeat, so the maximal alternating suffix of
+`A(x)` has length exactly one.  Consequently
+
+\[
+\boxed{
+B(A(q))=
+2^{k-1}A(r)+
+\begin{cases}
+2^{k-2},&e\equiv k\pmod2,\\
+2^{k-2}-1,&e\not\equiv k\pmod2.
+\end{cases}
+}
+\]
+
+This is implemented by `long_side_branch_value`.  It replaces the four
+exceptional residue classes by a finite phase plus the unbounded counter
+`k`; controlling that counter together with proof height is the remaining
+rank problem.
+
+If `r=0`, the whole word `x` is alternating and has leading bit one.  Directly
+
+\[
+A(x)=
+\begin{cases}
+2^k,&k\text{ odd},\\
+2^k-1,&k\text{ even}.
+\end{cases}
+\]
+
+Its maximal alternating suffix still has length one for `k>=3`, so the
+corresponding complete-word case is
+
+\[
+\boxed{
+B(A(q))=
+\begin{cases}
+2^{k-1},&k\text{ odd},\\
+2^{k-1}-1,&k\text{ even}.
+\end{cases}
+}
+\]
+
 ## 6. Exact parameterization of all B-predecessors
 
 Fix `r>=0`.  The complete set of positions `q` satisfying `B(q)=r` can be

@@ -233,6 +233,31 @@ def exceptional_side_branch_values(q: int) -> tuple[int, int] | None:
     )
 
 
+def long_side_branch_value(q: int) -> int | None:
+    """Return ``B(A(q))`` from the full long-suffix formula.
+
+    The formula applies exactly when the alternating suffix of ``A(q)`` has
+    length at least three; otherwise ``None`` is returned.  A zero remainder
+    means that the entire word is alternating, whose conceptual leading bit
+    is one.
+    """
+    if q < 0:
+        raise ValueError("q must be nonnegative")
+    x = transformed_A(q)
+    length = alternating_suffix_length(x)
+    if length < 3:
+        return None
+    remainder = x >> length
+    if remainder == 0:
+        tail = 1 << (length - 1)
+        return tail if length % 2 else tail - 1
+    leading_bit = remainder & 1
+    tail = 1 << (length - 2)
+    if leading_bit != length % 2:
+        tail -= 1
+    return (1 << (length - 1)) * transformed_A(remainder) + tail
+
+
 def transformed_B_predecessors(r: int, limit: int) -> tuple[int, ...]:
     """Return all ``q <= limit`` satisfying ``B(q) == r``.
 
