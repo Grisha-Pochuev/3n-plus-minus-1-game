@@ -236,6 +236,11 @@ the minimum source.  Both successors retain the same strict token
 h(q)<=h(b)-2.  Rank synthesis should now use two marked frame states,
 \"lift over a lower WIN\" and \"3/2 frame over its A-child\", rather than
 another numerical source window.
+Section 57 shows that the next ordinary side return always spends this
+proof-tree token: it produces either a WIN of height lower by two, or the
+single exceptional lift type over a canonical LOSS of height lower by one.
+The remaining local target is to expose the carried WIN/LOSS token at an
+actual DRAW boundary before any unmarked factor restart.
 
 ## Priority 2: finite transducer plus numerical potential
 

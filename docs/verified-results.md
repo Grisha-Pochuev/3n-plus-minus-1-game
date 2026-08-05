@@ -5070,3 +5070,66 @@ where in both rows \(q\) is the already retained WIN with
 over the lower-height token \(q\), or a fixed exponent-three/two frame over
 its ordinary A-child.  The remaining rank step is to transport that token
 through these two displayed frame types.
+
+## 57. Every canonical side return lowers its proof-tree token
+
+The lower-height WIN retained in Sections 53 and 56 has a uniform next
+return even when the ordinary side diamond is exceptional.  Let \(q\) be
+WIN, choose a LOSS child \(\ell\) that realizes its canonical height, and
+put
+
+\[
+y=A(q),\qquad r=B(q),\qquad p=B(A(q))=B(y).
+\]
+
+Thus
+
+\[
+h(q)=1+h(\ell),\qquad \ell\in\{y,r\}.
+\]
+
+If \(q\) is nonexceptional, the ordinary side relation makes \(p\) a
+child of both \(y\) and \(r\), hence in particular a child of \(\ell\).
+If \(q\) is exceptional but \(\ell=y\), the same conclusion follows
+directly from \(p=B(y)\).  In both cases
+
+\[
+\boxed{p\text{ is WIN and }h(p)\le h(q)-2.}
+\]
+
+It remains only to treat an exceptional \(q\) whose height-realizing LOSS
+child is \(\ell=r\).  The four formulas of Section 5 give
+
+\[
+\begin{array}{c|c|c}
+q&r=\ell&p\\ \hline
+16t+1&R(6t)&3(6t)+1\\
+16t+3&R(6t+1)&3(6t+1)+1\\
+16t+12&R(6t+4)&3(6t+4)+1\\
+16t+14&R(6t+5)&3(6t+5)+1.
+\end{array}
+\]
+
+Apply the universal identity from Section 53,
+
+\[
+3z+1=Q_m^{\,1-(z\bmod2)}(J(R(z)))\qquad(m\ge1).
+\]
+
+It shows in every exceptional row that \(p\) is an exact factor-free
+constant-tail lift over \(\ell\), while
+
+\[
+\boxed{\ell\text{ is LOSS and }h(\ell)=h(q)-1.}
+\]
+
+Consequently a canonical side return always transports its finite
+proof-tree token into one of exactly two typed forms:
+
+1. an ordinary WIN token whose height has fallen by at least two; or
+2. an exceptional exact lift over a LOSS token whose height has fallen by
+   one.
+
+This is a rank-transport lemma, not yet a boundary-descent theorem: the
+returned state has not been proved to be a DRAW boundary endpoint.  The
+arithmetic identities above are regression-tested for \(q<100000\).

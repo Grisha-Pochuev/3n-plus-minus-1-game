@@ -156,6 +156,21 @@ class GameArithmeticTests(unittest.TestCase):
                 (transformed_B(q), transformed_B(transformed_A(q))),
             )
 
+    def test_canonical_side_return_token(self) -> None:
+        for q in range(1, 100000):
+            expanding = transformed_A(q)
+            contracting = transformed_B(q)
+            returned = transformed_B(expanding)
+
+            if q % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                self.assertEqual(
+                    constant_tail_source_coordinates(returned)[:2],
+                    (contracting, 0),
+                )
+            else:
+                self.assertIn(returned, transformed_moves(expanding))
+                self.assertIn(returned, transformed_moves(contracting))
+
     def test_long_side_branch_formula(self) -> None:
         for q in range(1, 100000):
             value = long_side_branch_value(q)
