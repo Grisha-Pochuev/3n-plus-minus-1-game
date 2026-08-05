@@ -1610,6 +1610,51 @@ class GameArithmeticTests(unittest.TestCase):
 
         self.assertEqual(observed_letters, {"A", "B"})
 
+    def test_higher_factor_fork_source_diamond(self) -> None:
+        observed_exponents = set()
+        for source in range(1, 100000):
+            phase = source_A_selecting_tail_bit(source)
+            coefficient = embedded_original_state(source)
+            lower = constant_tail_state(coefficient, 1, phase)
+            upper = constant_tail_state(coefficient, 2, phase)
+            selected_source = transformed_A(source)
+            factor_source = transformed_B(lower)
+            factor_parent = transformed_A(upper)
+            factor_coordinates = [
+                constant_tail_source_coordinates(child)
+                for child in transformed_moves(factor_parent)
+            ]
+            lower_exponent = min(
+                coordinates[2] for coordinates in factor_coordinates
+            )
+            if lower_exponent < 2:
+                continue
+
+            observed_exponents.add(lower_exponent)
+            self.assertEqual(
+                factor_source,
+                transformed_B(selected_source),
+            )
+            self.assertNotIn(
+                source % 16,
+                SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+            )
+            self.assertIn(
+                factor_source,
+                transformed_moves(transformed_B(source)),
+            )
+            self.assertEqual(
+                set(transformed_moves(selected_source)),
+                {
+                    factor_source,
+                    transformed_A(selected_source),
+                },
+            )
+
+        self.assertIn(2, observed_exponents)
+        self.assertIn(3, observed_exponents)
+        self.assertTrue(any(exponent >= 4 for exponent in observed_exponents))
+
     def test_B_selecting_source_frame_diamond(self) -> None:
         for source in range(1, 100000):
             phase = 1 - source_A_selecting_tail_bit(source)

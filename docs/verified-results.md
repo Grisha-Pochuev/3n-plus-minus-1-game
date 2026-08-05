@@ -7807,8 +7807,8 @@ every \(1\le x<100000\).
 ## 93. The exponent-one factor fork spends its retained LOSS token
 
 The lowest factor row of Section 91 has a complete marked exit.  Retain
-its third alternative, put (g=1-e), and suppose the adjacent frame over
-the WIN source (b) has lower exponent (r=1).  Thus the DRAW state (F)
+its third alternative, put \(g=1-e\), and suppose the adjacent frame over
+the WIN source \(b\) has lower exponent \(r=1\).  Thus the DRAW state \(F\)
 has children
 
 \[
@@ -7821,7 +7821,7 @@ Let
 D=B(V),\qquad X=B(H)=B(G),
 \]
 
-and let (y) be the ordinary source selected by phase (g) at (b).
+and let \(y\) be the ordinary source selected by phase \(g\) at \(b\).
 The arithmetic identities of Sections 31 and 53 did not use the old
 source window.  They give
 
@@ -7830,25 +7830,25 @@ source window.  They give
 \{D,y\}=\{A(b),B(b)\},\qquad D\ne y.}
 \]
 
-The retained state (V) is LOSS, so (D) is WIN.  The state (b) is
-also WIN; since its other ordinary child is (y), outcome recursion now
+The retained state \(V\) is LOSS, so \(D\) is WIN.  The state \(b\) is
+also WIN; since its other ordinary child is \(y\), outcome recursion now
 forces
 
 \[
 \boxed{y\text{ is LOSS},\qquad h(b)=h(y)+1.}
 \]
 
-There are two phase alternatives.  If (g=\alpha(b)), then (y=A(b)).
-The A-selecting side diamond of Section 24 makes (X) a child of (y).
-At least one of (H,G) is DRAW and both have (X) as a child, so (X)
-is non-losing.  Since (y) is LOSS, (X) must actually be WIN, and
+There are two phase alternatives.  If \(g=\alpha(b)\), then \(y=A(b)\).
+The A-selecting side diamond of Section 24 makes \(X\) a child of \(y\).
+At least one of \(H,G\) is DRAW and both have \(X\) as a child, so \(X\)
+is non-losing.  Since \(y\) is LOSS, \(X\) must actually be WIN, and
 
 \[
 h(X)\le h(y)-1=h(b)-2.
 \]
 
-Thus a DRAW member of the frame points to (X), while the earlier DRAW
-state (U) points to (b).  These are two boundary edges and the second
+Thus a DRAW member of the frame points to \(X\), while the earlier DRAW
+state \(U\) points to \(b\).  These are two boundary edges and the second
 WIN endpoint is at least two proof levels lower:
 
 \[
@@ -7857,9 +7857,9 @@ WIN endpoint is at least two proof levels lower:
 \quad h(X)\le h(b)-2.}
 \]
 
-If (g=1-\alpha(b)), then (y=B(b)) and its signed valuation (j) is at
-least two.  The DRAW state (F) is exactly the second alternative in the
-obligation (O(b,g)).  Section 25 therefore transfers its DRAW to the
+If \(g=1-\alpha(b)\), then \(y=B(b)\) and its signed valuation \(j\) is at
+least two.  The DRAW state \(F\) is exactly the second alternative in the
+obligation \(O(b,g)\).  Section 25 therefore transfers its DRAW to the
 adjacent factor-free frame
 
 \[
@@ -7868,8 +7868,8 @@ Q_j^{\,1-g}(J(y)),\qquad Q_{j-1}^{\,1-g}(J(y)),
 }
 \]
 
-whose source (y) is the actual LOSS state just forced above.  If (y=0)
-this is a terminal-source token.  If (y>0), Section 92 gives
+whose source \(y\) is the actual LOSS state just forced above.  If \(y=0\)
+this is a terminal-source token.  If \(y>0\), Section 92 gives
 
 \[
 \boxed{\rho(y)<x.}
@@ -7878,7 +7878,93 @@ this is a terminal-source token.  If (y>0), Section 92 gives
 Consequently the exponent-one factor fork cannot discard its provenance:
 it either pays a two-level boundary-height descent or returns an adjacent
 DRAW frame over an actual LOSS token whose coefficient source is strictly
-below the generating source (x) (with source zero as the terminal case).
-Only the (r\ge2) opposite-twin rows remain in the factor-fork audit.  All
+below the generating source \(x\) (with source zero as the terminal case).
+Only the \(r\ge2\) opposite-twin rows remain in the factor-fork audit.  All
 displayed arithmetic identities and both phase alternatives are
-regression-tested for every (1\le x<100000).
+regression-tested for every \(1\le x<100000\).
+
+## 94. Every higher factor fork pays source or finite proof height
+
+The opposite-tail rows left by Section 93 do not require following the
+two tails indefinitely.  Their generating source itself supplies a
+well-founded split.  Retain the third alternative of Section 91 and
+suppose its lower frame exponent satisfies \(r\ge2\).  Put
+
+\[
+u=A(x),\qquad c=B(x),\qquad z=A(u)=A^2(x).
+\]
+
+The arithmetic part of Section 52 did not use its old minimum-source
+hypothesis.  Since the signed transition at \(u\) has valuation \(r\ge2\),
+it is B-selecting, and hence
+
+\[
+\boxed{b=B(u)=B(A(x)).}
+\]
+
+Moreover \(x\) is nonexceptional: in each of the four exceptional residue
+classes the phase \(g=1-\alpha(x)\) is A-selecting at \(A(x)\), and its
+valuation would be one.  The ordinary side relation at \(x\) therefore
+makes the same state \(b\) a child of both \(u=A(x)\) and \(c=B(x)\):
+
+\[
+\boxed{b\in\operatorname{moves}(u)\cap
+\operatorname{moves}(c).}
+\]
+
+Every positive state has coefficient source
+
+\[
+\rho(x)\le\frac{x-1}{6}<x.
+\]
+
+Now split on the actual outcome of \(x\).
+
+If \(x\) is DRAW, this is already a strict DRAW coefficient-source exit:
+
+\[
+\boxed{x\text{ DRAW}\Longrightarrow \rho(x)<x.}
+\]
+
+If \(x\) is WIN, choose a LOSS child \(\ell\in\{u,c\}\) that realizes
+its canonical height.  The common-child identity makes \(b\) a child of
+\(\ell\).  A child of a LOSS state is WIN, and
+
+\[
+h(b)\le h(\ell)-1=h(x)-2.
+\]
+
+The factor-row state \(U\) is DRAW and has \(b\) as a child, so this is an
+actual boundary endpoint:
+
+\[
+\boxed{x\text{ WIN}\Longrightarrow
+U\to b\text{ is a boundary and }h(b)\le h(x)-2.}
+\]
+
+Finally suppose \(x\) is LOSS.  Then both \(u\) and \(c\) are WIN.  The two
+children of \(u\) are \(b\) and \(z\), and the factor row already makes
+\(b\) WIN.  Therefore \(z\) is the unique LOSS child of \(u\).  The
+canonical height recursion gives
+
+\[
+h(z)=h(u)-1\le h(x)-2,
+\]
+
+and hence
+
+\[
+\boxed{x\text{ LOSS}\Longrightarrow
+z=A^2(x)\text{ is LOSS and }h(z)\le h(x)-2.}
+\]
+
+Thus every \(r\ge2\) factor fork exposes exactly the kind of marked event
+needed by a lexicographic rank: a smaller-source DRAW, a boundary WIN at
+strictly smaller finite proof height, or an actual LOSS token at strictly
+smaller finite proof height.  Together with Section 93 this closes the
+local provenance audit for every lower factor exponent.  It is not yet the
+global no-DRAW theorem: the canonical A-continuation and re-entry through
+the high-return obligation must still be assembled into a single
+well-founded transition system.  The common-child identity,
+nonexceptional filter, and rows \(r=2,3,\ge4\) are regression-tested for
+every \(1\le x<100000\).

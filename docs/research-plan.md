@@ -499,6 +499,15 @@ that actual LOSS source, whose coefficient coordinate is below x.  The
 remaining provenance audit is therefore confined to the opposite-tail
 twin rows with lower exponent at least two.
 
+Section 94 closes those higher-exponent rows without an unbounded twin
+walk.  Their source x is nonexceptional and the factor WIN b is the common
+child of A(x) and B(x).  Splitting on the outcome of x yields respectively
+a strict DRAW source drop, a boundary-WIN height drop, or the lower-height
+LOSS token A^2(x).  The complete factor fork is now locally ranked for
+every exponent.  Priority 1 is reduced to assembling this fork with the
+canonical A-continuation and the Section 90 high-return re-entry in one
+lexicographic transition invariant.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
