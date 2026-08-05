@@ -47,6 +47,8 @@ Update this table whenever the status of a substantial claim changes.
 | The ordinary side return is nondecreasing exactly for `s=0,5,10,15 mod 16`, with the four affine formulas of Section 19 | **PROVED** | `docs/verified-results.md`, Section 19; regression in `tests/test_game.py` |
 | In the four phase-mismatch subclasses modulo 32, a minimum-source lifted DRAW forces the exact `LOSS/WIN/DRAW` adjacent-pair fingerprint of Section 19 | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Section 19 |
 | The ensuing factor-three DRAW has valuation-one expanding child with exact source `3A(B(A(s)))+1` | **PROVED ARITHMETIC IDENTITY; DRAW CONTINUATION OPEN** | `docs/verified-results.md`, Section 19; regression in `tests/test_game.py` |
+| The competing child of that factor-three DRAW closes a larger diamond and contradicts the forced LOSS sibling | **PROVED** | `docs/verified-results.md`, Section 20; regression in `tests/test_game.py` |
+| A globally minimum-source DRAW lift can make a nondecreasing side return only in the phase-match classes `0,10,21,31 mod 32` | **PROVED CONDITIONAL REDUCTION** | `docs/verified-results.md`, Sections 18--20 |
 | A nonempty result from `certified_finite_draw_kernel` is a genuine finite DRAW countercertificate | **PROVED FOR THE IMPLEMENTATION LOGIC** | `docs/verified-results.md`, Section 8; `scripts/find_finite_draw_kernel.py` |
 | Every starting value is `WIN` or `LOSS`, with no `DRAW` | **OPEN** | main problem |
 | All odd starts below a large bound have been solved by the current code | **UNVERIFIED UNTIL REPRODUCED** | run scripts locally and record exact output |

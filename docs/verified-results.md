@@ -1615,3 +1615,111 @@ This last identity does not by itself say that `A(k)` is DRAW: the other
 child of the proved-DRAW state `k` can still carry the DRAW continuation.
 Controlling that competing child, and the phase-match rows above, is the
 remaining source-level obstruction.
+
+## 20. A larger diamond excludes every phase mismatch
+
+The competing child left open at the end of Section 19 closes the outcome
+fingerprint into a contradiction.  Retain a phase-mismatch row and write
+
+\[
+a=J(z),\qquad g=1-e,qquad w=B(z).
+\]
+
+Because `e` is the `B`-selecting phase at `z`, there is a `j>=2` such that
+
+\[
+3a+1-2e=2^jJ(w).
+\]
+
+Put `b=J(w)`.  The four states in the fingerprint of Section 19 are
+
+\[
+\begin{aligned}
+p&=Q_1^e(a),& h&=Q_2^e(a),\\
+d=A(p)&=Q_j^g(b),& c=B(p)&=Q_{j-1}^g(b),\\
+k=A(h)&=Q_1^e(3a).&&
+\end{aligned}
+\]
+
+The adjacent states `d` and `c` have exactly one common child.  Let `x` be
+that child and let `y` be the other child of `c`.  Then the following exact
+large-diamond identity holds:
+
+\[
+\boxed{B(k)=y.}
+\]
+
+Here is a complete proof.  First note that
+
+\[
+A(k)=9a-e.
+\]
+
+For `j=2`, the states `Q_2^g(b)` and `Q_1^g(b)` share their `B`-child, so
+`y=A(c)`.  If `e=0`, then `y=3b-1` and
+
+\[
+A(k)=4y+1;
+\]
+
+the appended word is `01`, and its leading zero repeats the final zero of
+`y`.  If `e=1`, then `y=3b` and
+
+\[
+A(k)=4y+2;
+\]
+
+the same statement holds with the word `10` and a repeated one.  Thus in
+both cases deleting the maximal alternating suffix leaves `y`.
+
+For `j=3`, the common child is `Q_1^g(3b)` and
+
+\[
+y=R(3b-g).
+\]
+
+When `e=0`, one has `A(k)=8(3b-1)+5`; the appended word `101` continues
+the alternating suffix of the even number `3b-1`.  When `e=1`, one has
+`A(k)=8(3b)+2`; now `010` continues the alternating suffix of the odd
+number `3b`.  Hence `R(A(k))=R(3b-g)=y`.
+
+Finally suppose `j>=4`.  The long-tail recurrence gives
+
+\[
+x=Q_{j-2}^g(3b),\qquad y=Q_{j-3}^g(3b).
+\]
+
+For `e=0`, `A(k)=8y+5`; the word `101` begins with the same one bit on
+which `y` ends.  For `e=1`, `A(k)=8y+2`; the word `010` begins with the
+same zero bit on which `y` ends.  In either case the maximal alternating
+suffix is exactly the appended three-bit word, proving `B(k)=y`.
+
+Now impose the minimum-source DRAW hypothesis of Section 19.  It proved
+
+\[
+d\text{ LOSS},\qquad c\text{ WIN},\qquad k\text{ DRAW}.
+\]
+
+Every child of the LOSS state `d` is WIN, so their common child `x` is WIN.
+The WIN state `c` must have a LOSS child; since `x` is WIN, its other child
+`y` is LOSS.  But the large-diamond identity makes this same `y` a child of
+the DRAW state `k`, which is impossible.  Therefore
+
+\[
+\boxed{
+s\equiv5,15,16,26\pmod {32}
+\quad\Longrightarrow\quad
+L_{\alpha(s)}(s)\text{ cannot be a globally minimum-source DRAW lift}.
+}
+\]
+
+Combining Sections 18--20, the only nondecreasing source returns still able
+to carry such a DRAW lift are the phase-match classes
+
+\[
+\boxed{s\equiv0,10,21,31\pmod {32}.}
+\]
+
+In those classes `p=L_{\alpha(z)}(z)` has the same canonical form at the
+larger returned source `z=B(A(s))`; it may itself be DRAW, so the LOSS/WIN
+fingerprint used above is not yet forced.

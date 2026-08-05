@@ -486,6 +486,34 @@ class GameArithmeticTests(unittest.TestCase):
                 (next_source, 0, 1, 1 - phase),
             )
 
+    def test_phase_mismatch_large_diamond(self) -> None:
+        for source in range(1, 100000):
+            if source % 32 not in {5, 15, 16, 26}:
+                continue
+
+            returned_source = transformed_B(transformed_A(source))
+            phase = source_A_selecting_tail_bit(source)
+            lower = constant_tail_state(
+                embedded_original_state(returned_source), 1, phase
+            )
+            upper = constant_tail_state(
+                embedded_original_state(returned_source), 2, phase
+            )
+            lower_expanding = transformed_A(lower)
+            lower_contracting = transformed_B(lower)
+            factor_three_state = transformed_A(upper)
+
+            common_children = set(transformed_moves(lower_expanding)) & set(
+                transformed_moves(lower_contracting)
+            )
+            self.assertEqual(len(common_children), 1)
+            other_child = next(
+                child
+                for child in transformed_moves(lower_contracting)
+                if child not in common_children
+            )
+            self.assertEqual(transformed_B(factor_three_state), other_child)
+
     def test_height_one_arithmetic(self) -> None:
         for q in range(1, 100000):
             if transformed_B(q) == 0:

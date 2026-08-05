@@ -63,11 +63,14 @@ strictly.  The surviving case is therefore a nondecreasing ordinary side
 return `B(A(s))>=s`.  Section 19 classifies it exactly as
 `s=0,5,10,15 mod 16`.  In the four phase-mismatch subclasses modulo 32, the
 adjacent lifted pair forces a smaller-source LOSS sibling, a shared WIN
-child, and a new DRAW `Q_1^e(3J(B(A(s))))`.  Its expanding child has exact
-source `3A(B(A(s)))+1`, but need not itself be DRAW.  The immediate target
-is to control the competing child of that factor-three DRAW and the four
-phase-match subclasses, while retaining the forced LOSS witness rather than
-seeking a rank for the arithmetic return alone.
+child, and a new DRAW `Q_1^e(3J(B(A(s))))`.  Section 20 identifies the
+competing child of this DRAW with the forced LOSS branch of a larger diamond,
+excluding all four mismatch classes.  Only the phase-match classes
+`s=0,10,21,31 mod 32` remain.  There the side child is another canonical
+minimum-source lift at the larger source `B(A(s))`.  The immediate target is
+to prove that repeated phase-match returns must eventually leave these
+classes or create a lower-height boundary, while retaining the forced
+siblings rather than seeking a rank for the arithmetic return alone.
 
 ## Priority 2: finite transducer plus numerical potential
 
