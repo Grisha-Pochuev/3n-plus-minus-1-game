@@ -7588,3 +7588,160 @@ rank and verify that no transition was omitted.  The inverse-parent
 identity is regression-tested for every valuation-three source transition
 below \(10000\), and for every exceptional side return below \(100000\)
 whose lower exponent is two.
+
+## 90. The second high frame is exactly an A-selecting obligation
+
+The finite frame in Section 86 has less freedom than its outcome statement
+used.  Retain
+
+\[
+u=Q_{v-1}^g(J(t)),\qquad
+c=B(u)=Q_{v-3}^g(3J(t)),\qquad v\ge5.
+\]
+
+Because \(u\) has parity \(g\), its embedded coefficient is
+
+\[
+J(u)=
+\begin{cases}
+3\,2^{v-1}J(t)+1,&g=0,\\
+3\,2^{v-1}J(t)-1,&g=1.
+\end{cases}
+\]
+
+The signed transition at \(u\) in phase \(g\) is consequently
+
+\[
+3J(u)+1-2g
+=4\bigl(9\,2^{v-3}J(t)+1-2g\bigr).
+\]
+
+The expression in parentheses is odd because \(v-3\ge2\).  Hence this
+transition has valuation exactly two.  Section 82 already identifies its
+ordinary selected source as \(B(u)=c\), so
+
+\[
+\boxed{
+\operatorname{sourceTransition}(u,g)=(B,2,c).}
+\]
+
+The output phase is \(1-g\), and it is precisely the A-selecting phase at
+\(c\).  Indeed, \(c\equiv0\pmod4\) when \(g=0\), while
+\(c\equiv3\pmod4\) when \(g=1\).  The two-bit formula for \(\alpha\)
+therefore gives
+
+\[
+\boxed{\alpha(c)=1-g.}
+\]
+
+Now return to the second alternative of Section 84.  It occurs when the
+next signed exit
+
+\[
+Q_1^g(J(u))
+\]
+
+is DRAW.  Section 25 transfers this DRAW through the valuation-two source
+transition just computed.  The transferred children are exactly
+
+\[
+Q_2^{1-g}(J(c)),\qquad Q_1^{1-g}(J(c)).
+\]
+
+Thus the signed exit itself is a DRAW parent of this pair, and the pair is
+not merely an unmarked adjacent frame.  In the notation of Section 27,
+
+\[
+\boxed{O(c,\alpha(c))\text{ holds}.}
+\]
+
+Consequently every genuinely high four-exit scan either returns to the
+frame over \(t\), pays the boundary-height descent of Sections 87--89, or
+enters the already defined A-selecting obligation automaton at the finite
+WIN/LOSS token \(c\).  No new phase, valuation, or frame type is introduced
+by the high return.  This still leaves the global bookkeeping problem:
+\(c\) need not lie in the original \([s,2s)\) source window, so the marked
+rank must transport the earlier proof-height token rather than reapply the
+numerical bound from Section 28.  Both boxed identities are
+regression-tested for sources below \(1000\), both phases, and valuations
+five through ten.
+
+## 91. An A-selecting obligation has a universal source-or-token fork
+
+The numerical window \(s\le x<2s\) in Section 28 was needed only to rule
+out a DRAW at the common side child.  If that outcome is retained instead,
+the same geometry gives a universal transition.  Let \(x>0\), put
+
+\[
+e=\alpha(x),\qquad g=1-e,
+\]
+
+and define
+
+\[
+P=Q_1^e(J(x)),\quad U=Q_2^e(J(x)),\quad
+y=A(x),\quad V=A(P)=Q_1^g(J(y)),
+\]
+
+\[
+b=B(P)=B(U),\qquad F=A(U).
+\]
+
+Suppose the exact obligation \(O(x,e)\) holds.  The common child \(b\)
+cannot be LOSS.  This is immediate if \(P\) is DRAW.  In the other
+alternative of \(O\), a LOSS \(b\) would make both \(P\) and \(U\) WIN,
+and hence make their stated DRAW parent LOSS.
+
+Whenever \(b>0\), its coefficient source \(\rho(b)\) is strictly below
+\(x\).  Section 24 makes \(b\) an ordinary child of \(y=A(x)\), so
+
+\[
+b\le A(y)=A^2(x)\le\frac{9x+5}{4}.
+\]
+
+The universal coefficient-source bound then gives
+
+\[
+\boxed{
+\rho(b)\le\frac{b-1}{6}
+\le\frac{9x+1}{24}<x.}
+\]
+
+Thus \(b\) DRAW is a strict coefficient-source transition, with no global
+minimum hypothesis.  The value \(b=0\) cannot occur under \(O\), because
+the terminal state is LOSS.
+
+It remains to suppose that \(b\) is WIN.  If \(P\) is DRAW, its other
+child \(V\) is DRAW, and therefore
+
+\[
+\boxed{O(A(x),1-e)\text{ holds}.}
+\]
+
+Otherwise \(O(x,e)\) is witnessed by a DRAW parent of \(U,P\).  The state
+\(P\) is then WIN and \(U\) is DRAW.  Since their common child \(b\) is
+WIN, outcome recursion forces
+
+\[
+\boxed{V\text{ LOSS},\qquad F\text{ DRAW}.}
+\]
+
+The arithmetic identity from Section 28 did not use its source window:
+the two children of \(F\) are an adjacent factor-free frame over \(b\),
+and hence that frame contains a DRAW.  Its lower exponent may now be
+arbitrary; Sections 79--90, rather than the old \([s,2s)\) estimate,
+normalize it while the actual LOSS token \(V\) remains marked.
+
+Consequently every A-selecting obligation has exactly three typed exits:
+
+1. a DRAW whose coefficient source is strictly below \(x\);
+2. the canonical A-continuation \(O(A(x),1-e)\); or
+3. an adjacent DRAW frame over the WIN state \(b\), accompanied by the
+   actual LOSS state \(V\).
+
+This removes the source-window obstruction noted at the end of Section 90,
+but it is still a local rank transition: the global proof must show that a
+return from the third row cannot increase the distinguished token before
+the first or a proof-height descent occurs.  The source inequality, common
+child, and factor-frame coordinates are regression-tested for every
+\(1\le x<100000\).

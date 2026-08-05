@@ -679,6 +679,17 @@ class GameArithmeticTests(unittest.TestCase):
                             successor_raw,
                             transformed_moves(lower_reverse),
                         )
+                        self.assertEqual(
+                            source_boundary_transition(
+                                successor_source,
+                                return_phase,
+                            ),
+                            ("B", 2, successor_raw),
+                        )
+                        self.assertEqual(
+                            source_A_selecting_tail_bit(successor_raw),
+                            phase,
+                        )
 
     def test_high_return_source_exception_filter(self) -> None:
         for source in range(1000):
@@ -1465,9 +1476,11 @@ class GameArithmeticTests(unittest.TestCase):
     def test_A_selecting_lift_side_diamond(self) -> None:
         for source in range(1, 100000):
             phase = source_A_selecting_tail_bit(source)
+            coefficient = embedded_original_state(source)
             lift = constant_tail_state(
-                embedded_original_state(source), 1, phase
+                coefficient, 1, phase
             )
+            upper = constant_tail_state(coefficient, 2, phase)
             selected_source = transformed_A(source)
             selected_expanding = transformed_A(selected_source)
             lifted_side = transformed_B(lift)
@@ -1484,6 +1497,34 @@ class GameArithmeticTests(unittest.TestCase):
                     lifted_side,
                     transformed_B(selected_source),
                 )
+
+            self.assertEqual(transformed_B(upper), lifted_side)
+            if lifted_side > 0:
+                self.assertLess(
+                    constant_tail_source_coordinates(lifted_side)[0],
+                    source,
+                )
+
+            factor_state = transformed_A(upper)
+            factor_coordinates = [
+                constant_tail_source_coordinates(child)
+                for child in transformed_moves(factor_state)
+            ]
+            self.assertEqual(
+                {coordinates[0] for coordinates in factor_coordinates},
+                {lifted_side},
+            )
+            self.assertEqual(
+                {coordinates[1] for coordinates in factor_coordinates},
+                {0},
+            )
+            self.assertEqual(
+                abs(
+                    factor_coordinates[0][2]
+                    - factor_coordinates[1][2]
+                ),
+                1,
+            )
 
     def test_B_selecting_source_frame_diamond(self) -> None:
         for source in range(1, 100000):

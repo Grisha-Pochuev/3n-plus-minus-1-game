@@ -466,6 +466,23 @@ now a transition audit and a single lexicographic marked rank covering the
 ordinary source descents, LOSS-token transports, and these boundary-height
 replacements.
 
+Section 90 removes one state from that audit.  The second frame after every
+high return is always a valuation-two A-selecting obligation at its finite
+source c, not a new arbitrary adjacent-frame type.  The only unresolved
+edge is therefore the re-entry of this obligation outside the original
+source window: it must retain the earlier distinguished WIN/LOSS token
+until Sections 52--68 spend its proof height.  A rank that silently treats
+c as a fresh minimum-source start would repeat Pitfall 11.
+
+Section 91 removes the numerical part of that edge.  At an arbitrary
+A-selecting obligation, the common side child is non-losing and its
+coefficient source is strictly below the current ordinary source.  If it
+is WIN, the old canonical/factor outcome fork holds verbatim, now with no
+bound on the factor exponent; Sections 79--90 normalize that exponent.
+The remaining rank question is only provenance: prove that the marked LOSS
+sibling in the factor row is spent before a later A-obligation is allowed
+to replace it by a higher token.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
