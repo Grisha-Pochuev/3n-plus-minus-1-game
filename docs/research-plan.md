@@ -338,6 +338,14 @@ DRAW, while a WIN A(s) marks it by a required LOSS witness.  Thus the
 height-one base can be represented by a finite outcome flag on one
 zero-source adjacent-frame type; the next local target is the transition of
 that marked frame through its first factor-three boundary.
+Section 71 performs that transition for a DRAW-marked frame.  Following a
+DRAW child strictly lowers the tail exponent until one/two, after which the
+only possible DRAW exits are the raw state R(3^n-delta) and the signed
+3^n+1-2delta state.  LTE makes the signed exponent explicit; only the minus
+row at even n retains the counter 2+v2(n).  The next target is to couple the
+raw state to that signed source, as Section 60 coupled the ninefold and
+twenty-sevenfold exits, and to retain the LOSS-marked zero-source frame from
+Section 70 through the same boundary.
 
 ## Priority 2: finite transducer plus numerical potential
 

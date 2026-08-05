@@ -2046,6 +2046,30 @@ class GameArithmeticTests(unittest.TestCase):
             self.assertEqual(upper_coordinates[2], lower_coordinates[2] + 1)
             self.assertEqual(upper_coordinates[3], lower_coordinates[3])
 
+    def test_zero_source_factor_boundary_valuations(self) -> None:
+        for power in range(1, 100):
+            coefficient = 3 ** (power - 1)
+            for phase in (0, 1):
+                lower = constant_tail_state(coefficient, 1, phase)
+                upper = constant_tail_state(coefficient, 2, phase)
+                common = alternating_suffix_remainder(3**power - phase)
+                signed_value = 3**power + 1 - 2 * phase
+                valuation = v2(signed_value)
+                signed_coefficient = signed_value >> valuation
+                signed_state = constant_tail_state(
+                    signed_coefficient, valuation, 1 - phase
+                )
+
+                self.assertEqual(transformed_B(lower), common)
+                self.assertEqual(transformed_B(upper), common)
+                self.assertEqual(transformed_A(lower), signed_state)
+
+                if phase == 0:
+                    expected = 2 if power % 2 else 1
+                else:
+                    expected = 1 if power % 2 else 2 + v2(power)
+                self.assertEqual(valuation, expected)
+
     def test_B_predecessor_parameterization(self) -> None:
         limit = 2000
         actual: dict[int, list[int]] = {}

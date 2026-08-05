@@ -6199,3 +6199,92 @@ height-one provenance.  It converts the terminal LOSS child of \(s\) into
 an adjacent zero-source child frame of \(A(s)\), marked either by a DRAW or
 by a LOSS witness according to the endpoint outcome.  The exact coordinates
 are regression-tested for every height-one endpoint \(s<100000\).
+
+## 71. A zero-source DRAW frame has one explicit factor boundary
+
+The arbitrarily long exponent in the zero-source DRAW frame of Sections
+69--70 does not create an arbitrary boundary valuation.  Write
+
+\[
+S_{k,r}^\delta:=Q_r^\delta(3^k),qquad
+k\ge0,\qquad r\ge1,\qquad\delta\in\{0,1\}.
+\]
+
+For \(r\ge3\), Section 14 gives
+
+\[
+\operatorname{moves}(S_{k,r}^\delta)
+=\{S_{k+1,r-1}^\delta,S_{k+1,r-2}^\delta\}.
+\]
+
+If a zero-source adjacent frame contains a DRAW, choose a DRAW member and,
+while its exponent is at least three, choose a DRAW child.  A DRAW has no
+LOSS child and at least one DRAW child, so this is always possible.  The
+tail exponent decreases by one or two at each move.  Hence after finitely
+many steps there is a DRAW state.  The two zero-source base states with
+coefficient exponent zero and tail exponent one or two are resolved
+explicitly in Section 15, so neither can be DRAW.  Consequently at least
+one long-tail move has occurred, which proves the coefficient exponent
+below is at least one.  Thus there is a DRAW state
+
+\[
+S_{k,r}^\delta,qquad r\in\{1,2\},qquad k\ge1.
+\]
+
+Put \(n=k+1\) and factor
+
+\[
+3^n+1-2\delta=2^j b,qquad b\text{ odd}.
+\]
+
+The exponent-one and exponent-two states have the common contracting child
+
+\[
+C_{n,\delta}:=R(3^n-\delta),
+\]
+
+while the expanding child of the exponent-one state is
+
+\[
+E_{n,\delta}:=Q_j^{1-\delta}(b).
+\]
+
+If the reached DRAW already has exponent one, one of these two children is
+DRAW.  If it has exponent two, its children are the same common state
+\(C_{n,\delta}\) and the exponent-one state
+\(S_{k+1,1}^\delta\).  If the common state is not DRAW, it is WIN and forces
+that exponent-one child to be DRAW; applying its two children gives the
+same conclusion.  Therefore
+
+\[
+\boxed{\{C_{n,\delta},E_{n,\delta}\}\text{ contains a DRAW}.}
+\]
+
+The signed exponent \(j\) is exact:
+
+\[
+\boxed{
+\begin{array}{c|cc}
+&n\text{ odd}&n\text{ even}\\ \hline
+\delta=0&j=2&j=1\\
+\delta=1&j=1&j=2+v_2(n).
+\end{array}}
+\]
+
+For \(3^n+1\), reduction modulo eight gives valuation two for odd \(n\)
+and valuation one for even \(n\).  For \(3^n-1\), odd \(n\) gives valuation
+one modulo four, while the standard factorization induction
+
+\[
+3^{2m}-1=(3^m-1)(3^m+1)
+\]
+
+gives \(v_2(3^n-1)=2+v_2(n)\) for even \(n\).
+
+Thus the long zero-source factor descent has only one raw side and one
+signed exit.  Three of the four parity/phase rows have exponent at most two;
+the sole unbounded row is controlled exactly by the integer counter
+\(v_2(n)\).  This is a finite arithmetic normalization, not yet a rank:
+the raw side can still carry the DRAW, and the source of the signed odd
+coefficient \(b\) can be large.  The boundary identities and valuation table
+are regression-tested for \(1\le n<100\).
