@@ -318,6 +318,20 @@ choose a marked-configuration rank that compares these exposed LOSS-source
 frames with the ordinary lower-height boundary endpoints and the factor
 returns of Sections 61--64 without assuming that a later endpoint reattains
 the original minimum height.
+The height-one family of Section 13 remains a separate base orientation.
+Its DRAW continuation is the sibling \(A(D)\) of the WIN endpoint
+\(s=B(D)\), not the state \(A(s)\).  Section 68 applies only after an
+actual DRAW A-child of a WIN token has been established, so it cannot be
+used to skip this distinction.  The marked-configuration rank must include
+the orientation of the boundary edge as well as the token height.
+Section 69 supplies that orientation for height one.  An ordinary parent
+either reaches a genuine zero-source DRAW frame or transfers the boundary
+to the explicit endpoint A(s); an exceptional parent reaches an adjacent
+DRAW frame over s itself.  The raw infinite set of B-predecessors is
+therefore replaced by the same two marked frame types used in the
+positive-height analysis plus one oriented boundary successor.  The next
+rank must show that repeated A(s) successors cannot alternate indefinitely
+with the adjacent height-one frames.
 
 ## Priority 2: finite transducer plus numerical potential
 

@@ -2009,6 +2009,30 @@ class GameArithmeticTests(unittest.TestCase):
                 self.assertGreater(transformed_B(q), 0)
                 self.assertEqual(transformed_B(transformed_B(q)), 0)
 
+    def test_height_one_boundary_parent_fork_arithmetic(self) -> None:
+        for parent in range(1, 100000):
+            endpoint = transformed_B(parent)
+            if endpoint == 0 or transformed_B(endpoint) != 0:
+                continue
+
+            draw_sibling = transformed_A(parent)
+            side = transformed_B(draw_sibling)
+            continuation = transformed_A(draw_sibling)
+            if parent % 16 not in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                self.assertIn(side, (0, transformed_A(endpoint)))
+                continue
+
+            side_coordinates = constant_tail_source_coordinates(side)
+            continuation_coordinates = constant_tail_source_coordinates(
+                continuation
+            )
+            self.assertEqual(side_coordinates[:2], (endpoint, 0))
+            self.assertEqual(continuation_coordinates[:2], (endpoint, 0))
+            self.assertEqual(
+                continuation_coordinates[2], side_coordinates[2] + 1
+            )
+            self.assertEqual(continuation_coordinates[3], side_coordinates[3])
+
     def test_B_predecessor_parameterization(self) -> None:
         limit = 2000
         actual: dict[int, list[int]] = {}

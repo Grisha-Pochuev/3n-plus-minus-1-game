@@ -6072,3 +6072,75 @@ the exceptional orientation; the remaining global task is to order
 successive ordinary and factor-frame exposures without restarting the
 minimum-height endpoint.  The adjacent-coordinate identity is
 regression-tested for every exceptional \(q<100000\).
+
+## 69. A height-one boundary has three exact continuation types
+
+The unresolved height-one orientation from Section 13 admits a sharper
+normal form without making the invalid inference recorded in Pitfall 14.
+Suppose
+
+\[
+D\text{ is DRAW},\qquad s=B(D)\text{ is WIN},\qquad
+B(s)=0,qquad t=A(D)\text{ is DRAW}.
+\]
+
+First let \(D\) be nonexceptional.  The ordinary side relation makes
+
+\[
+p:=B(t)=B(A(D))
+\]
+
+one of the two children \(A(s),B(s)\) of \(s\).  Since \(p\) is a child of
+the DRAW state \(t\), it cannot be the terminal LOSS \(B(s)=0\).  Hence
+
+\[
+\boxed{D\text{ nonexceptional}\Longrightarrow B(t)=A(s).}
+\]
+
+This common child is non-losing.  If \(A(s)\) is DRAW, then \(s\) is an
+exceptional WIN whose A-child is DRAW and whose unique LOSS child is zero.
+Section 68 applies legitimately and gives an adjacent factor-free DRAW
+frame over source zero.  If instead \(A(s)\) is WIN, outcome recursion at
+the DRAW state \(t\) forces its other child to be DRAW:
+
+\[
+\boxed{A(s)\text{ WIN}\Longrightarrow A(t)=A^2(D)\text{ DRAW}.}
+\]
+
+Thus the latter row is a new boundary whose WIN endpoint is exactly
+\(A(s)\); no outcome has been assigned to \(A(s)\) merely from the old
+boundary.
+
+Now let \(D\) be exceptional.  The arithmetic part of Section 68 did not
+use the outcome of \(D\).  With
+
+\[
+p=B(t),\qquad v=A(t),
+\]
+
+it gives, for some \(m\ge1\) and \(\delta\in\{0,1\}\),
+
+\[
+\boxed{
+p=Q_m^\delta(J(s)),\qquad
+v=Q_{m+1}^\delta(J(s)).}
+\]
+
+Because \(t\) is DRAW, at least one member of this adjacent factor-free
+frame over the height-one WIN source \(s\) is DRAW.
+
+Consequently every minimum-height-one boundary enters exactly one of three
+typed rows:
+
+1. an adjacent zero-source DRAW frame, when the ordinary common child
+   \(A(s)\) is DRAW;
+2. a new boundary with WIN endpoint \(A(s)\), when that common child is
+   WIN; or
+3. an adjacent DRAW frame over the height-one WIN source \(s\), when the
+   original parent \(D\) is exceptional.
+
+This is not yet an exclusion of height one: the second endpoint can have
+larger proof height, and the two adjacent-frame rows still require the
+global marked rank.  It does remove the raw B-predecessor family from the
+base case.  All arithmetic identities are regression-tested for
+\(D<100000\).

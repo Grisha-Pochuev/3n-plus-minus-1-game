@@ -170,3 +170,23 @@ These prefixes are not DRAW counterexamples; they omit the forced outcome
 tokens.  They show that the final argument must use the WIN/LOSS provenance
 of Sections 57 and 61--64, rather than only the sequence of phases and
 valuations.
+
+## 14. A DRAW continuation does not pass through its WIN endpoint
+
+For a boundary edge, the parent has one WIN child and a different DRAW
+child.  Subsequent DRAW play follows the latter.  No outcome rule says that
+the WIN endpoint's non-losing child is DRAW.
+
+In particular, the unresolved height-one boundary of Section 13 has
+
+\[
+D\text{ DRAW},\qquad B(D)=s\text{ WIN},\qquad
+A(D)\text{ DRAW},\qquad B(s)=0\text{ LOSS}.
+\]
+
+It is invalid to infer \(A(s)\) is DRAW.  The outcome of \(A(s)\) can be
+WIN, LOSS, or DRAW without violating the displayed local recursion.  Hence
+Section 68 cannot be applied to \(s\) unless a separate argument first
+establishes \(A(s)\) DRAW.  Confusing the DRAW sibling under \(D\) with a
+child of the WIN endpoint \(s\) would falsely reduce height one to a
+zero-source DRAW frame.
