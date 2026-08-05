@@ -9415,3 +9415,80 @@ still show that the adjacent frame spends \(x\) rather than replacing it
 by an unrelated proof height.  The child orientation, valuation table, and
 three returned-source rows are regression-tested for every
 \(1\le t<10000\), both phases, and valuations twelve through twenty.
+
+## 110. A stable nested recycle shortens the tail and lowers WIN height
+
+The apparent repetition in the \(v\ge15\) rows has a universal
+well-founded token chain.  Let \(C\) be positive and odd, let \(d\ge4\),
+and put
+
+\[
+X=Q_d^g(C).
+\]
+
+The last four bits of \(X\) are constant, so \(X\) is ordinary.  Direct
+long-tail reduction gives
+
+\[
+A(X)=Q_{d-1}^g(3C),qquad
+B(X)=Q_{d-2}^g(3C).
+\]
+
+The two ordinary children have the common child
+
+\[
+\boxed{B(A(X))=A(B(X))=Q_{d-3}^g(9C).}
+\]
+
+If \(X\) is WIN, choose a canonical LOSS child.  The boxed state is a
+child of that LOSS state, and hence
+
+\[
+\boxed{X'=B(A(X))\text{ is WIN},\qquad h(X')\le h(X)-2.}
+\]
+
+This can be iterated without any residue split.  Define
+
+\[
+X_i=Q_{d-3i}^g(9^iC)
+\]
+
+as long as \(d-3i\ge1\).  Whenever \(d-3i\ge4\), the preceding argument
+gives
+
+\[
+X_{i+1}=B(A(X_i)),qquad
+h(X_{i+1})\le h(X_i)-2.
+\]
+
+Consequently the long-tail common-token chain has at most
+
+\[
+\boxed{\left\lfloor\frac{d-1}{3}\right\rfloor}
+\]
+
+stable steps, and every such step lowers its WIN proof height by two.  It
+ends with tail exponent one, two, or three; no unbounded suffix counter is
+left.
+
+For Section 109 the first token in this chain is
+
+\[
+X_0=x=Q_{v-12}^g(2187J(t)).
+\]
+
+In every recurrence of the same stable nested pattern, its factor source
+is \(B(X_i)\), while the next carried common WIN is exactly
+\(X_{i+1}=B(A(X_i))\).  Thus a recurrence cannot reset the marked height:
+it shortens the tail by three and pays two proof levels before it can
+re-enter.  Any indefinitely repeated stable high-return pattern would
+force an infinite descending sequence of nonnegative heights, which is
+impossible.
+
+This proves termination of the stable *recycle itself*, not yet exclusion
+of every exit from it.  The raw/signed exits still have to be assigned to
+the lower-token frame types of Sections 79--109, and the terminal tail
+exponents one through three, together with \(v\le11\), remain finite base
+rows.  The exact chain coordinates are regression-tested for every odd
+\(1\le C<1000\), both phases, and initial exponents four through twenty-
+four.

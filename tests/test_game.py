@@ -821,6 +821,41 @@ class GameArithmeticTests(unittest.TestCase):
                 )[0]
                 self.assertLess(selected_source, source)
 
+    def test_long_tail_common_token_chain_coordinates(self) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                for initial_exponent in range(4, 25):
+                    current_coefficient = coefficient
+                    current_exponent = initial_exponent
+                    current = constant_tail_state(
+                        current_coefficient,
+                        current_exponent,
+                        phase,
+                    )
+                    while current_exponent >= 4:
+                        side = transformed_B(current)
+                        common = transformed_B(transformed_A(current))
+                        self.assertEqual(
+                            side,
+                            constant_tail_state(
+                                3 * current_coefficient,
+                                current_exponent - 2,
+                                phase,
+                            ),
+                        )
+                        self.assertEqual(common, transformed_A(side))
+                        self.assertEqual(
+                            common,
+                            constant_tail_state(
+                                9 * current_coefficient,
+                                current_exponent - 3,
+                                phase,
+                            ),
+                        )
+                        current = common
+                        current_coefficient *= 9
+                        current_exponent -= 3
+
     def test_high_return_obligation_common_side(self) -> None:
         for source in range(1, 1000):
             coefficient = embedded_original_state(source)

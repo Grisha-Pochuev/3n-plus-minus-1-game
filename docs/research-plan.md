@@ -646,6 +646,15 @@ second nested scan never replaces the carried height token by an unrelated
 source.  What remains is boundary exposure for an adjacent DRAW frame over
 a lift/ordinary child of x, together with v=11 and the earlier v<=10 rows.
 
+Section 110 supplies the well-founded counter for repeated stable nesting.
+For every long-tail WIN token X=Q_d^g(C), the next common token is exactly
+Q_(d-3)^g(9C)=B(A(X)) and its height is at least two lower.  Hence the
+v>=15-style recycle cannot iterate indefinitely: every recurrence spends
+two proof levels and reaches tail exponent 1, 2, or 3 after finitely many
+steps.  The remaining audit must route every coupled raw/signed exit into
+one of these lower-token configurations and then close the finite terminal
+rows v<=14; no unbounded high-return counter remains.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
