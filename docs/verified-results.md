@@ -7291,3 +7291,130 @@ the same source at exponent one is \(v=4\).  It never occurs in the
 height-one resonance, whose valuation is at least five.  The exact
 valuation-two coordinates and valuation-three strict descent are
 regression-tested for every positive source below \(1000\) and both phases.
+
+## 86. The second high frame has a finite ordinary token or returns
+
+Retain the second alternative of Section 84 and write
+
+\[
+c=Q_{v-3}^g(3J(t)),\qquad v\ge5.
+\]
+
+An adjacent factor-free frame over \(c\) contains a DRAW.  If \(c\) itself
+is DRAW, its exponent \(v-3\) is at least two and its coefficient is
+divisible by three.  Section 16 then gives a DRAW among
+
+\[
+Q_{v-2}^g(J(t)),\qquad Q_{v-1}^g(J(t)).
+\]
+
+Thus this case is already the first alternative of Section 84.  The second
+alternative can therefore be retained in the sharper form
+
+\[
+\boxed{
+\text{an adjacent DRAW frame over }c,
+\quad c\text{ is WIN or LOSS}.}
+\]
+
+The finite token \(c\) is ordinary except in one bounded row.  If \(v=6\),
+then \(c\equiv8\) or \(7\pmod {16}\), according as \(g=0\) or \(1\).
+If \(v\ge7\), then \(c\equiv0\) or \(15\pmod {16}\).  None of these
+residues is exceptional.  At \(v=5\), put \(w=A(t)\).  Since
+\(J(t)=2w+1\),
+
+\[
+c=12J(t)-g=24w+12-g.
+\]
+
+Reduction modulo sixteen gives
+
+\[
+\boxed{c\text{ exceptional}\quad\Longleftrightarrow\quad w\equiv g\pmod2.}
+\]
+
+In those two exceptional rows the formulas of Section 5 unify.  Writing
+\(z=9w+4\), direct substitution gives
+
+\[
+\boxed{B(c)=R(z),\qquad B(A(c))=3z+1=27w+13.}
+\]
+
+Section 53's \(3z+1\) identity therefore makes the exceptional side return
+an exact factor-free lift over \(B(c)\).  Consequently the second high
+frame carries either an ordinary finite WIN/LOSS token, or the already
+typed exceptional lift-token geometry; it cannot restart with an unmarked
+outcome or residue.  Its proof height is not yet compared with the original
+height-one terminal token.  The residue filter and both exceptional
+formulas are regression-tested for every source below \(1000\), both
+phases, and valuations five through ten.
+
+## 87. A DRAW factor frame pulls back or exposes a LOSS/DRAW gate
+
+There is a reverse outcome normalization for the whole factor frame, not
+only for one DRAW state.  Let \(a\) be positive, odd, and not divisible by
+three, let \(k\ge1\), fix a phase \(e\), and put
+
+\[
+P_k=Q_2^e(3^ka),\qquad R_k=Q_1^e(3^ka).
+\]
+
+Suppose \(\{P_k,R_k\}\) contains a DRAW.  If \(P_k\) is DRAW, repeated
+use of Section 16 removes every factor of three and produces a DRAW state
+
+\[
+Q_r^e(a)\qquad(r\ge2).
+\]
+
+If \(P_k\) is WIN, then \(R_k\) must be DRAW.  The exact reverse parent
+
+\[
+H_k:=Q_3^e(3^{k-1}a)
+\]
+
+has children
+
+\[
+\operatorname{moves}(H_k)=\{P_k,R_k\}.
+\]
+
+They are WIN and DRAW, so \(H_k\) is DRAW.  For \(k=1\) this is already
+factor-free; for \(k>1\), Section 16 again removes all remaining factors
+of three.  The sole remaining outcome orientation is therefore
+
+\[
+\boxed{P_k\text{ LOSS},\qquad R_k\text{ DRAW}.}
+\]
+
+It is a marked gate, not an untyped exception.  Let
+
+\[
+C_k=B(P_k)=B(R_k),\qquad T_k=A(R_k).
+\]
+
+Both children of the LOSS state \(P_k\) are WIN, so \(C_k\) is WIN.  The
+DRAW state \(R_k\), whose other child is \(T_k\), consequently forces
+\(T_k\) to be DRAW.  Moreover the same reverse parent \(H_k\) has the
+unique LOSS child \(P_k\), whence
+
+\[
+h(H_k)=h(P_k)+1,qquad
+h(C_k)\le h(P_k)-1=h(H_k)-2.
+\]
+
+Thus
+
+\[
+\boxed{
+\{P_k,R_k\}\text{ contains a DRAW}
+\Longrightarrow
+\begin{cases}
+Q_r^e(a)\text{ is DRAW for some }r\ge2,\quad\text{or}\\
+R_k\to C_k\text{ is a boundary with a two-level marked drop}.
+\end{cases}}
+\]
+
+The height comparison is relative to the exact reverse WIN parent \(H_k\);
+it does not yet claim that \(H_k\) is the globally minimum boundary
+endpoint.  The reverse-parent identity is regression-tested for odd bases
+below \(200\), both phases, and seven factor levels.

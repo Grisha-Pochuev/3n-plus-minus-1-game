@@ -366,6 +366,36 @@ class GameArithmeticTests(unittest.TestCase):
                         (next_signed, next_side),
                     )
 
+    def test_factor_frame_has_exact_reverse_parent(self) -> None:
+        for base_coefficient in range(1, 200, 2):
+            if base_coefficient % 3 == 0:
+                continue
+            for phase in (0, 1):
+                for factor_exponent in range(1, 8):
+                    preceding_coefficient = (
+                        3 ** (factor_exponent - 1)
+                        * base_coefficient
+                    )
+                    upper = constant_tail_state(
+                        3 * preceding_coefficient,
+                        2,
+                        phase,
+                    )
+                    lower = constant_tail_state(
+                        3 * preceding_coefficient,
+                        1,
+                        phase,
+                    )
+                    reverse_parent = constant_tail_state(
+                        preceding_coefficient,
+                        3,
+                        phase,
+                    )
+                    self.assertEqual(
+                        transformed_moves(reverse_parent),
+                        (upper, lower),
+                    )
+
     def test_ninefold_twenty_sevenfold_source_coupling(self) -> None:
         for b in range(1, 100000):
             if b % 64 not in {4, 25, 38, 59}:
@@ -598,6 +628,46 @@ class GameArithmeticTests(unittest.TestCase):
                             successor_raw,
                             transformed_moves(lower_reverse),
                         )
+
+    def test_high_return_source_exception_filter(self) -> None:
+        for source in range(1000):
+            coefficient = embedded_original_state(source)
+            selected = transformed_A(source)
+            for phase in (0, 1):
+                exponent_two = constant_tail_state(
+                    3 * coefficient,
+                    2,
+                    phase,
+                )
+                is_exceptional = (
+                    exponent_two % 16
+                    in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                )
+                self.assertEqual(
+                    is_exceptional,
+                    selected % 2 == phase,
+                )
+                if is_exceptional:
+                    core = 9 * selected + 4
+                    self.assertEqual(
+                        transformed_B(exponent_two),
+                        alternating_suffix_remainder(core),
+                    )
+                    self.assertEqual(
+                        transformed_B(transformed_A(exponent_two)),
+                        3 * core + 1,
+                    )
+
+                for valuation in range(6, 11):
+                    high_return = constant_tail_state(
+                        3 * coefficient,
+                        valuation - 3,
+                        phase,
+                    )
+                    self.assertNotIn(
+                        high_return % 16,
+                        SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+                    )
 
     def test_valuation_one_raw_exit_strict_source_drop(self) -> None:
         for source in range(1, 10000):

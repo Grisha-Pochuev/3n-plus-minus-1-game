@@ -433,8 +433,20 @@ Section 85 also closes the unused small rows universally: v=2 is one exact
 ordinary selected-source lift, and the only raw suffix at v=3 strictly
 lowers the coefficient source.  The same-source exponent-one row v=4 does
 not occur in the height-one resonance.
-The next task is to compare that sole B-child-frame alternative with the
-terminal token and force a boundary-height descent.
+Section 86 removes a DRAW source from the remaining B-child-frame
+alternative, since reverse division then returns to the frame over t.  Its
+source c may therefore be assumed WIN or LOSS.  It is ordinary for v>=6;
+the only exceptional row is v=5 and is an exact lift-token return over
+B(c).  The next task is to compare this now-finite token with the terminal
+token and force a boundary-height descent without allowing its height to
+restart.
+Section 87 adds a backwards normalization for every factor frame.  All
+powers of three pull back to a factor-free DRAW lift unless the frame is
+oriented upper-LOSS/lower-DRAW.  That sole obstruction is already a marked
+boundary: its common WIN child lies two proof levels below the exact reverse
+WIN parent.  The global rank may therefore treat factor accumulation as a
+zero-cost pullback and only charge this explicit LOSS/DRAW gate; it no
+longer needs the factor counter itself as an unbounded rank component.
 
 ## Priority 2: finite transducer plus numerical potential
 
