@@ -363,6 +363,26 @@ unbounded minus frame now contains a strictly lower-height LOSS token.
 The remaining height-one task is an outcome diamond coupling the adjacent
 DRAW boundary to this lower LOSS member; the arithmetic tail counter itself
 is no longer unmarked.
+Section 74 gives that coupling whenever the next two DRAW-spine states are
+ordinary.  Their side diamonds force the common child of the adjacent
+LOSS/non-losing frame to become a genuine boundary WIN at least two proof
+levels below the current endpoint.  Thus neither the DRAW-marked nor the
+LOSS-marked zero-source tail is an ordinary obstruction.  The remaining
+height-one rows must place an exceptional residue on one of two consecutive
+DRAW-spine states; those explicit exceptional returns are the next finite
+case split.
+Section 75 makes that split finite without a fixed-modulus shortcut.
+An actual alternating suffix of length at least five forces the two
+DRAW-spine residues to 5/10 and 0/15 modulo 16, so Section 74 applies.
+Only suffix lengths one through four remain; these can now be expanded as
+exact affine predecessor rows with the adjacent LOSS orientation retained.
+Section 76 closes those short rows.  Nonexceptionality of the original
+parent already restricts its suffix to length one or two, and the
+outcome-compatible side choice leaves four residue rows; in all four, both
+DRAW-spine states are ordinary, so Section 74 forces the height descent.
+The only remaining height-one orientation is therefore the exceptional
+original-parent row, whose adjacent DRAW frame over the height-one WIN
+source s must be coupled to the terminal LOSS child of s.
 
 ## Priority 2: finite transducer plus numerical potential
 

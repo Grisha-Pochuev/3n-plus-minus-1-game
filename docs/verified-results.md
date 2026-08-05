@@ -6497,3 +6497,201 @@ rank transport, not yet a contradiction, because the accompanying DRAW
 boundary still has to be coupled to that lower LOSS token.  All displayed
 arithmetic identities and parity/valuation rows are regression-tested for
 the indicated small parameter ranges.
+
+## 74. An ordinary DRAW spine exposes the adjacent LOSS token in two steps
+
+There is a direct boundary-exposure diamond for the marked adjacent frames
+of Sections 70 and 73.  Suppose
+
+\[
+T\text{ is DRAW},\qquad q=B(T)\text{ is WIN},\qquad
+d=A(T)\text{ is DRAW},
+\]
+
+and suppose the two children of \(q\) form an adjacent constant-tail frame
+
+\[
+\operatorname{moves}(q)=
+\{Q_{r+1}^e(a),Q_r^e(a)\}
+\]
+
+containing a LOSS.  Assume that both \(T\) and \(d\) are nonexceptional.
+
+Put
+
+\[
+p=B(d)=B(A(T)).
+\]
+
+The ordinary side relation at \(T\) makes \(p\) one of the two children of
+\(q\).  Since it is also a child of the DRAW state \(d\), it is non-losing.
+Therefore the other frame member, call it \(\ell\), is the unique LOSS
+child of \(q\), and
+
+\[
+h(\ell)=h(q)-1.
+\]
+
+Every adjacent constant-tail frame has exactly one common child \(u\).  For
+\(r\ge2\) it is explicitly
+
+\[
+u=Q_{r-1}^e(3a);
+\]
+
+for \(r=1\) it is the common contracting child from Section 14.  Because
+\(u\) is a child of the LOSS state \(\ell\),
+
+\[
+\boxed{u\text{ is WIN},\qquad h(u)\le h(q)-2.}
+\]
+
+If \(p\) is DRAW, then \(p\to u\) is already a boundary edge with the
+displayed lower endpoint height.
+
+If \(p\) is WIN, its other child is LOSS because its common child \(u\) is
+WIN.  The DRAW state \(d\), whose contracting child is the WIN state \(p\),
+must then have
+
+\[
+v=A(d)\text{ DRAW}.
+\]
+
+The ordinary side relation at \(d\) makes
+
+\[
+B(v)=B(A(d))
+\]
+
+a child of \(p=B(d)\).  It is also a child of the DRAW state \(v\), so it
+cannot be the LOSS child of \(p\); hence \(B(v)=u\).  Thus \(v\to u\) is
+the required boundary edge.  In both cases
+
+\[
+\boxed{\text{there is a boundary WIN }u\text{ with }h(u)\le h(q)-2.}
+\]
+
+Apply this to the ordinary successor row of Section 69.  There
+\(q=A(s)\), its children are the adjacent zero-source frame of Section 70,
+and the preceding DRAW has children \(q\) and its DRAW continuation.
+Consequently the height-one successor cannot pass through two consecutive
+nonexceptional DRAW-spine states without exposing a boundary endpoint two
+proof levels below \(q\).  The only local obstruction is now an explicit
+exception at one of those two DRAW states, not the length of the
+zero-source tail.  The common-child identity is regression-tested for odd
+coefficients below \(200\), both phases, and lower exponents below \(12\).
+
+## 75. Only four suffix lengths can obstruct the height-one spine descent
+
+The exceptional alternative left by Section 74 is automatically absent
+when the predecessor suffix is long.  In the ordinary successor row of
+Section 69, write
+
+\[
+T=A(D),\qquad R(T)=s,\qquad q=B(T)=A(s).
+\]
+
+Let \(L\) be the length of the maximal alternating suffix deleted from
+\(T\).  If \(L\ge5\), the last four bits of \(T\) are alternating, so
+
+\[
+T\bmod16\in\{5,10\}.
+\]
+
+Neither residue is exceptional.  The last five bits give the sharper
+alternatives
+
+\[
+T\equiv21\pmod {32}\quad\text{or}\quad
+T\equiv10\pmod {32}.
+\]
+
+In the first row \(T\) is odd and
+
+\[
+A(T)=\frac{3T+1}{2}\equiv0\pmod {16};
+\]
+
+in the second it is even and
+
+\[
+A(T)=\frac{3T}{2}\equiv15\pmod {16}.
+\]
+
+Thus both consecutive DRAW-spine states \(T\) and \(A(T)\) are
+nonexceptional whenever \(L\ge5\).  Section 74 applies and exposes a new
+boundary WIN whose height is at least two below \(q=A(s)\).
+
+Consequently
+
+\[
+\boxed{\text{a height-one ordinary successor can avoid the Section 74
+descent only when }L\in\{1,2,3,4\}.}
+\]
+
+This is a legitimate finite suffix split: the long case is decided by the
+actual suffix length before residues are used.  It does not assume that a
+fixed modulus detects an unbounded alternating suffix.  The two residue
+conclusions are regression-tested for every positive state below
+\(100000\) whose alternating suffix has length at least five.
+
+## 76. The height-one ordinary successor has no exceptional row
+
+The four short suffix lengths left by Section 75 collapse completely once
+the original parent is required to be ordinary.  Keep the notation of
+Sections 69 and 75:
+
+\[
+D\text{ nonexceptional},\qquad s=B(D),\qquad B(s)=0,
+\]
+
+\[
+T=A(D),\qquad q=A(s),\qquad B(T)=q.
+\]
+
+For a nonexceptional \(D\), Section 5 says that the alternating suffix of
+\(T=A(D)\) has length only one or two.  Moreover the last equality says
+that the ordinary side relation at \(D\) selects \(A(s)\), rather than the
+terminal state \(B(s)=0\).
+
+If the suffix length is one, the side relation selects \(A(s)\) exactly
+when
+
+\[
+s\bmod4\in\{0,3\}.
+\]
+
+Intersecting with the four height-one residues
+\(\{1,3,12,14\}\pmod {16}\) leaves \(s\equiv3,12\pmod {16}\).
+If the suffix length is two, the selecting residues are instead
+\(s\bmod4\in\{1,2\}\), leaving \(s\equiv1,14\pmod {16}\).
+
+Appending the corresponding one- or two-bit maximal suffix to \(s\), and
+then applying \(A\), gives the complete table
+
+\[
+\boxed{
+\begin{array}{c|c|c|c}
+s\bmod16&L&T\bmod16&A(T)\bmod16\\ \hline
+3&1&7&11\\
+12&1&8&4\\
+1&2&6&9\\
+14&2&9&6.
+\end{array}}
+\]
+
+None of the last two columns contains an exceptional residue.  Therefore
+the two consecutive DRAW-spine states \(T\) and \(A(T)\) always satisfy
+the hypotheses of Section 74.  We obtain
+
+\[
+\boxed{\text{every height-one ordinary successor exposes a boundary
+WIN at least two proof levels below }q=A(s).}
+\]
+
+Thus the ordinary parent row of Section 69 has no residual exceptional
+case and no unbounded suffix case.  The still-open height-one orientation
+is the row where the original parent \(D\) itself is exceptional and
+Section 69 produces an adjacent DRAW frame over \(s\).  The four-row table
+and the absence of exceptional spine residues are regression-tested for
+all parent states below \(100000\).

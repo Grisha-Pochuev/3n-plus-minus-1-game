@@ -482,6 +482,13 @@ class GameArithmeticTests(unittest.TestCase):
             if value is not None:
                 self.assertEqual(value, transformed_B(transformed_A(q)))
 
+    def test_long_alternating_suffix_avoids_spine_exceptions(self) -> None:
+        for state in range(1, 100000):
+            if alternating_suffix_length(state) < 5:
+                continue
+            self.assertIn(state % 16, {5, 10})
+            self.assertIn(transformed_A(state) % 16, {0, 15})
+
     def test_dyadic_minus_one_recurrence(self) -> None:
         for odd_coefficient in range(1, 1000, 2):
             for exponent in range(3, 16):
@@ -532,6 +539,33 @@ class GameArithmeticTests(unittest.TestCase):
                         coefficient, exponent, 1 - tail_bit
                     ),
                 )
+
+    def test_adjacent_tail_frame_has_one_common_child(self) -> None:
+        for odd_coefficient in range(1, 200, 2):
+            for tail_bit in (0, 1):
+                for lower_exponent in range(1, 12):
+                    lower = constant_tail_state(
+                        odd_coefficient, lower_exponent, tail_bit
+                    )
+                    upper = constant_tail_state(
+                        odd_coefficient, lower_exponent + 1, tail_bit
+                    )
+                    common = set(transformed_moves(lower)) & set(
+                        transformed_moves(upper)
+                    )
+                    self.assertEqual(len(common), 1)
+
+                    if lower_exponent >= 2:
+                        self.assertEqual(
+                            common,
+                            {
+                                constant_tail_state(
+                                    3 * odd_coefficient,
+                                    lower_exponent - 1,
+                                    tail_bit,
+                                )
+                            },
+                        )
 
     def test_constant_tail_coordinates_and_boundary_core_drop(self) -> None:
         for state in range(1, 100000):
@@ -2032,6 +2066,44 @@ class GameArithmeticTests(unittest.TestCase):
                 continuation_coordinates[2], side_coordinates[2] + 1
             )
             self.assertEqual(continuation_coordinates[3], side_coordinates[3])
+
+    def test_height_one_ordinary_successor_four_rows(self) -> None:
+        expected = {
+            (3, 1, 7, 11),
+            (12, 1, 8, 4),
+            (1, 2, 6, 9),
+            (14, 2, 9, 6),
+        }
+        seen: set[tuple[int, int, int, int]] = set()
+        for parent in range(1, 100000):
+            if parent % 16 in SIDE_RELATION_EXCEPTIONAL_RESIDUES:
+                continue
+            endpoint = transformed_B(parent)
+            if endpoint == 0 or transformed_B(endpoint) != 0:
+                continue
+
+            spine = transformed_A(parent)
+            lifted_endpoint = transformed_A(endpoint)
+            if transformed_B(spine) != lifted_endpoint:
+                continue
+
+            continuation = transformed_A(spine)
+            row = (
+                endpoint % 16,
+                alternating_suffix_length(spine),
+                spine % 16,
+                continuation % 16,
+            )
+            self.assertIn(row, expected)
+            self.assertNotIn(
+                spine % 16, SIDE_RELATION_EXCEPTIONAL_RESIDUES
+            )
+            self.assertNotIn(
+                continuation % 16,
+                SIDE_RELATION_EXCEPTIONAL_RESIDUES,
+            )
+            seen.add(row)
+        self.assertEqual(seen, expected)
 
     def test_height_one_endpoint_has_adjacent_zero_source_children(self) -> None:
         for endpoint in range(1, 100000):
