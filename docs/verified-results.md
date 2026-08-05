@@ -8720,6 +8720,93 @@ nested source \(w\), raw source \(r\), phase, and exponent split are
 regression-tested for every \(1\le t<10000\), both phases, and valuations
 nine and ten.
 
+## 105. The first signed exit re-enters over the same lower token
+
+The signed sibling in Section 104 has the same lower source provenance as
+its raw sibling.  Retain
+
+\[
+w=Q_1^{1-g}(J(y)),\qquad
+T=Q_1^{1-g}(J(w)),\qquad S=R(T),qquad v\ge9.
+\]
+
+Because \(w\) has tail exponent one and phase \(1-g\), its A-selecting
+phase is exactly
+
+\[
+\boxed{\alpha(w)=1-g.}
+\]
+
+The calculation in Section 104 gives more than the source coordinates of
+\(S\): in both phases,
+
+\[
+\boxed{S=A(w).}
+\]
+
+Consequently \(T\) is the A-selecting exponent-one lift over \(w\), and
+its expanding child is
+
+\[
+\boxed{A(T)=Q_1^g(J(S)).}
+\]
+
+Suppose now that \(v\ge10\), so Section 104 gives
+
+\[
+S=Q_1^g(J(r)),qquad r=B(q)=B(y)	ext{ WIN},qquad
+h(r)\le h(y)-1.
+\]
+
+Put
+
+\[
+z=B(w),qquad d=B(T).
+\]
+
+The same constant-tail calculation that produced Section 102's tables
+now applies at \(r=Q_{v-9}^g(243J(t))\).  It gives both the selected source
+and the exact lift containing \(d\):
+
+\[
+\boxed{
+\operatorname{sourceTransition}(r,g)=
+\begin{cases}
+(A,1,z),&v=10,\\
+(B,j,z),\quad j\ge3,&v=11,\\
+(B,2,z),&v\ge12,
+\end{cases}}
+\]
+
+\[
+\boxed{d=Q_j^{1-g}(J(z)).}
+\]
+
+For clarity, this is not an analogy inferred from tests.  The remaining
+tail exponent of \(r\) is \(v-9\): exponent one is A-selecting with
+valuation one, exponent two is B-selecting with valuation at least three,
+and every longer constant tail is B-selecting with valuation exactly two.
+The appended bits in the A-selecting lift at \(w\) give precisely the
+displayed \(Q_j^{1-g}\) state.
+
+There is now a complete outcome split for a DRAW signed exit \(T\).  Its
+common side \(d\) cannot be LOSS.
+
+- If \(d\) is DRAW, it is the displayed exact signed lift over the
+  ordinary child \(z\) of the lower WIN token \(r\).
+- If \(d\) is WIN, the other child \(A(T)=Q_1^g(J(S))\) is DRAW.  Since
+  \(S=Q_1^g(J(r))\) has A-selecting phase \(g\), this is the canonical
+  A-selecting continuation over an exact lift whose coefficient source is
+  still \(r\).
+
+Thus neither outcome of the first signed exit introduces a height-unrelated
+coefficient source: both remain in the source diamond of the already lower
+WIN token \(r\).  This is source attachment, not yet full paired-height
+descent, because the outcome of the selected child \(z\) must still be
+split and the \(v=9\) boundary row has an arbitrary lift exponent.  The
+identities and the valuation table are regression-tested for every
+\(1\le t<10000\), both phases, and valuations nine through twelve.
+
 ## 101. The high-return common side touches the lower predecessor token
 
 The lower token in Section 100 is not arbitrary relative to the new

@@ -601,6 +601,15 @@ lowers the second component of the pair.  The remaining exits are the
 nested signed lift over y and the coupled twenty-sevenfold level, together
 with v=7,8 and the two short exceptional rows.
 
+Section 105 attaches the first signed branch for v>=10 to the same lower
+token r.  Its intermediate source w is A-selecting, its selected source is
+exactly the raw lift S over r, and its common side is the signed transition
+from r with the shifted valuation table 1, >=3, 2 at v=10, v=11, v>=12.
+A DRAW therefore either stays in that exact r-source lift or canonically
+continues over S.  The next split is the finite outcome of the selected
+ordinary child z of r; the arbitrary-exponent v=9 row and the second
+factor level remain separate.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
