@@ -9955,3 +9955,116 @@ token \(r\), so the arbitrary lift is not an unrelated restart.  This is
 an exact routing lemma, not yet the global rank assembly.  The common-child
 identity, lift coordinates, phase, and second numerator are regression-
 tested for every odd \(1\le C<1000\) in both phases.
+
+## 114. The arbitrary A-lift has a three-bit canonical rank
+
+Section 113 routes its unbounded exponent into the universal obligation
+automaton.  The canonical branch of that obligation has a sharper exact
+rank.  Let \(a\) be any positive odd integer, let \(m\ge2\), and put
+
+\[
+x=Q_m^g(a),\qquad e=1-g=\alpha(x).
+\]
+
+In the notation of Section 91, define
+
+\[
+P=Q_1^e(J(x)),\qquad U=Q_2^e(J(x)),\qquad
+y=A(x),\qquad b=B(P)=B(U).
+\]
+
+Direct constant-tail reduction gives
+
+\[
+y=Q_{m-1}^g(3a),\qquad A(y)=Q_{m-2}^g(9a).
+\]
+
+At \(m=2\), the last displayed state has parity \(e\), so the refined
+side identity selects \(A(y)\).  From \(m=3\) onward it has parity \(g\),
+so the side identity selects \(B(y)\).  Reducing the latter long tail when
+possible gives the complete table
+
+\[
+\boxed{
+b=
+\begin{cases}
+Q_0^g(9a)=9a-g,&m=2,\\
+R\!\left(Q_1^g(9a)\right),&m=3,\\
+Q_{m-3}^g(9a),&m\ge4.
+\end{cases}}
+\]
+
+The phase and valuation at the canonical source \(y\) are equally rigid.
+For \(m=2\), direct substitution gives
+
+\[
+3J(y)+1-2g=2(27a+2-4g),
+\]
+
+whose bracket is odd.  Hence phase \(g\) is A-selecting with valuation one.
+For \(m=3\),
+
+\[
+3J(y)+1-2g=4(27a+1-2g),
+\]
+
+and the bracket is even, so phase \(g\) is B-selecting with valuation at
+least three.  Finally, for every \(m\ge4\),
+
+\[
+3J(y)+1-2g
+=4\left(27a\,2^{m-3}+1-2g\right)
+=4J(b),
+\]
+
+and the bracket is odd.  Thus
+
+\[
+\boxed{
+\operatorname{sourceTransition}(y,g)=
+\begin{cases}
+(A,1,b),&m=2,\\
+(B,j,b),\quad j\ge3,&m=3,\\
+(B,2,b),&m\ge4.
+\end{cases}}
+\]
+
+Now suppose \(O(x,e)\) takes Section 91's canonical alternative.  Then
+\(P\) is DRAW, \(b\) is WIN, and \(O(y,g)\) holds.  For \(m\ge4\), the
+valuation-two transfer is exact, so
+
+\[
+\boxed{O(x,e)\longmapsto O(b,e),\qquad
+(m,a)\longmapsto(m-3,9a).}
+\]
+
+If \(x\) is WIN, Section 96 also makes \(P\to b\) a boundary and gives
+
+\[
+\boxed{h(b)\le h(x)-2.}
+\]
+
+In the Section 113 application \(x=S\) is a boundary WIN endpoint, and
+every returned source \(b\) is again WIN.  Consequently this canonical
+recycle can occur at most
+
+\[
+\boxed{\left\lfloor\frac{m-1}{3}\right\rfloor}
+\]
+
+times before the tail exponent is one, two, or three, and every occurrence
+strictly lowers the carried boundary-WIN height.  In the Section 113 row
+\(a=J(r)\); more generally, when \(a=3^{2k}J(r)\), every \(m\ge4\) return
+has exact coordinates
+
+\[
+(\rho(b),k(b),r(b),e(b))=(r,2k+2,m-3,g).
+\]
+
+Thus the arbitrary lift exponent at \(D=3\) cannot create an unbounded
+canonical A-continuation or change its coefficient-source anchor.  The
+common-side DRAW and factor alternatives remain distinct marked exits; this
+lemma does not yet assemble them into the global no-DRAW theorem.  The
+three-row common-side formula, phase/valuation table, source coordinates,
+and exponents \(2\le m\le12\) are regression-tested for
+\(1\le r<1000\), both phases, and even factor powers through six.

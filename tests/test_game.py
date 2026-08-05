@@ -1112,6 +1112,109 @@ class GameArithmeticTests(unittest.TestCase):
                 )
                 self.assertEqual(v2(second_numerator), 2)
 
+    def test_long_lift_A_obligation_canonical_recycle(self) -> None:
+        for source in range(1, 1000):
+            base_coefficient = embedded_original_state(source)
+            for factor_power in range(0, 7, 2):
+                coefficient = 3**factor_power * base_coefficient
+                for phase in (0, 1):
+                    selecting_phase = 1 - phase
+                    for exponent in range(2, 13):
+                        obligation_source = constant_tail_state(
+                            coefficient,
+                            exponent,
+                            phase,
+                        )
+                        self.assertEqual(
+                            source_A_selecting_tail_bit(
+                                obligation_source
+                            ),
+                            selecting_phase,
+                        )
+
+                        selected_source = transformed_A(
+                            obligation_source
+                        )
+                        lower = constant_tail_state(
+                            embedded_original_state(obligation_source),
+                            1,
+                            selecting_phase,
+                        )
+                        upper = constant_tail_state(
+                            embedded_original_state(obligation_source),
+                            2,
+                            selecting_phase,
+                        )
+                        common_side = transformed_B(lower)
+                        self.assertEqual(
+                            transformed_B(upper), common_side
+                        )
+
+                        transition = source_boundary_transition(
+                            selected_source,
+                            phase,
+                        )
+                        self.assertEqual(transition[2], common_side)
+
+                        if exponent == 2:
+                            self.assertEqual(transition[:2], ("A", 1))
+                            self.assertEqual(
+                                common_side,
+                                transformed_A(selected_source),
+                            )
+                            self.assertEqual(
+                                source_A_selecting_tail_bit(
+                                    selected_source
+                                ),
+                                phase,
+                            )
+                        elif exponent == 3:
+                            self.assertEqual(transition[0], "B")
+                            self.assertGreaterEqual(transition[1], 3)
+                            self.assertEqual(
+                                common_side,
+                                alternating_suffix_remainder(
+                                    constant_tail_state(
+                                        9 * coefficient,
+                                        1,
+                                        phase,
+                                    )
+                                ),
+                            )
+                            self.assertEqual(
+                                source_A_selecting_tail_bit(
+                                    selected_source
+                                ),
+                                selecting_phase,
+                            )
+                        else:
+                            self.assertEqual(transition[:2], ("B", 2))
+                            self.assertEqual(
+                                common_side,
+                                constant_tail_state(
+                                    9 * coefficient,
+                                    exponent - 3,
+                                    phase,
+                                ),
+                            )
+                            self.assertEqual(
+                                constant_tail_source_coordinates(
+                                    common_side
+                                ),
+                                (
+                                    source,
+                                    factor_power + 2,
+                                    exponent - 3,
+                                    phase,
+                                ),
+                            )
+                            self.assertEqual(
+                                source_A_selecting_tail_bit(
+                                    selected_source
+                                ),
+                                selecting_phase,
+                            )
+
     def test_high_return_obligation_common_side(self) -> None:
         for source in range(1, 1000):
             coefficient = embedded_original_state(source)

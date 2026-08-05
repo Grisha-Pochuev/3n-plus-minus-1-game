@@ -680,6 +680,14 @@ exactly the obligation O(S,alpha(S)).  Thus the short-row audit no longer
 has an unbounded parameter: D=3 routes into Sections 91--96, while
 D=4,...,13 use the fixed tables of Sections 106--112.
 
+Section 114 gives that routing its own explicit counter.  On the canonical
+branch, every tail of length m>=4 returns by valuation two with
+(m,a) -> (m-3,9a), keeps the same coefficient-source anchor, and lowers
+the boundary-WIN height by two.  Hence the arbitrary D=3 lift reaches tail
+length 1, 2, or 3 after finitely many canonical recycles.  The remaining
+D=3 audit is now only its common-side DRAW and factor alternatives, together
+with those three terminal tail rows; no unbounded canonical lift remains.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
