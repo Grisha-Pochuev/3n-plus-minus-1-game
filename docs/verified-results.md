@@ -10671,3 +10671,112 @@ creating a lower DRAW/WIN boundary.  This is an outcome-incidence problem
 in three bounded local types, not an unbounded exponent or factor-counter
 problem.  The three coordinate identities are regression-tested for every
 odd \(1\le C<1000\) in both phases.
+
+## 121. Every terminal lower-pair barrier reassembles one LOSS token
+
+The two members transported independently in Section 120 have not lost
+their common LOSS provenance.  At the terminal row they are again exactly
+the two children of one state.  Retain all notation there, including
+
+\[
+M=3h+n,\qquad n\in\{1,2,3\},\qquad
+e=1-g,\qquad c_i=9^iJ(r),
+\]
+
+and let \(\ell\) be the original LOSS state whose two WIN children are
+\(L_0,H_0\).  The three reconstructed parents are as follows.
+
+### Terminal exponent three
+
+The barrier is
+
+\[
+L_h=Q_1^e(c_h),\qquad H_h=Q_2^e(c_h).
+\]
+
+If \(h=0\), this is the original pair and its parent is \(\ell\).  If
+\(h\ge1\), put
+
+\[
+Z_3=Q_3^e(3^{2h-1}J(r)).
+\]
+
+The long-tail identities give
+
+\[
+\boxed{\operatorname{moves}(Z_3)=\{H_h,L_h\}.}
+\]
+
+Both children are WIN, so \(Z_3\) is LOSS.  With \(Z_3:=\ell\) in the
+case \(h=0\), the height bounds of Section 120 give uniformly
+
+\[
+\boxed{h(Z_3)\le h(\ell)-2h.}
+\]
+
+### Terminal exponent two
+
+Here \(h\ge1\), and the barrier is
+
+\[
+H_h=Q_1^e(c_h),\qquad K=R(H_h).
+\]
+
+Put
+
+\[
+Z_2=Q_2^e(3^{2h-1}J(r)).
+\]
+
+Its expanding child is \(H_h\).  The symmetric exponent-two/one
+common-child identity gives its contracting child as \(R(H_h)=K\).
+Therefore
+
+\[
+\boxed{\operatorname{moves}(Z_2)=\{H_h,K\},\qquad
+Z_2\text{ LOSS},\qquad h(Z_2)\le h(\ell)-2h.}
+\]
+
+### Terminal exponent one
+
+Now \(h\ge1\), and Section 120's barrier is
+
+\[
+L_{h-1}=Q_2^e(c_{h-1}),\qquad
+H_{h-1}=Q_3^e(c_{h-1}).
+\]
+
+For \(h=1\) this is again the original pair, with parent \(\ell\).  For
+\(h\ge2\), put
+
+\[
+Z_1=Q_4^e(3^{2h-3}J(r)).
+\]
+
+Long-tail reduction gives
+
+\[
+\boxed{\operatorname{moves}(Z_1)=
+\{H_{h-1},L_{h-1}\}.}
+\]
+
+Thus \(Z_1\) is LOSS.  Defining \(Z_1:=\ell\) when \(h=1\), the two
+componentwise bounds give
+
+\[
+\boxed{h(Z_1)\le h(\ell)-2h+2.}
+\]
+
+Indeed, a LOSS height is one plus the maximum of the heights of its two
+WIN children.  Taking the maximum preserves each componentwise decrement
+from Section 120.  Hence the terminal barrier is not merely a pair of
+unrelated lower WIN states: it is the complete proof frontier of a single
+LOSS token.  Except in the two zero-recycle rows, that LOSS token is
+strictly lower than the original \(\ell\).
+
+This is the canonical-witness transport needed before the terminal factor
+incidence audit.  It does not yet prove that every DRAW exit reaches a child
+of \(Z_n\); that remaining step must use the exact raw/signed positions of
+Section 117.  The three inverse-parent identities, including both
+zero-recycle rows, are regression-tested for every odd
+\(1\le C<1000\) in both phases.

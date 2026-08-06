@@ -742,6 +742,17 @@ outcome-incidence theorem for these three barriers against the three
 terminal rows of Section 117; no canonical-recycle counter remains in that
 statement.
 
+Section 121 shows that these are not merely two independent WIN barriers.
+In every terminal row they are exactly the two children of one reconstructed
+LOSS state.  Taking the maximum of their componentwise height bounds
+transports the original canonical LOSS witness through the entire recycle:
+the reconstructed LOSS height falls by 2h in the exponent-three and
+exponent-two rows and by 2h-2 in the exponent-one row.  Only the two genuine
+zero-recycle endpoints return the original LOSS witness unchanged.  The
+remaining incidence theorem may therefore carry one marked LOSS token
+against the raw/signed exits of Section 117 instead of trying to preserve
+two unrelated WIN heights.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

@@ -1318,6 +1318,84 @@ class GameArithmeticTests(unittest.TestCase):
                         ),
                     )
 
+    def test_terminal_barriers_reassemble_a_loss_parent(self) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                marked_source = constant_tail_state(
+                    coefficient, 3, phase
+                )
+                marked_win = transformed_A(marked_source)
+                common_win = transformed_B(marked_win)
+                canonical_loss = transformed_A(marked_win)
+                lower_successor = transformed_B(canonical_loss)
+                upper_successor = transformed_A(canonical_loss)
+                raw_exponent = (
+                    v2(27 * coefficient + 1 - 2 * phase) + 1
+                )
+                if raw_exponent < 3:
+                    continue
+
+                terminal_exponent = (raw_exponent - 1) % 3 + 1
+                recycle_count = (
+                    raw_exponent - terminal_exponent
+                ) // 3
+                opposite_phase = 1 - phase
+
+                def recycle(state: int, count: int) -> int:
+                    for _ in range(count):
+                        state = transformed_B(transformed_A(state))
+                    return state
+
+                terminal_coefficient = (
+                    3 ** (2 * recycle_count)
+                    * embedded_original_state(common_win)
+                )
+
+                if terminal_exponent == 3:
+                    lower = recycle(lower_successor, recycle_count)
+                    upper = recycle(upper_successor, recycle_count)
+                    if recycle_count == 0:
+                        expected_parent = canonical_loss
+                    else:
+                        expected_parent = constant_tail_state(
+                            terminal_coefficient // 3,
+                            3,
+                            opposite_phase,
+                        )
+                elif terminal_exponent == 2:
+                    lower = alternating_suffix_remainder(
+                        recycle(upper_successor, recycle_count)
+                    )
+                    upper = recycle(upper_successor, recycle_count)
+                    expected_parent = constant_tail_state(
+                        terminal_coefficient // 3,
+                        2,
+                        opposite_phase,
+                    )
+                else:
+                    lower = recycle(
+                        lower_successor, recycle_count - 1
+                    )
+                    upper = recycle(
+                        upper_successor, recycle_count - 1
+                    )
+                    if recycle_count == 1:
+                        expected_parent = canonical_loss
+                    else:
+                        expected_parent = constant_tail_state(
+                            terminal_coefficient // 27,
+                            4,
+                            opposite_phase,
+                        )
+
+                parent = inverse_F(upper)
+                self.assertIsNotNone(parent)
+                self.assertEqual(parent, expected_parent)
+                self.assertEqual(
+                    transformed_moves(parent),
+                    (upper, lower),
+                )
+
     def test_long_lift_A_obligation_canonical_recycle(self) -> None:
         for source in range(1, 1000):
             base_coefficient = embedded_original_state(source)
