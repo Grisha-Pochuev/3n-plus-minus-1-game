@@ -11027,3 +11027,444 @@ form a finite signed/raw incidence table.  This does not yet decide those
 three short rows.  The selected source identity and the strict inequality
 are regression-tested for every odd multiple of three below \(100000\), in
 both phases.
+
+## 125. The six short exponent-one rows have only three attached sources
+
+The two LOSS orientations in Section 123 do not give two independent
+incidence problems.  Retain
+
+\[
+e=1-g,\qquad
+L\in\{Q_2^e(c),Q_1^e(c)\}\text{ LOSS}.
+\]
+
+The two candidates have the same contracting child:
+
+\[
+\boxed{
+W=B(Q_1^e(c))=B(Q_2^e(c))=R(3c-e).}
+\]
+
+Consequently the actual choice of \(L\) always gives
+
+\[
+\boxed{W\text{ WIN},\qquad h(W)\le h(L)-1.}
+\]
+
+Now put
+
+\[
+N=9c-g,\qquad
+\lambda=\operatorname{asl}(N),\qquad y=R(N).
+\]
+
+The signed source identity behind Section 124 is
+
+\[
+2^\lambda J(y)=27c+1-2g.
+\]
+
+Hence Section 25's transferred adjacent frame is
+
+\[
+\boxed{
+\begin{aligned}
+D&=Q_{\lambda+1}^g(J(y))=54c+2-5g,\\
+C&=Q_\lambda^g(J(y))=27c+1-3g.
+\end{aligned}}
+\]
+
+Thus even the two states carrying the DRAW are independent of
+\(\lambda\); only their canonical constant-tail coordinates change.
+They are also independent of which member of the exponent-one/two pair
+is the actual LOSS \(L\).
+
+There is already a strict numerical anchor at one further source level.
+If \(y>0\), let \(\rho(y)\) denote its coefficient source.  The universal
+coefficient-source estimate and \(\lambda\ge1\) give
+
+\[
+\boxed{
+\rho(y)\le\frac{y-1}{6}
+\le\frac{\lfloor(9c-g)/2\rfloor-1}{6}
+<\frac{3c}{4}<c.}
+\]
+
+Thus every suffix length, not only the three short ones, produces a
+transferred frame whose source \(y\) has a strictly smaller nested
+coefficient source.  Section 124's \(\lambda\ge4\) conclusion remains
+stronger in those rows because the outer source itself is already below
+\(c\).
+
+The three short suffixes give the exact residue table
+
+\[
+\begin{array}{c|cc}
+&g=0&g=1\\ \hline
+\lambda=1&c\equiv3\pmod4&c\equiv1\pmod4\\
+\lambda=2&c\equiv1\pmod8&c\equiv7\pmod8\\
+\lambda=3&c\equiv5\pmod {16}&c\equiv11\pmod {16}.
+\end{array}
+\]
+
+These rows have the following source attachments.
+
+### Suffix length one
+
+Here
+
+\[
+W=\frac{3c-1}{2},\qquad
+y=\frac{9c-1}{2}=3W+1.
+\]
+
+The residue table gives \(W\bmod2=g\).  Put \(t=R(W)\).  Section 53's
+universal raw-to-constant-tail identity now gives, for some \(m\ge1\),
+
+\[
+\boxed{y=Q_m^e(J(t)),\qquad t=R(W)<c.}
+\]
+
+Indeed \(t\le\lfloor W/2\rfloor<3c/4\).  Thus the length-one row is an
+exact factor-free lift whose nested source has already decreased below
+the gate coefficient.
+
+### Suffix length two
+
+Put \(z=3c-e=A(Q_1^e(c))\), so \(W=R(z)\).  The displayed residues make
+the alternating suffix of \(z\) at least three bits long.  Since
+\(z\bmod2=g\), the exact suffix factorization has the form
+
+\[
+3z+2-g=2^vJ(W),\qquad v\ge3.
+\]
+
+On the other hand, direct substitution gives
+
+\[
+3z+2-g=4(y+g).
+\]
+
+Therefore, with \(m=v-2\ge1\),
+
+\[
+\boxed{y=Q_m^g(J(W)),\qquad W<c.}
+\]
+
+The strict inequality follows already from
+\(W=R(z)\le\lfloor z/8\rfloor<c\).  Hence this row is an exact
+factor-free lift over the actual lower-height WIN child \(W\).
+
+### Suffix length three
+
+The residue table gives
+
+\[
+W=\frac{3c-3+2g}{4},\qquad
+y=\frac{9c-5+2g}{8}.
+\]
+
+Here \(W\bmod2=e\), and direct evaluation of
+\(A(W)=\lceil3W/2\rceil\) yields
+
+\[
+\boxed{y=A(W),\qquad W<c.}
+\]
+
+Thus the last short source is an actual ordinary child of the same
+lower-height WIN token.
+
+The six formal rows \((\lambda,L)\) have therefore collapsed to three
+typed exits:
+
+\[
+\boxed{
+\begin{array}{c|l}
+\lambda=1&\text{a factor-free lift over a source }t<c,\\
+\lambda=2&\text{a factor-free lift over }W\text{ WIN with }
+W<c,\ h(W)\le h(L)-1,\\
+\lambda=3&A(W)\text{ with }W\text{ WIN},\
+W<c,\ h(W)\le h(L)-1.
+\end{array}}
+\]
+
+This is a genuine source/proof-token attachment, but not yet the global
+size-change theorem: a subsequent factor scan must still be shown to
+preserve one descending component until it reaches a DRAW boundary.
+The shared frame, universal strict nested-source bound, all three residue
+rows, and the exact nested coordinates are regression-tested for every odd
+multiple of three below \(100000\), in both phases.
+
+## 126. The length-one gate enters the old obligation automaton below \(c\)
+
+The first row of Section 125 can be sharpened from source attachment to an
+exact automaton entry.  Retain
+
+\[
+\lambda=1,\qquad
+y=Q_m^e(J(t)),\qquad e=1-g,\qquad t<c.
+\]
+
+The original B-selecting transition from \(X\) has valuation
+\(\lambda+1=2\).  Section 27 therefore preserves the exact obligation:
+
+\[
+\boxed{O(X,e)\Longrightarrow O(y,g).}
+\]
+
+There are only two tail cases.  If \(m=1\), the A-selecting phase at
+\(y=Q_1^e(J(t))\) is \(e\), so the obligation phase \(g\) is B-selecting.
+Put
+
+\[
+k=B(y).
+\]
+
+Section 107's universal exponent-one estimate applies with phase \(e\):
+if \(k>0\), then
+
+\[
+\boxed{\rho(k)<t<c.}
+\]
+
+Section 25 transfers \(O(y,g)\) to an adjacent frame over this exact
+selected child \(k\).  Thus the sole one-bit inner lift immediately makes
+a second strict nested-source descent (with \(k=0\) as the terminal-source
+case).
+
+If \(m\ge2\), a constant tail of length at least two and bit \(e\) has
+A-selecting phase \(g\), with valuation one.  Hence
+
+\[
+\boxed{m\ge2\Longrightarrow O(y,\alpha(y)),\qquad
+\alpha(y)=g.}
+\]
+
+This is exactly the A-selecting obligation type of Sections 91--96,
+anchored at the already smaller coefficient source \(t<c\).  In
+particular its canonical lift counter is the one treated in Section 114:
+every \(m\ge4\) canonical recycle sends
+
+\[
+(m,J(t))\longmapsto(m-3,9J(t))
+\]
+
+without changing the underlying source \(t\), while spending the carried
+boundary height whenever the obligation source is the marked WIN endpoint.
+The common-side and factor alternatives remain the already typed exits of
+Sections 91 and 115--116; no new phase or suffix counter is introduced by
+the terminal gate.
+
+This closes the arithmetic entry audit for \(\lambda=1\), not the global
+size-change assembly of those existing exits.  The valuation-two entry,
+the \(m=1\) strict nested descent, and the \(m\ge2\) A-selecting phase are
+regression-tested for every odd multiple of three below \(100000\), in both
+phases.
+
+## 127. The length-two gate has one lower-WIN-anchored tail table
+
+Retain the \(\lambda=2\) row of Section 125:
+
+\[
+W\text{ WIN},\qquad h(W)\le h(L)-1,\qquad W<c,
+\]
+
+\[
+y=Q_m^g(J(W)),\qquad m\ge1,
+\]
+
+and let its transferred frame be
+
+\[
+D=Q_3^g(J(y)),\qquad C=Q_2^g(J(y)).
+\]
+
+The phase \(g\) at \(y\) has the exact three-row table
+
+\[
+\boxed{
+\operatorname{sourceTransition}(y,g)=
+\begin{cases}
+(A,1,A(y)),&m=1,\\
+(B,j,B(y)),\quad j\ge3,&m=2,\\
+(B,2,B(y)),&m\ge3.
+\end{cases}}
+\]
+
+For \(m=1\), direct reduction gives
+
+\[
+\boxed{A(y)=3J(W)-g,}
+\]
+
+which is the first raw factor boundary over the same \(W\).  For
+\(m\ge3\), long-tail reduction gives
+
+\[
+\boxed{
+B(y)=Q_{m-2}^g(3J(W)).}
+\]
+
+Thus every stable B-selected row shortens the inner tail by two bits,
+adds one marked factor of three, and preserves the lower-height source
+\(W\).  The sole transition not covered by one of these two formulas is
+the explicit \(m=2,\ j\ge3\) signed boundary over \(B(y)\).
+
+There is also a universal one-step outcome diamond for the outer
+three/two frame.  Put
+
+\[
+\begin{aligned}
+P_2&=Q_2^g(3J(y)),&
+P_1&=Q_1^g(3J(y)),\\
+S&=B(C)=B(Q_1^g(J(y))).
+\end{aligned}
+\]
+
+Then
+
+\[
+\operatorname{moves}(D)=\{P_2,P_1\},\qquad
+\operatorname{moves}(C)=\{P_1,S\}.
+\]
+
+Consequently outcome recursion alone gives
+
+\[
+\boxed{
+\{D,C\}\text{ contains a DRAW}
+\Longrightarrow
+\{P_2,P_1\}\text{ contains a DRAW}
+\quad\text{or}\quad S\text{ is DRAW}.}
+\]
+
+Neither exit loses the \(W\)-provenance.  In the \(m=1\) row, Section 24
+makes \(S\) an ordinary child of the displayed factor-boundary state
+\(A(y)=3J(W)-g\).  In the two B-selecting rows, Section 25 gives
+
+\[
+\boxed{S=Q_{j-1}^{\,1-g}(J(B(y))).}
+\]
+
+In particular, for every \(m\ge3\),
+
+\[
+\boxed{
+S=Q_1^{\,1-g}
+\!\left(J\!\left(Q_{m-2}^g(3J(W))\right)\right).}
+\]
+
+Thus the length-two terminal row enters either the first factor pair over
+the exact lift \(y\), an ordinary side of the first raw boundary over
+\(W\), or an exact signed lift over the tail-shortened state still anchored
+at \(W\).  Its only unbounded counter decreases by two in the stable row;
+the \(m=1,2\) endpoints are already finite raw/signed boundary types.
+
+This proves provenance and counter descent, not yet the global outcome
+rank through the subsequent factor scan.  The phase table, long-tail
+return, outer diamond, and all three side-exit coordinates are
+regression-tested for every odd multiple of three below \(100000\), in both
+phases.
+
+## 128. The length-three gate reaches the old finite-source fork in two plies
+
+Retain the \(\lambda=3\) row of Section 125:
+
+\[
+W\text{ WIN},\qquad h(W)\le h(L)-1,\qquad W<c,
+\qquad y=A(W).
+\]
+
+Let \(a=J(y)\).  The transferred frame is
+
+\[
+\{Q_4^g(a),Q_3^g(a)\}\text{ containing a DRAW}.
+\]
+
+Following a DRAW child through the long-tail recurrence reaches exponent
+one or two after at most two plies.  More precisely, outcome recursion and
+
+\[
+\begin{aligned}
+\operatorname{moves}(Q_3^g(a))
+  &=\{Q_2^g(3a),Q_1^g(3a)\},\\
+\operatorname{moves}(Q_4^g(a))
+  &=\{Q_3^g(3a),Q_2^g(3a)\},\\
+\operatorname{moves}(Q_3^g(3a))
+  &=\{Q_2^g(9a),Q_1^g(9a)\}
+\end{aligned}
+\]
+
+give
+
+\[
+\boxed{
+\text{for some }k\in\{1,2\},\quad
+\{Q_2^g(3^ka),Q_1^g(3^ka)\}
+\text{ contains a DRAW}.}
+\]
+
+This is exactly the one- or two-level factor boundary normalized in
+Sections 59--62, now with finite source \(y=A(W)\).  The actual outcome of
+that source gives a complete typed entry.
+
+If \(y\) is DRAW, its coefficient source is already strictly below the
+lower WIN token:
+
+\[
+\boxed{
+\rho(y)\le\frac{y-1}{6}
+\le\frac{3W-1}{12}<W<c.}
+\]
+
+If \(y\) is LOSS, the factor boundary has a LOSS finite source whose own
+coefficient source is below \(W\); Section 61 transports its two
+lower-height WIN children through every raw/signed exit.
+
+Finally suppose \(y\) is WIN.  Since \(W\) and its A-child \(y\) are both
+WIN, its other child
+
+\[
+z=B(W)
+\]
+
+is the unique LOSS child of \(W\), and
+
+\[
+\boxed{h(z)=h(W)-1\le h(L)-2.}
+\]
+
+Put
+
+\[
+p=B(y)=B(A(W)).
+\]
+
+Section 57 gives the exact two orientation rows:
+
+\[
+\boxed{
+\begin{array}{ll}
+W\text{ ordinary}:&
+p\in\operatorname{moves}(z),\
+p\text{ WIN},\
+h(p)\le h(W)-2,\\
+W\text{ exceptional}:&
+p=Q_m^\delta(J(z))\text{ for some }m\ge1.
+\end{array}}
+\]
+
+In the exceptional row \(z\) remains the actual LOSS token one height
+below \(W\).  Thus the \(y\)-WIN factor boundary is precisely the
+WIN-source fork of Section 62 with \(q=W,\ x=A(W)=y\), carrying either
+the lower ordinary WIN \(p\) or the exact lift over the lower LOSS \(z\).
+
+Consequently no length-three continuation enters a new factor type: it is
+a strict nested-source DRAW exit, the LOSS-source provenance of Section
+61, or the WIN-source provenance of Section 62, and the initial tail is
+spent in at most two moves.  This remains a routing lemma rather than the
+global proof that every later marked return follows one descending thread.
+The two-ply factor horizon, nested-source inequality, ordinary
+common-child incidence, and exceptional exact-lift coordinates are
+regression-tested for every odd multiple of three below \(100000\), in both
+phases.

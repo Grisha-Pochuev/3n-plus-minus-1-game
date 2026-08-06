@@ -775,6 +775,47 @@ factor-free source y<c.  Thus only the exact suffix lengths 1, 2, and 3
 remain in the exponent-one outcome table, each still carrying the genuine
 lower-height LOSS orientation from Section 123.
 
+Section 125 removes the apparent six-row split.  Both possible LOSS
+orientations share the same lower-height WIN child W, and the actual
+transferred DRAW frame is the same affine pair for every suffix length.
+Its source has coefficient source strictly below c for every suffix
+length, so even a short outer-source increase is a strict nested-source
+decrease.
+At length one its source is a factor-free lift over a nested source below
+c; at length two it is a lift over W itself, with W<c; at length three it
+is the ordinary child A(W), again with W<c.  Thus no short row has an
+unattached numerical restart.  The remaining exponent-one task is global
+size-change assembly: prove that the subsequent factor normalization
+cannot alternate between the smaller source and the lower proof-height
+token while discarding both.
+
+Section 126 completes the arithmetic routing of the length-one row.  Its
+valuation-two transfer is the exact obligation over the smaller-anchored
+lift from Section 125.  An inner tail of length one makes another strict
+nested-source descent; every longer inner tail is precisely the existing
+A-selecting obligation automaton, and its canonical three-bit recycle
+keeps the smaller source anchor.  Only the common-side/factor exits already
+present in that automaton remain for the global size-change proof.
+
+Section 127 gives the corresponding exact routing for length two.  Its
+source is an arbitrary constant-tail lift over the already lower-height
+WIN token W<c, but the phase table has only three rows: m=1 is the first
+raw factor boundary, m=2 is one signed boundary, and every m>=3 B-return
+replaces m by m-2 while preserving W.  The outer three/two frame has one
+factor-pair exit and one side exit, both explicitly attached to that same
+W-fork.  The length-two row therefore has no height-unrelated source or
+nondecreasing tail counter left; only the global outcome exposure through
+the existing factor scan remains.
+
+Section 128 routes length three all the way to the old finite-source fork.
+Its source A(W) is an actual child of the lower-height WIN token W<c, and
+the outer four/three frame reaches a one- or two-level exponent-two/one
+factor boundary in at most two plies.  A DRAW source makes a strict nested
+source descent; a LOSS source is Section 61; and a WIN source is exactly
+Section 62 with B(W) as its unique lower LOSS sibling and B(A(W)) as the
+ordinary/lift return.  Thus length three introduces neither a new counter
+nor a new outcome orientation.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

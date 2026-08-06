@@ -1681,6 +1681,281 @@ class GameArithmeticTests(unittest.TestCase):
                 if suffix_length >= 4:
                     self.assertLess(returned_source, gate_coefficient)
 
+    def test_exponent_one_terminal_gate_short_rows_share_one_frame(
+        self,
+    ) -> None:
+        for gate_coefficient in range(3, 100000, 6):
+            for phase in (0, 1):
+                opposite_phase = 1 - phase
+                lower_one = constant_tail_state(
+                    gate_coefficient, 1, opposite_phase
+                )
+                lower_two = constant_tail_state(
+                    gate_coefficient, 2, opposite_phase
+                )
+                lower_win = transformed_B(lower_one)
+                self.assertEqual(transformed_B(lower_two), lower_win)
+
+                raw_argument = 9 * gate_coefficient - phase
+                suffix_length = alternating_suffix_length(raw_argument)
+                returned_source = alternating_suffix_remainder(
+                    raw_argument
+                )
+                returned_coefficient = embedded_original_state(
+                    returned_source
+                )
+                self.assertEqual(
+                    2**suffix_length * returned_coefficient,
+                    27 * gate_coefficient + 1 - 2 * phase,
+                )
+                self.assertEqual(
+                    constant_tail_state(
+                        returned_coefficient,
+                        suffix_length + 1,
+                        phase,
+                    ),
+                    54 * gate_coefficient + 2 - 5 * phase,
+                )
+                self.assertEqual(
+                    constant_tail_state(
+                        returned_coefficient,
+                        suffix_length,
+                        phase,
+                    ),
+                    27 * gate_coefficient + 1 - 3 * phase,
+                )
+                if returned_source > 0:
+                    nested_source = constant_tail_source_coordinates(
+                        returned_source
+                    )[0]
+                    self.assertLess(nested_source, gate_coefficient)
+
+                if suffix_length == 1:
+                    self.assertEqual(
+                        gate_coefficient % 4,
+                        3 if phase == 0 else 1,
+                    )
+                    self.assertEqual(
+                        lower_win, (3 * gate_coefficient - 1) // 2
+                    )
+                    nested_source = alternating_suffix_remainder(
+                        lower_win
+                    )
+                    source, factor, exponent, tail = (
+                        constant_tail_source_coordinates(returned_source)
+                    )
+                    self.assertEqual(source, nested_source)
+                    self.assertEqual(factor, 0)
+                    self.assertGreaterEqual(exponent, 1)
+                    self.assertEqual(tail, opposite_phase)
+                    self.assertLess(nested_source, gate_coefficient)
+                    self.assertEqual(
+                        source_boundary_transition(
+                            constant_tail_state(
+                                3 * gate_coefficient, 1, phase
+                            ),
+                            opposite_phase,
+                        ),
+                        ("B", 2, returned_source),
+                    )
+                    if exponent == 1:
+                        self.assertGreater(nested_source, 0)
+                        self.assertEqual(
+                            source_A_selecting_tail_bit(returned_source),
+                            opposite_phase,
+                        )
+                        selected_child = transformed_B(returned_source)
+                        self.assertEqual(
+                            source_boundary_transition(
+                                returned_source, phase
+                            )[0],
+                            "B",
+                        )
+                        if selected_child > 0:
+                            self.assertLess(
+                                constant_tail_source_coordinates(
+                                    selected_child
+                                )[0],
+                                nested_source,
+                            )
+                    else:
+                        self.assertEqual(
+                            source_A_selecting_tail_bit(returned_source),
+                            phase,
+                        )
+                        self.assertEqual(
+                            source_boundary_transition(
+                                returned_source, phase
+                            )[:2],
+                            ("A", 1),
+                        )
+
+                elif suffix_length == 2:
+                    self.assertEqual(
+                        gate_coefficient % 8,
+                        1 if phase == 0 else 7,
+                    )
+                    source, factor, exponent, tail = (
+                        constant_tail_source_coordinates(returned_source)
+                    )
+                    self.assertEqual(source, lower_win)
+                    self.assertEqual(factor, 0)
+                    self.assertGreaterEqual(exponent, 1)
+                    self.assertEqual(tail, phase)
+                    self.assertLess(lower_win, gate_coefficient)
+                    source_transition = source_boundary_transition(
+                        returned_source, phase
+                    )
+                    source_coefficient = embedded_original_state(
+                        returned_source
+                    )
+                    frame_upper = constant_tail_state(
+                        source_coefficient, 3, phase
+                    )
+                    frame_lower = constant_tail_state(
+                        source_coefficient, 2, phase
+                    )
+                    factor_upper = constant_tail_state(
+                        3 * source_coefficient, 2, phase
+                    )
+                    factor_lower = constant_tail_state(
+                        3 * source_coefficient, 1, phase
+                    )
+                    side_exit = transformed_B(frame_lower)
+                    self.assertEqual(
+                        transformed_moves(frame_upper),
+                        (factor_upper, factor_lower),
+                    )
+                    self.assertEqual(
+                        transformed_moves(frame_lower),
+                        (factor_lower, side_exit),
+                    )
+                    if exponent == 1:
+                        self.assertEqual(
+                            source_transition[:2], ("A", 1)
+                        )
+                        self.assertEqual(
+                            source_transition[2],
+                            3 * embedded_original_state(lower_win)
+                            - phase,
+                        )
+                        self.assertIn(
+                            side_exit,
+                            transformed_moves(source_transition[2]),
+                        )
+                    elif exponent == 2:
+                        self.assertEqual(source_transition[0], "B")
+                        self.assertGreaterEqual(source_transition[1], 3)
+                        self.assertEqual(
+                            side_exit,
+                            constant_tail_state(
+                                embedded_original_state(
+                                    source_transition[2]
+                                ),
+                                source_transition[1] - 1,
+                                opposite_phase,
+                            ),
+                        )
+                    else:
+                        self.assertEqual(
+                            source_transition[:2], ("B", 2)
+                        )
+                        self.assertEqual(
+                            source_transition[2],
+                            constant_tail_state(
+                                3 * embedded_original_state(lower_win),
+                                exponent - 2,
+                                phase,
+                            ),
+                        )
+                        self.assertEqual(
+                            side_exit,
+                            constant_tail_state(
+                                embedded_original_state(
+                                    source_transition[2]
+                                ),
+                                1,
+                                opposite_phase,
+                            ),
+                        )
+
+                elif suffix_length == 3:
+                    self.assertEqual(
+                        gate_coefficient % 16,
+                        5 if phase == 0 else 11,
+                    )
+                    self.assertEqual(
+                        lower_win,
+                        (
+                            3 * gate_coefficient
+                            - 3
+                            + 2 * phase
+                        )
+                        // 4,
+                    )
+                    self.assertEqual(
+                        returned_source, transformed_A(lower_win)
+                    )
+                    self.assertLess(lower_win, gate_coefficient)
+                    self.assertLess(
+                        constant_tail_source_coordinates(
+                            returned_source
+                        )[0],
+                        lower_win,
+                    )
+
+                    source_coefficient = embedded_original_state(
+                        returned_source
+                    )
+                    frame_upper = constant_tail_state(
+                        source_coefficient, 4, phase
+                    )
+                    frame_lower = constant_tail_state(
+                        source_coefficient, 3, phase
+                    )
+                    first_factor_upper = constant_tail_state(
+                        3 * source_coefficient, 2, phase
+                    )
+                    first_factor_lower = constant_tail_state(
+                        3 * source_coefficient, 1, phase
+                    )
+                    intermediate = constant_tail_state(
+                        3 * source_coefficient, 3, phase
+                    )
+                    second_factor_upper = constant_tail_state(
+                        9 * source_coefficient, 2, phase
+                    )
+                    second_factor_lower = constant_tail_state(
+                        9 * source_coefficient, 1, phase
+                    )
+                    self.assertEqual(
+                        transformed_moves(frame_lower),
+                        (first_factor_upper, first_factor_lower),
+                    )
+                    self.assertEqual(
+                        transformed_moves(frame_upper),
+                        (intermediate, first_factor_upper),
+                    )
+                    self.assertEqual(
+                        transformed_moves(intermediate),
+                        (second_factor_upper, second_factor_lower),
+                    )
+
+                    lower_sibling = transformed_B(lower_win)
+                    returned_side = transformed_B(returned_source)
+                    if side_branch_relation(lower_win) is None:
+                        source, factor, exponent, _ = (
+                            constant_tail_source_coordinates(returned_side)
+                        )
+                        self.assertEqual(source, lower_sibling)
+                        self.assertEqual(factor, 0)
+                        self.assertGreaterEqual(exponent, 1)
+                    else:
+                        self.assertIn(
+                            returned_side,
+                            transformed_moves(lower_sibling),
+                        )
+
     def test_long_lift_A_obligation_canonical_recycle(self) -> None:
         for source in range(1, 1000):
             base_coefficient = embedded_original_state(source)
