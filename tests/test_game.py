@@ -4973,6 +4973,124 @@ class GameArithmeticTests(unittest.TestCase):
                 transformed_B_predecessors(r, limit), tuple(actual.get(r, ()))
             )
 
+    def test_length_two_factor_scan_preserves_nested_anchor(self) -> None:
+        for coefficient in range(1, 400, 2):
+            for phase in (0, 1):
+                opposite_phase = 1 - phase
+                for exponent in range(3, 13):
+                    source = constant_tail_state(
+                        coefficient, exponent, phase
+                    )
+                    source_coefficient = embedded_original_state(source)
+                    lower_side = transformed_B(source)
+                    self.assertEqual(
+                        lower_side,
+                        constant_tail_state(
+                            3 * coefficient, exponent - 2, phase
+                        ),
+                    )
+
+                    first_numerator = (
+                        9 * source_coefficient + 1 - 2 * phase
+                    )
+                    first_return = constant_tail_state(
+                        embedded_original_state(lower_side),
+                        1,
+                        opposite_phase,
+                    )
+                    self.assertEqual(v2(first_numerator), 1)
+                    self.assertEqual(
+                        first_numerator,
+                        2 * embedded_original_state(first_return),
+                    )
+
+                    first_signed = constant_tail_state(
+                        embedded_original_state(first_return),
+                        1,
+                        opposite_phase,
+                    )
+                    first_raw = alternating_suffix_remainder(first_signed)
+                    self.assertEqual(first_raw, transformed_A(first_return))
+                    self.assertEqual(
+                        27 * source_coefficient + 1 - 2 * phase,
+                        4 * embedded_original_state(first_raw),
+                    )
+
+                    if exponent == 3:
+                        boundary_source = transformed_B(lower_side)
+                        raw_coefficient, raw_exponent, raw_tail = (
+                            constant_tail_coordinates(first_raw)
+                        )
+                        self.assertEqual(
+                            raw_coefficient,
+                            embedded_original_state(boundary_source),
+                        )
+                        self.assertGreaterEqual(raw_exponent, 2)
+                        self.assertEqual(raw_tail, phase)
+                        continue
+
+                    reduced_source = transformed_A(lower_side)
+                    self.assertEqual(
+                        reduced_source,
+                        constant_tail_state(
+                            9 * coefficient, exponent - 3, phase
+                        ),
+                    )
+                    self.assertEqual(
+                        first_raw,
+                        constant_tail_state(
+                            embedded_original_state(reduced_source),
+                            1,
+                            phase,
+                        ),
+                    )
+
+                    letter, valuation, selected_source = (
+                        source_boundary_transition(reduced_source, phase)
+                    )
+                    if exponent == 4:
+                        self.assertEqual((letter, valuation), ("A", 1))
+                    elif exponent == 5:
+                        self.assertEqual(letter, "B")
+                        self.assertGreaterEqual(valuation, 3)
+                    else:
+                        self.assertEqual((letter, valuation), ("B", 2))
+                        self.assertEqual(
+                            selected_source,
+                            constant_tail_state(
+                                27 * coefficient,
+                                exponent - 5,
+                                phase,
+                            ),
+                        )
+
+                    signed_common_side = transformed_B(first_signed)
+                    self.assertEqual(
+                        signed_common_side,
+                        constant_tail_state(
+                            embedded_original_state(selected_source),
+                            valuation,
+                            opposite_phase,
+                        ),
+                    )
+
+                    if exponent >= 5:
+                        obligation_side = transformed_B(first_raw)
+                        self.assertEqual(
+                            obligation_side,
+                            constant_tail_state(
+                                embedded_original_state(selected_source),
+                                valuation - 1,
+                                opposite_phase,
+                            ),
+                        )
+                        self.assertEqual(
+                            source_boundary_transition(
+                                first_raw, opposite_phase
+                            )[:2],
+                            ("B", 2),
+                        )
+
     def test_inverse_F(self) -> None:
         for q in range(10000):
             self.assertEqual(inverse_F(F(q)), q)

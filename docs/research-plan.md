@@ -816,6 +816,30 @@ Section 62 with B(W) as its unique lower LOSS sibling and B(A(W)) as the
 ordinary/lift return.  Thus length three introduces neither a new counter
 nor a new outcome orientation.
 
+Section 129 supplies the order needed to combine the nonuniform token
+shapes.  Rank the finite proof witnesses by the multiset extension of
+their heights, equivalently by the natural ordinal sum of omega^h.  A
+token may be replaced by one or several certified lower descendants and
+the rank still strictly decreases.  This covers both componentwise pair
+returns and the exceptional adjacent-pair rows, without any unjustified
+cross-comparison of heights.  The intended global rank is now
+lexicographic: numerical source anchor first, proof-token multiset second,
+and a local tail/factor counter last.  The remaining audit is concrete:
+verify anchor/token preservation through the length-two factor scan and
+the terminal exponent-two/three macros; every already certified split is
+automatically well-founded under this order.
+
+Section 130 completes the stable part of the length-two entry audit.
+For a three/two frame over (Q_D^g(C)), the first signed valuation is
+always one.  Its raw exit is an exponent-one lift over
+(Q_{D-3}^g(9C)), while the signed common side and the no-first-exit
+obligation are lifts over (Q_{D-5}^g(27C)).  Thus the original nested
+source is preserved and the only remaining length-two rows have tail
+exponent three, four, or five.  The next finite task is to attach those
+three endpoints and the nested A-obligation exit to the multiset-token
+replacements, then perform the analogous audit for terminal exponents two
+and three.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

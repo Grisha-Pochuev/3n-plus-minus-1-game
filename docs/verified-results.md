@@ -11468,3 +11468,241 @@ The two-ply factor horizon, nested-source inequality, ordinary
 common-child incidence, and exceptional exact-lift coordinates are
 regression-tested for every odd multiple of three below \(100000\), in both
 phases.
+
+## 129. A multiset of proof heights ranks every certified token split
+
+The paired height sums used in Sections 103 and 118 are sufficient in
+their ordinary rows, but a fixed-length tuple is not the correct global
+object: an exceptional side diamond can replace one marked token by two
+certified descendants.  The standard multiset extension removes this
+artificial mismatch.
+
+For a finite multiset \(M\) of finite proof heights, define
+
+\[
+\Phi(M)=\mathop{\#}_{h\in M}\omega^h,
+\]
+
+the Hessenberg (natural) sum of the monomials \(\omega^h\).  Equivalently,
+if \(m_j\) is the multiplicity of height \(j\), then
+
+\[
+\Phi(M)=\sum_{j=0}^{H}m_j\omega^j
+\]
+
+in descending Cantor normal form.  This is an ordinal below
+\(\omega^\omega\).
+
+Suppose one occurrence of \(H\) in \(M\) is replaced by any finite
+multiset
+
+\[
+\{h_1,\ldots,h_k\},\qquad h_i<H.
+\]
+
+At exponent \(H\), the Cantor coefficient decreases by one; all newly
+inserted terms occur at lower exponents and cannot compensate for that
+decrease.  Therefore
+
+\[
+\boxed{
+\Phi\bigl((M\setminus\{H\})\uplus\{h_1,\ldots,h_k\}\bigr)
+<\Phi(M).}
+\]
+
+Replacing several tokens by certified lower descendants is a finite
+sequence of such steps and is again strict.  This proves well-foundedness
+without comparing descendants of different parents.
+
+The distinction between a proof token and an arithmetic anchor is
+important.  Only states whose finite outcome and height comparison have
+actually been proved are inserted into \(M\).  An exact lift over a LOSS
+source retains that LOSS token; the lift itself is not assigned a height
+unless its outcome has separately been established.
+
+The local transitions already proved in this repository fit this order
+exactly:
+
+1. Section 103 replaces \(u,c\) by \(p,b\), and then by \(q,y\), with
+   each new token strictly below its own predecessor.  Both replacements
+   decrease \(\Phi\); the scalar height sums there are a stronger
+   numerical witness for those ordinary rows.
+2. Section 110 replaces a long-tail WIN token by its common WIN
+   descendant two proof levels lower.  Every stable recurrence therefore
+   decreases \(\Phi\), independently of its tail counter.
+3. In Section 118's ordinary row, \(q,r\) are replaced componentwise by
+   \(x,z\).  In its exceptional row, the single token \(q\) is replaced
+   by the two certified WIN children \(x,a\), both at least two levels
+   lower, while the WIN token \(r\) is retained unchanged and is also the
+   exact source anchor.  Thus
+   \(\{h(q),h(r)\}\) becomes
+   \(\{h(x),h(a),h(r)\}\); the apparent increase in token count is a
+   strict multiset decrease.
+4. Sections 123 and 125 replace the reconstructed LOSS token \(L\) by
+   its common WIN child \(W\) at least one level lower.  In Section 128's
+   ordinary \(A(W)\)-WIN row, \(W\) may be replaced by its unique LOSS
+   child \(z\) and the lower common WIN \(p\); both are lower than \(W\).
+   In the exceptional row only \(z\) is the proof token, while the
+   returned state remains an exact lift over it.
+
+Consequently none of these paired or branching transitions can reset
+finite proof height.  A global marked configuration may be ranked
+lexicographically by
+
+\[
+\boxed{(\text{numerical source anchor},\ \Phi(M),\
+\text{local tail/factor counter}).}
+\]
+
+A strict source descent may introduce new finite tokens; a source-preserving
+certified replacement strictly decreases \(\Phi\); and only when both
+preceding components are unchanged may a proved tail recurrence use its
+local counter.  The lexicographic product is well-founded because each
+component order is well-founded.
+
+This is the missing order-theoretic rule for assembling the local
+size-change lemmas, but it is not by itself the no-DRAW theorem.  Completion
+still requires an entry audit proving that every remaining factor/obligation
+edge either preserves its old arithmetic anchor and certified token
+multiset, or performs one of the strict changes above.  In particular the
+length-two factor scan of Section 127 and the terminal exponent-two/three
+macros of Section 122 still require that audit.
+
+## 130. The length-two factor scan spends three or five tail bits
+
+The factor scan left open in Section 127 has a coefficient-independent
+normal form.  Let (C) be positive and odd, let (D\ge3), and put
+
+\[
+x=Q_D^g(C),\qquad e=1-g.
+\]
+
+Suppose the three/two factor frame over (x),
+
+\[
+\{Q_3^g(J(x)),Q_2^g(J(x))\},
+\]
+
+contains a DRAW.  The ordinary lower side of (x) and the first returned
+source are
+
+\[
+q=B(x)=Q_{D-2}^g(3C),\qquad
+w=Q_1^e(J(q)).
+\]
+
+Indeed direct substitution gives the fixed valuation
+
+\[
+\boxed{9J(x)+1-2g=2J(w).}
+\]
+
+Let the first signed and raw exits be
+
+\[
+T=Q_1^e(J(w)),\qquad S=R(T).
+\]
+
+The appended-bit identity of Sections 104--105 gives (S=A(w)), and
+the consecutive-factor identity then gives
+
+\[
+\boxed{27J(x)+1-2g=4J(S).}
+\]
+
+Thus the second signed/raw exits are exactly
+
+\[
+U=Q_2^e(J(S)),\qquad P=Q_1^e(J(S)).
+\]
+
+If (D\ge4), put
+
+\[
+r=A(q)=Q_{D-3}^g(9C).
+\]
+
+The first raw exit has the exact nested coordinate
+
+\[
+\boxed{S=Q_1^g(J(r)).}
+\]
+
+For (D=3), put instead (r=B(q)).  The boundary calculation of
+Section 113 gives
+
+\[
+\boxed{S=Q_M^g(J(r))\quad\text{for an exact }M\ge2.}
+\]
+
+Hence even the shortest row enters the already typed A-selecting lift
+over its raw factor-boundary source; it does not create an unrelated
+coefficient.
+
+The signed exit also has a fixed source table.  For (D\ge4), factor the
+transition at (r) in phase (g):
+
+\[
+\operatorname{sourceTransition}(r,g)=
+\begin{cases}
+(A,1,z),&D=4,\\
+(B,j,z),\quad j\ge3,&D=5,\\
+(B,2,z),&D\ge6.
+\end{cases}
+\]
+
+Then the common side of the signed exit is
+
+\[
+\boxed{B(T)=Q_j^e(J(z)).}
+\]
+
+Consequently, if (T) is DRAW, either this displayed exact lift is DRAW,
+or it is WIN and outcome recursion forces
+
+\[
+A(T)=Q_1^g(J(S))
+\]
+
+to be DRAW.  Both alternatives retain the marked chain through (r) or
+its selected child (z).
+
+There is an equally rigid no-first-exit branch.  If neither (S) nor
+(T) is DRAW, the four-exit argument of Sections 80 and 106 makes (S)
+a boundary WIN endpoint and gives
+
+\[
+\boxed{O(S,e).}
+\]
+
+For every (D\ge5), the transition at (S) has valuation two.  With
+(k=B(S)), the exact B-transfer is
+
+\[
+\boxed{
+k=Q_{j-1}^e(J(z)),\qquad O(S,e)\Longrightarrow O(k,g).}
+\]
+
+In the stable range (D\ge6), these formulas simplify to
+
+\[
+\boxed{
+z=Q_{D-5}^g(27C),\quad
+B(T)=Q_2^e(J(z)),\quad
+k=Q_1^e(J(z)).}
+\]
+
+Therefore every stable DRAW exit of the two-level scan remains over a
+tail with the same underlying coefficient anchor and with exponent lower
+by three or five.  If (C=3^hJ(W)), every displayed (q,r,z) still has
+canonical coefficient source (W).  The only endpoints are (D=3,4,5),
+where (r) or (z) is already one of the raw/signed factor-boundary
+types over that same (W).
+
+Applied to Section 127 with (C=J(W)), this proves that its length-two
+factor scan cannot discard the lower-height WIN anchor (W) during any
+stable tail step.  It is still a routing result, not the global no-DRAW
+theorem: the three endpoint rows and the nested A-obligation exit must be
+matched to a certified token replacement in the final size-change graph.
+All identities above are regression-tested for odd (C<400), both
+phases, and (3\le D\le12).
