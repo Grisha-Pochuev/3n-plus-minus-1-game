@@ -10414,3 +10414,141 @@ The lemma does not yet prove that every DRAW exit from Section 117 actually
 touches this object.  All child incidences, the exceptional residue filter,
 and the adjacent coordinates are regression-tested for odd
 \(1\le C<1000\) in both phases.
+
+## 119. The shortest raw exponent is exactly aligned with its lower pair
+
+The arbitrary exponent in Section 113 and the lower successor object in
+Section 118 are the same arithmetic parameter.  This removes one apparent
+degree of freedom from the remaining terminal-factor audit.
+
+First record a general signed-prefix identity.  Let \(w\) be positive and
+odd, let \(e\in\{0,1\}\), and factor
+
+\[
+3w+1-2e=2^v d.
+\]
+
+The odd number \(d\) is not divisible by three, so it has a unique form
+\(d=J(t)\).  The alternating-suffix valuation formula gives
+
+\[
+\operatorname{asl}(2w-e)=v+1.
+\]
+
+Moreover
+
+\[
+\left\lfloor\frac{2w-e}{2^{v+1}}\right\rfloor
+=\left\lfloor\frac{w-e/2}{2^v}\right\rfloor=t.
+\]
+
+For the last equality, substitute
+\(w=(2^vJ(t)-1+2e)/3\) and use
+\(J(t)=3t+1+(t\bmod2)\).  The fractional remainder is strictly between
+zero and one, including the direct terminal case \(t=0\).  Hence
+
+\[
+\boxed{3w+1-2e=2^vJ(R(2w-e)).}
+\]
+
+In particular, with \(w=J(s)\), the raw state
+\(R(Q_1^e(J(s)))\) is exactly the ordinary child of \(s\) selected by
+phase \(e\).  This is an equality of states, not merely equality of their
+coefficient sources.
+
+Now return to the \(D=3\) marked row.  Let
+
+\[
+b=Q_3^g(C),\qquad q=A(b),\qquad r=B(q),
+\]
+
+and put
+
+\[
+\ell=A(q),\qquad x=B(\ell),\qquad a=A(\ell).
+\]
+
+Direct substitution gives
+
+\[
+q=12C-g,\qquad \ell=18C-g,\qquad a=27C-g.
+\]
+
+Apply the signed-prefix identity to \(w=9C\) and \(e=g\).  If
+
+\[
+m:=1+v_2(27C+1-2g),
+\]
+
+then
+
+\[
+\boxed{27C+1-2g=2^{m-1}J(r).}
+\]
+
+The first raw exit of Section 113 is therefore exactly
+
+\[
+\boxed{S=Q_m^g(J(r)),}
+\]
+
+while the upper lower-successor state has the opposite phase and the
+adjacent exponent
+
+\[
+\boxed{a=Q_{m-1}^{1-g}(J(r)).}
+\]
+
+The residue split is now exact:
+
+\[
+\boxed{
+m=2\Longleftrightarrow q\text{ is ordinary},\qquad
+m\ge3\Longleftrightarrow q\text{ is exceptional}.}
+\]
+
+Indeed, for \(g=0\) this is the split \(C\equiv3,1\pmod4\), and for
+\(g=1\) it is the split \(C\equiv1,3\pmod4\), respectively.  No longer
+binary suffix is inferred from a fixed modulus: the modulus decides only
+whether the displayed exact valuation is one or at least two.
+
+In the exceptional row, \(a\) ends in at least two copies of \(1-g\), so
+one-bit suffix deletion gives
+
+\[
+\boxed{x=Q_{m-2}^{1-g}(J(r)).}
+\]
+
+Thus Section 118's adjacent pair is not at an unrelated exponent: it is
+precisely the \((m-2,m-1)\) pair opposite the first raw exponent \(m\).
+
+In the ordinary row, \(m=2\) and
+
+\[
+a=Q_1^{1-g}(J(r)).
+\]
+
+The general signed-prefix identity now says that
+
+\[
+\boxed{x=R(a)\text{ is the child of }r
+\text{ selected by phase }1-g.}
+\]
+
+Consequently phase \(g\) selects the other child \(z\) of \(r\).  Under
+the marked outcomes of Section 118, \(r,x\) are WIN, so this other child
+is the unique LOSS child and
+
+\[
+\boxed{z\text{ LOSS},\qquad h(z)=h(r)-1.}
+\]
+
+The shortest-row terminal audit therefore has only two aligned entries:
+the ordinary exponent-two row whose original phase points to the lower
+LOSS token, and the exceptional row whose opposite-phase WIN pair occurs
+exactly two and one exponents below the raw state.  This still does not
+prove that every later factor exit touches the aligned token; it removes
+the possibility that the exit exponent and the lower pair drift
+independently.  The signed factorization, residue split, phase-selected
+ordinary child, and exact exponents are regression-tested for every odd
+\(1\le C<1000\) in both phases.

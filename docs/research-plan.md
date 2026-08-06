@@ -724,6 +724,15 @@ an exact adjacent lift pair over r.  The remaining outcome theorem for the
 Section 117 factor boundaries now has a concrete target: expose this
 ordinary lower pair or one of the two exceptional lower lifts.
 
+Section 119 proves that the target and the arbitrary raw exponent are
+exactly aligned.  The ordinary row always has raw exponent two, and its
+opposite phase selects the known lower WIN child of r, leaving the original
+phase to select r's unique LOSS child.  In the exceptional row the two
+lower WIN lifts occur at precisely m-2 and m-1 in the opposite phase.  A
+completion therefore does not need to compare two independent counters;
+it needs an outcome barrier for this one aligned exponent ladder through
+the Section 117 factor levels.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

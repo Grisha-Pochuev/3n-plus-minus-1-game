@@ -1162,6 +1162,68 @@ class GameArithmeticTests(unittest.TestCase):
                         lower_coordinates[3],
                     )
 
+    def test_short_marked_raw_exponent_matches_successor_pair(
+        self,
+    ) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                factor_source = constant_tail_state(
+                    coefficient, 3, phase
+                )
+                marked_win = transformed_A(factor_source)
+                common_win = transformed_B(marked_win)
+                canonical_child = transformed_A(marked_win)
+                lower_successor = transformed_B(canonical_child)
+                upper_successor = transformed_A(canonical_child)
+
+                aligned_factor = (
+                    27 * coefficient + 1 - 2 * phase
+                )
+                raw_exponent = v2(aligned_factor) + 1
+                self.assertEqual(
+                    aligned_factor,
+                    2 ** (raw_exponent - 1)
+                    * embedded_original_state(common_win),
+                )
+                self.assertEqual(
+                    upper_successor,
+                    constant_tail_state(
+                        embedded_original_state(common_win),
+                        raw_exponent - 1,
+                        1 - phase,
+                    ),
+                )
+
+                exceptional = (
+                    marked_win % 16
+                    in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                )
+                self.assertEqual(exceptional, raw_exponent >= 3)
+                if exceptional:
+                    self.assertEqual(
+                        lower_successor,
+                        constant_tail_state(
+                            embedded_original_state(common_win),
+                            raw_exponent - 2,
+                            1 - phase,
+                        ),
+                    )
+                else:
+                    self.assertEqual(raw_exponent, 2)
+                    selected_child = source_boundary_transition(
+                        common_win, 1 - phase
+                    )[2]
+                    self.assertEqual(lower_successor, selected_child)
+                    self.assertEqual(
+                        set(transformed_moves(common_win)),
+                        {
+                            source_boundary_transition(
+                                common_win, phase
+                            )[2],
+                            lower_successor,
+                        },
+                    )
+
     def test_long_lift_A_obligation_canonical_recycle(self) -> None:
         for source in range(1, 1000):
             base_coefficient = embedded_original_state(source)
