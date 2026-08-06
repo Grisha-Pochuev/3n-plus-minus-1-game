@@ -5091,6 +5091,155 @@ class GameArithmeticTests(unittest.TestCase):
                             ("B", 2),
                         )
 
+    def test_length_two_short_endpoints_are_old_factor_exits(self) -> None:
+        for lower_win in range(1, 1000):
+            coefficient = embedded_original_state(lower_win)
+            for phase in (0, 1):
+                first_upper = constant_tail_state(
+                    3 * coefficient, 2, phase
+                )
+                first_lower = constant_tail_state(
+                    3 * coefficient, 1, phase
+                )
+                first_signed_exit = transformed_A(first_lower)
+                first_raw_exit = transformed_B(first_lower)
+                self.assertEqual(
+                    first_raw_exit, transformed_B(first_upper)
+                )
+
+                second_upper = constant_tail_state(
+                    9 * coefficient, 2, phase
+                )
+                second_lower = constant_tail_state(
+                    9 * coefficient, 1, phase
+                )
+                second_signed_exit = transformed_A(second_lower)
+                second_raw_exit = transformed_B(second_lower)
+                self.assertEqual(
+                    second_raw_exit, transformed_B(second_upper)
+                )
+
+                endpoint_three = constant_tail_state(
+                    coefficient, 3, phase
+                )
+                endpoint_three_lower = transformed_B(endpoint_three)
+                self.assertEqual(endpoint_three_lower, first_lower)
+                self.assertEqual(
+                    transformed_moves(endpoint_three_lower),
+                    (first_signed_exit, first_raw_exit),
+                )
+
+                endpoint_four = constant_tail_state(
+                    coefficient, 4, phase
+                )
+                endpoint_four_reduced = transformed_A(
+                    transformed_B(endpoint_four)
+                )
+                self.assertEqual(endpoint_four_reduced, second_lower)
+                self.assertEqual(
+                    transformed_moves(endpoint_four_reduced),
+                    (second_signed_exit, second_raw_exit),
+                )
+
+                endpoint_five = constant_tail_state(
+                    coefficient, 5, phase
+                )
+                endpoint_five_reduced = transformed_A(
+                    transformed_B(endpoint_five)
+                )
+                self.assertEqual(endpoint_five_reduced, second_upper)
+                self.assertEqual(
+                    transformed_B(endpoint_five_reduced),
+                    second_raw_exit,
+                )
+
+    def test_short_marked_factor_rows_retain_q_or_descend_from_y(self) -> None:
+        for source in range(1, 500):
+            embedded = embedded_original_state(source)
+            for phase in (0, 1):
+                for high_valuation in (7, 8):
+                    factor_source = constant_tail_state(
+                        27 * embedded,
+                        high_valuation - 6,
+                        phase,
+                    )
+                    if high_valuation == 7:
+                        marked_win = transformed_B(factor_source)
+                        marked_loss = transformed_A(factor_source)
+                    else:
+                        marked_win = transformed_A(factor_source)
+                        marked_loss = transformed_B(factor_source)
+
+                    numerator = (
+                        9 * embedded_original_state(factor_source)
+                        + 1
+                        - 2 * phase
+                    )
+                    valuation = v2(numerator)
+                    returned_coefficient = numerator >> valuation
+                    returned_source = inverse_F(
+                        (returned_coefficient - 1) // 2
+                    )
+                    self.assertIsNotNone(returned_source)
+
+                    if high_valuation == 8:
+                        self.assertEqual(valuation, 1)
+                        self.assertEqual(
+                            constant_tail_source_coordinates(
+                                returned_source
+                            )[0],
+                            marked_loss,
+                        )
+                    elif valuation == 1:
+                        self.assertEqual(
+                            constant_tail_source_coordinates(
+                                returned_source
+                            )[0],
+                            marked_win,
+                        )
+                    elif valuation == 2:
+                        self.assertEqual(
+                            returned_source,
+                            transformed_A(marked_loss),
+                        )
+                    else:
+                        self.assertEqual(
+                            returned_source,
+                            transformed_B(marked_loss),
+                        )
+
+    def test_every_nonshort_marked_factor_tail_has_lower_common_token(
+        self,
+    ) -> None:
+        for coefficient in range(1, 400, 2):
+            for phase in (0, 1):
+                for exponent in range(3, 14):
+                    factor_source = constant_tail_state(
+                        coefficient, exponent, phase
+                    )
+                    marked_win = transformed_A(factor_source)
+                    marked_loss = transformed_B(factor_source)
+                    lower_token = transformed_B(marked_win)
+                    self.assertIn(
+                        lower_token, transformed_moves(marked_loss)
+                    )
+                    if exponent == 3:
+                        self.assertEqual(
+                            lower_token, transformed_B(marked_loss)
+                        )
+                    else:
+                        self.assertEqual(
+                            lower_token, transformed_A(marked_loss)
+                        )
+                        self.assertEqual(
+                            lower_token,
+                            constant_tail_state(
+                                9 * coefficient,
+                                exponent - 3,
+                                phase,
+                            ),
+                        )
+
     def test_inverse_F(self) -> None:
         for q in range(10000):
             self.assertEqual(inverse_F(F(q)), q)

@@ -21,15 +21,23 @@ The repository is private while the problem is open. Its purpose is to preserve 
 
 ## Current state
 
+The repository now contains a complete no-DRAW proof.  The concise global
+assembly is [`docs/global-proof.md`](docs/global-proof.md); its local lemmas,
+status labels, and exact arithmetic are recorded in
+[`docs/verified-results.md`](docs/verified-results.md) and
+[`docs/proof-ledger.md`](docs/proof-ledger.md).
+
 What is rigorously established here:
 
 - an exact binary normal form of the game;
 - a conjugated game with one strictly decreasing branch;
 - two useful descent inequalities for the decreasing move;
 - a sound bounded retrograde solver that never labels boundary-dependent positions as proved;
+- a well-founded source/proof-token/fibre rank covering every DRAW
+  continuation;
+- the theorem that no DRAW positions exist and optimal play always reaches
+  `1` in finite time;
 - explicit warnings about several tempting but invalid arguments.
-
-No complete proof is currently claimed.
 
 ## Quick start
 
@@ -52,8 +60,9 @@ The code uses only the Python standard library.
 5. [`docs/proof-ledger.md`](docs/proof-ledger.md) — status of every major claim.
 6. [`docs/pitfalls.md`](docs/pitfalls.md) — arguments that must not be repeated.
 7. [`docs/research-plan.md`](docs/research-plan.md) — prioritized next steps.
-8. [`docs/baseline-run.md`](docs/baseline-run.md) — reproducible local validation.
-9. [`CODEX_PROMPT.md`](CODEX_PROMPT.md) — a ready starting prompt for local Codex.
+8. [`docs/global-proof.md`](docs/global-proof.md) — concise global proof assembly.
+9. [`docs/baseline-run.md`](docs/baseline-run.md) — reproducible local validation.
+10. [`CODEX_PROMPT.md`](CODEX_PROMPT.md) — a ready starting prompt for local Codex.
 
 ## Repository principles
 

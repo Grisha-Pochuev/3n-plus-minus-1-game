@@ -8754,7 +8754,7 @@ its expanding child is
 Suppose now that \(v\ge10\), so Section 104 gives
 
 \[
-S=Q_1^g(J(r)),qquad r=B(q)=B(y)	ext{ WIN},qquad
+S=Q_1^g(J(r)),\qquad r=B(q)=A(y)\text{ WIN},\qquad
 h(r)\le h(y)-1.
 \]
 
@@ -11706,3 +11706,740 @@ theorem: the three endpoint rows and the nested A-obligation exit must be
 matched to a certified token replacement in the final size-change graph.
 All identities above are regression-tested for odd (C<400), both
 phases, and (3\le D\le12).
+
+## 131. The three short length-two endpoints are the old factor exits over W
+
+Section 130 leaves tail exponents (D=3,4,5).  In the application from
+Section 127 their coefficient is not arbitrary: it is
+
+\[
+C=J(W),
+\]
+
+where (W) is the already retained lower-height WIN token.  This makes
+all three endpoints exact members of the factor scan over (W), rather
+than merely states with the same canonical coefficient source.
+
+Put (a=J(W)), and use the standard two-level notation
+
+\[
+\begin{aligned}
+P_1&=Q_2^g(3a),&R_1&=Q_1^g(3a),\\
+P_2&=Q_2^g(9a),&R_2&=Q_1^g(9a),
+\end{aligned}
+\]
+
+with signed and raw exits
+
+\[
+T_i=A(R_i),\qquad S_i=B(P_i)=B(R_i)qquad(i=1,2).
+\]
+
+These are exactly the four exits of Section 59 for the factor source
+(W).
+
+For (D=3), the first lower side in Section 130 is
+
+\[
+q=B(Q_3^g(a))=Q_1^g(3a)=R_1.
+\]
+
+Therefore
+
+\[
+\boxed{\operatorname{moves}(q)=\{T_1,S_1\}.}
+\]
+
+In particular Section 130's boundary source (r=B(q)) is exactly
+(S_1), while the other ordinary source at that endpoint is exactly
+(T_1).  The arbitrary A-selecting lift produced in the (D=3) row is
+therefore anchored at the first raw exit of the old scan.
+
+For (D=4), two ordinary reductions give
+
+\[
+r=A(B(Q_4^g(a)))=Q_1^g(9a)=R_2,
+\]
+
+and hence
+
+\[
+\boxed{\operatorname{moves}(r)=\{T_2,S_2\}.}
+\]
+
+Section 130's selected source (z=A(r)) is exactly (T_2); its
+unselected sibling is exactly (S_2).
+
+Finally, for (D=5),
+
+\[
+r=A(B(Q_5^g(a)))=Q_2^g(9a)=P_2,
+\]
+
+so its selected B-source is
+
+\[
+\boxed{z=B(r)=S_2.}
+\]
+
+Thus every stable tail reduction from the length-two terminal gate ends
+inside the already proved two-level factor-exit geometry over the actual
+WIN token (W):
+
+\[
+\boxed{
+D=3\rightsquigarrow\{T_1,S_1\},\qquad
+D=4\rightsquigarrow\{T_2,S_2\},\qquad
+D=5\rightsquigarrow S_2.}
+\]
+
+This is stronger than equality of coefficient sources and requires no
+outcome assumption.  Consequently the short endpoints inherit the
+WIN-source provenance and valuation-two normalization of Sections
+54--64; they are not new terminal macros needing independent residue
+tables.
+
+The result still does not by itself spend the lower proof token.  A finite
+outcome at one of (T_i,S_i) can start a nested lift/obligation whose own
+proof height is not comparable with (h(W)).  The global size-change
+assembly must retain the outer (W)-descendant token while ranking that
+nested computation, rather than replacing it by the endpoint's height.
+The three exact endpoint incidences are regression-tested for
+(1\le W<1000) in both phases.
+
+## 132. A well-founded fibre rank permits incomparable inner heights
+
+The finite outcome of an endpoint in Section 131 need not have proof
+height below the retained outer token.  No such comparison is required.
+The appropriate order-theoretic statement is a well-founded-fibre lemma.
+
+Let (mathcal C) be a set of marked configurations with transition
+relation (longrightarrow), and let
+
+\[
+\pi:\mathcal C\longrightarrow\mathrm{Ord}
+\]
+
+be an ordinal-valued projection.  Assume:
+
+1. (C\to C') always implies (pi(C')\le\pi(C));
+2. for every ordinal (alpha), the restriction of
+   (longrightarrow) to the fibre
+   (pi^{-1}(\{\alpha\})) is well-founded.
+
+Then the full transition relation is well-founded.
+
+Indeed, suppose
+
+\[
+C_0\to C_1\to C_2\to\cdots
+\]
+
+were infinite.  The sequence (pi(C_i)) is nonincreasing.  It can have
+only finitely many strict decreases, since an infinite set of strict
+decrease indices would give an infinite descending sequence of ordinals.
+It is therefore eventually constant, leaving an infinite transition path
+inside one fibre, contrary to assumption 2.
+
+For the marked game reductions, take as the outer projection the
+lexicographic ordinal code of
+
+\[
+\boxed{
+(\text{retained numerical source anchor},\ \Phi(M)),}
+\]
+
+where (Phi) is the proof-token multiset rank from Section 129.  The
+exact ordinal coding is standard: if the numerical anchor is (s) and
+(Phi(M)<\omega^\omega), use
+
+\[
+\pi=\omega^\omega s+\Phi(M).
+\]
+
+A strict source transition lowers the first component and may reset all
+later data.  At a fixed source, replacing certified tokens by lower
+descendants lowers (Phi) and may likewise reset the inner task.  Every
+pure routing step must preserve both components and belongs to the fibre
+relation.
+
+Different proof-token multisets can have the same ordinal value (Phi), so
+equality of the displayed ordinal alone must not be used to identify their
+states.  Every transition that changes an actual token is, by construction,
+a certified strict lower replacement and therefore strictly lowers (Phi).
+Consequently an equal-(Phi) routing path preserves the token multiset
+itself.  Each equal ordinal fibre is thus a disjoint union of invariant
+fixed-token components; Section 136 proves each such component
+well-founded, which is exactly what the fibre lemma needs.
+
+This resolves the apparent comparison problem in Section 131.  If an old
+factor exit (T_i) or (S_i) is finite with a height unrelated to
+(h(W)), that endpoint can be used only as inner state of the fixed
+outer fibre.  It is not inserted into the outer token multiset.  The
+certified descendant of (W) remains marked until a proved replacement
+lowers (Phi).  Arbitrarily large inner proof height is harmless provided
+the obligation/factor system restricted to that fixed outer fibre is
+itself well-founded.
+
+Thus the remaining global audit has an exact three-way classification:
+
+1. a source edge, which must strictly lower the retained outer source;
+2. a token edge, which must preserve that source and strictly lower
+   (Phi);
+3. a routing edge, which must preserve both and be included in the proved
+   well-founded fibre automaton.
+
+The lemma is **PROVED**, but condition 2 for the union of all routing
+types is not yet asserted.  Sections 91--120 prove its major obligation
+and stable-factor components; the terminal exponent-two/three entries and
+the completeness audit of their connections remain to be supplied.
+
+## 133. Terminal exponents two and three enter after a strict token edge
+
+The fibre lemma changes what must be proved at the terminal macros of
+Sections 121--122.  A direct incidence from every DRAW exit to a child of
+(Z_n) would be sufficient, but it is not necessary.  It is enough that
+the terminal inner computation is entered only after the outer projection
+has fallen, or that it is an already ranked fixed-fibre entry.
+
+First consider terminal exponent two.  This row exists only for (h\ge1).
+Section 121 reconstructs
+
+\[
+Z_2\text{ LOSS},\qquad h(Z_2)\le h(\ell)-2h<h(\ell).
+\]
+
+All terminal states in Section 122 retain the same marked arithmetic
+anchor (r).  Therefore replacing the old LOSS token (ell) by (Z_2)
+strictly lowers (Phi) at a fixed outer source, before the obligation at
+
+\[
+X_2=Q_2^g(3d)
+\]
+
+is normalized.  By Section 132 the entire inner obligation/factor state
+may be reset at this edge.  No comparison between the heights of its
+finite intermediate states (y_2,c_2,b_2,p_2) and (h(\ell)) is needed.
+
+For terminal exponent three with (h\ge1), the same argument applies:
+
+\[
+Z_3\text{ LOSS},\qquad h(Z_3)\le h(\ell)-2h<h(\ell),
+\]
+
+and the macro based at (X_3=Q_3^g(3d)) begins after the strict token
+replacement (ell\mapsto Z_3).
+
+It remains to inspect the sole zero-recycle exponent-three row.  Here
+(h=0), (Z_3=\ell), and the terminal source is the shortest marked
+configuration of Sections 113 and 118.  Write
+
+\[
+b=Q_3^g(J(r)),\qquad q=A(b),\qquad y=B(b),
+\]
+
+with the already proved outcomes
+
+\[
+b,q,r\text{ WIN},\qquad y\text{ LOSS},\qquad
+r=B(q)=B(y).
+\]
+
+The selected LOSS state (y) is already one of the two proof tokens in
+the marked configuration of Sections 102--104.  The state (r) is a
+child of this LOSS state, so
+
+\[
+\boxed{r\text{ WIN},\qquad h(r)\le h(y)-1.}
+\]
+
+This comparison is independent of which first or second factor exit is
+DRAW.  Section 113's exact coordinates retain (r) through every branch:
+its raw member is (Q_M^g(J(r))), and in the zero row (M=3), so that
+raw member is (b) itself.  The no-first-exit branch is the A-selecting
+obligation of Sections 114--116 over the same marked (r); the first-exit
+diamond also keeps (r) as its exact lower source.  Thus the apparent
+self-return at (b) is entered with the strict certified token edge
+
+\[
+\boxed{y\longmapsto r,\qquad h(r)\le h(y)-1.}
+\]
+
+No token is being added in order to manufacture this decrease: (y) is
+the selected LOSS member of the incoming pair ((q,y)).  The multiset
+rank of Section 129 replaces that existing occurrence by (r) while
+retaining (q) and all other outer tokens.  Section 132 then permits an
+arbitrary reset of the inner factor state.
+
+Consequently terminal exponents two and three introduce no new
+equal-projection routing type:
+
+1. every positive-recycle row strictly replaces (ell) by (Z_n);
+2. the only zero-recycle exponent-three row strictly replaces the marked
+   LOSS token (y) by the WIN token (r).
+
+This closes their **entry** audit, not the complete no-DRAW theorem.  The
+remaining obligation is to verify that the union of the already listed
+same-projection routing transitions in Sections 91--120 is complete and
+well-founded; a missing routing edge there could still invalidate the
+global application of Section 132.  The arithmetic identities used in
+the zero row are covered by the regressions for Sections 113, 118, and
+121.
+
+## 134. The two shortest marked factor rows preserve the incoming pair
+
+The completeness audit exposes two rows that were normalized in Section
+102 but not covered by the (v\ge9) transport beginning in Section 104.
+They are (v=7,8), equivalently constant-tail exponents (D=1,2) at the
+marked factor source.  Both have a direct token attachment.
+
+Retain Section 102's marked configuration
+
+\[
+b,q\text{ WIN},\qquad y\text{ LOSS},\qquad
+\{Q_3^g(J(b)),Q_2^g(J(b))\}
+\text{ contains a DRAW}.
+\]
+
+For (v=7),
+
+\[
+b=Q_1^g(27J(t)),\qquad q=B(b),\qquad y=A(b).
+\]
+
+Factor the first ninefold source as
+
+\[
+9J(b)+1-2g=2^jJ(w).
+\]
+
+Section 54's universal trichotomy becomes
+
+\[
+\boxed{
+w=
+\begin{cases}
+Q_m^\delta(J(q))\quad(m\ge1),&j=1,\\
+A(y),&j=2,\\
+B(y),&j\ge3.
+\end{cases}}
+\]
+
+The first row is an exact inner lift over the already marked WIN token
+(q), so the outer pair ((q,y)) is retained unchanged.  In the other
+two rows (w) is an actual child of the marked LOSS token (y).  Hence
+
+\[
+w\text{ is WIN},\qquad h(w)\le h(y)-1,
+\]
+
+and the multiset replacement (y\mapsto w) is strict.  Section 60 carries
+the same provenance through the possible twenty-sevenfold exit.
+
+For (v=8),
+
+\[
+b=Q_2^g(27J(t)),\qquad q=A(b),\qquad y=B(b).
+\]
+
+Writing (C=27J(t)), direct substitution gives
+
+\[
+J(b)=12C+1-2g,
+\]
+
+and therefore
+
+\[
+9J(b)+1-2g
+=2(54C+5-10g).
+\]
+
+The bracket is odd, so
+
+\[
+\boxed{j=1,\qquad w=Q_m^\delta(J(y))\quad(m\ge1).}
+\]
+
+Thus the resonant (v=8) row is not an unmarked high-valuation restart:
+its first source is an exact lift over the incoming marked LOSS token
+(y).  The coupled second level takes one ordinary selected-source step
+from that lift, exactly the fixed-fibre obligation transition of Sections
+60 and 91--96.  The outer pair ((q,y)) is retained until one of those
+proved source/token edges fires.
+
+Consequently neither (v=7) nor (v=8) can reset the proof-token
+projection.  They supply respectively a strict descendant of (y), or
+an inner routing task over (q) or (y) in the same fibre.  This closes
+the only two marked-factor entry rows omitted by Sections 104--133; it
+does not yet certify that no connection between the listed routing types
+has been omitted.  The trichotomy and the fixed (v=8) valuation are
+regression-tested for (1\le t<500) in both phases.
+
+## 135. Every marked factor tail of length at least three pays its LOSS token
+
+The finite (D=4,\ldots,13) table suggested after Section 112 is
+unnecessary.  The universal routing of Section 130 and the marked outcomes
+of Section 102 combine before any residue or factor-exit split.
+
+Let (C) be positive and odd, (D\ge3), and put
+
+\[
+b=Q_D^g(C),\qquad q=A(b),\qquad y=B(b).
+\]
+
+Retain the marked outcomes
+
+\[
+b,q\text{ WIN},\qquad y\text{ LOSS}.
+\]
+
+Long-tail reduction gives
+
+\[
+q=Q_{D-1}^g(3C),\qquad y=Q_{D-2}^g(3C).
+\]
+
+At (D=3), the exponent-two/one common-child identity gives
+
+\[
+r:=B(q)=B(y).
+\]
+
+For every (D\ge4), the ordinary long-tail identity gives instead
+
+\[
+\boxed{
+r:=B(q)=A(y)=Q_{D-3}^g(9C).}
+\]
+
+In both cases (r) is an actual child of the marked LOSS state (y).
+Therefore
+
+\[
+\boxed{r\text{ WIN},\qquad h(r)\le h(y)-1.}
+\]
+
+This strict token comparison is available before the three/two DRAW frame
+over (b) chooses any raw, signed, or second-level exit.
+
+Section 130 proves that the entire factor scan retains this exact token.
+At (D=3), its first raw member is a constant-tail lift over (r).  At
+every (D\ge4), that member is
+
+\[
+S=Q_1^g(J(r)).
+\]
+
+The signed common side is a lift over the phase-selected child (z) of
+(r), and the no-first-exit obligation is over the same (S) and then an
+exact lift over (z).  The endpoint identities of Section 131 are the
+specializations of this statement at (D=3,4,5); no branch introduces a
+source unrelated to (r).
+
+Consequently the complete marked factor scan for (D\ge3) has the strict
+outer multiset edge
+
+\[
+\boxed{
+\{h(q),h(y)\}\longmapsto\{h(q),h(r)\},
+\qquad h(r)<h(y).}
+\]
+
+All inner lift/obligation data may reset after this edge by Section 132.
+If a later routing path re-enters the same marked factor type, the newly
+marked LOSS token is again replaced by its own lower common child; hence
+no (D=4,\ldots,13) outcome table is required for well-foundedness.
+
+Together with Section 134's (D=1,2) rows, this covers every constant-tail
+length at entry to the marked high-return factor scan.  It remains to
+audit connections that enter a generic obligation or factor frame without
+the marked (q/y) orientation.  The common-child identities are
+regression-tested for odd (C<400), both phases, and (3\le D\le13).
+
+## 136. The complete marked/obligation normalizer is well-founded in each fibre
+
+We can now verify the fibre condition of Section 132 for the routing
+system generated by Sections 91--135.  Fix an outer numerical source
+anchor and a proof-token multiset (M), and suppose for contradiction
+that there is an infinite routing path that preserves both fixed values.
+
+There is a necessary composition point here.  The union of two
+well-founded routing subsystems is not automatically well-founded.  Inside
+the fixed outer fibre, record the active normalizer's own retained
+numerical anchor \(a\) and its finite multiset \(N\) of certified *inner*
+proof tokens.  Tokens in \(N\) are not inserted into the already fixed
+outer multiset \(M\).  Give the inner data the ordinal projection
+
+\[
+\sigma=\omega^\omega a+\Psi(N),\qquad
+\Psi(N)=\mathop{\#}_{h\in N}\omega^h.
+\]
+
+The inner multiset is initialized when this outer fibre is entered.  A
+later finite endpoint of unrelated height is routing state only, exactly as
+in Section 132; it is not inserted into \(N\).  The transition inventory
+below permits only preservation of \(N\) or certified replacement by lower
+descendants, so there is no equal-outer-rank operation that reinitializes
+\(\Psi(N)\) arbitrarily.
+
+The source/provenance statements of Sections 91--135 have exactly the same
+three-way meaning at this inner level: a source edge lowers \(a\) and may
+reset \(N\); a certified token replacement preserves \(a\) and lowers
+\(\Psi(N)\); and a pure routing edge preserves the actual \(a,N\).  If a
+carried token belongs to the outer multiset \(M\), its strict replacement
+has already left the fixed outer fibre; otherwise it is one of the tokens
+of \(N\) and lowers \(\sigma\).  Thus the fibre lemma of Section 132 may
+be applied once more *inside* the fixed outer fibre.  This is finite
+nesting of two explicitly displayed ordinal projections, not an assumption
+that an unrelated endpoint height belongs to \(M\).
+
+First consider every visit to a marked factor configuration
+
+\[
+b,q\text{ WIN},\qquad y\text{ LOSS},
+\]
+
+of Section 102.  If its tail exponent satisfies (D\ge3), Section 135
+replaces the already present token (y) by the lower token (r).  This is
+strict either in the outer projection or in \(\Psi(N)\).  Therefore a
+constant-\(\sigma\) routing segment can visit only the two rows (D=1,2).
+
+Section 134 shows that these rows introduce no fresh finite token:
+
+- (D=1) either replaces (y) by an actual lower child, which is again
+  strict and hence impossible on a constant-\(\sigma\) segment, or enters
+  an exact lift over the already marked (q);
+- (D=2) enters an exact lift over the already marked (y).
+
+Discarding the strict alternatives, both rows are therefore ordinary
+inner lift/obligation entries with the outer pair unchanged.
+
+It remains to follow the generic obligation/factor subsystem.  Its case
+split is exhaustive:
+
+1. At an A-selecting obligation, Section 91 gives a strict source exit, a
+   canonical A-continuation, or the retained-LOSS factor fork.
+2. Section 93 bounds every canonical A-streak by four side tests before a
+   strict source/token exit or a B-selecting phase.
+3. At a B-selecting phase, Section 96 treats the valuation-two recycle:
+   its first occurrence either gives a source exit or installs a finite
+   local WIN/LOSS witness, and every further \(A,B_2\) pair strictly lowers
+   that witness height.  Every larger valuation is already a strict
+   numerical-source exit (represented by its adjacent frame).
+4. The exponent-one factor fork is strict by Section 94; every higher
+   factor fork is strict in source or finite proof token by Section 95.
+5. Section 96 proves that arbitrarily long alternation between canonical
+   A-steps and valuation-two B-transfers cannot evade those strict events:
+   after the first pair, every further pair lowers the current finite WIN
+   source height by at least two.
+
+The high-return connection back from the adjacent factor normal form is
+the marked configuration already handled above.  Sections 97--102 prove
+that it preserves its incoming source/token provenance.  At \(v=5,6\),
+Sections 98--101 replace the carried finite return token by certified
+lower descendants before a new marked task is installed.  For every
+\(v\ge7\), Section 103 strictly replaces the carried pair \(u,c\) by
+the pair \(q,y\).  These are strict \(\Psi(N)\)-edges at fixed \(a\).
+Sections 104--135 then transport the new pair through all tail lengths:
+the \(D\ge3\) rows pay a further strict token edge, whereas the two
+\(D=1,2\) rows preserve \(a,N\) and route to one exact lift.  Consequently
+every cross-transition from the generic subsystem back to a new marked
+factor task is strict in \(\sigma\); the short routing rows cannot reset
+that decrease.
+
+It remains to consider a path on which \(\sigma\) is constant.  Such a
+path cannot use a high-return re-entry or a \(D\ge3\) marked row.  It may
+start with one \(D=1,2\) exact lift, after which it stays in the generic
+subsystem.  A canonical A-streak has at most four side tests by Section 93,
+and Sections 94--96 force every factor/B continuation either to lower
+\(a\), lower \(\Psi(N)\), or finish after its bounded routing counter.
+Thus the equal-\(\sigma\) relation is well-founded.  Applying Section 132
+to \(\sigma\) proves that the whole inner normalizer is well-founded;
+applying it to the outer projection proves the fixed-\(M\) claim.  This
+contradiction proves
+
+\[
+\boxed{
+\text{the routing relation of Sections 91--135 is well-founded in every
+fixed source/token fibre}.}
+\]
+
+Together with Section 132, any path that has entered this normalizer is
+globally well-founded: source edges may reset tokens, token edges may reset
+all inner lift/factor data, and the remaining equal-projection routing
+cannot be infinite.
+
+This is the normalizer theorem, not yet the no-DRAW theorem.  The final
+completeness audit must show that every entry produced by the initial
+minimum-source and height-one reductions of Sections 15--90 is either a
+strict outer edge or one of the normalizer types listed here.  In
+particular no raw height-one resonance may be silently treated as a
+generic finite-source obligation.
+
+## 137. Every minimum-source and height-one entry reaches the normalizer
+
+We now audit the upstream entries to Section 136.  Suppose a DRAW exists
+and choose the globally least coefficient source (s) of a DRAW state.
+The constant-tail normalization of Sections 14--17 is exhaustive:
+
+1. every tail of length at least three reduces to the exponent-one/two
+   boundary;
+2. the common boundary child has a strictly smaller coefficient source
+   and therefore cannot carry DRAW;
+3. factors of three at exponent at least two pull back by Section 16;
+4. after removing those factors, the signed exponent-one transition is
+   exactly one ordinary source move under the embedding (J).
+
+Consequently a source-surviving branch reaches the canonical minimum-source
+lift
+
+\[
+Q_1^{\alpha(s)}(J(s))\text{ DRAW},
+\]
+
+while every discarded branch has a DRAW source strictly below (s) and
+is impossible by the choice of (s).
+
+Sections 18--27 give an exhaustive continuation of that lift.  Their
+successive alternatives are:
+
+- a strict source return at an exceptional or contracting ordinary side;
+- a boundary WIN whose certified proof height is strictly lower;
+- the exact length-two WIN/LOSS switch of Section 23;
+- an A-selecting boundary, closed by the strict token edge of Section 24;
+- a B-selecting boundary, transferred by Sections 25--27 to
+  (O(x,\alpha(x))) after at most two valuation-two B-transfers.
+
+Source-decreasing alternatives contradict minimality of (s).  The
+boundary-height alternatives are exactly the certified token replacements
+ranked by (Phi) in Section 129.  The only non-strict alternative is the
+last one, and it is the generic A-selecting obligation admitted by Section
+136.
+
+The height-one boundary family of Sections 13 and 69 has no missing raw
+entry.  Its ordinary-parent row is closed by Sections 70 and 74--76 with a
+boundary WIN at least two proof levels lower.  Its exceptional-parent row
+is the adjacent frame over the height-one source (s) from Section 77.
+For that frame:
+
+- Sections 78--81 couple every resonance to a raw/signed exit at the
+  current or next factor level;
+- Sections 82--86 type every such exit as a strict source return, an exact
+  lift/frame over its finite token, or the one marked high frame;
+- Sections 87--89 turn the sole LOSS/DRAW gate at every factor level into
+  an actual two-level boundary-height descent;
+- Section 90 identifies the remaining high frame exactly as
+  (O(c,\alpha(c))), retaining its finite WIN/LOSS provenance.
+
+Thus the height-one family also has only a strict source edge, a strict
+token edge, or an entry to the Section 136 normalizer.  In particular the
+resonant quotient of Section 78 is not being bounded by a fixed search
+depth; the consecutive-level coupling and reverse parents account for all
+of its exits.
+
+We have therefore proved the entry statement
+
+\[
+\boxed{
+\text{Every such continuation lowers the projection or enters Section 136.}}
+\]
+
+This completes the transition inventory needed for the global argument.
+The final theorem still has to state explicitly why a hypothetical DRAW
+supplies an infinite sequence of these marked macro-configurations and why
+Sections 129, 132, 136, and the entry statement forbid it.  That last
+assembly must also be checked against the infinite-path and minimum-DRAW
+pitfalls before the ledger status can change from OPEN.
+
+## 138. The game has no DRAW positions
+
+We now assemble the preceding lemmas.
+
+### The marked relation
+
+Assume for contradiction that a DRAW exists, and choose the globally least
+coefficient source (s) occurring at a DRAW.  Sections 14--27 and 69--90,
+as audited in Section 137, associate to an outcome-compatible continuation
+one of the following marked macrosteps:
+
+1. a DRAW with retained source strictly below (s);
+2. replacement of one or more certified finite proof tokens by certified
+   lower descendants, with the retained source unchanged;
+3. a routing step in the obligation/factor normalizer of Section 136, with
+   both retained source and outer proof-token multiset unchanged.
+
+The first alternative is impossible by the definition of (s).  In the
+second alternative the ordinal multiset rank (Phi) strictly decreases by
+Section 129.  The third alternative lies in a fixed source/token fibre,
+whose routing relation is well-founded by Section 136.
+
+Every macrostep preserves an actual DRAW continuation.  This is not an
+assumption that a DRAW passes through a marked WIN token: the outcome
+diamonds in the cited sections choose a DRAW member, while the finite token
+is carried separately through the exact source/lift coordinates.  In
+particular Sections 130--135 prove this attachment at the formerly
+unresolved marked factor exits.
+
+### Excluding an infinite macro-path
+
+Let (mathcal C) be the marked configurations reachable in this way and
+encode their retained outer data by
+
+\[
+\pi(C)=\omega^\omega s(C)+\Phi(M(C)).
+\]
+
+Every transition satisfies (pi(C')\le\pi(C)).  A strict source or token
+edge makes the inequality strict.  On an equal-(pi) transition the actual
+source and token multiset are unchanged: any token replacement would have
+strictly lowered (Phi).  Hence an equal ordinal fibre is a disjoint union
+of invariant fixed-source/fixed-token normalizer components, each
+well-founded by Section 136.  The well-founded-fibre lemma of Section 132
+therefore proves that the complete marked relation on (mathcal C) is
+well-founded.
+
+On the other hand, a DRAW state has no LOSS child and has at least one DRAW
+child.  Each finite macro-normalization uses only finitely many such outcome
+diamonds and ends at another marked configuration containing an actual
+DRAW, unless it has already reached the impossible smaller-source case.
+Starting from the hypothetical DRAW and repeatedly choosing the supplied
+DRAW continuation therefore constructs an infinite sequence
+
+\[
+C_0\longrightarrow C_1\longrightarrow C_2\longrightarrow\cdots.
+\]
+
+This contradicts well-foundedness of the marked relation.  Hence
+
+\[
+\boxed{\text{there are no DRAW positions in the conjugated game}.}
+\]
+
+### Returning to the original game
+
+Every nonterminal conjugated state is therefore WIN or LOSS.  Both outcomes
+have finite canonical proof height (Section 9).  At a WIN state an optimal
+move chooses a canonical LOSS child of smaller height; every child of a
+LOSS state is WIN and has smaller height.  Thus optimal play decreases a
+nonnegative proof height on every move and reaches the terminal state (0)
+after finitely many moves.
+
+The embedding (J) identifies (0) with the original terminal odd state
+(1), and identifies every odd state not divisible by three with a unique
+conjugated state.  From an odd starting value divisible by three, either
+legal move immediately produces an odd value not divisible by three.
+Since both resulting states are already WIN or LOSS, the starting state is
+also WIN or LOSS.  Consequently
+
+\[
+\boxed{
+\text{For every odd positive start, optimal play reaches }1
+\text{ in finitely many moves}.}
+\]
+
+This proof does not use a finite numerical cutoff, propagate a minimum DRAW
+indefinitely along an A-ray, infer DRAW from an arbitrary cycle, or restart
+a minimum-height argument at later factor endpoints.  Unbounded alternating
+suffixes are handled by their exact lengths and counters, and all changes
+in finite witness shape are ranked by the multiset/fibre construction.

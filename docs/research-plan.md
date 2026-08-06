@@ -840,6 +840,116 @@ three endpoints and the nested A-obligation exit to the multiset-token
 replacements, then perform the analogous audit for terminal exponents two
 and three.
 
+Section 131 identifies all three endpoint rows without a new table.  With
+the gate coefficient (C=J(W)), the (D=3) endpoint has precisely the
+first signed/raw factor exits over (W) as its children, the (D=4)
+endpoint has the second signed/raw exits, and (D=5) selects that same
+second raw exit.  Hence the entire length-two scan returns to the existing
+WIN-source factor automaton of Sections 54--64 while retaining (W).
+What remains is an order-theoretic nesting issue: if one of those old
+exits is finite, its height must be ranked as an inner computation while
+the certified lower descendant of (W) stays in the outer token
+multiset.  It must not replace that outer token by an incomparable finite
+height.
+
+Section 132 supplies the precise composition rule for that nesting.  Use
+the retained source and the outer proof-token multiset as an ordinal
+projection.  Source/token edges strictly lower the projection and may
+reset all inner data; routing edges stay in one fibre.  It is therefore
+enough to prove the union of routing edges well-founded separately inside
+each fixed fibre.  In particular the unrelated finite height of an old
+factor exit is inner state, not a replacement for the descendant of
+(W).  The remaining proof obligation is now a completeness/SCT audit of
+the fixed-fibre automaton, with terminal exponent two and three as the
+only entries not yet attached.
+
+Section 133 removes those last two unattached entries.  Terminal exponent
+two has no zero-recycle row, and its reconstructed LOSS token is strictly
+below the incoming one before the macro begins.  The same is true for
+every positive-recycle exponent-three row.  In the sole zero-recycle
+exponent-three row the LOSS token is unchanged, but the marked shortest
+configuration replaces its already carried LOSS token (y) by its WIN
+child (r), with (h(r)\le h(y)-1), independently of the chosen DRAW
+exit.  Hence every
+terminal exponent-two/three entry lowers the outer multiset projection
+before any unrelated inner height can appear.  The remaining task is no
+longer another arithmetic terminal table: it is a completeness and
+well-foundedness audit of the same-projection routing graph already spread
+across Sections 91--120.
+
+Section 134 closes the two short marked-factor entries that the (v\ge9)
+transport did not cover.  At (v=7), the first returned source is either
+an exact lift over the already marked WIN (q), or one of the two actual
+children of the marked LOSS (y), giving an immediate multiset decrease.
+At (v=8), its valuation is identically one and the returned source is an
+exact lift over (y).  Thus the formerly resonant short rows preserve the
+incoming pair and enter the same fixed-fibre obligation system; no
+short-(D) entry remains unattached.  The next step is now a literal edge
+inventory of the fixed-fibre graph, looking especially for a connection
+that can move between Sections 91--96 and 97--120 without either the
+source or token projection falling.
+
+Section 135 removes the apparent finite (D=4,\ldots,13) audit as well.
+For every marked tail of length at least three, the marked WIN/LOSS
+children (q,y) have a common child (r), which is WIN one proof level
+below (y).  Section 130 retains (r), or an exact child/lift over it,
+through every factor exit.  Thus the whole marked scan strictly replaces
+(y) by (r) before its inner task can reset.  Combined with Section 134,
+all marked-factor tail lengths are now ranked.  The remaining edge
+inventory can ignore Sections 103--122 as independent control cycles and
+focus on unmarked generic factor entries and their return to the universal
+obligation fork.
+
+Section 136 proves the fixed-fibre normalizer theorem.  A marked tail of
+length at least three cannot occur in an equal-projection fibre because
+Section 135 lowers its existing LOSS token.  The two shorter tails are
+exact lifts over existing tokens and return to the universal obligation
+subsystem.  A short marked row can occur at most once on an
+equal-inner-rank segment: the active normalizer inside the fixed outer fibre carries
+its own local source/token ordinal.  Every later return from the generic
+subsystem first performs the strict high-return replacement of Sections
+98--103 in that inner rank.  Sections 91--96 then exhaust every
+equal-inner-rank route after a possible short lift: canonical A-streaks are
+bounded, the valuation-two recycle installs and then lowers a finite local
+witness, larger valuations give strict source exits, and every factor fork
+pays source or token height.  Applying the fibre lemma at this inner level
+shows that neither the generic subsystem nor its cross-transition back to a
+marked row can support an infinite equal-outer-fibre path.  The last audit
+is now upstream: verify that Sections 15--90 send every minimum-source and
+height-one entry either through a strict outer edge or into this
+normalizer, with no omitted raw resonance.
+
+Section 137 completes that upstream inventory.  The minimum-source
+constant-tail reduction of Sections 14--27 has only source descent,
+certified boundary-token descent, or the generic A-selecting obligation as
+its surviving output.  The height-one ordinary row strictly lowers its
+boundary token; the exceptional resonant row is completely coupled by
+Sections 77--89 and its sole non-strict high return is exactly the
+A-selecting obligation of Section 90.  Hence every initial DRAW
+continuation enters the Section 136 normalizer or lowers the outer
+projection.  The next step is a final theorem-level audit: construct the
+infinite marked macro-path supplied by a hypothetical DRAW, apply the
+well-founded source/fibre/token order, and check the argument explicitly
+against every pitfall concerning infinite play, fixed depth, and changing
+minimum witnesses.
+
+Section 138 performs that final assembly.  A hypothetical DRAW supplies an
+infinite outcome-compatible sequence of finite marked macrosteps.  Its
+ordinal projection
+
+\[
+\omega^\omega s+\Phi(M)
+\]
+
+never increases; a source or token edge is strict, while an equal ordinal
+fibre decomposes into invariant fixed-source/fixed-token components and is
+well-founded by Section 136.  This contradicts the infinite marked path,
+so the conjugated game has no DRAW.  Canonical proof height then decreases
+on every optimal move to \(0\), which corresponds to the original terminal
+state \(1\).  The research task has therefore changed from finding the
+missing transition to independent proof audit, compression of the argument,
+and preparation of a submission-quality manuscript.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.
