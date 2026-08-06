@@ -1396,6 +1396,291 @@ class GameArithmeticTests(unittest.TestCase):
                     (upper, lower),
                 )
 
+    def test_reassembled_loss_parent_has_fixed_terminal_macro(
+        self,
+    ) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                marked_source = constant_tail_state(
+                    coefficient, 3, phase
+                )
+                marked_win = transformed_A(marked_source)
+                common_win = transformed_B(marked_win)
+                canonical_loss = transformed_A(marked_win)
+                raw_exponent = (
+                    v2(27 * coefficient + 1 - 2 * phase) + 1
+                )
+                if raw_exponent < 3:
+                    continue
+
+                terminal_exponent = (raw_exponent - 1) % 3 + 1
+                recycle_count = (
+                    raw_exponent - terminal_exponent
+                ) // 3
+                opposite_phase = 1 - phase
+                base = embedded_original_state(common_win)
+                terminal_coefficient = 9**recycle_count * base
+                terminal_source = constant_tail_state(
+                    terminal_coefficient,
+                    terminal_exponent,
+                    phase,
+                )
+
+                if terminal_exponent == 3:
+                    if recycle_count == 0:
+                        macro_coefficient = base
+                        loss_parent = canonical_loss
+                        self.assertEqual(
+                            terminal_source,
+                            constant_tail_state(
+                                macro_coefficient, 3, phase
+                            ),
+                        )
+                        multiplier = 27
+                        raw_argument_coefficient = 9
+                    else:
+                        macro_coefficient = (
+                            3 ** (2 * recycle_count - 1) * base
+                        )
+                        loss_parent = constant_tail_state(
+                            macro_coefficient, 3, opposite_phase
+                        )
+                        self.assertEqual(
+                            terminal_source,
+                            constant_tail_state(
+                                3 * macro_coefficient, 3, phase
+                            ),
+                        )
+                        multiplier = 81
+                        raw_argument_coefficient = 27
+
+                    selected_source = transformed_B(
+                        transformed_A(terminal_source)
+                    )
+                    self.assertEqual(
+                        selected_source,
+                        alternating_suffix_remainder(
+                            constant_tail_state(
+                                raw_argument_coefficient
+                                * macro_coefficient,
+                                1,
+                                phase,
+                            )
+                        ),
+                    )
+                    signed_value = (
+                        multiplier * macro_coefficient
+                        + 1
+                        - 2 * phase
+                    )
+                    valuation = v2(signed_value)
+                    self.assertEqual(
+                        signed_value,
+                        2**valuation
+                        * embedded_original_state(selected_source),
+                    )
+                    self.assertEqual(
+                        source_boundary_transition(
+                            transformed_A(terminal_source), phase
+                        ),
+                        ("B", valuation + 2, selected_source),
+                    )
+
+                elif terminal_exponent == 2:
+                    macro_coefficient = (
+                        3 ** (2 * recycle_count - 1) * base
+                    )
+                    loss_parent = constant_tail_state(
+                        macro_coefficient, 2, opposite_phase
+                    )
+                    self.assertEqual(
+                        terminal_source,
+                        constant_tail_state(
+                            3 * macro_coefficient, 2, phase
+                        ),
+                    )
+                    intermediate = constant_tail_state(
+                        9 * macro_coefficient, 1, phase
+                    )
+                    raw_odd = 27 * macro_coefficient - phase
+                    self.assertEqual(
+                        transformed_A(terminal_source), intermediate
+                    )
+                    self.assertEqual(
+                        transformed_B(terminal_source),
+                        alternating_suffix_remainder(intermediate),
+                    )
+                    self.assertEqual(
+                        transformed_A(intermediate), raw_odd
+                    )
+                    self.assertEqual(
+                        transformed_B(intermediate),
+                        alternating_suffix_remainder(raw_odd),
+                    )
+
+                else:
+                    if recycle_count == 1:
+                        macro_coefficient = base
+                        loss_parent = canonical_loss
+                        self.assertEqual(
+                            terminal_source,
+                            constant_tail_state(
+                                9 * macro_coefficient, 1, phase
+                            ),
+                        )
+                        multiplier = 81
+                        raw_argument_coefficient = 27
+                    else:
+                        macro_coefficient = (
+                            3 ** (2 * recycle_count - 3) * base
+                        )
+                        loss_parent = constant_tail_state(
+                            macro_coefficient, 4, opposite_phase
+                        )
+                        self.assertEqual(
+                            terminal_source,
+                            constant_tail_state(
+                                27 * macro_coefficient, 1, phase
+                            ),
+                        )
+                        multiplier = 243
+                        raw_argument_coefficient = 81
+
+                    selected_source = transformed_B(terminal_source)
+                    self.assertEqual(
+                        selected_source,
+                        alternating_suffix_remainder(
+                            raw_argument_coefficient
+                            * macro_coefficient
+                            - phase
+                        ),
+                    )
+                    signed_value = (
+                        multiplier * macro_coefficient
+                        + 1
+                        - 2 * phase
+                    )
+                    valuation = v2(signed_value)
+                    self.assertEqual(
+                        signed_value,
+                        2**valuation
+                        * embedded_original_state(selected_source),
+                    )
+                    self.assertEqual(
+                        source_boundary_transition(
+                            terminal_source, opposite_phase
+                        ),
+                        ("B", valuation + 1, selected_source),
+                    )
+
+                upper_child, lower_child = transformed_moves(loss_parent)
+                self.assertEqual(
+                    source_boundary_transition(loss_parent, phase),
+                    ("A", 1, upper_child),
+                )
+                loss_transition = source_boundary_transition(
+                    loss_parent, opposite_phase
+                )
+                self.assertEqual(loss_transition[0], "B")
+                self.assertEqual(loss_transition[2], lower_child)
+                if terminal_exponent == 2:
+                    self.assertGreaterEqual(loss_transition[1], 3)
+                else:
+                    self.assertEqual(loss_transition[1], 2)
+
+    def test_exponent_one_terminal_loss_gate(self) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                marked_source = constant_tail_state(
+                    coefficient, 3, phase
+                )
+                marked_win = transformed_A(marked_source)
+                common_win = transformed_B(marked_win)
+                canonical_loss = transformed_A(marked_win)
+                raw_exponent = (
+                    v2(27 * coefficient + 1 - 2 * phase) + 1
+                )
+                if raw_exponent < 3:
+                    continue
+                terminal_exponent = (raw_exponent - 1) % 3 + 1
+                if terminal_exponent != 1:
+                    continue
+
+                recycle_count = (raw_exponent - 1) // 3
+                opposite_phase = 1 - phase
+                terminal_coefficient = (
+                    9**recycle_count
+                    * embedded_original_state(common_win)
+                )
+                terminal_source = constant_tail_state(
+                    terminal_coefficient, 1, phase
+                )
+                if recycle_count == 1:
+                    loss_parent = canonical_loss
+                else:
+                    loss_parent = constant_tail_state(
+                        terminal_coefficient // 27,
+                        4,
+                        opposite_phase,
+                    )
+
+                gate_parent = constant_tail_state(
+                    terminal_coefficient // 9,
+                    3,
+                    opposite_phase,
+                )
+                gate_coefficient = terminal_coefficient // 3
+                gate_pair = (
+                    constant_tail_state(
+                        gate_coefficient, 2, opposite_phase
+                    ),
+                    constant_tail_state(
+                        gate_coefficient, 1, opposite_phase
+                    ),
+                )
+
+                self.assertEqual(transformed_A(loss_parent), gate_parent)
+                self.assertEqual(transformed_moves(gate_parent), gate_pair)
+                self.assertEqual(
+                    terminal_source,
+                    constant_tail_state(
+                        3 * gate_coefficient, 1, phase
+                    ),
+                )
+                self.assertEqual(
+                    source_boundary_transition(terminal_source, phase)[0],
+                    "A",
+                )
+                self.assertEqual(
+                    source_boundary_transition(
+                        terminal_source, opposite_phase
+                    )[0],
+                    "B",
+                )
+
+    def test_exponent_one_terminal_gate_long_raw_source_drops(
+        self,
+    ) -> None:
+        for gate_coefficient in range(3, 100000, 6):
+            for phase in (0, 1):
+                opposite_phase = 1 - phase
+                terminal_source = constant_tail_state(
+                    3 * gate_coefficient, 1, phase
+                )
+                raw_argument = 9 * gate_coefficient - phase
+                returned_source = alternating_suffix_remainder(
+                    raw_argument
+                )
+                transition = source_boundary_transition(
+                    terminal_source, opposite_phase
+                )
+                self.assertEqual(transition[0], "B")
+                self.assertEqual(transition[2], returned_source)
+
+                suffix_length = alternating_suffix_length(raw_argument)
+                if suffix_length >= 4:
+                    self.assertLess(returned_source, gate_coefficient)
+
     def test_long_lift_A_obligation_canonical_recycle(self) -> None:
         for source in range(1, 1000):
             base_coefficient = embedded_original_state(source)

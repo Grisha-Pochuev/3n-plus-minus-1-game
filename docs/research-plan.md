@@ -753,6 +753,28 @@ remaining incidence theorem may therefore carry one marked LOSS token
 against the raw/signed exits of Section 117 instead of trying to preserve
 two unrelated WIN heights.
 
+Section 122 expresses those exits directly relative to the reconstructed
+LOSS token.  All positive-recycle rows reduce to coefficient-independent
+macros with multipliers 81, 27, and 243; the two zero-recycle endpoints are
+separate 27- and 81-fold macros.  Consequently the D=3 terminal incidence
+audit is now a five-row symbolic outcome table.  Neither the original raw
+exponent nor the accumulated factor power remains as a parameter of that
+table.
+
+Section 123 strengthens the exponent-one part of that table.  In both its
+zero- and positive-recycle rows, one more canonical proof-tree step produces
+an actual LOSS among Q2^e(c),Q1^e(c), at height at most h(ell)-2h, while
+the terminal B-selecting source is exactly Q1^g(3c).  Hence the two
+exponent-one macros collapse to a single two-orientation LOSS/X gate.  The
+remaining task for that exponent is only to expose one of these two marked
+LOSS orientations through the B-selecting transfer.
+
+Section 124 closes every long raw suffix in that gate.  If the actual suffix
+deleted from 9c-g has length at least four, Section 25 transfers DRAW to a
+factor-free source y<c.  Thus only the exact suffix lengths 1, 2, and 3
+remain in the exponent-one outcome table, each still carrying the genuine
+lower-height LOSS orientation from Section 123.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

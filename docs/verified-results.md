@@ -10780,3 +10780,250 @@ of \(Z_n\); that remaining step must use the exact raw/signed positions of
 Section 117.  The three inverse-parent identities, including both
 zero-recycle rows, are regression-tested for every odd
 \(1\le C<1000\) in both phases.
+
+## 122. Relative to the LOSS token, every terminal factor macro is fixed
+
+Sections 117 and 121 use the same power \(3^{2h}J(r)\), but in different
+coordinates.  Reparameterizing by the reconstructed LOSS token removes
+that power completely.  Retain
+
+\[
+e=1-g.
+\]
+
+There are three positive-recycle rows.
+
+### Terminal exponent three, \(h\ge1\)
+
+Put
+
+\[
+d=3^{2h-1}J(r),\qquad Z_3=Q_3^e(d)\text{ LOSS}.
+\]
+
+Then the terminal obligation source and its Section 117 returned source
+are exactly
+
+\[
+X_3=Q_3^g(3d),\qquad
+b_3=R\!\left(Q_1^g(27d)\right),
+\]
+
+and, for \(v_3\ge1\),
+
+\[
+\boxed{81d+1-2g=2^{v_3}J(b_3),\qquad
+\operatorname{sourceTransition}(A(X_3),g)
+=(B,v_3+2,b_3).}
+\]
+
+### Terminal exponent two
+
+Here \(h\ge1\).  Put
+
+\[
+d=3^{2h-1}J(r),\qquad Z_2=Q_2^e(d)\text{ LOSS}.
+\]
+
+All four terminal states of Section 117 become
+
+\[
+\boxed{
+\begin{aligned}
+X_2&=Q_2^g(3d),\\
+y_2&=Q_1^g(9d),\\
+c_2&=R\!\left(Q_1^g(9d)\right),\\
+b_2&=27d-g,\qquad p_2=R(27d-g).
+\end{aligned}}
+\]
+
+### Terminal exponent one, \(h\ge2\)
+
+Put
+
+\[
+d=3^{2h-3}J(r),\qquad Z_1=Q_4^e(d)\text{ LOSS}.
+\]
+
+Then
+
+\[
+X_1=Q_1^g(27d),\qquad c_1=R(81d-g),
+\]
+
+and, for \(v_1\ge1\),
+
+\[
+\boxed{243d+1-2g=2^{v_1}J(c_1),\qquad
+\operatorname{sourceTransition}(X_1,e)
+=(B,v_1+1,c_1).}
+\]
+
+The two zero-recycle endpoints are fixed macros as well.  For exponent
+three with \(h=0\), put \(d=J(r)\).  Then \(Z_3=\ell\),
+
+\[
+X_3=Q_3^g(d),\qquad
+b_3=R\!\left(Q_1^g(9d)\right),\qquad
+27d+1-2g=2^{v_3}J(b_3).
+\]
+
+For exponent one with \(h=1\), again put \(d=J(r)\).  Then
+\(Z_1=\ell\),
+
+\[
+X_1=Q_1^g(9d),\qquad c_1=R(27d-g),\qquad
+81d+1-2g=2^{v_1}J(c_1).
+\]
+
+Every display is obtained by substituting the definition of \(d\) into
+Section 117; no outcome conclusion is inferred from the reparameterization.
+There is also one uniform phase alignment at the LOSS end of all five
+macros.  If \(U_n=A(Z_n)\) and \(L_n=B(Z_n)\) are its two WIN children,
+then
+
+\[
+\boxed{
+\operatorname{sourceTransition}(Z_n,g)=(A,1,U_n),\qquad
+\operatorname{sourceTransition}(Z_n,e)=(B,j_n,L_n),}
+\]
+
+where
+
+\[
+\boxed{j_3=j_1=2,\qquad j_2\ge3.}
+\]
+
+For the positive-recycle rows this follows immediately from the final
+constant tails of \(Q_3^e(d),Q_2^e(d),Q_4^e(d)\).  In the two
+zero-recycle rows it follows from the exact original child coordinates
+of \(\ell\).  Thus the old phase \(g\) selects the upper WIN child and the
+opposite phase selects the lower WIN child in every row.
+
+The important point is that the distance from the marked LOSS token to the
+terminal raw/signed boundary is coefficient-independent: the largest
+remaining multiplier is \(243\), and there are exactly five macros after
+the two zero-recycle endpoints are separated.  Thus the missing incidence
+lemma has no hidden factor counter or tail counter.  These fixed forms and
+their source-transition valuations are regression-tested for every odd
+\(1\le C<1000\) in both phases.
+
+## 123. The exponent-one terminal row exports a strictly lower LOSS gate
+
+The apparent distinction between the zero-recycle and positive-recycle
+exponent-one macros disappears at the proof-tree level.  Retain that row,
+so
+
+\[
+a=3^{2h}J(r),\qquad h\ge1,\qquad
+X=Q_1^g(a),\qquad e=1-g,
+\]
+
+and let \(Z_1\) be the LOSS state reconstructed in Section 121.  Put
+
+\[
+U=Q_3^e(a/9).
+\]
+
+When \(h=1\), this is the upper original child of
+\(Z_1=\ell\).  When \(h\ge2\), direct long-tail reduction of
+\(Z_1=Q_4^e(a/27)\) gives the same identity.  Thus in every row
+
+\[
+\boxed{U=A(Z_1)\text{ is WIN},\qquad h(U)\le h(Z_1)-1.}
+\]
+
+The two children of \(U\) are exactly
+
+\[
+\boxed{
+Q_2^e(a/3),\qquad Q_1^e(a/3).}
+\]
+
+Choose a canonical LOSS child \(L\) of the WIN state \(U\).  Then
+
+\[
+\boxed{
+L\in\{Q_2^e(a/3),Q_1^e(a/3)\},\qquad
+h(L)=h(U)-1\le h(Z_1)-2\le h(\ell)-2h.}
+\]
+
+Writing \(c=a/3\), the terminal obligation source is simultaneously
+
+\[
+\boxed{X=Q_1^g(3c).}
+\]
+
+Its A-selecting phase is \(g\), so the obligation phase \(e\) is
+B-selecting, exactly as in Section 117.  Consequently every exponent-one
+terminal macro, including the former zero-recycle row, arrives at one of
+only two marked configurations:
+
+\[
+\boxed{
+L=Q_2^e(c)\text{ LOSS}\quad\text{or}\quad
+L=Q_1^e(c)\text{ LOSS},\qquad
+X=Q_1^g(3c).}
+\]
+
+The LOSS member is an actual canonical proof witness, not an outcome label
+inferred from arithmetic, and is at least \(2h\) proof levels below the
+original \(\ell\).  This reduces both exponent-one factor macros to one
+two-orientation LOSS/X gate.  It does not yet decide how the B-selecting
+DRAW obligation over \(X\) exposes \(L\); that is now the sole incidence
+question for this terminal exponent.  The common parent, its two exact
+children, and both source phases are regression-tested for every odd
+\(1\le C<1000\) in both phases.
+
+## 124. A long raw suffix leaves the exponent-one LOSS gate by source descent
+
+Retain the two-orientation gate of Section 123:
+
+\[
+c>0\text{ odd},\qquad 3\mid c,\qquad
+X=Q_1^g(3c),\qquad e=1-g,\qquad O(X,e).
+\]
+
+The phase \(e\) is B-selecting at \(X\).  Its selected source is the actual
+contracting child
+
+\[
+y=B(X)=R(9c-g).
+\]
+
+Let
+
+\[
+\lambda=\operatorname{asl}(9c-g)
+\]
+
+be the length of the maximal alternating suffix deleted in this expression.
+The B-selecting transfer of Section 25 sends the DRAW obligation to an
+adjacent factor-free frame over \(y\) containing a DRAW.  If
+\(\lambda\ge4\), then
+
+\[
+y=\left\lfloor\frac{9c-g}{2^\lambda}\right\rfloor
+\le\left\lfloor\frac{9c}{16}\right\rfloor<c.
+\]
+
+Therefore
+
+\[
+\boxed{\lambda\ge4\Longrightarrow
+\text{the exponent-one gate makes a strict DRAW-source transition }y<c.}
+\]
+
+No fixed modulus is being used to decide an unbounded suffix: the split is
+made on its actual length.  The only rows that can avoid this source descent
+are now
+
+\[
+\boxed{\lambda\in\{1,2,3\}.}
+\]
+
+They retain the actual lower-height LOSS orientation from Section 123 and
+form a finite signed/raw incidence table.  This does not yet decide those
+three short rows.  The selected source identity and the strict inequality
+are regression-tested for every odd multiple of three below \(100000\), in
+both phases.
