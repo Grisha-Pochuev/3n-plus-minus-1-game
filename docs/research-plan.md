@@ -733,6 +733,15 @@ completion therefore does not need to compare two independent counters;
 it needs an outcome barrier for this one aligned exponent ladder through
 the Section 117 factor levels.
 
+Section 120 removes even that unbounded ladder from the local audit.
+Applying the already proved three-bit common-child map to both lower WIN
+members transports them, with componentwise height descent, to one of only
+three fixed barriers at the terminal coefficient: Q2/Q1, Q1 with its raw
+child, or Q3/Q2 one ninefold level earlier.  The next task is now a bounded
+outcome-incidence theorem for these three barriers against the three
+terminal rows of Section 117; no canonical-recycle counter remains in that
+statement.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

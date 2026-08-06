@@ -10552,3 +10552,122 @@ the possibility that the exit exponent and the lower pair drift
 independently.  The signed factorization, residue split, phase-selected
 ordinary child, and exact exponents are regression-tested for every odd
 \(1\le C<1000\) in both phases.
+
+## 120. The aligned lower pair reaches one of three fixed terminal barriers
+
+Section 119 aligns the first raw state and the opposite-phase lower WIN
+pair.  The same three-bit common-child map that ranks the raw obligation
+also transports that pair all the way to its terminal row.
+
+Retain the exceptional shortest-row notation and write
+
+\[
+M=3h+n,\qquad n\in\{1,2,3\},
+\]
+
+where \(M\ge3\) is Section 119's first raw exponent.  Put
+
+\[
+e=1-g,\qquad c_i=9^iJ(r).
+\]
+
+The two children of the LOSS state \(\ell=A(q)\) are
+
+\[
+L_0=Q_{M-2}^e(J(r)),\qquad
+H_0=Q_{M-1}^e(J(r)).
+\]
+
+Hence both are WIN.  For every WIN state \(Q_d^e(c)\) with \(d\ge4\),
+Section 110 gives the exact common-child transition
+
+\[
+Q_d^e(c)\longmapsto Q_{d-3}^e(9c)
+\]
+
+and lowers its proof height by at least two.  Apply this transition to the
+two members independently for as long as their exponents permit.  Exactly
+three terminal configurations result.
+
+### Raw exponent \(M=3h+3\)
+
+Both members admit \(h\) common-child transitions:
+
+\[
+\boxed{
+L_h=Q_1^e(c_h),\qquad H_h=Q_2^e(c_h),
+}
+\]
+
+\[
+\boxed{
+h(L_h)\le h(L_0)-2h,\qquad
+h(H_h)\le h(H_0)-2h.}
+\]
+
+Thus the exponent-three terminal raw source carries an exact opposite-
+phase exponent-one/two WIN barrier over its own terminal coefficient.
+
+### Raw exponent \(M=3h+2\)
+
+The upper member admits \(h\) transitions and becomes
+
+\[
+H_h=Q_1^e(c_h)\text{ WIN},qquad
+h(H_h)\le h(H_0)-2h.
+\]
+
+The lower member admits \(h-1\) transitions and becomes
+
+\[
+L_{h-1}=Q_3^e(c_{h-1})\text{ WIN}.
+\]
+
+This state is ordinary.  Its two children have the common child
+
+\[
+K=B(A(L_{h-1}))=R(Q_1^e(c_h))=R(H_h).
+\]
+
+Choosing either canonical LOSS child of the WIN state \(L_{h-1}\) shows
+
+\[
+\boxed{K\text{ WIN},\qquad
+h(K)\le h(L_0)-2h.}
+\]
+
+The exponent-two terminal row therefore carries the fixed WIN barrier
+\(\{Q_1^e(c_h),R(Q_1^e(c_h))\}\).
+
+### Raw exponent \(M=3h+1\)
+
+Here \(h\ge1\).  Both members admit \(h-1\) transitions and give
+
+\[
+\boxed{
+L_{h-1}=Q_2^e(c_{h-1}),\qquad
+H_{h-1}=Q_3^e(c_{h-1}),
+}
+\]
+
+with both states WIN and
+
+\[
+\boxed{
+h(L_{h-1})\le h(L_0)-2h+2,\qquad
+h(H_{h-1})\le h(H_0)-2h+2.}
+\]
+
+Thus the exponent-one terminal row carries an opposite-phase three/two
+WIN barrier exactly one ninefold coefficient level before its terminal
+coefficient.
+
+Consequently the number \(h\) of canonical recycles is no longer part of
+the unresolved outcome problem.  Every possible value of \(M\) transports
+the original lower pair, with explicit height descent, to one of the three
+fixed local barriers above.  What remains is to prove that the corresponding
+Section 117 terminal factor exit cannot cross its fixed barrier without
+creating a lower DRAW/WIN boundary.  This is an outcome-incidence problem
+in three bounded local types, not an unbounded exponent or factor-counter
+problem.  The three coordinate identities are regression-tested for every
+odd \(1\le C<1000\) in both phases.

@@ -1224,6 +1224,100 @@ class GameArithmeticTests(unittest.TestCase):
                         },
                     )
 
+    def test_aligned_successor_pair_reaches_three_terminal_barriers(
+        self,
+    ) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                marked_source = constant_tail_state(
+                    coefficient, 3, phase
+                )
+                marked_win = transformed_A(marked_source)
+                common_win = transformed_B(marked_win)
+                canonical_child = transformed_A(marked_win)
+                lower_successor = transformed_B(canonical_child)
+                upper_successor = transformed_A(canonical_child)
+                raw_exponent = (
+                    v2(27 * coefficient + 1 - 2 * phase) + 1
+                )
+                if raw_exponent < 3:
+                    continue
+
+                terminal_exponent = (raw_exponent - 1) % 3 + 1
+                recycle_count = (
+                    raw_exponent - terminal_exponent
+                ) // 3
+                opposite_phase = 1 - phase
+
+                def recycle(state: int, count: int) -> int:
+                    for _ in range(count):
+                        state = transformed_B(transformed_A(state))
+                    return state
+
+                terminal_coefficient = (
+                    3 ** (2 * recycle_count)
+                    * embedded_original_state(common_win)
+                )
+
+                if terminal_exponent == 3:
+                    self.assertEqual(
+                        recycle(lower_successor, recycle_count),
+                        constant_tail_state(
+                            terminal_coefficient, 1, opposite_phase
+                        ),
+                    )
+                    self.assertEqual(
+                        recycle(upper_successor, recycle_count),
+                        constant_tail_state(
+                            terminal_coefficient, 2, opposite_phase
+                        ),
+                    )
+                elif terminal_exponent == 2:
+                    terminal_lift = recycle(
+                        upper_successor, recycle_count
+                    )
+                    preceding_lower = recycle(
+                        lower_successor, recycle_count - 1
+                    )
+                    self.assertEqual(
+                        terminal_lift,
+                        constant_tail_state(
+                            terminal_coefficient, 1, opposite_phase
+                        ),
+                    )
+                    self.assertEqual(
+                        constant_tail_source_coordinates(
+                            preceding_lower
+                        )[2:],
+                        (3, opposite_phase),
+                    )
+                    self.assertEqual(
+                        transformed_B(
+                            transformed_A(preceding_lower)
+                        ),
+                        alternating_suffix_remainder(terminal_lift),
+                    )
+                else:
+                    preceding_coefficient = (
+                        terminal_coefficient // 9
+                    )
+                    self.assertEqual(
+                        recycle(
+                            lower_successor, recycle_count - 1
+                        ),
+                        constant_tail_state(
+                            preceding_coefficient, 2, opposite_phase
+                        ),
+                    )
+                    self.assertEqual(
+                        recycle(
+                            upper_successor, recycle_count - 1
+                        ),
+                        constant_tail_state(
+                            preceding_coefficient, 3, opposite_phase
+                        ),
+                    )
+
     def test_long_lift_A_obligation_canonical_recycle(self) -> None:
         for source in range(1, 1000):
             base_coefficient = embedded_original_state(source)
