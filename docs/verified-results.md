@@ -10206,3 +10206,211 @@ untyped.  This still does not prove that a later high-return edge preserves
 the same descending thread.  The four state identities, ordinary
 common-child incidence, and exceptional adjacent coordinates are covered
 by the regressions of Sections 68, 99, and 114.
+
+## 117. Every terminal anchored-obligation row stays on the old factor boundary
+
+Sections 114--116 rank the long tail and type its outcomes, but their final
+states can have a canonical coefficient source larger than the original
+anchor.  That does not mean the old provenance has disappeared.  Let
+
+\[
+a=3^{2h}J(r),\qquad h\ge0,
+\]
+
+and retain the phase \(g\).  The three terminal tail exponents have the
+following exact factor-boundary forms.
+
+### Tail exponent one
+
+Put
+
+\[
+x_1=Q_1^g(a),\qquad c_1=B(x_1).
+\]
+
+The opposite phase \(1-g\) is B-selecting at \(x_1\).  Direct substitution
+gives
+
+\[
+3J(x_1)+1-2(1-g)
+=2\left(3^{2h+2}J(r)+1-2g\right).
+\]
+
+If
+
+\[
+3^{2h+2}J(r)+1-2g=2^{v_1}J(c_1),
+\]
+
+then \(v_1\ge1\), and therefore
+
+\[
+\boxed{\operatorname{sourceTransition}(x_1,1-g)
+=(B,v_1+1,c_1).}
+\]
+
+Thus the B-obligation at the exponent-one endpoint transfers to the signed
+factor boundary of even level \(2h+2\) over \(r\).
+
+### Tail exponent two
+
+Put
+
+\[
+x_2=Q_2^g(a),\qquad y_2=A(x_2).
+\]
+
+The four states used in Section 116 are
+
+\[
+\boxed{
+\begin{aligned}
+y_2&=Q_1^g(3^{2h+1}J(r)),\\
+c_2:=B(x_2)
+&=R\!\left(Q_1^g(3^{2h+1}J(r))\right),\\
+b_2:=A(y_2)&=3^{2h+2}J(r)-g,\\
+p_2:=B(y_2)&=R\!\left(3^{2h+2}J(r)-g\right).
+\end{aligned}}
+\]
+
+Hence both lower tokens exported by Section 116 and the common side of the
+obligation are respectively the signed/raw sides of one odd and one even
+factor level over the same \(r\).
+
+### Tail exponent three
+
+Put
+
+\[
+x_3=Q_3^g(a),\qquad y_3=A(x_3),\qquad b_3=B(y_3).
+\]
+
+Section 114's boundary row is
+
+\[
+b_3=R\!\left(Q_1^g(3^{2h+2}J(r))\right).
+\]
+
+Moreover
+
+\[
+3J(y_3)+1-2g
+=4\left(3^{2h+3}J(r)+1-2g\right).
+\]
+
+Writing
+
+\[
+3^{2h+3}J(r)+1-2g=2^{v_3}J(b_3)
+\qquad(v_3\ge1)
+\]
+
+therefore gives
+
+\[
+\boxed{\operatorname{sourceTransition}(y_3,g)
+=(B,v_3+2,b_3).}
+\]
+
+Consequently the three terminal rows produced after any number of
+\((m,a)\mapsto(m-3,9a)\) recycles remain exact raw/signed factor-boundary
+types over the original finite token \(r\).  Canonical refactorization of
+one raw state may assign it a different numerical coefficient source, but
+the marked expression and its adjacent factor level still retain \(r\).
+This closes the arithmetic entry table for the no-first-exit \(D=3\) row;
+it does not yet prove that every outcome path through those factor
+boundaries exposes a certified descendant of \(r\).  All three
+factorizations and the even powers \(0\le2h\le6\) are regression-tested for
+\(1\le r<1000\) in both phases.
+
+## 118. The shortest marked pair has a componentwise lower successor diamond
+
+The factor anchor \(r\) in Sections 113--117 is not merely an arithmetic
+label.  Return to the shortest marked configuration
+
+\[
+b=Q_3^g(C),\qquad q=A(b),\qquad y=B(b),
+\]
+
+with
+
+\[
+b,q\text{ WIN},\qquad y\text{ LOSS},\qquad
+r=B(q)=B(y)\text{ WIN}.
+\]
+
+The two children of \(q\) are
+
+\[
+\ell:=A(q),\qquad r=B(q).
+\]
+
+Since \(q\) and \(r\) are both WIN, the other child is forced to be the
+unique LOSS child:
+
+\[
+\boxed{\ell\text{ LOSS},\qquad h(\ell)=h(q)-1.}
+\]
+
+Put
+
+\[
+x:=B(\ell)=B(A(q)),\qquad a:=A(\ell)=A^2(q).
+\]
+
+Both \(x\) and \(a\) are children of the LOSS state \(\ell\).  Therefore
+
+\[
+\boxed{x,a\text{ WIN},\qquad
+h(x),h(a)\le h(q)-2.}
+\]
+
+There are now exactly two arithmetic orientations.
+
+If \(q\) is nonexceptional, its ordinary side relation makes \(x\) a child
+of both \(\ell=A(q)\) and \(r=B(q)\).  Let \(z\) be the other child of
+\(r\).  The state \(r\) is WIN and already has the WIN child \(x\), so
+\(z\) is its unique LOSS child.  Hence
+
+\[
+\boxed{
+q\text{ ordinary}\Longrightarrow
+\begin{cases}
+x\in\operatorname{moves}(r),\\
+z\text{ LOSS},\quad h(z)=h(r)-1,\\
+h(x)\le h(q)-2.
+\end{cases}}
+\]
+
+Thus the marked pair \((q\text{ WIN},r\text{ WIN})\) has the
+componentwise lower successor pair
+
+\[
+\boxed{(q,r)\longmapsto(x,z),\qquad
+h(x)+h(z)\le h(q)+h(r)-3.}
+\]
+
+If \(q\) is exceptional, its two-bit tail restricts it to residue \(12\)
+for \(g=0\) or residue \(3\) for \(g=1\).  The exact exceptional formula of
+Section 68 gives
+
+\[
+\boxed{
+\{x,a\}=
+\{Q_k^\delta(J(r)),Q_{k+1}^\delta(J(r))\}
+\quad(k\ge1).}
+\]
+
+Both members are the already proved lower-height WIN children of
+\(\ell\).  Thus the exceptional row replaces the ordinary successor pair
+by an exact adjacent factor-free WIN pair over the same \(r\); it does not
+create an unmarked finite token.
+
+This identifies the finite proof-tree object that the terminal factor
+boundaries of Section 117 must expose.  In the ordinary row it is a pair
+strictly lower in both old components; in the exceptional row it is the
+adjacent pair over \(r\) whose two members are both lower than \(q\).
+The lemma does not yet prove that every DRAW exit from Section 117 actually
+touches this object.  All child incidences, the exceptional residue filter,
+and the adjacent coordinates are regression-tested for odd
+\(1\le C<1000\) in both phases.

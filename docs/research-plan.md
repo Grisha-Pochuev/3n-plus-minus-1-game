@@ -706,6 +706,24 @@ strict two-token edge.  The remaining global issue is now precise: prove
 that the later high-return and first-exit routes preserve one of these
 descending threads instead of resetting both components.
 
+Section 117 shows that even the canonical coefficient-source jump in the
+terminal m=1,2,3 rows does not erase the old arithmetic anchor.  Each final
+state is an explicit raw or signed boundary at a known odd/even factor
+level of 3^k J(r).  The D=3 no-first-exit table is therefore complete as a
+finite collection of marked factor-boundary types.  What is still missing
+is the outcome theorem for these marked terminal factor boundaries: they
+must expose a certified descendant of r, not merely retain r in their
+formula.
+
+Section 118 identifies that descendant exactly.  The D=3 state q has the
+unique LOSS child A(q), so x=B(A(q)) is WIN at least two heights below q.
+In every ordinary row x is also a child of r, forcing r's other child to be
+LOSS one height below r; this gives a componentwise lower successor pair.
+In the two exceptional residue rows the two lower WIN children instead form
+an exact adjacent lift pair over r.  The remaining outcome theorem for the
+Section 117 factor boundaries now has a concrete target: expose this
+ordinary lower pair or one of the two exceptional lower lifts.
+
 ## Priority 2: finite transducer plus numerical potential
 
 A fixed residue class is insufficient, but `R` is naturally read by a finite transducer scanning bits from right to left until the first repeated bit.

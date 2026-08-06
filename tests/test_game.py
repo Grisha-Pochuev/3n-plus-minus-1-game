@@ -1112,6 +1112,56 @@ class GameArithmeticTests(unittest.TestCase):
                 )
                 self.assertEqual(v2(second_numerator), 2)
 
+    def test_short_marked_pair_has_lower_successor_diamond(self) -> None:
+        for coefficient in range(1, 1000, 2):
+            for phase in (0, 1):
+                factor_source = constant_tail_state(
+                    coefficient, 3, phase
+                )
+                marked_win = transformed_A(factor_source)
+                marked_loss = transformed_B(factor_source)
+                common_win = transformed_B(marked_win)
+                self.assertEqual(
+                    common_win, transformed_B(marked_loss)
+                )
+
+                canonical_loss = transformed_A(marked_win)
+                lower_win = transformed_B(canonical_loss)
+                self.assertEqual(
+                    transformed_moves(marked_win),
+                    (canonical_loss, common_win),
+                )
+
+                if (
+                    marked_win % 16
+                    not in SIDE_RELATION_EXCEPTIONAL_RESIDUES
+                ):
+                    self.assertIn(
+                        lower_win, transformed_moves(common_win)
+                    )
+                else:
+                    upper_lift = transformed_A(canonical_loss)
+                    lower_coordinates = (
+                        constant_tail_source_coordinates(lower_win)
+                    )
+                    upper_coordinates = (
+                        constant_tail_source_coordinates(upper_lift)
+                    )
+                    self.assertEqual(
+                        lower_coordinates[:2], (common_win, 0)
+                    )
+                    self.assertEqual(
+                        upper_coordinates[:2], (common_win, 0)
+                    )
+                    self.assertEqual(
+                        upper_coordinates[2],
+                        lower_coordinates[2] + 1,
+                    )
+                    self.assertEqual(
+                        upper_coordinates[3],
+                        lower_coordinates[3],
+                    )
+
     def test_long_lift_A_obligation_canonical_recycle(self) -> None:
         for source in range(1, 1000):
             base_coefficient = embedded_original_state(source)
@@ -1242,6 +1292,113 @@ class GameArithmeticTests(unittest.TestCase):
                                     transformed_B(obligation_source)
                                 ),
                             )
+
+    def test_anchored_obligation_terminal_factor_forms(self) -> None:
+        for source in range(1, 1000):
+            source_coefficient = embedded_original_state(source)
+            for factor_power in range(0, 7, 2):
+                coefficient = 3**factor_power * source_coefficient
+                for phase in (0, 1):
+                    opposite_phase = 1 - phase
+
+                    exponent_one = constant_tail_state(
+                        coefficient, 1, phase
+                    )
+                    one_child = transformed_B(exponent_one)
+                    one_factor = (
+                        3 ** (factor_power + 2)
+                        * source_coefficient
+                        + 1
+                        - 2 * phase
+                    )
+                    one_valuation = v2(one_factor)
+                    self.assertEqual(
+                        source_boundary_transition(
+                            exponent_one, opposite_phase
+                        ),
+                        ("B", one_valuation + 1, one_child),
+                    )
+                    self.assertEqual(
+                        one_factor >> one_valuation,
+                        embedded_original_state(one_child),
+                    )
+
+                    exponent_two = constant_tail_state(
+                        coefficient, 2, phase
+                    )
+                    selected_source = transformed_A(exponent_two)
+                    loss_side = transformed_B(exponent_two)
+                    common_side = transformed_A(selected_source)
+                    returned_side = transformed_B(selected_source)
+                    self.assertEqual(
+                        selected_source,
+                        constant_tail_state(
+                            3 ** (factor_power + 1)
+                            * source_coefficient,
+                            1,
+                            phase,
+                        ),
+                    )
+                    self.assertEqual(
+                        common_side,
+                        3 ** (factor_power + 2)
+                        * source_coefficient
+                        - phase,
+                    )
+                    self.assertEqual(
+                        loss_side,
+                        alternating_suffix_remainder(
+                            constant_tail_state(
+                                3 ** (factor_power + 1)
+                                * source_coefficient,
+                                1,
+                                phase,
+                            )
+                        ),
+                    )
+                    self.assertEqual(
+                        returned_side,
+                        alternating_suffix_remainder(common_side),
+                    )
+
+                    exponent_three = constant_tail_state(
+                        coefficient, 3, phase
+                    )
+                    three_selected = transformed_A(exponent_three)
+                    three_common = transformed_B(three_selected)
+                    three_factor = (
+                        3 ** (factor_power + 3)
+                        * source_coefficient
+                        + 1
+                        - 2 * phase
+                    )
+                    three_valuation = v2(three_factor)
+                    self.assertGreaterEqual(three_valuation, 1)
+                    self.assertEqual(
+                        source_boundary_transition(
+                            three_selected, phase
+                        ),
+                        (
+                            "B",
+                            three_valuation + 2,
+                            three_common,
+                        ),
+                    )
+                    self.assertEqual(
+                        three_factor >> three_valuation,
+                        embedded_original_state(three_common),
+                    )
+                    self.assertEqual(
+                        three_common,
+                        alternating_suffix_remainder(
+                            constant_tail_state(
+                                3 ** (factor_power + 2)
+                                * source_coefficient,
+                                1,
+                                phase,
+                            )
+                        ),
+                    )
 
     def test_high_return_obligation_common_side(self) -> None:
         for source in range(1, 1000):
