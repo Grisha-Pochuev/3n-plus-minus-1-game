@@ -12,6 +12,7 @@ root.
 | `python scripts/analyze_suffixes.py --limit 1000000 --suffix-bits 12` | exploratory suffix statistics | experiment, not proof |
 | `python scripts/extract_proof.py 100 --limit 200000 --output proof.json` | generate one finite outcome proof DAG | certificate generator |
 | `python scripts/verify_outcome_certificate.py proof.json` | validate a finite proof DAG independently | certificate checker |
+| `python scripts/verify_global_certificate.py` | validate the symbolic global-routing inventory and rank assembly | **CONDITIONAL MACHINE CHECK**; four explicit human obligations remain |
 
 ## Generator versus checker
 
@@ -20,6 +21,12 @@ kept separate and small; it reimplements only the exact conjugated moves and
 the local `WIN`/`LOSS` proof rules. A bug in the generator therefore cannot
 make an invalid certificate pass unless the independent checker has a matching
 bug.
+
+The global checker is also independent of `src/optimal_3n1`. It reads the
+committed declarative inventory directly, verifies the pinned proof-source
+digest, total guard partitions, one rule per case, lexicographic effects, and
+the equal-rank control DAG. Its exact non-machine-checked boundary is in
+[`../certificates/global-routing-certificate.md`](../certificates/global-routing-certificate.md).
 
 ## Choosing limits
 

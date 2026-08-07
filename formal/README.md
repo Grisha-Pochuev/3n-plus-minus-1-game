@@ -14,15 +14,22 @@ lake build
 ```
 
 Lean is pinned to `v4.32.1`. The project intentionally has no mathlib or other
-third-party dependency, so the initial foundation stays small and easy to
-audit.
+third-party dependency.
 
 ## Scope
 
-Read [`COVERAGE.md`](COVERAGE.md). At present, Lean formalizes the exact
-original move relation, the conjugated expanding branch, and its elementary
-arithmetic properties. It does **not** yet kernel-check the alternating-suffix
-branch, the marked ordinal rank, or the global no-`DRAW` theorem.
+Read [`COVERAGE.md`](COVERAGE.md). Lean formalizes the exact original move
+relation, the conjugated expanding branch, and its elementary arithmetic
+properties. It now also kernel-checks the general certificate metatheorem in
+[`ThreeNPlusMinusOne/Certificate.lean`](ThreeNPlusMinusOne/Certificate.lean):
+a lexicographically ranked relation is well-founded and therefore has no
+infinite descending route.
+
+Lean still does **not** kernel-check the alternating-suffix branch, the
+concrete marked multiset rank, the JSON-to-game refinement, or the global
+no-`DRAW` theorem. A successful build validates the metatheorem used by the
+certificate; it does not discharge the certificate's four human proof
+obligations.
 
 This partial status is intentional and explicit: a compiling foundation is
 more auditable than a file that states the desired theorem through axioms or
@@ -43,6 +50,7 @@ unfinished placeholders.
 2. Prove the exact normal form and `B(q)<q`.
 3. Formalize `WIN`, `LOSS`, `DRAW`, and canonical finite proof height.
 4. Formalize token multisets and the Section 129 ordinal descent.
-5. Formalize the Section 132 fibre lemma.
-6. Encode the finite routing cases from Sections 130–137.
+5. Refine the abstract Section 132 metatheorem to the concrete outer/inner
+   multiset ranks.
+6. Encode and prove the finite routing cases from Sections 130–137.
 7. State and prove Section 138 without adding axioms.

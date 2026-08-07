@@ -4,6 +4,12 @@ Status: **PROVED (human proof)**. Independent external review is pending, and
 the complete theorem is not yet Lean-checked. See `../AUDIT.md` for the audit
 protocol and `../formal/COVERAGE.md` for the exact formalization boundary.
 
+The final transition inventory and rank assembly also have a
+[`conditional symbolic certificate`](../certificates/global-routing-certificate.md).
+Its checker verifies the declared coverage and size-change graph, while four
+local certificate-to-game obligations remain in the human proof. Certificate
+acceptance must not be described as a full formalization.
+
 ## Theorem
 
 For every odd positive starting integer, optimal play in the two-player

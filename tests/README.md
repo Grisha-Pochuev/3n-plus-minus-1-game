@@ -14,6 +14,9 @@ The suite has three layers:
   propagation;
 - `test_certificates.py` checks that the independent certificate verifier
   accepts valid witnesses and rejects malformed edges, ranks, and padding.
+- `test_global_certificate.py` checks that the symbolic assembly verifier
+  rejects missing cases, invalid resets, equal-rank cycles, overlapping
+  intervals, and proof-source hash drift.
 
 A passing test suite shows that the implementation matches these cases. It is
 not, by itself, a proof over all integers.

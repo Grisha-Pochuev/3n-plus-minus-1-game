@@ -11,26 +11,51 @@ root, and run:
 python audit.py
 ```
 
-On a typical laptop this takes about one or two minutes. The last lines should
-be:
+On a typical laptop this takes about one or two minutes. The final banner
+should be:
 
 ```text
 === AUDIT PASSED ===
 All machine-checkable local stages passed ...
-Next: perform the human proof audit in AUDIT.md Sections 4–5.
+Next: review the four declared global-certificate trust obligations ...
 ```
 
-This means:
+This one command verifies:
 
-- all regression tests passed;
-- the exact arithmetic identities passed up to the printed finite limit;
-- a finite proof DAG was generated;
-- a separate checker accepted every edge and rank decrease in that DAG.
+- all unit and regression tests;
+- the stated finite range of arithmetic identities;
+- the committed symbolic global-routing assembly;
+- a committed finite outcome proof DAG;
+- a newly generated finite proof DAG with an independent checker.
 
-It does **not** mean that the computer checked the infinite no-`DRAW` theorem.
-That theorem is presently a human proof.
+The global routing success is deliberately printed as
+`CONDITIONAL_MACHINE_CHECK`. It proves that the declared universal case
+inventory has no missing declared case, obeys its lexicographic rank, and has
+no equal-rank control cycle. Four links from those schemas to the original
+game remain human proof obligations; see
+[`certificates/global-routing-certificate.md`](certificates/global-routing-certificate.md).
 
-If your Python command is named `python3`, use `python3 audit.py` instead.
+If your Python command is named `python3`, use `python3 audit.py`.
+
+## I want the shortest direct certificate check
+
+Run:
+
+```bash
+python scripts/verify_global_certificate.py
+```
+
+Expected summary at the current revision:
+
+```text
+GLOBAL ROUTING ASSEMBLY CERTIFICATE ACCEPTED
+status: CONDITIONAL_MACHINE_CHECK
+inventory: 15 states, 46 transitions, 12 total guard partitions
+rank check: 29 strict transitions; 17 equal-rank transitions form a DAG
+```
+
+Read the checker scope before citing this as evidence. It is stronger than a
+finite numerical search but weaker than a complete formalization of the game.
 
 ## I want to understand the claimed solution
 
@@ -46,15 +71,15 @@ proved in the full supplement.
 ## I want to audit the mathematics
 
 Follow [`AUDIT.md`](AUDIT.md). Do not start by reading all 138 sections
-linearly. First understand the final dependency chain in Sections 129–138,
-then follow only the cited earlier lemmas. Record any objection using the
-template in the audit guide.
+linearly. First inspect the four explicit certificate trust obligations, then
+read the final dependency chain in Sections 129–138 and follow only the cited
+earlier lemmas.
 
 Expected time is hours or days, not minutes. The proof is long because it
 keeps exact source provenance and finite outcome witnesses through all routing
 cases.
 
-## I want to inspect machine certificates
+## I want to inspect finite outcome certificates
 
 Read [`certificates/README.md`](certificates/README.md), then run:
 
@@ -62,8 +87,8 @@ Read [`certificates/README.md`](certificates/README.md), then run:
 python scripts/verify_outcome_certificate.py certificates/examples/q10.json
 ```
 
-The generator and checker are separate. The checker does not import the game
-implementation used by the generator.
+This proves the outcome of one finite root. It is separate from the symbolic
+global assembly.
 
 ## I want to inspect or extend the code
 
@@ -78,8 +103,16 @@ The repository-only working manuscript is [`paper/main.tex`](paper/main.tex).
 It is not submitted automatically. Its detailed proof supplement is
 [`docs/verified-results.md`](docs/verified-results.md).
 
-## I want the Lean files
+## I want the Lean check
 
-Lean is optional and is not needed for `python audit.py`. Read
-[`formal/COVERAGE.md`](formal/COVERAGE.md) first: the current Lean project is
-only a partial foundation and does not yet check the global theorem.
+Lean is optional and is not needed for `python audit.py`:
+
+```bash
+cd formal
+lake update
+lake build
+```
+
+Read [`formal/COVERAGE.md`](formal/COVERAGE.md) first. Lean kernel-checks the
+general well-founded-certificate metatheorem, but not yet the concrete
+JSON-to-game refinement or the global no-`DRAW` theorem.

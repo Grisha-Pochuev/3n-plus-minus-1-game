@@ -1,4 +1,4 @@
-.PHONY: audit test verify retrograde suffixes proof certificate lean
+.PHONY: audit test verify retrograde suffixes proof certificate global-certificate lean
 
 audit:
 	python audit.py
@@ -21,6 +21,9 @@ proof:
 certificate:
 	python scripts/extract_proof.py 100 --limit 200000 --output results/proof-100.json
 	python scripts/verify_outcome_certificate.py results/proof-100.json
+
+global-certificate:
+	python scripts/verify_global_certificate.py
 
 lean:
 	cd formal && lake build

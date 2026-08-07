@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "certificate_kind": "global-routing-assembly-certificate",
+  "status": "CONDITIONAL_MACHINE_CHECK",
+  "game": "conjugated-3n-plus-minus-1",
+  "global_claim": "The marked DRAW macro-relation used in Sections 129-138 is well-founded.",
+  "claim_scope": "The checker validates the finite assembly and rank logic. The four listed refinement and outcome obligations remain part of the human proof.",
+  "proof_source": {
+    "path": "docs/verified-results.md",
+    "sha256": "9f934a5497007e93227fcfcd95414825fe6ee2ed954ecc806d8f2eaa4108fbc8",
+    "proof_section_ranges": ["14-27", "69-138"]
+  },
+  "machine_checked_obligations": [
+    "source-integrity",
+    "declared-guard-coverage",
+    "one-rule-per-case",
+    "lexicographic-size-change",
+    "equal-rank-control-acyclicity",
+    "proof-section-presence"
+  ],
+  "trusted_obligations": [
+    {
+      "id": "local-arithmetic-and-coordinate-identities",
+      "status": "HUMAN_PROOF",
+      "proof_sections": [14, 15, 16, 17, 91, 93, 94, 95, 96, 130, 131, 133, 134, 135],
+      "description": "The universal A/B, constant-tail, valuation, source and common-child identities attached to each macro case are correct. Finite regressions are supporting checks, not their proof."
+    },
+    {
+      "id": "declared-guards-refine-all-game-cases",
+      "status": "HUMAN_PROOF",
+      "proof_sections": [91, 93, 94, 95, 96, 102, 103, 130, 133, 134, 135, 136, 137],
+      "description": "Every legal outcome-compatible continuation is represented by one of the declared semantic guard cases; the checker proves only that the declared cases themselves are total and nonoverlapping."
+    },
+    {
+      "id": "outcome-compatible-draw-continuation",
+      "status": "HUMAN_PROOF",
+      "proof_sections": [91, 96, 102, 103, 118, 130, 133, 134, 135, 137, 138],
+      "description": "Each macro rule follows an actual DRAW member while carrying finite WIN/LOSS witnesses separately; it never assumes that DRAW passes through a marked finite token."
+    },
+    {
+      "id": "finite-macrostep-productivity",
+      "status": "HUMAN_PROOF",
+      "proof_sections": [93, 96, 129, 132, 136, 137, 138],
+      "description": "Every normalization macro consumes finitely many outcome diamonds and either makes the certified transition or reaches the stated impossible/terminal alternative."
+    }
+  ],
+  "rank_components": [
+    {
+      "id": "outer_source",
+      "order": "nat",
+      "meaning": "Retained numerical source anchor."
+    },
+    {
+      "id": "outer_tokens",
+      "order": "finite-multiset-extension(nat)",
+      "meaning": "Finite multiset of outer canonical WIN/LOSS proof heights (Section 129)."
+    },
+    {
+      "id": "inner_source",
+      "order": "nat",
+      "meaning": "Numerical anchor of the active fixed-outer-fibre normalizer (Section 136)."
+    },
+    {
+      "id": "inner_tokens",
+      "order": "finite-multiset-extension(nat)",
+      "meaning": "Finite multiset of inner proof-token heights retained by the normalizer."
+    }
+  ],
+  "guard_partitions": {
+    "upstream_entry": {
+      "kind": "enum",
+      "meaning": "Exhaustive output classes of the minimum-source and height-one entry audits.",
+      "cases": ["source_drop", "token_drop", "normalizer_entry"]
+    },
+    "a_obligation_result": {
+      "kind": "enum",
+      "meaning": "Section 91 alternatives at an A-selecting obligation.",
+      "cases": ["source_exit", "token_exit", "canonical_a", "retained_loss_factor"]
+    },
+    "a_test_nonfinal_result": {
+      "kind": "enum",
+      "meaning": "One of the first three bounded side tests in the Section 93 A-streak.",
+      "cases": ["source_exit", "token_exit", "next_test", "b_select"]
+    },
+    "a_test_final_result": {
+      "kind": "enum",
+      "meaning": "The fourth and final Section 93 side test.",
+      "cases": ["source_exit", "token_exit", "b_select"]
+    },
+    "b_valuation": {
+      "kind": "integer_intervals",
+      "meaning": "Valuation at the B-selecting source after the orientation restrictions of Sections 91-96.",
+      "domain_min": 2,
+      "domain_max": null,
+      "cases": [
+        {"id": "valuation_two", "min": 2, "max": 2},
+        {"id": "valuation_at_least_three", "min": 3, "max": null}
+      ]
+    },
+    "b2_first_result": {
+      "kind": "enum",
+      "meaning": "First valuation-two recycle in Section 96.",
+      "cases": ["source_exit", "install_witness"]
+    },
+    "b2_ready_result": {
+      "kind": "enum",
+      "meaning": "Every continuation after the valuation-two witness is installed.",
+      "cases": ["source_exit", "witness_drop"]
+    },
+    "factor_fork_result": {
+      "kind": "enum",
+      "meaning": "Sections 94-95 factor-fork outcomes and the adjacent high-return frame.",
+      "cases": ["exponent_one_source", "exponent_one_token", "higher_source", "higher_token", "adjacent_high_return"]
+    },
+    "high_return_valuation": {
+      "kind": "integer_intervals",
+      "meaning": "High-return rows after the adjacent factor normal form.",
+      "domain_min": 5,
+      "domain_max": null,
+      "cases": [
+        {"id": "valuation_five_or_six", "min": 5, "max": 6},
+        {"id": "valuation_at_least_seven", "min": 7, "max": null}
+      ]
+    },
+    "marked_tail_result": {
+      "kind": "enum",
+      "meaning": "Complete refinement of D=1, D=2 and D>=3 marked constant-tail rows.",
+      "cases": ["d1_lower_child", "d1_exact_lift_q", "d2_exact_lift_y", "d_at_least_3_common_child"]
+    },
+    "single_exact_lift": {
+      "kind": "enum",
+      "meaning": "A short marked row may enter one exact lift before the generic normalizer.",
+      "cases": ["enter_a_obligation"]
+    },
+    "terminal_macro_result": {
+      "kind": "enum",
+      "meaning": "All terminal exponent-two/three entry rows of Section 133.",
+      "cases": ["exponent_two_positive_recycle", "exponent_three_positive_recycle", "exponent_three_zero_recycle"]
+    }
+  },
+  "control_states": [
+    {"id": "minimum_source_entry", "guard_partition": "upstream_entry", "meaning": "Sections 14-27 minimum-source continuation."},
+    {"id": "height_one_entry", "guard_partition": "upstream_entry", "meaning": "Sections 69-90 height-one continuation."},
+    {"id": "a_obligation", "guard_partition": "a_obligation_result", "meaning": "Generic A-selecting obligation."},
+    {"id": "a_test_4", "guard_partition": "a_test_nonfinal_result", "meaning": "Four remaining canonical-A side tests."},
+    {"id": "a_test_3", "guard_partition": "a_test_nonfinal_result", "meaning": "Three remaining canonical-A side tests."},
+    {"id": "a_test_2", "guard_partition": "a_test_nonfinal_result", "meaning": "Two remaining canonical-A side tests."},
+    {"id": "a_test_1", "guard_partition": "a_test_final_result", "meaning": "Final canonical-A side test."},
+    {"id": "b_select", "guard_partition": "b_valuation", "meaning": "B-selecting valuation split."},
+    {"id": "b2_first", "guard_partition": "b2_first_result", "meaning": "First valuation-two transfer."},
+    {"id": "b2_ready", "guard_partition": "b2_ready_result", "meaning": "Valuation-two transfer with retained witness."},
+    {"id": "factor_fork", "guard_partition": "factor_fork_result", "meaning": "Exponent-one/higher factor fork."},
+    {"id": "high_return", "guard_partition": "high_return_valuation", "meaning": "Connection from adjacent factor form to a new marked task."},
+    {"id": "marked_tail", "guard_partition": "marked_tail_result", "meaning": "Marked WIN/WIN/LOSS constant-tail configuration."},
+    {"id": "short_exact_lift", "guard_partition": "single_exact_lift", "meaning": "The sole pure D=1 or D=2 exact lift."},
+    {"id": "terminal_macro", "guard_partition": "terminal_macro_result", "meaning": "Terminal exponent-two/three entry."}
+  ],
+  "transitions": [
+    {"id": "min-source-drop", "from": "minimum_source_entry", "guard_case": "source_drop", "to": "minimum_source_entry", "rank_effect": ["decrease", "reset", "reset", "reset"], "proof_sections": [15, 17, 137], "meaning": "A smaller retained source permits all lower ranks to reset."},
+    {"id": "min-token-drop", "from": "minimum_source_entry", "guard_case": "token_drop", "to": "minimum_source_entry", "rank_effect": ["preserve", "decrease", "reset", "reset"], "proof_sections": [24, 129, 137], "meaning": "A certified lower boundary witness replaces an outer token."},
+    {"id": "min-enter-normalizer", "from": "minimum_source_entry", "guard_case": "normalizer_entry", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [25, 26, 27, 136, 137], "meaning": "The unique non-strict minimum-source output enters the generic normalizer."},
+
+    {"id": "height-source-drop", "from": "height_one_entry", "guard_case": "source_drop", "to": "minimum_source_entry", "rank_effect": ["decrease", "reset", "reset", "reset"], "proof_sections": [70, 82, 137], "meaning": "The height-one frame returns to a smaller source."},
+    {"id": "height-token-drop", "from": "height_one_entry", "guard_case": "token_drop", "to": "minimum_source_entry", "rank_effect": ["preserve", "decrease", "reset", "reset"], "proof_sections": [70, 74, 75, 76, 87, 88, 89, 129, 137], "meaning": "The height-one boundary supplies a lower finite token."},
+    {"id": "height-enter-normalizer", "from": "height_one_entry", "guard_case": "normalizer_entry", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 90, 136, 137], "meaning": "The remaining high frame is exactly a generic obligation."},
+
+    {"id": "a-source-exit", "from": "a_obligation", "guard_case": "source_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [91, 136], "meaning": "The active normalizer source strictly decreases."},
+    {"id": "a-token-exit", "from": "a_obligation", "guard_case": "token_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [91, 129, 136], "meaning": "A lower inner proof token is installed."},
+    {"id": "a-canonical", "from": "a_obligation", "guard_case": "canonical_a", "to": "a_test_4", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [91, 93, 136], "meaning": "Begin the bounded canonical-A streak."},
+    {"id": "a-loss-factor", "from": "a_obligation", "guard_case": "retained_loss_factor", "to": "factor_fork", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [91, 94, 95, 136], "meaning": "Route with the same retained LOSS witness to its factor fork."},
+
+    {"id": "a4-source", "from": "a_test_4", "guard_case": "source_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [93, 136], "meaning": "A side test lowers the inner source."},
+    {"id": "a4-token", "from": "a_test_4", "guard_case": "token_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [93, 129, 136], "meaning": "A side test lowers an inner token."},
+    {"id": "a4-next", "from": "a_test_4", "guard_case": "next_test", "to": "a_test_3", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [93, 136], "meaning": "Consume one of the at most four side tests."},
+    {"id": "a4-b", "from": "a_test_4", "guard_case": "b_select", "to": "b_select", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [93, 96, 136], "meaning": "Switch to the B-selecting phase."},
+
+    {"id": "a3-source", "from": "a_test_3", "guard_case": "source_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [93, 136], "meaning": "A side test lowers the inner source."},
+    {"id": "a3-token", "from": "a_test_3", "guard_case": "token_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [93, 129, 136], "meaning": "A side test lowers an inner token."},
+    {"id": "a3-next", "from": "a_test_3", "guard_case": "next_test", "to": "a_test_2", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [93, 136], "meaning": "Consume one bounded side test."},
+    {"id": "a3-b", "from": "a_test_3", "guard_case": "b_select", "to": "b_select", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [93, 96, 136], "meaning": "Switch to the B-selecting phase."},
+
+    {"id": "a2-source", "from": "a_test_2", "guard_case": "source_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [93, 136], "meaning": "A side test lowers the inner source."},
+    {"id": "a2-token", "from": "a_test_2", "guard_case": "token_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [93, 129, 136], "meaning": "A side test lowers an inner token."},
+    {"id": "a2-next", "from": "a_test_2", "guard_case": "next_test", "to": "a_test_1", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [93, 136], "meaning": "Consume one bounded side test."},
+    {"id": "a2-b", "from": "a_test_2", "guard_case": "b_select", "to": "b_select", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [93, 96, 136], "meaning": "Switch to the B-selecting phase."},
+
+    {"id": "a1-source", "from": "a_test_1", "guard_case": "source_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [93, 136], "meaning": "The last side test lowers the inner source."},
+    {"id": "a1-token", "from": "a_test_1", "guard_case": "token_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [93, 129, 136], "meaning": "The last side test lowers an inner token."},
+    {"id": "a1-b", "from": "a_test_1", "guard_case": "b_select", "to": "b_select", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [93, 96, 136], "meaning": "The bounded A-streak ends in a B-selecting phase."},
+
+    {"id": "b-valuation-two", "from": "b_select", "guard_case": "valuation_two", "to": "b2_first", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [96, 136], "meaning": "Enter the valuation-two transfer with no hidden unbounded residue split."},
+    {"id": "b-valuation-high", "from": "b_select", "guard_case": "valuation_at_least_three", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [96, 136], "meaning": "Every larger valuation is a strict adjacent-source exit."},
+    {"id": "b2-first-source", "from": "b2_first", "guard_case": "source_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [96, 136], "meaning": "The first valuation-two pair can already lower the source."},
+    {"id": "b2-install", "from": "b2_first", "guard_case": "install_witness", "to": "b2_ready", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [96, 136], "meaning": "Install the retained finite witness once."},
+    {"id": "b2-ready-source", "from": "b2_ready", "guard_case": "source_exit", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [96, 136], "meaning": "A later pair lowers the source."},
+    {"id": "b2-ready-token", "from": "b2_ready", "guard_case": "witness_drop", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [96, 129, 136], "meaning": "Every continuing A/B2 pair lowers the retained witness height."},
+
+    {"id": "factor-exp1-source", "from": "factor_fork", "guard_case": "exponent_one_source", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [94, 136], "meaning": "Exponent-one fork lowers the active source."},
+    {"id": "factor-exp1-token", "from": "factor_fork", "guard_case": "exponent_one_token", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [94, 129, 136], "meaning": "Exponent-one fork lowers the retained LOSS token."},
+    {"id": "factor-high-source", "from": "factor_fork", "guard_case": "higher_source", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "decrease", "reset"], "proof_sections": [95, 136], "meaning": "Higher factor fork lowers the active source."},
+    {"id": "factor-high-token", "from": "factor_fork", "guard_case": "higher_token", "to": "minimum_source_entry", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [95, 129, 136], "meaning": "Higher factor fork lowers a retained token."},
+    {"id": "factor-adjacent-return", "from": "factor_fork", "guard_case": "adjacent_high_return", "to": "high_return", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [95, 97, 136], "meaning": "Route into the exact adjacent high-return normal form."},
+
+    {"id": "high-return-short", "from": "high_return", "guard_case": "valuation_five_or_six", "to": "marked_tail", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [98, 99, 100, 101, 129, 136], "meaning": "Rows v=5,6 replace the carried return token by lower descendants."},
+    {"id": "high-return-long", "from": "high_return", "guard_case": "valuation_at_least_seven", "to": "marked_tail", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [102, 103, 129, 136], "meaning": "Rows v>=7 replace the carried pair before the new marked task."},
+
+    {"id": "marked-d1-child", "from": "marked_tail", "guard_case": "d1_lower_child", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [129, 134, 136], "meaning": "The D=1 child row replaces the marked LOSS token."},
+    {"id": "marked-d1-lift", "from": "marked_tail", "guard_case": "d1_exact_lift_q", "to": "short_exact_lift", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [134, 136], "meaning": "The other D=1 row preserves the pair and enters an exact lift over q."},
+    {"id": "marked-d2-lift", "from": "marked_tail", "guard_case": "d2_exact_lift_y", "to": "short_exact_lift", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [134, 136], "meaning": "The D=2 row preserves the pair and enters an exact lift over y."},
+    {"id": "marked-long-child", "from": "marked_tail", "guard_case": "d_at_least_3_common_child", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [130, 131, 132, 135, 136], "meaning": "Every D>=3 marked tail replaces y by its lower common WIN child r."},
+    {"id": "short-lift-entry", "from": "short_exact_lift", "guard_case": "enter_a_obligation", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [91, 96, 134, 136], "meaning": "After the sole short exact lift, stay in the generic subsystem."},
+
+    {"id": "terminal-exp2", "from": "terminal_macro", "guard_case": "exponent_two_positive_recycle", "to": "a_obligation", "rank_effect": ["preserve", "decrease", "reset", "reset"], "proof_sections": [129, 132, 133], "meaning": "Replace the old LOSS token by Z2 before normalizing the terminal task."},
+    {"id": "terminal-exp3-positive", "from": "terminal_macro", "guard_case": "exponent_three_positive_recycle", "to": "a_obligation", "rank_effect": ["preserve", "decrease", "reset", "reset"], "proof_sections": [129, 132, 133], "meaning": "Replace the old LOSS token by Z3 in every positive-recycle row."},
+    {"id": "terminal-exp3-zero", "from": "terminal_macro", "guard_case": "exponent_three_zero_recycle", "to": "marked_tail", "rank_effect": ["preserve", "decrease", "reset", "reset"], "proof_sections": [118, 129, 132, 133, 138], "meaning": "In the sole zero row replace the existing marked LOSS token y by its child r."}
+  ]
+}

@@ -20,11 +20,14 @@ status in [`docs/proof-ledger.md`](docs/proof-ledger.md).
 Important audit distinction:
 
 - the complete theorem is claimed as a **human proof**;
+- the symbolic global-routing certificate machine-checks the declared finite
+  assembly and rank logic, conditional on four explicit human refinement and
+  outcome obligations;
 - the Python suite checks exact identities and finite instances, but is not
   presented as a proof of the infinite theorem;
-- Lean currently checks only the foundations listed in
-  [`formal/COVERAGE.md`](formal/COVERAGE.md); the global theorem is **not yet
-  Lean-checked**;
+- Lean checks the foundations and the general well-founded-certificate
+  metatheorem listed in [`formal/COVERAGE.md`](formal/COVERAGE.md); the global
+  theorem is **not yet Lean-checked**;
 - independent external review is still pending.
 
 ## Start here
@@ -54,9 +57,10 @@ For the simplest independent check, run one command from the repository root:
 python audit.py
 ```
 
-It runs the complete test suite, finite identity checks, generates a finite
-outcome proof certificate, and validates that certificate with a separate
-small checker. Its scope and limitations are documented in
+It runs the complete test suite, finite identity checks, validates the
+conditional global-routing assembly, generates a finite outcome proof
+certificate, and validates that certificate with a separate small checker.
+Its scope and limitations are documented in
 [`certificates/README.md`](certificates/README.md).
 
 The same main stages can be run separately:
@@ -64,11 +68,14 @@ The same main stages can be run separately:
 ```bash
 python -m unittest discover -s tests -v
 python scripts/verify_claims.py --limit 100000
+python scripts/verify_global_certificate.py
 ```
 
-Expected result after adding the certificate checker: `101` tests pass, followed by
-verification of the normal form and descent identities through `100000`.
-The exact recorded run is [`docs/audit-run-2026-08-07.md`](docs/audit-run-2026-08-07.md).
+Expected result: `107` tests pass, followed by verification of the normal form
+and descent identities through `100000`, and acceptance of a 46-transition
+global assembly with status `CONDITIONAL_MACHINE_CHECK`. The earlier packaging
+baseline is [`docs/audit-run-2026-08-07.md`](docs/audit-run-2026-08-07.md); the
+current command always prints the checked revision's live result.
 
 Optional larger experiments:
 
@@ -109,7 +116,7 @@ See [`formal/README.md`](formal/README.md) and
 | [`src/optimal_3n1/`](src/optimal_3n1/) | exact arithmetic and bounded solvers |
 | [`tests/`](tests/) | regression and soundness tests |
 | [`scripts/`](scripts/) | reproducible verification and exploration |
-| [`certificates/`](certificates/) | certificate formats, checker scope, and global-certificate design |
+| [`certificates/`](certificates/) | finite proof DAGs and the conditional symbolic global assembly |
 | [`formal/`](formal/) | Lean project and explicit formalization coverage |
 | [`paper/`](paper/) | article source kept in the repository only |
 

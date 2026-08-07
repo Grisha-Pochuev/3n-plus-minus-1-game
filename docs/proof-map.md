@@ -76,3 +76,9 @@ Each of these checks corresponds to a known class of failed shortcuts in
 The diagram above describes the human proof. It must not be read as a Lean
 dependency graph. The current Lean coverage is listed independently in
 `formal/COVERAGE.md`.
+
+The finite overlay in `certificates/global-routing.json` mirrors the final
+source/token/normalizer inventory. Its checker machine-validates declared
+case coverage, rank effects, and the equal-rank DAG; it does not prove that
+the semantic cases exhaust the original game relation. The exact four-part
+trust boundary is in `certificates/global-routing-certificate.md`.

@@ -19,3 +19,9 @@ play is the same as optimal winning play.
 Lean contributions must compile with the pinned toolchain, contain no `sorry`,
 `admit`, or new axioms, and update `formal/COVERAGE.md` without overstating
 coverage.
+
+Changes to `docs/verified-results.md` intentionally invalidate the pinned
+digest in `certificates/global-routing.json`. Do not update that digest as a
+mechanical afterthought: first review whether the transition inventory and its
+four human trust obligations still match the changed proof, then run
+`python scripts/verify_global_certificate.py` and the full test suite.

@@ -2,11 +2,13 @@
 """One-command local audit for an independent reader.
 
 This command checks repository integrity requirements, runs the complete unit
-suite, verifies exact arithmetic over a stated finite range, generates one
-finite outcome proof DAG, and validates it with the independent checker.
+suite, verifies exact arithmetic over a stated finite range, validates the
+symbolic global-routing assembly, generates one finite outcome proof DAG, and
+validates it with the independent checker.
 
-It does not claim to machine-check the global no-DRAW proof; that proof still
-requires the human audit described in AUDIT.md.
+The global certificate is conditional on four explicit human proof
+obligations. This command does not claim a fully machine-checked no-DRAW proof;
+the remaining audit is described in AUDIT.md.
 """
 
 from __future__ import annotations
@@ -27,6 +29,8 @@ REQUIRED_FILES = (
     "AUDIT.md",
     "START_HERE.md",
     "certificates/README.md",
+    "certificates/global-routing-certificate.md",
+    "certificates/global-routing.json",
     "docs/problem.md",
     "docs/normal-form.md",
     "docs/global-proof.md",
@@ -36,9 +40,11 @@ REQUIRED_FILES = (
     "docs/pitfalls.md",
     "scripts/verify_claims.py",
     "scripts/extract_proof.py",
+    "scripts/verify_global_certificate.py",
     "scripts/verify_outcome_certificate.py",
     "scripts/README.md",
     "formal/COVERAGE.md",
+    "formal/ThreeNPlusMinusOne/Certificate.lean",
     "paper/README.md",
 )
 
@@ -200,8 +206,10 @@ def main() -> None:
     print(f"Python: {sys.version.split()[0]}")
     print(f"Repository: {ROOT}")
     print(
-        "Scope: regression tests + finite identities + one finite proof DAG.\n"
-        "The global theorem remains a human proof; follow AUDIT.md to review it."
+        "Scope: regression tests + finite identities + conditional global "
+        "assembly + one finite proof DAG.\n"
+        "Four local refinement/outcome obligations remain human-checked; "
+        "follow AUDIT.md."
     )
 
     total_started = time.monotonic()
@@ -221,6 +229,14 @@ def main() -> None:
             "scripts/verify_claims.py",
             "--limit",
             str(args.limit),
+        ],
+    )
+    run_stage(
+        "conditional global routing assembly",
+        [
+            sys.executable,
+            "scripts/verify_global_certificate.py",
+            "certificates/global-routing.json",
         ],
     )
     run_stage(
@@ -255,7 +271,10 @@ def main() -> None:
     elapsed = time.monotonic() - total_started
     print("\n=== AUDIT PASSED ===")
     print(f"All machine-checkable local stages passed in {elapsed:.2f}s.")
-    print("Next: perform the human proof audit in AUDIT.md Sections 4–5.")
+    print(
+        "Next: review the four declared global-certificate trust obligations "
+        "in AUDIT.md Sections 4–5."
+    )
 
 
 if __name__ == "__main__":
