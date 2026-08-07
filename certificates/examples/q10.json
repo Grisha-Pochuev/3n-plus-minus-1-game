@@ -1,0 +1,62 @@
+{
+  "certificate_kind": "finite-outcome-proof-dag",
+  "claim_scope": "one finite WIN/LOSS proof; not the global theorem",
+  "game": "conjugated-3n-plus-minus-1",
+  "limit": 10000,
+  "node_count": 10,
+  "nodes": {
+    "0": {
+      "outcome": "LOSS",
+      "proof_children": [],
+      "rank": 1
+    },
+    "1": {
+      "outcome": "WIN",
+      "proof_children": [0],
+      "rank": 2
+    },
+    "10": {
+      "outcome": "WIN",
+      "proof_children": [7],
+      "rank": 159
+    },
+    "11": {
+      "outcome": "WIN",
+      "proof_children": [4],
+      "rank": 61
+    },
+    "2": {
+      "outcome": "LOSS",
+      "proof_children": [3, 1],
+      "rank": 11
+    },
+    "3": {
+      "outcome": "WIN",
+      "proof_children": [0],
+      "rank": 3
+    },
+    "4": {
+      "outcome": "LOSS",
+      "proof_children": [6, 1],
+      "rank": 43
+    },
+    "5": {
+      "outcome": "WIN",
+      "proof_children": [4],
+      "rank": 60
+    },
+    "6": {
+      "outcome": "WIN",
+      "proof_children": [2],
+      "rank": 17
+    },
+    "7": {
+      "outcome": "LOSS",
+      "proof_children": [11, 5],
+      "rank": 119
+    }
+  },
+  "root": 10,
+  "root_outcome": "WIN",
+  "schema_version": 1
+}

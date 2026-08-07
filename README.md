@@ -1,78 +1,137 @@
-# Optimal 3n±1 Game
+# Optimal `3n±1` Game
 
-Research repository for the two-player `3n±1` game introduced by Ingo Althöfer.
+A proof repository for the two-player `3n±1` game (also known as Conway's
+*Beans-Don't-Talk* game).
 
-## Prize problem
+## Main claim
 
-Let the current position be a positive odd integer `n > 1`. Two players move alternately. On each turn, the player chooses one of
+Let `n > 1` be odd. A move chooses `3n+1` or `3n-1` and removes every factor
+of two. Reaching `1` wins immediately. The repository proves:
 
-- `3n + 1`,
-- `3n - 1`,
+> **PROVED (human proof).** For every odd positive starting integer, optimal
+> play reaches `1` after finitely many moves. Equivalently, the game has no
+> `DRAW` positions.
 
-and divides the chosen value by `2` repeatedly until an odd integer is obtained. This odd integer is the next position. If the resulting value is `1`, the player who made the move wins immediately.
+The concise assembly is in [`docs/global-proof.md`](docs/global-proof.md).
+The complete chain of local lemmas is in
+[`docs/verified-results.md`](docs/verified-results.md), with claim-by-claim
+status in [`docs/proof-ledger.md`](docs/proof-ledger.md).
 
-**Problem.** Prove that for every odd starting integer `n`, the game reaches `1` in finitely many moves when both players play optimally.
+Important audit distinction:
 
-Ingo Althöfer offers **€500** for the first proof. The official prize page states that solutions must be submitted by **31 December 2037**. Computer analysis by Michael Hartisch has verified the claim for all starting positions `n < 1,000,000`.
+- the complete theorem is claimed as a **human proof**;
+- the Python suite checks exact identities and finite instances, but is not
+  presented as a proof of the infinite theorem;
+- Lean currently checks only the foundations listed in
+  [`formal/COVERAGE.md`](formal/COVERAGE.md); the global theorem is **not yet
+  Lean-checked**;
+- independent external review is still pending.
 
-Official source: <https://althofer.de/collatz-prizes.html> (`Prize 3`, page updated 12 June 2026).
+## Start here
 
-The repository is private while the problem is open. Its purpose is to preserve rigorous progress, make computational claims reproducible, and support local work with Codex. The long-term goal is a proof suitable for public release and submission for Althöfer's €500 prize.
+For an independent check, begin with [`AUDIT.md`](AUDIT.md). The first-time
+reader guide is [`START_HERE.md`](START_HERE.md). The shortest mathematical
+reading route is:
 
-## Current state
+1. [`docs/problem.md`](docs/problem.md) — exact rules and provenance;
+2. [`docs/normal-form.md`](docs/normal-form.md) — binary conjugation;
+3. [`docs/global-proof.md`](docs/global-proof.md) — global no-`DRAW` argument;
+4. [`docs/proof-map.md`](docs/proof-map.md) — dependency map into the detailed proof;
+5. [`docs/proof-ledger.md`](docs/proof-ledger.md) — status of every major claim;
+6. [`docs/verified-results.md`](docs/verified-results.md) — all detailed lemmas;
+7. [`docs/pitfalls.md`](docs/pitfalls.md) — known invalid shortcuts.
 
-The repository now contains a complete no-DRAW proof.  The concise global
-assembly is [`docs/global-proof.md`](docs/global-proof.md); its local lemmas,
-status labels, and exact arithmetic are recorded in
-[`docs/verified-results.md`](docs/verified-results.md) and
-[`docs/proof-ledger.md`](docs/proof-ledger.md).
+The article draft lives only in this repository under [`paper/`](paper/).
+No submission or publication is performed by repository tooling.
 
-What is rigorously established here:
+## Reproduce the checks
 
-- an exact binary normal form of the game;
-- a conjugated game with one strictly decreasing branch;
-- two useful descent inequalities for the decreasing move;
-- a sound bounded retrograde solver that never labels boundary-dependent positions as proved;
-- a well-founded source/proof-token/fibre rank covering every DRAW
-  continuation;
-- the theorem that no DRAW positions exist and optimal play always reaches
-  `1` in finite time;
-- explicit warnings about several tempting but invalid arguments.
+Requirements: Python 3.10 or newer; no third-party Python packages.
 
-## Quick start
+For the simplest independent check, run one command from the repository root:
+
+```bash
+python audit.py
+```
+
+It runs the complete test suite, finite identity checks, generates a finite
+outcome proof certificate, and validates that certificate with a separate
+small checker. Its scope and limitations are documented in
+[`certificates/README.md`](certificates/README.md).
+
+The same main stages can be run separately:
 
 ```bash
 python -m unittest discover -s tests -v
-python scripts/verify_claims.py --limit 1000000
+python scripts/verify_claims.py --limit 100000
+```
+
+Expected result after adding the certificate checker: `101` tests pass, followed by
+verification of the normal form and descent identities through `100000`.
+The exact recorded run is [`docs/audit-run-2026-08-07.md`](docs/audit-run-2026-08-07.md).
+
+Optional larger experiments:
+
+```bash
 python scripts/retrograde_prefix.py --limit 1000000
+python scripts/find_finite_draw_kernel.py --limit 1000000
 python scripts/analyze_suffixes.py --limit 1000000 --suffix-bits 12
 python scripts/extract_proof.py 100 --limit 1000000 --output results/proof-100.json
 ```
 
-The code uses only the Python standard library.
+`UNKNOWN` in a bounded computation means only "not resolved by this
+computation". It is neither a `DRAW` nor a counterexample.
 
-## Read in this order
+### Lean
 
-1. [`AGENTS.md`](AGENTS.md) — rules for Codex and future agents.
-2. [`docs/problem.md`](docs/problem.md) — exact problem and sources.
-3. [`docs/normal-form.md`](docs/normal-form.md) — the binary reduction.
-4. [`docs/verified-results.md`](docs/verified-results.md) — proved lemmas.
-5. [`docs/proof-ledger.md`](docs/proof-ledger.md) — status of every major claim.
-6. [`docs/pitfalls.md`](docs/pitfalls.md) — arguments that must not be repeated.
-7. [`docs/research-plan.md`](docs/research-plan.md) — prioritized next steps.
-8. [`docs/global-proof.md`](docs/global-proof.md) — concise global proof assembly.
-9. [`docs/baseline-run.md`](docs/baseline-run.md) — reproducible local validation.
-10. [`CODEX_PROMPT.md`](CODEX_PROMPT.md) — a ready starting prompt for local Codex.
+Lean is optional, pinned to version `v4.32.1`, and the current project has no
+third-party Lean dependency:
 
-## Repository principles
+```bash
+cd formal
+lake update
+lake build
+```
 
-- A finite computation is evidence, not a proof of the infinite statement.
-- Every computational claim must be reproducible from committed code and parameters.
-- `UNKNOWN` in bounded retrograde analysis means exactly unknown; it is not a draw or a counterexample.
-- Failed ideas are recorded because they prevent repeated work.
-- Prefer structural mathematics over large brute-force runs, especially on a modest local laptop.
+See [`formal/README.md`](formal/README.md) and
+[`formal/COVERAGE.md`](formal/COVERAGE.md) before interpreting the result.
 
-## References
+## Repository map
+
+| Path | Purpose |
+|---|---|
+| [`AUDIT.md`](AUDIT.md) | independent verification protocol and trust boundary |
+| [`START_HERE.md`](START_HERE.md) | first-time reader guide with commands and expected results |
+| [`docs/global-proof.md`](docs/global-proof.md) | concise proof of the main theorem |
+| [`docs/verified-results.md`](docs/verified-results.md) | detailed mathematical proof, Sections 1–138 |
+| [`docs/proof-ledger.md`](docs/proof-ledger.md) | status and dependencies of claims |
+| [`docs/proof-map.md`](docs/proof-map.md) | roadmap through the final dependency chain |
+| [`src/optimal_3n1/`](src/optimal_3n1/) | exact arithmetic and bounded solvers |
+| [`tests/`](tests/) | regression and soundness tests |
+| [`scripts/`](scripts/) | reproducible verification and exploration |
+| [`certificates/`](certificates/) | certificate formats, checker scope, and global-certificate design |
+| [`formal/`](formal/) | Lean project and explicit formalization coverage |
+| [`paper/`](paper/) | article source kept in the repository only |
+
+## Status vocabulary
+
+Every research claim is classified as `PROVED`, `COMPUTATIONALLY VERIFIED`,
+`CONJECTURE`, `DISPROVED`, or `UNVERIFIED LEAD`. These labels are defined and
+enforced in [`AGENTS.md`](AGENTS.md).
+
+## Provenance and prize
+
+Ingo Althöfer's official page describes the `3n+-1 game`, a €500 prize, and
+a submission deadline of 31 December 2037. It also records Michael Hartisch's
+finite verification below one million. See
+[`docs/problem.md`](docs/problem.md) for the earlier Beans-Don't-Talk sources
+and complete bibliographic information.
 
 - Official prize page: <https://althofer.de/collatz-prizes.html>
-- I. Althöfer, M. Hartisch, T. Zipproth, *Analysis of a Collatz Game and Other Variants of the 3n+1 Problem*, Advances in Computer Games, 2024, DOI: `10.1007/978-3-031-54968-7_11`.
+- Althöfer, Hartisch, Zipproth (2024), DOI:
+  <https://doi.org/10.1007/978-3-031-54968-7_11>
+
+## License
+
+The repository is released under the [MIT License](LICENSE). Citation
+metadata are provided in [`CITATION.cff`](CITATION.cff).

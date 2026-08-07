@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this proof repository, please cite it using these metadata."
+title: "Optimal 3n±1 Game: proof and verification repository"
+type: software
+authors:
+  - family-names: "Pochuev"
+    given-names: "Grisha"
+repository-code: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
+url: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
+license: MIT
+version: 0.1.0
+date-released: 2026-08-07
+keywords:
+  - combinatorial games
+  - Collatz problem
+  - 3n plus or minus 1
+  - termination
+  - Lean 4

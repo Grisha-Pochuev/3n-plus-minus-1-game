@@ -1,4 +1,7 @@
-.PHONY: test verify retrograde suffixes proof
+.PHONY: audit test verify retrograde suffixes proof certificate lean
+
+audit:
+	python audit.py
 
 test:
 	python -m unittest discover -s tests -v
@@ -14,3 +17,10 @@ suffixes:
 
 proof:
 	python scripts/extract_proof.py 1 --limit 100000
+
+certificate:
+	python scripts/extract_proof.py 100 --limit 200000 --output results/proof-100.json
+	python scripts/verify_outcome_certificate.py results/proof-100.json
+
+lean:
+	cd formal && lake build

@@ -38,12 +38,16 @@ def main() -> None:
         children = result.proof_children(q)
         nodes[q] = {
             "outcome": result.outcome(q).name,
-            "resolved_at": int(result.resolved_at[q]),
+            "rank": int(result.resolved_at[q]),
             "proof_children": list(children),
         }
         stack.extend(children)
 
     payload = {
+        "schema_version": 1,
+        "certificate_kind": "finite-outcome-proof-dag",
+        "game": "conjugated-3n-plus-minus-1",
+        "claim_scope": "one finite WIN/LOSS proof; not the global theorem",
         "limit": args.limit,
         "root": args.q,
         "root_outcome": root_outcome.name,

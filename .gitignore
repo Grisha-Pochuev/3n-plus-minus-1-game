@@ -8,7 +8,12 @@ dist/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.tools/
+.audit-*/
 results/
 *.csv
 *.jsonl
 .DS_Store
+
+# Lean/Lake build products (sources and lock files stay tracked)
+formal/.lake/

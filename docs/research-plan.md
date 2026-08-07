@@ -1,5 +1,9 @@
 # Prioritized research plan
 
+> Historical development log. The global proof was subsequently completed in
+> Sections 129–138 of `verified-results.md`. For current status and the audit
+> route, use `../README.md`, `../AUDIT.md`, and `proof-map.md`.
+
 ## Goal
 
 Exclude draw positions in the infinite directed graph with moves

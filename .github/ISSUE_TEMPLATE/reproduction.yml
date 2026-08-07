@@ -1,0 +1,40 @@
+name: Report a reproduction failure
+description: Report a test, audit, or certificate command that did not reproduce.
+title: "[Reproduction]: "
+labels: ["reproducibility"]
+body:
+  - type: input
+    id: revision
+    attributes:
+      label: Git revision
+      description: Output of `git rev-parse HEAD`.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system, architecture, and `python --version`.
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Exact command and parameters
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Complete output
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: changes
+    attributes:
+      label: Local changes
+      description: Output of `git status --short`, and any relevant modifications.
+    validations:
+      required: true

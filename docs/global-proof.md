@@ -1,5 +1,9 @@
 # Global no-DRAW proof
 
+Status: **PROVED (human proof)**. Independent external review is pending, and
+the complete theorem is not yet Lean-checked. See `../AUDIT.md` for the audit
+protocol and `../formal/COVERAGE.md` for the exact formalization boundary.
+
 ## Theorem
 
 For every odd positive starting integer, optimal play in the two-player

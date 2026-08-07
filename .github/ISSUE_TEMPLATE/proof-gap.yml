@@ -1,0 +1,56 @@
+name: Report a possible proof gap
+description: Identify a false statement, missing case, or unsupported inference.
+title: "[Proof audit]: "
+labels: ["proof-audit"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for auditing the proof. Please isolate the smallest precise issue and read `AUDIT.md` and `docs/pitfalls.md` first.
+  - type: input
+    id: revision
+    attributes:
+      label: Git revision
+      description: Output of `git rev-parse HEAD`.
+    validations:
+      required: true
+  - type: input
+    id: location
+    attributes:
+      label: Exact location
+      description: Document, section, theorem/lemma, and paragraph or displayed formula.
+    validations:
+      required: true
+  - type: textarea
+    id: statement
+    attributes:
+      label: Statement being challenged
+      description: Restate the precise claim and the assumptions available there.
+    validations:
+      required: true
+  - type: dropdown
+    id: issue_type
+    attributes:
+      label: Type of issue
+      options:
+        - False statement with counterexample
+        - Missing case
+        - Unsupported inference
+        - Ambiguous definition or notation
+        - Broken dependency or citation
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Give the counterexample, derivation, or exact reason the inference does not follow.
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Effect on the proof
+      description: Explain whether this affects only a local lemma or the global no-DRAW theorem.
+    validations:
+      required: true

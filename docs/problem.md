@@ -14,9 +14,14 @@ then divides the chosen number by `2` repeatedly until it is odd. If the resulti
 
 Players alternate and have perfect information.
 
-## Open problem
+## Problem
 
 Prove that, under optimal play, every odd starting value leads to `1` after finitely many moves.
+
+Repository status: **PROVED (human proof)** in Sections 129–138 of
+`verified-results.md`, with the concise assembly in `global-proof.md`.
+Independent external review and full machine formalization are still pending;
+the official prize page may therefore continue to list the problem as open.
 
 Because arbitrary move sequences can cycle, this is not the ordinary Collatz convergence statement. For example,
 

@@ -1,5 +1,9 @@
 # Reproducible baseline run
 
+> Historical record. This file intentionally preserves the earlier 38-test
+> baseline. For the current one-command audit and current test count, use
+> `../START_HERE.md` and `audit-run-2026-08-07.md`.
+
 Date: 5 August 2026.
 
 This file records a small validation run suitable for an ordinary laptop. It is not evidence for the full infinite theorem beyond checking the implementation and providing a baseline for later comparisons.
