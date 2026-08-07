@@ -58,6 +58,9 @@ unfinished placeholders, runs the complete tests, checks finite arithmetic,
 checks the conditional global assembly, and independently validates both a
 committed and a freshly generated finite outcome certificate.
 
+The current clean-clone output is recorded in
+[`docs/audit-run-2026-08-08.md`](docs/audit-run-2026-08-08.md).
+
 The global stage can be isolated:
 
 ```bash

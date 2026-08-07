@@ -73,9 +73,10 @@ python scripts/verify_global_certificate.py
 
 Expected result: `107` tests pass, followed by verification of the normal form
 and descent identities through `100000`, and acceptance of a 46-transition
-global assembly with status `CONDITIONAL_MACHINE_CHECK`. The earlier packaging
-baseline is [`docs/audit-run-2026-08-07.md`](docs/audit-run-2026-08-07.md); the
-current command always prints the checked revision's live result.
+global assembly with status `CONDITIONAL_MACHINE_CHECK`. A clean-clone run is
+recorded in
+[`docs/audit-run-2026-08-08.md`](docs/audit-run-2026-08-08.md); the current
+command always prints the checked revision's live result.
 
 Optional larger experiments:
 
