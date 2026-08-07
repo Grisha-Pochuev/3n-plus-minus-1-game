@@ -49,6 +49,9 @@ The Zenodo metadata, packaging instructions, and publication checklist are in
 [`zenodo/`](zenodo/). No submission or publication is performed by repository
 tooling.
 
+The published preprint is permanently archived at
+[doi:10.5281/zenodo.21844684](https://doi.org/10.5281/zenodo.21844684).
+
 ## Reproduce the checks
 
 Requirements: Python 3.10 or newer; no third-party Python packages.

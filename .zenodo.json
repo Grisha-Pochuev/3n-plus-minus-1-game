@@ -28,7 +28,12 @@
       "identifier": "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game",
       "relation": "isSupplementedBy",
       "resource_type": "software"
+    },
+    {
+      "identifier": "10.5281/zenodo.21844684",
+      "relation": "isIdenticalTo",
+      "resource_type": "publication-preprint"
     }
   ],
-  "notes": "Correspondence: n_854@mail.ru. Verification repository: https://github.com/Grisha-Pochuev/3n-plus-minus-1-game. The symbolic global certificate has status CONDITIONAL_MACHINE_CHECK; consult the trust-boundary document before citing its scope."
+  "notes": "Published preprint DOI: https://doi.org/10.5281/zenodo.21844684. Correspondence: n_854@mail.ru. Verification repository: https://github.com/Grisha-Pochuev/3n-plus-minus-1-game. The symbolic global certificate has status CONDITIONAL_MACHINE_CHECK; consult the trust-boundary document before citing its scope."
 }

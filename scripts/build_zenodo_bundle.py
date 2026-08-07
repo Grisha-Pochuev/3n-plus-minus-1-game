@@ -68,6 +68,7 @@ def validate_inputs() -> None:
         "Pochuev, Grisha",
         "n_854@mail.ru",
         "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game",
+        "10.5281/zenodo.21844684",
         "CONDITIONAL_MACHINE_CHECK",
     ):
         if required not in encoded:
@@ -118,6 +119,7 @@ def main() -> None:
         "Termination under Optimal Play in the Two-Player 3n+/-1 Game\n"
         f"Git revision: {revision}\n"
         "Repository: https://github.com/Grisha-Pochuev/3n-plus-minus-1-game\n"
+        "Published DOI: https://doi.org/10.5281/zenodo.21844684\n"
         "Correspondence: n_854@mail.ru\n"
         "Certificate scope: CONDITIONAL_MACHINE_CHECK; see certificates/global-routing-certificate.md\n",
         encoding="utf-8",

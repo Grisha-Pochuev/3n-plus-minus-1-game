@@ -3,6 +3,7 @@
     "title": "Termination under Optimal Play in the Two-Player 3n+/-1 Game",
     "upload_type": "publication",
     "publication_type": "preprint",
+    "doi": "10.5281/zenodo.21844684",
     "publication_date": "2026-08-08",
     "creators": [
       {
@@ -30,8 +31,13 @@
         "identifier": "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game",
         "relation": "isSupplementedBy",
         "resource_type": "software"
+      },
+      {
+        "identifier": "10.5281/zenodo.21844684",
+        "relation": "isIdenticalTo",
+        "resource_type": "publication-preprint"
       }
     ],
-    "notes": "Correspondence: n_854@mail.ru. The linked global-routing certificate has status CONDITIONAL_MACHINE_CHECK and retains four explicit human proof obligations."
+    "notes": "Published record: https://doi.org/10.5281/zenodo.21844684. Correspondence: n_854@mail.ru. The linked global-routing certificate has status CONDITIONAL_MACHINE_CHECK and retains four explicit human proof obligations."
   }
 }

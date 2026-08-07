@@ -3,6 +3,8 @@
 This directory contains the metadata and human checklist for depositing the
 article as a Zenodo **Publication / Preprint**.
 
+Published record: <https://doi.org/10.5281/zenodo.21844684>.
+
 - `deposit-metadata.json` is a copyable metadata record for the web form or
   legacy deposit API.
 - `UPLOAD_CHECKLIST.md` gives the exact Russian-language upload procedure.

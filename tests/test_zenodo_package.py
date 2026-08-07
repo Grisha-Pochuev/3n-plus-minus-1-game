@@ -9,13 +9,14 @@ ROOT = Path(__file__).resolve().parents[1]
 EMAIL = "n_854@mail.ru"
 REPOSITORY = "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
 PROBLEM_PAGE = "https://althofer.de/collatz-prizes.html"
+DOI = "10.5281/zenodo.21844684"
 
 
 class ZenodoPackageTests(unittest.TestCase):
     def test_zenodo_metadata_contains_required_identity_and_links(self) -> None:
         metadata = json.loads((ROOT / ".zenodo.json").read_text(encoding="utf-8"))
         encoded = json.dumps(metadata, ensure_ascii=False)
-        for required in ("Pochuev, Grisha", REPOSITORY, PROBLEM_PAGE):
+        for required in ("Pochuev, Grisha", REPOSITORY, PROBLEM_PAGE, DOI):
             self.assertIn(required, encoded)
 
     def test_deposit_metadata_exposes_scope_and_correspondence(self) -> None:
@@ -23,7 +24,7 @@ class ZenodoPackageTests(unittest.TestCase):
             (ROOT / "zenodo" / "deposit-metadata.json").read_text(encoding="utf-8")
         )
         encoded = json.dumps(metadata, ensure_ascii=False)
-        for required in (EMAIL, REPOSITORY, "CONDITIONAL_MACHINE_CHECK"):
+        for required in (EMAIL, REPOSITORY, DOI, "CONDITIONAL_MACHINE_CHECK"):
             self.assertIn(required, encoded)
 
     def test_article_source_contains_publication_links(self) -> None:
@@ -31,6 +32,7 @@ class ZenodoPackageTests(unittest.TestCase):
         self.assertIn(EMAIL, source)
         self.assertIn("github.com/Grisha-Pochuev/3n-plus-minus-1-game", source)
         self.assertIn("AlthoferProblemPage", source)
+        self.assertIn(DOI, source)
 
     def test_compiled_article_is_present(self) -> None:
         pdf = ROOT / "paper" / "main.pdf"

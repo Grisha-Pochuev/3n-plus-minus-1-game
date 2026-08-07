@@ -8,6 +8,10 @@ authors:
     email: "n_854@mail.ru"
 repository-code: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
 url: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21844684"
+    description: "Published preprint and archived article source"
 license: MIT
 version: 1.0.0
 date-released: 2026-08-08
@@ -25,4 +29,5 @@ preferred-citation:
       given-names: "Grisha"
       email: "n_854@mail.ru"
   year: 2026
-  url: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
+  doi: "10.5281/zenodo.21844684"
+  url: "https://doi.org/10.5281/zenodo.21844684"

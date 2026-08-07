@@ -6,6 +6,8 @@ address, the verification repository, the proof architecture, reproducibility
 commands, and an explicit distinction between the human proof, conditional
 global certificate, finite regression evidence, and Lean-checked metatheory.
 
+Published record: <https://doi.org/10.5281/zenodo.21844684>.
+
 No repository script uploads or publishes the article. The author performs the
 final Zenodo review and publication.
 
