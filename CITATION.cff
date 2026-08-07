@@ -5,14 +5,24 @@ type: software
 authors:
   - family-names: "Pochuev"
     given-names: "Grisha"
+    email: "n_854@mail.ru"
 repository-code: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
 url: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"
 license: MIT
-version: 0.1.0
-date-released: 2026-08-07
+version: 1.0.0
+date-released: 2026-08-08
 keywords:
   - combinatorial games
   - Collatz problem
   - 3n plus or minus 1
   - termination
   - Lean 4
+preferred-citation:
+  type: article
+  title: "Termination under Optimal Play in the Two-Player 3n+/-1 Game"
+  authors:
+    - family-names: "Pochuev"
+      given-names: "Grisha"
+      email: "n_854@mail.ru"
+  year: 2026
+  url: "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game"

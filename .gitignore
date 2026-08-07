@@ -5,6 +5,7 @@ __pycache__/
 venv/
 build/
 dist/
+tmp/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
@@ -17,3 +18,10 @@ results/
 
 # Lean/Lake build products (sources and lock files stay tracked)
 formal/.lake/
+
+# LaTeX build intermediates (the reviewed paper/main.pdf remains tracked)
+paper/*.aux
+paper/*.bbl
+paper/*.blg
+paper/*.log
+paper/*.out

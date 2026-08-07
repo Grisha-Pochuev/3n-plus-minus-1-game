@@ -13,6 +13,7 @@ root.
 | `python scripts/extract_proof.py 100 --limit 200000 --output proof.json` | generate one finite outcome proof DAG | certificate generator |
 | `python scripts/verify_outcome_certificate.py proof.json` | validate a finite proof DAG independently | certificate checker |
 | `python scripts/verify_global_certificate.py` | validate the symbolic global-routing inventory and rank assembly | **CONDITIONAL MACHINE CHECK**; four explicit human obligations remain |
+| `python scripts/build_zenodo_bundle.py` | package the compiled article, LaTeX source, committed repository snapshot, metadata, and SHA-256 manifest | local packaging only; never contacts or publishes to Zenodo |
 
 ## Generator versus checker
 

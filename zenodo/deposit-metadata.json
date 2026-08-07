@@ -1,0 +1,37 @@
+{
+  "metadata": {
+    "title": "Termination under Optimal Play in the Two-Player 3n+/-1 Game",
+    "upload_type": "publication",
+    "publication_type": "preprint",
+    "publication_date": "2026-08-08",
+    "creators": [
+      {
+        "name": "Pochuev, Grisha"
+      }
+    ],
+    "description": "We address the two-player 3n+/-1 problem stated at https://althofer.de/collatz-prizes.html. The game is played on positive odd integers: a move replaces n > 1 by the odd part of either 3n-1 or 3n+1, and the player who reaches 1 wins. Arbitrary play need not terminate. We give a binary normal form, rank finite outcome-proof tokens by a well-founded multiset order, prove the remaining equal-rank routing fibres well-founded, and conclude that no DRAW positions exist. The accompanying repository contains the complete proof supplement, executable checks, a conditional global-routing certificate, negative tests, and Lean-checked certificate metatheory.",
+    "access_right": "open",
+    "license": "cc-by-4.0",
+    "language": "eng",
+    "version": "1.0.0",
+    "keywords": [
+      "combinatorial game theory",
+      "3n plus or minus 1",
+      "Collatz-type dynamics",
+      "optimal play",
+      "termination",
+      "well-founded relation",
+      "machine-checkable certificate",
+      "Lean 4",
+      "reproducibility"
+    ],
+    "related_identifiers": [
+      {
+        "identifier": "https://github.com/Grisha-Pochuev/3n-plus-minus-1-game",
+        "relation": "isSupplementedBy",
+        "resource_type": "software"
+      }
+    ],
+    "notes": "Correspondence: n_854@mail.ru. The linked global-routing certificate has status CONDITIONAL_MACHINE_CHECK and retains four explicit human proof obligations."
+  }
+}

@@ -44,8 +44,10 @@ reading route is:
 6. [`docs/verified-results.md`](docs/verified-results.md) — all detailed lemmas;
 7. [`docs/pitfalls.md`](docs/pitfalls.md) — known invalid shortcuts.
 
-The article draft lives only in this repository under [`paper/`](paper/).
-No submission or publication is performed by repository tooling.
+The article source and reviewed PDF live under [`paper/`](paper/).
+The Zenodo metadata, packaging instructions, and publication checklist are in
+[`zenodo/`](zenodo/). No submission or publication is performed by repository
+tooling.
 
 ## Reproduce the checks
 
@@ -71,7 +73,7 @@ python scripts/verify_claims.py --limit 100000
 python scripts/verify_global_certificate.py
 ```
 
-Expected result: `107` tests pass, followed by verification of the normal form
+Expected result: all tests pass, followed by verification of the normal form
 and descent identities through `100000`, and acceptance of a 46-transition
 global assembly with status `CONDITIONAL_MACHINE_CHECK`. A clean-clone run is
 recorded in
@@ -119,7 +121,8 @@ See [`formal/README.md`](formal/README.md) and
 | [`scripts/`](scripts/) | reproducible verification and exploration |
 | [`certificates/`](certificates/) | finite proof DAGs and the conditional symbolic global assembly |
 | [`formal/`](formal/) | Lean project and explicit formalization coverage |
-| [`paper/`](paper/) | article source kept in the repository only |
+| [`paper/`](paper/) | article source, reviewed PDF, and publication license |
+| [`zenodo/`](zenodo/) | Zenodo metadata, preservation bundle instructions, and final publication checklist |
 
 ## Status vocabulary
 
@@ -127,15 +130,15 @@ Every research claim is classified as `PROVED`, `COMPUTATIONALLY VERIFIED`,
 `CONJECTURE`, `DISPROVED`, or `UNVERIFIED LEAD`. These labels are defined and
 enforced in [`AGENTS.md`](AGENTS.md).
 
-## Provenance and prize
+## Problem provenance
 
-Ingo Althöfer's official page describes the `3n+-1 game`, a €500 prize, and
-a submission deadline of 31 December 2037. It also records Michael Hartisch's
-finite verification below one million. See
+Ingo Althöfer's official page states the `3n+-1 game` problem addressed by
+this repository and records Michael Hartisch's finite verification below one
+million. See
 [`docs/problem.md`](docs/problem.md) for the earlier Beans-Don't-Talk sources
 and complete bibliographic information.
 
-- Official prize page: <https://althofer.de/collatz-prizes.html>
+- Official problem page: <https://althofer.de/collatz-prizes.html>
 - Althöfer, Hartisch, Zipproth (2024), DOI:
   <https://doi.org/10.1007/978-3-031-54968-7_11>
 

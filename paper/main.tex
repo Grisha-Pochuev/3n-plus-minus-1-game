@@ -5,6 +5,7 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[a4paper,margin=30mm]{geometry}
 \usepackage{microtype}
+\usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -19,11 +20,18 @@
 \newcommand{\DRAW}{\mathrm{DRAW}}
 
 \title{Termination under Optimal Play in the Two-Player $3n\mathbin{\pm}1$ Game}
-\author{Grisha Pochuev}
-\date{Working manuscript, 7 August 2026}
+\author{Grisha Pochuev\\
+  \small\href{mailto:n_854@mail.ru}{n\_854@mail.ru}\\
+  \small\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}}
+\date{Preprint, 8 August 2026}
 
 \begin{document}
 \maketitle
+
+\begin{center}
+\small This preprint is distributed under the Creative Commons Attribution
+4.0 International license (CC BY 4.0).
+\end{center}
 
 \begin{abstract}
 We consider the impartial two-player game on positive odd integers in which a
@@ -38,7 +46,12 @@ any hypothetical draw continuation into an infinite path in a well-founded
 marked transition system. Consequently no draw positions exist and optimal
 play reaches $1$ from every odd starting value. A detailed proof supplement,
 regression tests, and the exact status of the ongoing Lean formalization are
-included in the accompanying repository.
+included in the accompanying repository. The repository also contains a
+declarative global-routing certificate, a small independent checker, and a
+Lean proof of the general well-founded-certificate metatheorem. Their exact
+trust boundary is stated explicitly: the global assembly is machine-checked
+conditional on four local refinement obligations that remain part of the
+human proof.
 \end{abstract}
 
 \section{Introduction}
@@ -49,6 +62,11 @@ game of Alth\"ofer, Hartisch, and Zipproth
 \cite{AlthoferHartischZipproth2024}. Its similarity to Collatz iteration is
 superficial in one important respect: the two signs are strategic choices by
 alternating players.
+
+The specific problem addressed here is the two-player problem stated on
+Alth\"ofer's Collatz-problems page: prove that every odd starting value reaches
+$1$ when both players act optimally \cite{AlthoferProblemPage}. The formulation
+on that page and the game rules used below agree exactly.
 
 For the player to move, a position is $\WIN$ if some move leads to a $\LOSS$
 position, and is $\LOSS$ if every move leads to a $\WIN$ position. Because the
@@ -66,9 +84,24 @@ For every positive odd starting integer, optimal play reaches $1$ after
 finitely many moves. Equivalently, the game has no $\DRAW$ positions.
 \end{theorem}
 
+\paragraph{Independent verification package.}
+The complete proof supplement and the independently runnable verification
+artifacts are maintained at
+\begin{center}
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+\end{center}
+An external reader can clone the repository and run \texttt{python audit.py}
+to check the documented arithmetic regressions, finite proof certificates,
+and the conditional global-routing assembly. The same repository contains the
+negative tests and Lean-checked certificate metatheory, together with an
+explicit account of what remains human-verified.
+
 This manuscript presents the final dependency chain. Complete local case
 proofs are contained in the numbered proof supplement
 \cite{PochuevRepository}; section numbers below refer to that supplement.
+The supplement, executable checks, certificate inventory, and formalization
+sources are openly available at
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
 
 \section{Rules and binary normal form}
 
@@ -281,21 +314,66 @@ conjugated image. Hence the conclusion covers every odd starting state.
 
 \section{Verification status and reproducibility}
 
-The repository distinguishes three kinds of evidence.
+The repository distinguishes four kinds of evidence.
 
 First, the mathematical supplement labels each claim as proved,
 computationally verified, conjectural, disproved, or an unverified lead.
 Second, standard-library Python code checks the exact normal form, descent
 identities, routing arithmetic, and bounded retrograde soundness. These finite
 runs are regression evidence and are not used as the proof of the infinite
-theorem. Third, a pinned Lean project formalizes an initial subset of the
-foundations. Its coverage table explicitly states that the global theorem is
-not yet Lean-checked.
+theorem.
+
+Third, the repository contains a finite declarative inventory of the global
+routing assembly. It has 15 control states, 46 transition schemas, and 12
+guard partitions, including symbolic unbounded valuation and tail-length
+intervals. An independent standard-library Python checker verifies source
+integrity, complete coverage of the \emph{declared} cases, one rule per case,
+lexicographic reset discipline, and acyclicity of the 17 equal-rank control
+edges. The remaining 29 schemas have an explicit strict rank component.
+
+The checker prints the status \texttt{CONDITIONAL\_MACHINE\_CHECK}. Four
+obligations deliberately remain on the human side of the trust boundary:
+\begin{enumerate}
+  \item the universal arithmetic and coordinate identities attached to each
+        macro schema;
+  \item refinement of the declared semantic guards to every legal game case;
+  \item outcome compatibility of the selected DRAW continuation and the
+        separately carried finite tokens;
+  \item finite productivity of every macro-normalization.
+\end{enumerate}
+Thus acceptance of the JSON certificate validates the final size-change
+assembly conditional on the cited Sections 14--137; it is not presented as a
+complete machine proof from the original move relation.
+
+Fourth, a pinned Lean 4 project proves the general metatheory used by the
+certificate: the lexicographic product of well-founded relations is
+well-founded, a relation mapped to strict decreases in such a rank is
+well-founded, and a well-founded certified relation admits no infinite route.
+The Lean sources use no problem-specific axioms and contain no
+\texttt{sorry} or \texttt{admit}. Lean does not yet prove the concrete
+multiset rank or the four certificate-to-game refinement obligations, and the
+coverage table states this limitation explicitly.
 
 This separation is part of the result: it permits an auditor to reproduce the
 computations without confusing them with the well-foundedness proof, and to
 measure future formalization progress without importing the desired theorem
 as an axiom.
+
+From a clean checkout, the complete locally machine-checkable audit is:
+\begin{verbatim}
+python audit.py
+\end{verbatim}
+It runs the complete unit and regression test suite, checks the documented finite
+arithmetic range, validates the global assembly certificate, generates a
+finite outcome proof DAG, and validates that DAG with a separate checker. The
+global certificate alone is checked by
+\begin{verbatim}
+python scripts/verify_global_certificate.py
+\end{verbatim}
+The Lean metatheory is checked independently by \texttt{lake build} in the
+\texttt{formal} directory. Exact commands, expected output, negative tests,
+and the human audit route are recorded in the repository's
+\texttt{START\_HERE.md} and \texttt{AUDIT.md} files.
 
 \section{Known proof hazards}
 
@@ -315,6 +393,16 @@ finite outcome witnesses: strict token replacement gives an ordinal
 projection, and the remaining equal-projection routing is well-founded by an
 explicit normalizer analysis. Entry completeness then excludes every possible
 draw continuation and proves finite optimal play from all odd starts.
+
+\section*{Data, code, and correspondence}
+
+The proof supplement, source code, tests, certificate files, Lean sources, and
+reproducibility records are available at
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}. The repository
+is the authoritative location for the evolving verification artifacts; the
+Zenodo record preserves the released article and source snapshot. Questions,
+counterexamples, and audit reports may be sent to
+\href{mailto:n_854@mail.ru}{n\_854@mail.ru}.
 
 \bibliographystyle{plain}
 \bibliography{references}

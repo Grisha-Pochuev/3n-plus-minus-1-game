@@ -1,4 +1,4 @@
-.PHONY: audit test verify retrograde suffixes proof certificate global-certificate lean
+.PHONY: audit test verify retrograde suffixes proof certificate global-certificate zenodo lean
 
 audit:
 	python audit.py
@@ -24,6 +24,9 @@ certificate:
 
 global-certificate:
 	python scripts/verify_global_certificate.py
+
+zenodo:
+	python scripts/build_zenodo_bundle.py
 
 lean:
 	cd formal && lake build

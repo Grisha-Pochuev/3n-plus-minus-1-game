@@ -45,7 +45,14 @@ REQUIRED_FILES = (
     "scripts/README.md",
     "formal/COVERAGE.md",
     "formal/ThreeNPlusMinusOne/Certificate.lean",
+    ".zenodo.json",
     "paper/README.md",
+    "paper/LICENSE.md",
+    "paper/main.pdf",
+    "scripts/build_zenodo_bundle.py",
+    "zenodo/README.md",
+    "zenodo/deposit-metadata.json",
+    "zenodo/UPLOAD_CHECKLIST.md",
 )
 
 
@@ -120,6 +127,7 @@ def documentation_files() -> list[Path]:
         "scripts",
         "src",
         "tests",
+        "zenodo",
     ):
         files.extend((ROOT / dirname).glob("*.md"))
     return sorted(set(files))
