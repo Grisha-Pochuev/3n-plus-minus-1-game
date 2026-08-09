@@ -1,6 +1,6 @@
 from pathlib import Path
 import hashlib
-import json
+import re
 
 
 LEMMA = r'''### The first factor signed exit is anchored at the common boundary endpoint
@@ -160,11 +160,17 @@ def main() -> None:
         proof.write_text(text.replace(marker, LEMMA + marker, 1), encoding="utf-8")
 
     cert_path = Path("certificates/global-routing.json")
-    cert = json.loads(cert_path.read_text(encoding="utf-8"))
-    cert["proof_source"]["sha256"] = hashlib.sha256(proof.read_bytes()).hexdigest()
-    # Preserve the already narrowed scope: this lemma advances the open entry
-    # proof, but does not yet make the global theorem machine- or human-proved.
-    cert_path.write_text(json.dumps(cert, separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
+    cert_text = cert_path.read_text(encoding="utf-8")
+    digest = hashlib.sha256(proof.read_bytes()).hexdigest()
+    cert_text, count = re.subn(
+        r'("sha256"\s*:\s*")[0-9a-f]{64}("\s*,)',
+        rf'\g<1>{digest}\2',
+        cert_text,
+        count=1,
+    )
+    if count != 1:
+        raise SystemExit("certificate proof hash field not found")
+    cert_path.write_text(cert_text, encoding="utf-8")
 
 
 if __name__ == "__main__":
