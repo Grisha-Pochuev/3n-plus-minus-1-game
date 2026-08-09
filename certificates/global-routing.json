@@ -7,7 +7,7 @@
   "claim_scope": "The checker validates the declared finite typed assembly and rank logic only. After the external audit, the arbitrary factorful exponent-one attachment in corrected Section 137 remains open; certificate acceptance is not evidence for the global no-DRAW theorem.",
   "proof_source": {
     "path": "docs/verified-results.md",
-    "sha256": "4943d9d5a82b42619787b971c3eb9cd20cbfc852e30ce0926efc522a18b99766",
+    "sha256": "e8d4abdbb58f92ec0ae08b1c5627ae92b5c0810b0a05247df4a75a2b069f451f",
     "proof_section_ranges": ["14-27", "69-138"]
   },
   "machine_checked_obligations": [
