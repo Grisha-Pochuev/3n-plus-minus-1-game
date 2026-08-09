@@ -1,41 +1,40 @@
 # Start here
 
-This page is for a reader opening the repository for the first time.
+This page is for a reader opening the repository after the external audit of
+the global proof.
+
+## First: understand the current status
+
+The target theorem is still that optimal play from every odd positive start
+reaches `1`.  **The global theorem is currently OPEN in this manuscript.**
+
+An external audit found a real gap in old Section 137.  Corrected Sections
+136--138 now remove the false source-descent inference and prove a universal
+two-level arithmetic normalization for the previously omitted factorful
+exponent-one family.  One provenance/rank attachment lemma remains open.
+
+Read [`AUDIT.md`](AUDIT.md) before interpreting any machine output.
 
 ## I only want to check that the code runs
 
-Install Python 3.10 or newer, clone the repository, open a terminal in its
-root, and run:
+Install Python 3.10 or newer and run:
 
 ```bash
 python audit.py
 ```
 
-On a typical laptop this takes about one or two minutes. The final banner
-should be:
+This checks:
 
-```text
-=== AUDIT PASSED ===
-All machine-checkable local stages passed ...
-Next: review the four declared global-certificate trust obligations ...
-```
-
-This one command verifies:
-
-- all unit and regression tests;
+- unit and regression tests;
 - the stated finite range of arithmetic identities;
-- the committed symbolic global-routing assembly;
-- a committed finite outcome proof DAG;
-- a newly generated finite proof DAG with an independent checker.
+- finite outcome proof DAGs;
+- the declared symbolic typed-routing assembly.
 
-The global routing success is deliberately printed as
-`CONDITIONAL_MACHINE_CHECK`. It proves that the declared universal case
-inventory has no missing declared case, obeys its lexicographic rank, and has
-no equal-rank control cycle. Four links from those schemas to the original
-game remain human proof obligations; see
-[`certificates/global-routing-certificate.md`](certificates/global-routing-certificate.md).
-
-If your Python command is named `python3`, use `python3 audit.py`.
+The symbolic stage may print `CONDITIONAL_MACHINE_CHECK`.  This is **not** a
+proof of the global theorem.  It checks the declared finite control/rank
+assembly conditional on the human semantic-refinement obligations; corrected
+Section 137 identifies one of those obligations as still open for the
+arbitrary factorful exponent-one entry.
 
 ## I want the shortest direct certificate check
 
@@ -45,67 +44,59 @@ Run:
 python scripts/verify_global_certificate.py
 ```
 
-Expected summary at the current revision:
+A successful result says that the **declared typed assembly** satisfies its
+machine-checked guard/rank conditions.  It does not establish that every
+actual game continuation reaches one of those typed entries.
 
-```text
-GLOBAL ROUTING ASSEMBLY CERTIFICATE ACCEPTED
-status: CONDITIONAL_MACHINE_CHECK
-inventory: 15 states, 46 transitions, 12 total guard partitions
-rank check: 29 strict transitions; 17 equal-rank transitions form a DAG
-```
+## I want to understand the mathematical repair
 
-Read the checker scope before citing this as evidence. It is stronger than a
-finite numerical search but weaker than a complete formalization of the game.
+Read in this order:
 
-## I want to understand the claimed solution
+1. [`docs/problem.md`](docs/problem.md) — exact game semantics;
+2. [`docs/normal-form.md`](docs/normal-form.md) — binary conjugation;
+3. Sections 14--17 of [`docs/verified-results.md`](docs/verified-results.md) — constant-tail coordinates and the exponent-one obstruction;
+4. Sections 79--81 — universal consecutive-factor coupling;
+5. Sections 87--90 — note the typed hypothesis of the first-factor hidden parent;
+6. Sections 91--135 — marked obligation/factor normalizer;
+7. corrected Sections 136--138 — the repaired audit and exact remaining attachment lemma;
+8. [`docs/global-proof.md`](docs/global-proof.md) — concise status.
 
-Read these three files:
-
-1. [`docs/problem.md`](docs/problem.md) — rules and outcome terminology;
-2. [`docs/normal-form.md`](docs/normal-form.md) — the exact binary reduction;
-3. [`docs/global-proof.md`](docs/global-proof.md) — the global argument.
-
-Then open [`docs/proof-map.md`](docs/proof-map.md) to see where every part is
-proved in the full supplement.
+The key new statement is the **arbitrary exponent-one attachment lemma** in
+Section 137.  It is the current blocking lemma for the global theorem.
 
 ## I want to audit the mathematics
 
-Follow [`AUDIT.md`](AUDIT.md). Do not start by reading all 138 sections
-linearly. First inspect the four explicit certificate trust obligations, then
-read the final dependency chain in Sections 129–138 and follow only the cited
-earlier lemmas.
+Follow [`AUDIT.md`](AUDIT.md).  In particular try to falsify:
 
-Expected time is hours or days, not minutes. The proof is long because it
-keeps exact source provenance and finite outcome witnesses through all routing
-cases.
+- the two-level normalization of `Q_1^epsilon(3^k J(s))`;
+- the distinction between a retained source anchor and a temporary routing
+  source;
+- any use of Section 89 outside the congruence conditions proved by its
+  constructor;
+- any claimed token replacement that lacks an actual proof-height
+  comparison.
 
 ## I want to inspect finite outcome certificates
 
-Read [`certificates/README.md`](certificates/README.md), then run:
+Read [`certificates/README.md`](certificates/README.md), then run for example:
 
 ```bash
 python scripts/verify_outcome_certificate.py certificates/examples/q10.json
 ```
 
-This proves the outcome of one finite root. It is separate from the symbolic
-global assembly.
-
-## I want to inspect or extend the code
-
-- [`src/README.md`](src/README.md) explains the library modules.
-- [`scripts/README.md`](scripts/README.md) lists every supported command.
-- [`tests/README.md`](tests/README.md) explains what the tests guarantee.
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) gives proof and reporting standards.
+This proves the outcome of one finite root.  It is separate from the global
+open question.
 
 ## I want the article
 
-The repository-only working manuscript is [`paper/main.tex`](paper/main.tex).
-It is not submitted automatically. Its detailed proof supplement is
-[`docs/verified-results.md`](docs/verified-results.md).
+The repository working manuscript is [`paper/main.tex`](paper/main.tex).
+The published Zenodo version predates this external audit.  The repair branch
+should therefore be treated as an erratum/work-in-progress rather than as a
+new completed proof.
 
 ## I want the Lean check
 
-Lean is optional and is not needed for `python audit.py`:
+Lean is optional:
 
 ```bash
 cd formal
@@ -113,6 +104,5 @@ lake update
 lake build
 ```
 
-Read [`formal/COVERAGE.md`](formal/COVERAGE.md) first. Lean kernel-checks the
-general well-founded-certificate metatheorem, but not yet the concrete
-JSON-to-game refinement or the global no-`DRAW` theorem.
+Read [`formal/COVERAGE.md`](formal/COVERAGE.md) first.  Lean does not currently
+check the global no-`DRAW` theorem.
