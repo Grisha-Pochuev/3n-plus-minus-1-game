@@ -1,43 +1,107 @@
 # Independent audit guide
 
-This document tells a third party exactly what is claimed, what can be checked
-mechanically, and where human mathematical review is still required.
+This document tells a third party exactly what is currently established,
+what can be checked mechanically, and what remains open after the external
+audit of Sections 136--138.
 
-## 1. Claim under review
+## 1. Current claim status
 
-**PROVED (human proof).** Every odd positive starting value in the two-player
-`3n±1` game has finite remoteness. Equivalently, the conjugated game has no
-`DRAW` positions, and optimal play reaches `1` in finitely many moves.
+**GLOBAL THEOREM: OPEN IN THIS MANUSCRIPT.**
 
-This is not yet a claim of independent acceptance or of a fully
-machine-checked theorem.
+The intended theorem is that every odd positive starting value in the
+two-player `3n±1` game has finite remoteness, equivalently that the
+conjugated game has no `DRAW` positions and optimal play reaches `1`.
 
-## 2. Trust boundary
+The previous repository revision labelled this theorem `PROVED (human
+proof)`.  Ingo Althöfer reported an independent audit that found a genuine
+entry gap in old Section 137.  The repair branch withdraws the invalid
+inference, proves an exact two-level normalization for the missing
+factorful exponent-one arithmetic family, and isolates the remaining
+source/proof-token attachment lemma.  Independent re-review of any future
+completion is still required.
+
+## 2. The audited defect
+
+The old Section 137 inferred a decrease of the coefficient **source** from a
+decrease of the canonical odd coefficient.  This is false in the presence
+of powers of three.  A concrete counterexample is
+
+\[
+s=1,\quad J(1)=5,\quad a=3J(1)=15,\quad \epsilon=1,
+\]
+
+for which
+
+\[
+R(3a-\epsilon)=R(44)=22.
+\]
+
+The new canonical coefficient is \(11<15\), but \(11=J(3)\), so the new
+source is \(3>1\).
+
+The old proof also used Section 16 as though it removed powers of three at
+constant-tail exponent one.  It does not.  Thus an arbitrary state
+
+\[
+Q_1^\epsilon(3^kJ(s)),\qquad k>0,
+\]
+
+was not covered by the old entry trichotomy.
+
+## 3. What the repair establishes
+
+Corrected Section 137 applies the universal factor-level results of Sections
+79--81 directly to the missing family.  If the displayed factorful
+exponent-one state is DRAW, then within the current or next factor level a
+DRAW exit occurs.  Factoring
+
+\[
+3^{i+1}J(s)+1-2\epsilon=2^vJ(t)
+\]
+
+gives the exact signed exit
+
+\[
+Q_v^{1-\epsilon}(J(t)).
+\]
+
+For \(v\ge2\), the raw sibling is exactly
+
+\[
+Q_{v-1}^{1-\epsilon}(J(t));
+\]
+
+for \(v=1\), a positive raw DRAW has a strict coefficient-source descent
+relative to \(t\).  This is a complete arithmetic normalization of the
+previously omitted family.
+
+What is **not** yet proved is that the returned source \(t\) can always be
+attached to the retained outer rank without increase.  In general \(t>s\)
+can occur.  The corrected proof therefore does not replace the old source
+anchor by \(t\).
+
+The remaining statement is named the **arbitrary exponent-one attachment
+lemma** in Section 137.  It must show that the normalized DRAW continuation
+produces a genuine lower retained source, a certified lower proof token, or
+a typed entry to Section 136 while preserving the retained outer data.
+
+## 4. Trust boundary
 
 An audit has four separate layers.
 
 | Layer | What it establishes | What it does not establish |
 |---|---|---|
-| Human proof | The infinite theorem, if every lemma and dependency is correct | Kernel verification or independent acceptance |
-| Global assembly certificate | Totality of the declared symbolic partitions, one rule per declared case, valid lexicographic reset discipline, and no equal-rank control cycle | That the declared macro guards and effects refine every legal game continuation |
-| Python arithmetic and finite certificates | Exact implementation agreement on stated finite ranges and genuine finite `WIN`/`LOSS` proof DAGs | The theorem for all integers |
-| Lean build | The definitions and metatheorems marked Lean-proved in `formal/COVERAGE.md` | The concrete JSON-to-game refinement or the global no-`DRAW` theorem |
+| Human local proofs | The individual arithmetic/outcome lemmas with their stated hypotheses | The missing global attachment lemma |
+| Symbolic routing certificate | The declared finite control/rank assembly for typed entries | That every real game continuation reaches one of those typed entries |
+| Python arithmetic and finite certificates | Exact implementation agreement on stated finite ranges and genuine finite `WIN`/`LOSS` proof DAGs | The infinite no-`DRAW` theorem |
+| Lean build | Definitions and metatheorems listed in `formal/COVERAGE.md` | The concrete JSON-to-game refinement or the global no-`DRAW` theorem |
 
-No bounded `UNKNOWN` position is called a draw. No finite cutoff is used as a
-substitute for well-foundedness.
+The symbolic checker may still print `CONDITIONAL_MACHINE_CHECK`.  After the
+external audit this must be read narrowly: it checks the declared typed
+assembly, not the unresolved semantic attachment of the arbitrary
+factorful exponent-one family.
 
-The symbolic certificate has four mandatory `HUMAN_PROOF` obligations:
-
-1. the universal arithmetic and coordinate identities behind its macros;
-2. refinement of the declared semantic guards to every legal case;
-3. outcome compatibility of the selected `DRAW` continuation and carried
-   finite tokens;
-4. finite productivity of every macro normalization.
-
-The checker refuses a certificate that omits or relabels any of these. See
-[`certificates/global-routing-certificate.md`](certificates/global-routing-certificate.md).
-
-## 3. Fast reproducibility check
+## 5. Reproducibility checks
 
 From a clean checkout, record the exact revision:
 
@@ -53,24 +117,17 @@ Then run:
 python audit.py
 ```
 
-This command validates repository layout and links, scans Lean sources for
-unfinished placeholders, runs the complete tests, checks finite arithmetic,
-checks the conditional global assembly, and independently validates both a
-committed and a freshly generated finite outcome certificate.
+The local tests, finite arithmetic checks, finite outcome certificates, and
+the declared symbolic routing certificate remain useful.  A successful run
+must **not** be described as a proof of the global theorem.
 
-The current clean-clone output is recorded in
-[`docs/audit-run-2026-08-08.md`](docs/audit-run-2026-08-08.md).
-
-The global stage can be isolated:
+The symbolic stage can be isolated with
 
 ```bash
 python scripts/verify_global_certificate.py
 ```
 
-Acceptance must be quoted together with its printed status
-`CONDITIONAL_MACHINE_CHECK` and the four remaining obligations.
-
-For the formalized subset:
+and the Lean subset with
 
 ```bash
 cd formal
@@ -78,79 +135,67 @@ lake update
 lake build
 ```
 
-The Lean toolchain is pinned to `v4.32.1`; the project has no third-party Lean
-dependency. Read [`formal/COVERAGE.md`](formal/COVERAGE.md) before reporting
-the scope of a successful build.
+Read `formal/COVERAGE.md` before interpreting a successful Lean build.
 
-## 4. Human proof audit
+## 6. Human proof audit order
 
-Read the proof in this order:
+Read the mathematics in this order:
 
-1. Confirm the game semantics and the `WIN`/`LOSS`/`DRAW` trichotomy in
-   [`docs/problem.md`](docs/problem.md).
-2. Verify the binary normal form in [`docs/normal-form.md`](docs/normal-form.md),
-   especially the unbounded alternating-suffix operation.
-3. Read the short assembly in [`docs/global-proof.md`](docs/global-proof.md).
-4. Compare the certificate inventory with
-   [`certificates/global-routing.json`](certificates/global-routing.json).
-5. Use [`docs/proof-map.md`](docs/proof-map.md) to expand every cited
-   dependency.
-6. Check Sections 129–138 of
-   [`docs/verified-results.md`](docs/verified-results.md) line by line, then
-   follow their backward citations.
-7. Compare every dependency and status with
-   [`docs/proof-ledger.md`](docs/proof-ledger.md).
-8. Check the proposed reasoning against every failure mode in
-   [`docs/pitfalls.md`](docs/pitfalls.md).
+1. `docs/problem.md` — game semantics and `WIN`/`LOSS`/`DRAW` terminology.
+2. `docs/normal-form.md` — binary conjugated form.
+3. Sections 14--17 of `docs/verified-results.md` — constant-tail source
+   coordinates and the original exponent-one obstruction.
+4. Sections 79--81 — universal consecutive-factor coupling and the repaired
+   two-level normalization.
+5. Sections 87--90 — note carefully that the first-factor hidden parent of
+   Section 89 has an additional typed congruence hypothesis.
+6. Sections 91--135 — the typed obligation/factor normalizer and provenance
+   machinery.
+7. Corrected Sections 136--138 — retained-anchor versus routing-cursor
+   distinction, the repaired arithmetic entry, and the explicit remaining
+   attachment lemma.
 
-## 5. Decisive manual obligations
+## 7. Decisive manual obligations
 
-Try to falsify these links first:
+Try to falsify these points first:
 
-- the Section 137 source/token/normalizer trichotomy really covers every
-  minimum-source and height-one continuation;
-- every semantic case in `global-routing.json` corresponds to exactly the
-  game cases cited by its `proof_sections` field;
-- the source/proof-token projection never increases, including on resets;
-- every token-changing edge replaces actual carried tokens by certified lower
-  descendants;
-- the equal-projection normalizer has no hidden parameterized recurrence not
-  represented in the finite control DAG;
-- every high-return cross-transition is strict before a fresh marked task can
-  be installed;
-- a hypothetical `DRAW` really supplies another marked configuration after a
-  finite macro normalization;
-- the terminal `q=0` conclusion is transported correctly to all odd original
-  states, including values divisible by three.
+- the universal two-level normalization in corrected Section 137 really
+  follows from Sections 79--81 for arbitrary `k>0`;
+- no step confuses a decrease of canonical coefficient with a decrease of
+  coefficient source;
+- no transition silently promotes a temporary returned source `t` to the
+  retained numerical anchor;
+- Section 89 is used only when its congruence hypothesis has actually been
+  proved by the constructor of the typed frame;
+- every token-changing edge replaces an actual carried finite token by
+  certified lower descendants;
+- the typed Section 136 normalizer is well-founded without treating
+  intermediate `A(x)` cursor growth as source descent;
+- any future proof of the arbitrary exponent-one attachment lemma follows an
+  actual outcome-compatible DRAW continuation.
 
-The checker detects an omitted *declared* guard case. It cannot detect that a
-human-defined guard partition omitted a genuine arithmetic possibility. That
-distinction is the central remaining trust boundary.
+## 8. Machine-checkable status
 
-## 6. How to report a problem
+- Conjugated arithmetic and local identities: **PROVED / finite-regression supported** as stated in their sections.
+- Symbolic typed routing assembly: **CONDITIONAL MACHINE CHECK**.
+- Python finite checks: **COMPUTATIONALLY VERIFIED** at their stated limits.
+- Lean metatheory subset: **KERNEL-CHECKED BUILD** at the scope in `formal/COVERAGE.md`.
+- Arbitrary factorful exponent-one arithmetic normalization: **PROVED** in corrected Section 137.
+- Arbitrary exponent-one provenance/rank attachment: **OPEN**.
+- Global no-`DRAW` theorem: **OPEN IN THIS MANUSCRIPT**.
+- Independent external acceptance: **PENDING**.
 
-A useful report should identify the smallest precise failing item:
+## 9. How to report a problem or completion
 
-- certificate transition identifier or document section;
-- exact statement being challenged;
+A useful report should identify the smallest precise item:
+
+- exact section and statement;
 - assumptions available at that point;
-- a counterexample, failed inference, or missing case;
-- whether the issue affects a local lemma, certificate refinement, dependency
-  map, or the global theorem.
+- counterexample, failed inference, or missing case;
+- whether the issue is arithmetic, outcome compatibility, provenance, or
+  global rank assembly.
 
-Arithmetic counterexamples should include a minimal input and a short script
-or calculation. Proof gaps should distinguish an omitted explanation from a
-false statement.
-
-## 7. Current audit status
-
-- Human proof assembled: **PROVED within this repository**.
-- Symbolic global assembly: **CONDITIONAL MACHINE CHECK IMPLEMENTED**.
-- Python regression suite: **COMPUTATIONALLY VERIFIED** at the recorded
-  revision.
-- Finite identity run through 100000: **COMPUTATIONALLY VERIFIED** at the
-  recorded revision.
-- Lean certificate metatheory: **KERNEL-CHECKED BUILD**, with exact limitations
-  in `formal/COVERAGE.md`.
-- Concrete certificate-to-game refinement in Lean: **PENDING**.
-- Independent external review: **PENDING**.
+For a proposed completion of the remaining attachment lemma, the crucial
+question is not merely whether the returned factor/source can be computed,
+but whether the old retained source/token projection is preserved or
+strictly decreased on every outcome-compatible branch.
