@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "title": "Termination under Optimal Play in the Two-Player 3n+/-1 Game",
+    "title": "A Binary Normal Form and an Audited Proof Attempt for the Two-Player 3n+/-1 Game",
     "upload_type": "publication",
     "publication_type": "preprint",
     "doi": "10.5281/zenodo.21844684",
@@ -10,17 +10,17 @@
         "name": "Pochuev, Grisha"
       }
     ],
-    "description": "We address the two-player 3n+/-1 problem stated at https://althofer.de/collatz-prizes.html. The game is played on positive odd integers: a move replaces n > 1 by the odd part of either 3n-1 or 3n+1, and the player who reaches 1 wins. Arbitrary play need not terminate. We give a binary normal form, rank finite outcome-proof tokens by a well-founded multiset order, prove the remaining equal-rank routing fibres well-founded, and conclude that no DRAW positions exist. The accompanying repository contains the complete proof supplement, executable checks, a conditional global-routing certificate, negative tests, and Lean-checked certificate metatheory.",
+    "description": "We study the two-player 3n+/-1 problem stated at https://althofer.de/collatz-prizes.html. An external audit by Ingo Althöfer identified a genuine gap in the old global entry argument. The repaired repository withdraws the invalid coefficient-source inference and proves a universal two-level arithmetic normalization for the previously omitted factorful exponent-one family, but the provenance/rank attachment of that family remains OPEN. Therefore this repair draft does not claim that no DRAW positions have been proved impossible.",
     "access_right": "open",
     "license": "cc-by-4.0",
     "language": "eng",
-    "version": "1.0.0",
+    "version": "audit-repair-draft",
     "keywords": [
       "combinatorial game theory",
       "3n plus or minus 1",
       "Collatz-type dynamics",
       "optimal play",
-      "termination",
+      "binary normal form",
       "well-founded relation",
       "machine-checkable certificate",
       "Lean 4",
@@ -38,6 +38,6 @@
         "resource_type": "publication-preprint"
       }
     ],
-    "notes": "Published record: https://doi.org/10.5281/zenodo.21844684. Correspondence: n_854@mail.ru. The linked global-routing certificate has status CONDITIONAL_MACHINE_CHECK and retains four explicit human proof obligations."
+    "notes": "Historical published record: https://doi.org/10.5281/zenodo.21844684. It predates the external audit and contains the earlier proof claim. Do not publish a replacement proof version while the arbitrary exponent-one attachment lemma in corrected Section 137 remains open. Correspondence: n_854@mail.ru. The routing certificate status CONDITIONAL_MACHINE_CHECK refers only to the declared typed assembly."
   }
 }
