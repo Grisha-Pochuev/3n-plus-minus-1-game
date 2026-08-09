@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""One-command local audit for an independent reader.
+"""One-command machine-checkable audit for an independent reader.
 
 This command checks repository integrity requirements, runs the complete unit
 suite, verifies exact arithmetic over a stated finite range, validates the
-symbolic global-routing assembly, generates one finite outcome proof DAG, and
-validates it with the independent checker.
+declared typed global-routing assembly, generates one finite outcome proof
+DAG, and validates it with the independent checker.
 
-The global certificate is conditional on four explicit human proof
-obligations. This command does not claim a fully machine-checked no-DRAW proof;
-the remaining audit is described in AUDIT.md.
+After the external Althöfer audit, the global no-DRAW theorem is OPEN in this
+manuscript.  Corrected Section 137 isolates the arbitrary exponent-one
+provenance/rank attachment lemma that is not proved by this command or by the
+symbolic routing certificate.  See AUDIT.md and docs/althoefer-audit-repair.md.
 """
 
 from __future__ import annotations
@@ -31,6 +32,7 @@ REQUIRED_FILES = (
     "certificates/README.md",
     "certificates/global-routing-certificate.md",
     "certificates/global-routing.json",
+    "docs/althoefer-audit-repair.md",
     "docs/problem.md",
     "docs/normal-form.md",
     "docs/global-proof.md",
@@ -48,7 +50,7 @@ REQUIRED_FILES = (
     ".zenodo.json",
     "paper/README.md",
     "paper/LICENSE.md",
-    "paper/main.pdf",
+    "paper/main.tex",
     "scripts/build_zenodo_bundle.py",
     "zenodo/README.md",
     "zenodo/deposit-metadata.json",
@@ -184,7 +186,7 @@ def check_lean_placeholders() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Run the reproducible local audit; see AUDIT.md for scope."
+        description="Run machine-checkable audit stages; see AUDIT.md for scope."
     )
     parser.add_argument(
         "--limit",
@@ -210,14 +212,15 @@ def main() -> None:
     if not 0 <= args.certificate_root <= args.certificate_limit:
         parser.error("certificate root must lie in 0..certificate-limit")
 
-    print("Optimal 3n±1 game — reproducible local audit")
+    print("Optimal 3n±1 game — machine-checkable local audit")
     print(f"Python: {sys.version.split()[0]}")
     print(f"Repository: {ROOT}")
     print(
-        "Scope: regression tests + finite identities + conditional global "
-        "assembly + one finite proof DAG.\n"
-        "Four local refinement/outcome obligations remain human-checked; "
-        "follow AUDIT.md."
+        "Scope: regression tests + finite identities + conditional typed "
+        "routing assembly + one finite proof DAG.\n"
+        "IMPORTANT: the global no-DRAW theorem is OPEN in this repair. "
+        "Corrected Section 137 leaves the arbitrary exponent-one attachment "
+        "lemma as a human mathematical obligation."
     )
 
     total_started = time.monotonic()
@@ -240,7 +243,7 @@ def main() -> None:
         ],
     )
     run_stage(
-        "conditional global routing assembly",
+        "conditional typed global routing assembly",
         [
             sys.executable,
             "scripts/verify_global_certificate.py",
@@ -277,11 +280,11 @@ def main() -> None:
     )
 
     elapsed = time.monotonic() - total_started
-    print("\n=== AUDIT PASSED ===")
+    print("\n=== MACHINE-CHECKABLE AUDIT PASSED ===")
     print(f"All machine-checkable local stages passed in {elapsed:.2f}s.")
     print(
-        "Next: review the four declared global-certificate trust obligations "
-        "in AUDIT.md Sections 4–5."
+        "This does NOT close the global theorem. Next mathematical target: "
+        "the arbitrary exponent-one attachment lemma in corrected Section 137."
     )
 
 
