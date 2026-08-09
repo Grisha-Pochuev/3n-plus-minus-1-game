@@ -1,15 +1,27 @@
 # Article source
 
-`main.tex` is the English preprint intended for a Zenodo
-**Publication / Preprint** record. It includes the author's correspondence
-address, the verification repository, the proof architecture, reproducibility
-commands, and an explicit distinction between the human proof, conditional
-global certificate, finite regression evidence, and Lean-checked metatheory.
+`main.tex` is now an **audited repair draft**, not a completed proof manuscript.
 
-Published record: <https://doi.org/10.5281/zenodo.21844684>.
+The published Zenodo record predates the external audit:
+<https://doi.org/10.5281/zenodo.21844684>.
 
-No repository script uploads or publishes the article. The author performs the
-final Zenodo review and publication.
+Ingo Althöfer's audit exposed a genuine gap in the old Section 137.  The
+repository repair proves a universal two-level arithmetic normalization for
+the omitted factorful exponent-one family, but the provenance/rank attachment
+lemma stated in corrected Section 137 remains open.  Accordingly the paper
+source on this branch must not claim that the global no-`DRAW` theorem is
+proved.
+
+The authoritative technical status is in:
+
+- `../AUDIT.md`;
+- `../docs/althoefer-audit-repair.md`;
+- corrected Sections 136--138 of `../docs/verified-results.md`;
+- `../docs/global-proof.md`.
+
+`main.pdf` on this branch may still be an older rendered artifact until the
+corrected `main.tex` is rebuilt; do not cite the PDF without checking its
+revision.
 
 ## Build
 
@@ -30,25 +42,23 @@ cd paper
 tectonic main.tex
 ```
 
-The repository uses only common LaTeX packages. Before release, inspect every
-rendered PDF page and confirm that bibliography entries, URLs, formulas, page
-numbers, and the email link render correctly.
+Before any new release, inspect every rendered page and confirm that the
+abstract, theorem status, audit note, bibliography, URLs, formulas, and page
+numbers match the repaired source.
 
 ## Zenodo bundle
 
-After the PDF exists and all changes are committed, run from the repository
-root:
+Do not publish a new proof version while the attachment lemma is open.  After
+a future completion is independently re-audited, the bundle can be rebuilt
+with
 
 ```bash
 python scripts/build_zenodo_bundle.py
 ```
 
-This produces the exact upload files in `dist/zenodo/`. Follow
-[`../zenodo/UPLOAD_CHECKLIST.md`](../zenodo/UPLOAD_CHECKLIST.md) before pressing
-Zenodo's `Publish` button.
+and reviewed according to `../zenodo/UPLOAD_CHECKLIST.md`.
 
 ## Licensing
 
-The article and its source are CC BY 4.0; see [`LICENSE.md`](LICENSE.md). The
-verification software linked from the article remains under the repository's
-root MIT license.
+The article and its source are CC BY 4.0; see `LICENSE.md`.  Verification
+software remains under the repository's root MIT license.
