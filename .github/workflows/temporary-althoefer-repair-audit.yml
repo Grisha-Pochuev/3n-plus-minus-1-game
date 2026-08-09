@@ -1,0 +1,16 @@
+name: Temporary Althoefer repair audit
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  audit-repair-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/althoefer-audit-gap
+      - name: Run machine-checkable audit
+        run: python audit.py --limit 100000
