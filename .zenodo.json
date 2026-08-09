@@ -31,7 +31,7 @@
     },
     {
       "identifier": "10.5281/zenodo.21844684",
-      "relation": "isPreviousVersionOf",
+      "relation": "isNewVersionOf",
       "resource_type": "publication-preprint"
     }
   ],
