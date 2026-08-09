@@ -1,0 +1,59 @@
+name: Temporary normalize routing certificate
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  normalize-and-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: repair/althoefer-audit-gap
+          fetch-depth: 0
+      - name: Restore compact certificate formatting and patch audit scope
+        shell: bash
+        run: |
+          git show origin/main:certificates/global-routing.json > certificates/global-routing.json
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib
+
+          cert = Path('certificates/global-routing.json')
+          proof = Path('docs/verified-results.md')
+          text = cert.read_text(encoding='utf-8')
+          replacements = {
+            '"global_claim": "The marked DRAW macro-relation used in Sections 129-138 is well-founded."':
+              '"global_claim": "The declared typed marked/obligation routing assembly is well-founded after a valid provenance-preserving entry."',
+            '"claim_scope": "The checker validates the finite assembly and rank logic. The four listed refinement and outcome obligations remain part of the human proof."':
+              '"claim_scope": "The checker validates the declared finite typed assembly and rank logic only. After the external audit, the arbitrary factorful exponent-one attachment in corrected Section 137 remains open; certificate acceptance is not evidence for the global no-DRAW theorem."',
+            '"description": "Every legal outcome-compatible continuation is represented by one of the declared semantic guard cases; the checker proves only that the declared cases themselves are total and nonoverlapping."':
+              '"description": "Every legal outcome-compatible continuation must be represented by one declared semantic guard. Corrected Section 137 leaves the arbitrary factorful exponent-one attachment open for the global theorem, so this human refinement obligation is not currently discharged globally."',
+            '"description": "Each macro rule follows an actual DRAW member while carrying finite WIN/LOSS witnesses separately; it never assumes that DRAW passes through a marked finite token."':
+              '"description": "Each used macro must follow an actual DRAW member while carrying finite WIN/LOSS witnesses separately. Corrected Section 137 isolates the still-open attachment step needed before this can be asserted for every global entry."'
+          }
+          for old, new in replacements.items():
+              if old not in text:
+                  raise SystemExit('expected certificate text not found: ' + old[:80])
+              text = text.replace(old, new, 1)
+          old_hash = '"sha256": "9f934a5497007e93227fcfcd95414825fe6ee2ed954ecc806d8f2eaa4108fbc8"'
+          new_hash = '"sha256": "' + hashlib.sha256(proof.read_bytes()).hexdigest() + '"'
+          if old_hash not in text:
+              raise SystemExit('main certificate proof hash not found')
+          text = text.replace(old_hash, new_hash, 1)
+          cert.write_text(text, encoding='utf-8')
+          PY
+      - name: Run machine-checkable audit
+        run: python audit.py --limit 100000
+      - name: Commit normalized certificate
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add certificates/global-routing.json
+          git commit -m "Keep routing certificate diff focused on audited scope"
+          git push origin HEAD:repair/althoefer-audit-gap
