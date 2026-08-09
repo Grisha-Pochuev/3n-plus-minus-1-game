@@ -74,8 +74,7 @@ factor search is used. It repairs the arithmetic omission but does not prove
 
 ## Second repair: the predecessor removes the unbounded factor level
 
-The previous paragraph can be strengthened before the returned source `t`
-is used. Suppose
+Suppose
 
 \[
 R_k=Q_1^\epsilon(3^kJ(s))\text{ is DRAW},\qquad k\ge1.
@@ -107,128 +106,161 @@ Because `R_k` is DRAW, `q` is not LOSS.
   three. Thus a factor-free DRAW over the original source `s` is obtained.
 - If `q` is WIN, then `ell=C_{k-1}=B(q)` is its unique LOSS child and
   `h(ell)=h(q)-1`.
-  - If `q` is nonexceptional, the ordinary side relation makes
-    `C_k=B(A(q))` a child of `ell`; hence `C_k` is WIN with
-    `h(C_k)<=h(q)-2`. Since `R_k` is DRAW, its other child `T_k` is DRAW.
-    The odd coefficient of `T_k` is not divisible by three, so `T_k` is a
-    factor-free DRAW exit accompanied by a strict finite-token descent.
-  - If `q` is exceptional, Section 68 applies exactly to
-    `q WIN`, `A(q)=R_k DRAW`, `B(q)=ell LOSS`. It identifies
-    `{C_k,T_k}` as an adjacent factor-free pair over the actual LOSS token
-    `ell`, and at least one member is DRAW.
+  - If `q` is nonexceptional, `C_k=B(A(q))` is a child of `ell`; hence
+    `C_k` is WIN with `h(C_k)<=h(q)-2`. Since `R_k` is DRAW, its other
+    child `T_k` is DRAW and is factor-free.
+  - If `q` is exceptional, Section 68 identifies `{C_k,T_k}` as an
+    adjacent factor-free pair over the actual LOSS token `ell`, and at least
+    one member is DRAW.
 
-Therefore
+Therefore every factorful exponent-one DRAW reaches either a factor-free
+DRAW over the same source, or a factor-free DRAW lift/frame while a certified
+finite WIN/LOSS token strictly decreases. The unbounded factor exponent is
+not a remaining obstruction.
+
+## Third repair: the first factor exit is anchored at the old boundary WIN
+
+The factor-free exponent-two base entry has an exact identity that removes
+another apparent source reset. Let `a` be positive and odd, `e` be a phase,
+and put
 
 \[
-\boxed{
-\begin{minipage}{0.88\linewidth}
-Every factorful exponent-one DRAW reaches either a factor-free DRAW over the
-same source, or a factor-free DRAW lift/frame while a certified finite
-WIN/LOSS token strictly decreases. The unbounded factor exponent itself is
-not a remaining obstruction.
-\end{minipage}}
+P=Q_1^e(a),\qquad U=Q_2^e(a),\qquad
+b=B(P)=B(U),\qquad F=A(U)=Q_1^e(3a).
 \]
 
-This is now part of corrected Section 137.
+Then, for the exact valuation `v`,
 
-## What remains after the stronger reduction
+\[
+\boxed{9a+1-2e=2^vJ(b)}.
+\]
 
-The remaining difficulty is a **factor-free base-entry attachment**, not an
-arbitrary-`k` problem. A factor-free DRAW at exponent one is already handled
-by the source-lift analysis of Sections 17--27. The delicate base case is an
-exponent-two factor-free DRAW whose common contracting child has source below
-`s` and is therefore WIN, while its expanding child enters the first
-factor-one level.
+Hence
 
-The exact blocking statement is still phrased conservatively as the
-**arbitrary exponent-one attachment lemma** in corrected Section 137, but the
-new predecessor reduction proves that any completion only has to close this
-factor-free first-entry geometry. It no longer has to control an unbounded
-factor counter.
+\[
+\boxed{A(F)=Q_v^{1-e}(J(b)).}
+\]
 
-A useful local split for that base geometry is the following. Put
+This is proved from Sections 14 and 18, not guessed from computation. For
+`e=0`, Section 18 applied to `w=3a` gives
+
+\[
+\operatorname{oddpart}(9a+1)=J(R(3a))=J(b).
+\]
+
+For `e=1`, the second identity of Section 18 gives
+
+\[
+\operatorname{oddpart}(9a-1)=J(R(6a-1)),
+\]
+
+and Section 14 gives `R(6a-1)=R(3a-1)=b`.
+
+Now take `a=J(s)` and suppose the factor-free exponent-two state `U` is
+DRAW at globally minimum DRAW source `s`. Its common child `b` has canonical
+coefficient below `J(s)`, so its own coefficient source is strictly below
+`s`; hence `b` is not DRAW. Since it is a child of `U`, it is not LOSS
+either, and therefore
+
+\[
+\boxed{b\text{ is WIN}.}
+\]
+
+The other child `F` of `U` is DRAW. The exact factorization above says that
+the first signed factor exit is not over a new arbitrary source: it is over
+this already exposed finite WIN endpoint `b`. If `v>=2`, the two children of
+`F` are the adjacent factor-free frame
+
+\[
+Q_v^{1-e}(J(b)),\qquad Q_{v-1}^{1-e}(J(b));
+\]
+
+if `v=1`, the signed child is the factor-free exponent-one lift over `b`,
+and a positive DRAW raw exit has the strict Section 81 source decrease.
+
+This identity is also regression-tested in `tests/test_althoefer_repair.py`
+for the first 10,000 sources in both phases. The test is supporting evidence;
+the proof is the two-case argument above.
+
+## What remains after the stronger reductions
+
+The remaining difficulty is no longer an arbitrary factor exponent and no
+longer an arbitrary first returned source. It is now a **factor-free
+base-entry attachment over an already carried finite WIN token**.
+
+A factor-free DRAW at exponent one is handled by the source-lift analysis of
+Sections 17--27. The delicate base case is an exponent-two factor-free DRAW
+whose common contracting child `b` is a known WIN and whose expanding child
+enters the factor-one scan anchored exactly at `b` by the identity above.
+
+Put
 
 \[
 a=J(s),\qquad
 P=Q_1^\epsilon(a),\qquad U=Q_2^\epsilon(a).
 \]
 
-If `U` is DRAW, its common child with `P` has source below `s`, hence is WIN,
-and `A(U)=Q_1^\epsilon(3a)` is DRAW. There are three possibilities for `P`:
+If `U` is DRAW, there are three possible outcomes for `P`:
 
 1. `P` DRAW — this is already the factor-free exponent-one source-lift
    analysis; the B-selecting phase strictly returns below `s`, while the
    A-selecting phase is the canonical obligation.
-2. `P` WIN — its other child is an actual LOSS token, while `U` and
-   `A(U)` are DRAW. This has the local outcome geometry of the typed factor
-   fork, but the entry must be connected to the retained rank without
-   silently assuming the extra parent appearing in the definition of `O`.
+2. `P` WIN — because the common child is WIN, the other child of `P` is an
+   actual LOSS token. Together with `U` DRAW and `A(U)` DRAW, this is the
+   local outcome geometry used by the typed factor fork; the remaining audit
+   question is to enter that subsystem without importing an unproved parent.
 3. `P` LOSS — both children of `P` are WIN while `U` and `A(U)` are DRAW.
    This is the sharpest remaining orientation. When the Section 89
-   congruence fails, the factor-free pair `{U,P}` has the complementary
-   exact parent
+   congruence fails, `{U,P}` has the complementary exact parent
    \[
    K'=\frac{8a-1-\epsilon}{3},\qquad
-   \operatorname{moves}(K')=\{U,P\},
+   \operatorname{moves}(K')=\{U,P\}.
    \]
-   because in exactly those rows `U` lies in the image of `A` and
-   `R(U)=P`. Thus this orientation already exposes an additional exact
-   finite-height boundary relation. The complementary rows are the ones in
-   which Section 89 supplies its own hidden parent to the exponent-three/two
-   frame. A complete proof must join these two parent geometries to the
-   existing token normalizer without a reset.
-
-The last paragraph is a narrowing of the research target, not yet a global
-closure lemma.
+   In the complementary congruence rows, Section 89 supplies its hidden
+   parent to the exponent-three/two frame. These two exact parent geometries
+   are the remaining pieces that must be joined to the fixed-fibre token
+   normalizer without an unranked reset.
 
 ## Why the old global proof still cannot simply be restored
 
-A returned arithmetic source is not guaranteed to lie below the old globally
-minimal DRAW source. Therefore the proof may not replace the retained rank
-anchor merely because a new source is the current routing cursor. Doing that
-would reproduce the audited error in a different notation.
-
-Corrected Section 136 consequently separates **retained anchors/tokens**
-from temporary routing cursors. Its well-foundedness theorem is asserted only
-for typed entries whose provenance has already been proved by Sections
-91--135 or by a valid new entry lemma.
+A temporary arithmetic source is not automatically a new retained rank
+anchor. Corrected Section 136 therefore separates **retained anchors/tokens**
+from routing cursors. A source can replace a retained anchor only after a
+proved strict comparison; a finite outcome can replace a proof token only
+after a proved height comparison.
 
 ## Exact remaining lemma
 
-> **Arbitrary exponent-one attachment lemma.** Assume `s` is the globally
-> least coefficient source of a DRAW and
-> \[
-> Q_1^\epsilon(3^kJ(s))\text{ is DRAW},\qquad k>0.
-> \]
-> After the proved predecessor reduction, show that the resulting
-> factor-free DRAW continuation can be connected to the retained outer rank
-> so that an outcome-compatible finite continuation reaches at least one of:
+> **Factor-free base-entry attachment lemma.** Let `s` be the globally least
+> coefficient source of a DRAW. After the proved predecessor reduction has
+> reduced any factorful exponent-one entry to the factor-free base geometry,
+> and after the exact first-factor identity has exposed the finite WIN token
+> `b`, prove that every outcome-compatible continuation either:
 >
-> 1. an actual DRAW with retained coefficient source `<s`;
-> 2. a certified strict replacement of an already carried finite proof
->    token, at retained source `s`;
-> 3. a typed Section 136 normalizer entry with the old retained source/token
->    projection unchanged.
+> 1. reaches an actual DRAW with retained source `<s`;
+> 2. strictly replaces an already carried finite proof token;
+> 3. enters a typed Section 136 normalizer state with the retained outer
+>    source/token projection unchanged.
 >
-> A temporary routing source may not replace the retained source anchor
-> without a proved strict comparison.
+> In particular, a long adjacent factor-free frame over `b` must be
+> normalized while `b` (or a certified descendant of it) remains marked.
 
-For `s>0`, the ordinary state `s` itself is finite (`WIN` or `LOSS`), because
-its own coefficient source is at most `(s-1)/6<s`. Sections 54, 57, and
-61--64, together with the new predecessor lemma, provide the main finite
-proof-tree machinery for the remaining base attachment. Source zero has the
-separate exact treatment of Sections 71--73.
+For `s>0`, the ordinary state `s` itself is finite (`WIN` or `LOSS`) because
+its coefficient source is at most `(s-1)/6<s`. Sections 54, 57, 61--64,
+79--90, and 91--96 contain most of the local transition machinery needed for
+this final attachment. Source zero has the separate exact treatment of
+Sections 71--73.
 
 ## Current status
 
 - old false Section 137 source-descent statement: **withdrawn**;
 - arbitrary factorful exponent-one arithmetic case split: **repaired / proved**;
 - unbounded factor-level obstruction: **removed by the predecessor reduction**;
-- distinction between retained anchor and routing cursor: **made explicit**;
+- first factor returned source: **proved to equal the already exposed WIN endpoint `b`**;
+- retained-anchor versus routing-cursor distinction: **made explicit**;
 - typed normalizer after a valid entry: **retained**;
-- factor-free base-entry provenance/rank attachment: **open**;
+- factor-free base-entry provenance/rank attachment over the finite WIN token: **open**;
 - global no-DRAW theorem: **open in the manuscript pending that lemma**.
 
-The purpose of this branch is to make the repository safe to audit: no
-machine result or local lemma is presented as closing the missing semantic
-attachment step.
+The repair branch is intentionally conservative: no machine result or local
+lemma is presented as closing the remaining semantic attachment step.
