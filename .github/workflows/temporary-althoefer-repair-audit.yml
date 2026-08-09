@@ -14,3 +14,5 @@ jobs:
           ref: repair/althoefer-audit-gap
       - name: Run machine-checkable audit
         run: python audit.py --limit 100000
+      - name: Confirm repaired theorem status
+        run: grep -q "OPEN IN THIS MANUSCRIPT" docs/proof-ledger.md
