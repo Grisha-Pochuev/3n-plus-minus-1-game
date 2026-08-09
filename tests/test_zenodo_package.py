@@ -27,17 +27,25 @@ class ZenodoPackageTests(unittest.TestCase):
         for required in (EMAIL, REPOSITORY, DOI, "CONDITIONAL_MACHINE_CHECK"):
             self.assertIn(required, encoded)
 
-    def test_article_source_contains_publication_links(self) -> None:
+    def test_article_source_contains_publication_links_and_open_status(self) -> None:
         source = (ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
         self.assertIn(EMAIL, source)
         self.assertIn("github.com/Grisha-Pochuev/3n-plus-minus-1-game", source)
         self.assertIn("AlthoferProblemPage", source)
         self.assertIn(DOI, source)
+        self.assertIn("Target theorem (open)", source)
+        self.assertIn("Remaining attachment lemma", source)
+        self.assertIn("not claimed as proved", source)
 
-    def test_compiled_article_is_present(self) -> None:
+    def test_compiled_article_is_valid_if_present(self) -> None:
+        # The audited repair deliberately removes the pre-audit PDF because it
+        # states the old, invalid global conclusion.  A PDF becomes mandatory
+        # only for a release bundle rebuilt from the current source.  If a
+        # developer has built one locally, still reject a non-PDF placeholder.
         pdf = ROOT / "paper" / "main.pdf"
-        self.assertTrue(pdf.is_file())
-        self.assertTrue(pdf.read_bytes().startswith(b"%PDF-"))
+        if pdf.exists():
+            self.assertTrue(pdf.is_file())
+            self.assertTrue(pdf.read_bytes().startswith(b"%PDF-"))
 
 
 if __name__ == "__main__":
