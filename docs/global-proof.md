@@ -1,114 +1,244 @@
-# Global no-DRAW proof
+# Global no-DRAW proof after the Althöfer audit
 
-Status: **PROVED (human proof)**. Independent external review is pending, and
-the complete theorem is not yet Lean-checked. See `../AUDIT.md` for the audit
-protocol and `../formal/COVERAGE.md` for the exact formalization boundary.
+Status: **HUMAN-PROOF CLAIM RESTORED; INDEPENDENT RE-AUDIT PENDING.**
 
-The final transition inventory and rank assembly also have a
-[`conditional symbolic certificate`](../certificates/global-routing-certificate.md).
-Its checker verifies the declared coverage and size-change graph, while four
-local certificate-to-game obligations remain in the human proof. Certificate
-acceptance must not be described as a full formalization.
+The target theorem is:
 
-## Theorem
+> For every odd positive starting integer, optimal play in the two-player
+> \(3n\pm1\) game reaches \(1\) after finitely many moves.
+>
+> Equivalently, the conjugated game has no `DRAW` positions.
 
-For every odd positive starting integer, optimal play in the two-player
-\(3n\pm1\) game reaches \(1\) after finitely many moves.
+The old Section 137 contained a real gap.  The conservative repair in
+`verified-results.md` withdrew the invalid step and left the theorem open.
+The missing attachment is now supplied in
+[`althoefer-audit-closure.md`](althoefer-audit-closure.md).  The addendum is
+the authoritative continuation after corrected Sections 136--138.
 
-Equivalently, the conjugated game has no DRAW positions.
+## 1. What remains withdrawn
 
-## Proof architecture
+The proof does **not** use either of the statements rejected by the audit.
 
-The local arithmetic and outcome lemmas are proved in
-[`verified-results.md`](verified-results.md).  The global proof uses four
-assembled statements.
+1. A smaller canonical coefficient is not treated as a smaller coefficient
+   source when powers of three are present.  The counterexample
+   `s=1, J(1)=5, a=15, e=1` remains valid.
+2. The reverse-factor lemma of Section 16 is used only from exponent at least
+   two; exponent-one powers of three are handled by Sections 79--81 and the
+   predecessor reduction.
 
-1. **Proof-token order (Sections 129 and 132).**  A finite multiset \(M\)
-   of canonical WIN/LOSS proof heights has ordinal rank
+## 2. Order-theoretic backbone
 
-   \[
-   \Phi(M)=\mathop{\#}_{h\in M}\omega^h.
-   \]
+Section 129 assigns every finite multiset `M` of certified WIN/LOSS proof
+heights the well-founded ordinal multiset rank `Phi(M)`.  Replacing any
+existing token by finitely many certified lower descendants strictly lowers
+that rank.
 
-   Replacing any token by finitely many certified lower descendants
-   strictly decreases \(\Phi\).  If an ordinal projection never increases
-   and its equal-projection fibres are well-founded, the whole transition
-   relation is well-founded.  Equal \(\Phi\) does not by itself identify
-   token states, but every token-changing edge is strict; therefore an
-   equal-projection route preserves the actual token multiset.
+Section 132 supplies the well-founded-fibre principle.  A strict source edge
+may reset later data; at fixed source a strict proof-token replacement may
+reset all still-later routing data.  Equal retained source/token fibres must
+be well-founded on their own.
 
-2. **Factor attachment (Sections 130--135).**  Every marked factor scan
-   retains its incoming finite proof tokens.  For a marked source
-   \(b=Q_D^g(C)\) with \(D\ge3\), the marked LOSS child \(y\) and WIN child
-   \(q\) have a common WIN child \(r\) with
-   \(h(r)\le h(y)-1\).  Before any inner branch is followed, the scan
-   replaces the carried token \(y\) by \(r\), and every exit keeps that
-   lower token and its exact source attachment marked.
-   The two remaining lengths \(D=1,2\) are exact lifts over the already
-   marked \(q\) or \(y\).
+Corrected Section 136 proves that the typed obligation/factor relation of
+Sections 91--135 is well-founded in such a fixed retained fibre.  Temporary
+ordinary sources such as `x,A(x),A^2(x)` are routing cursors.  They are not
+silently substituted for the retained source anchor.
 
-3. **Fixed-fibre normalizer (Section 136).**  At fixed retained source and
-   outer token multiset, the generic A/B obligation and factor routing is
-   well-founded.  Canonical A-streaks have a proved four-side-test exit;
-   valuation-two B-transfers install and then lower a finite local witness;
-   higher valuations give source descent or enter factor forks that pay
-   source or finite-token height; and a high return
-   re-enters only the marked factor rows from item 2.  More importantly,
-   every return from the generic subsystem passes through a strict
-   high-return replacement before a new marked pair is installed.  The
-   internal source/token rank
-   \(\omega^\omega a+\Psi(N)\) therefore decreases across every such
-   cross-transition.  Applying the well-founded-fibre lemma again inside
-   the fixed outer fibre prevents the two subsystems from alternating
-   forever.  Hence no routing path can remain forever in one fibre.
+## 3. The missing one-shot entry component
 
-4. **Entry completeness (Section 137).**  The minimum-source
-   constant-tail analysis of Sections 14--27 and the separate height-one
-   analysis of Sections 69--90 have only three outputs: strict source
-   descent, certified proof-token descent, or entry to the normalizer in
-   item 3.  The height-one resonance is coupled across consecutive factor
-   levels and is not treated by a fixed-depth search.
+The Althöfer gap was precisely the transition from an arbitrary raw entry to
+that typed normalizer.  The closure addendum inserts one finite component
 
-Assume a DRAW exists and choose the least coefficient source \(s\) of a
-DRAW.  Following the exhaustive outcome diamonds gives a marked
-macro-configuration containing an actual DRAW.  A macrostep either reaches
-a DRAW below \(s\), strictly decreases \(\Phi\), or stays in one fixed
-normalizer fibre.  The first case contradicts the choice of \(s\); the
-other two are well-founded by items 1 and 3.  Thus the complete marked
-transition relation is well-founded.
+\[
+\eta\in\{1,0\},\qquad 1>0,
+\]
 
-But every DRAW has no LOSS child and at least one DRAW child.  Repeatedly
-following the DRAW continuation through the finite macro-normalizations
-would create an infinite marked transition path, a contradiction.  Hence
-no DRAW exists.
+after the retained outer source and outer proof-token multiset.
 
-Every remaining state is WIN or LOSS and has finite canonical proof height.
-An optimal move from WIN goes to a lower-height LOSS child, and every move
-from LOSS goes to a lower-height WIN child.  The height decreases on every
-move until conjugated state \(0\), which corresponds to original state
-\(1\).
+- `eta=1`: the current outer fibre has not initialized its typed inner
+  normalizer.
+- `eta=0`: the typed Section 136 normalizer is active.
 
-Odd original states divisible by three enter the conjugated state space
-after one legal move, because the odd part of \(3n\pm1\) is not divisible
-by three.  Therefore the conclusion holds for every odd starting value.
+The transition
 
-## Pitfall audit
+\[
+\eta:1\to0
+\]
 
-The proof does not:
+is strict.  Therefore the first inner arithmetic source may be any finite
+value, even a returned source `t>s`.  The proof never calls this a source
+descent.  Once `eta=0`, it cannot reset to `1` in the same outer source/token
+fibre.  A later raw reset is permitted only after an earlier outer source or
+proof-token component has genuinely decreased.
 
-- propagate a minimum DRAW indefinitely along the expanding branch;
-- infer DRAW from bounded `UNKNOWN` states, a large verified prefix, or an
-  arbitrary-play cycle;
-- use a fixed modulus to determine an unbounded alternating suffix;
-- assume a fixed total A/B phase horizon;
-- restart a minimum-boundary-height argument at later factor endpoints;
-- replace a retained finite witness by an incomparable later witness;
-- infer a lower boundary merely from a lower ordinary predecessor;
-- confuse a DRAW continuation with its separate marked WIN endpoint;
-- infer that the union of two terminating routing subsystems terminates
-  without checking their cross-transitions.
+This separates a one-time initialization from a forbidden height/source
+reset and is the central order-theoretic repair.
 
-Exact suffix lengths, forced LOSS witnesses, canonical proof heights, and
-source provenance remain marked throughout the macro relation.  See
-[`pitfalls.md`](pitfalls.md) for the invalid shortcuts that motivated these
-requirements.
+## 4. Arbitrary factorful exponent one
+
+Suppose
+
+\[
+Q_1^e(3^kJ(s))\text{ is DRAW},\qquad k>0.
+\]
+
+Sections 79--81 give a universal current/next-factor exit.  The corrected
+Section 137 predecessor reduction sharpens it:
+
+- either a factor-free DRAW is recovered over the original source `s`;
+- or an exact factor-free DRAW lift/frame is exposed while an actual finite
+  predecessor token is replaced by a certified lower descendant.
+
+Thus an arbitrary power of three at exponent one cannot produce an unmarked
+restart.  The second alternative is already a strict Section 129 edge and
+may reset the inner routing task.  The first alternative reduces to the
+factor-free base entry below.
+
+## 5. Factor-free exponent-two base entry
+
+Let
+
+\[
+a=J(x),\quad P=Q_1^e(a),\quad U=Q_2^e(a),
+\]
+
+\[
+b=B(P)=B(U),\quad F=A(U)=Q_1^e(3a),\quad g=1-e.
+\]
+
+At the globally minimum DRAW source, `U DRAW` makes the common child `b`
+WIN and therefore forces `F` DRAW.  Corrected Section 137 proves
+
+\[
+\boxed{9J(x)+1-2e=2^vJ(b).}
+\]
+
+The closure addendum splits by the source phase.
+
+### B-selecting phase
+
+If `e=1-alpha(x)`, then
+
+\[
+\boxed{v=1},\qquad \boxed{b=3A(x)+1}.
+\]
+
+The DRAW state `F` has children
+
+\[
+T=Q_1^g(J(b)),\qquad C=R(T),
+\]
+
+and Section 119 identifies `C` as an actual ordinary child of `b`.
+
+- `T DRAW` is the first alternative of the exact obligation `O(b,g)` and
+  consumes the one-shot entry bit.
+- `C DRAW` makes the other ordinary child of the WIN state `b` an actual LOSS
+  token.  The ordinary side diamond gives a lower boundary token; the
+  exceptional A-child row is Section 68's exact frame over that LOSS token;
+  and the remaining exceptional B-child row has strict coefficient source
+  `<x` by the explicit estimate in the closure addendum.
+
+Hence no B-selecting base row is untyped.
+
+### A-selecting phase
+
+If `e=alpha(x)`, then `v>=2`.
+
+For `v>=4`, the exact factorization gives
+
+\[
+16J(b)\le9J(x)+1\le27x+19,
+\]
+
+hence
+
+\[
+\boxed{b\le(9x+1)/16<x}.
+\]
+
+Thus a DRAW child of `F` is a strict source exit.
+
+At `v=2`, `F` is exactly a DRAW parent of the exponent-two/one pair over
+`b`, so `O(b,g)` holds.
+
+At `v=3`, the frame is
+
+\[
+Q_3^g(J(b)),\qquad Q_2^g(J(b)).
+\]
+
+Reducing the constructor equation modulo three gives
+
+\[
+\boxed{J(b)\equiv1+g\pmod3},
+\]
+
+which is exactly the additional hypothesis required by Section 89.  Hence
+Sections 87--90 legitimately normalize this frame to a strict source/token
+edge or a typed obligation.  Section 89 is not applied to an arbitrary first
+frame.
+
+This closes the factor-free exponent-two base case that remained open in the
+9 August repair note.
+
+## 6. Complete marked relation
+
+Use the lexicographic retained data
+
+\[
+(\text{outer source},\ \Phi(M),\ \eta,\ \text{typed inner rank}).
+\]
+
+Every outcome-compatible macrostep now has one of the following forms.
+
+1. **Outer source decrease.**  The first component strictly falls and all
+   later data may reset.
+2. **Finite proof-token decrease.**  The source is fixed and Section 129
+   strictly lowers `Phi(M)`; later entry/inner data may reset.
+3. **Initial typed entry.**  The first two components are fixed and
+   `eta:1->0`; the new inner source may be numerically larger.
+4. **Typed routing.**  `eta=0` and the path stays in the well-founded
+   Section 136 fibre until a preceding strict component falls.
+
+There is no fifth unranked transition after the closure addendum.
+
+Section 132 therefore makes the complete marked macro-relation
+well-founded.
+
+## 7. Excluding DRAW
+
+Assume a DRAW exists and choose the least coefficient source `s` occurring
+at a DRAW.  Sections 14--17, 69--90, the corrected Section 137 predecessor
+reduction, and the closure addendum supply a finite marked macrostep
+containing an actual DRAW.
+
+A DRAW has no LOSS child and at least one DRAW child, so unless a strict
+smaller-source contradiction has already occurred the construction can be
+repeated.  An infinite DRAW would therefore create an infinite path in the
+marked macro-relation.
+
+That is impossible by Section 6.  Hence
+
+\[
+\boxed{\text{there are no DRAW positions in the conjugated game}.}
+\]
+
+Every position is consequently WIN or LOSS with finite canonical proof
+height.  Optimal play decreases the appropriate finite outcome height until
+conjugated state `0`, which is original odd state `1`.  Odd original states
+divisible by three enter the conjugated image after one legal move, so the
+conclusion holds for every odd positive start.
+
+## 8. Verification boundary
+
+This is again a **human proof claim**.  It is not an assertion that the whole
+theorem is formally verified.
+
+- `tests/test_althoefer_closure.py` regression-checks the new phase/valuation,
+  raw-child, strict-source, and Section 89 congruence identities on a finite
+  range.
+- `certificates/global-routing.json` remains a conditional machine check of
+  the declared typed assembly; it does not itself prove the one-shot bridge.
+- Lean checks only the subset listed in `formal/COVERAGE.md`.
+- Independent external re-audit of this repaired entry bridge remains
+  pending.

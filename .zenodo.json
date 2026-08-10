@@ -1,5 +1,5 @@
 {
-  "title": "Termination under Optimal Play in the Two-Player 3n+/-1 Game",
+  "title": "A Binary Normal Form and an Audited Proof Attempt for the Two-Player 3n+/-1 Game",
   "upload_type": "publication",
   "publication_type": "preprint",
   "creators": [
@@ -7,17 +7,17 @@
       "name": "Pochuev, Grisha"
     }
   ],
-  "description": "We address the two-player 3n+/-1 problem stated at https://althofer.de/collatz-prizes.html. The game is played on positive odd integers: a move replaces n > 1 by the odd part of either 3n-1 or 3n+1, and the player who reaches 1 wins. Arbitrary play need not terminate. We give a binary normal form, rank finite outcome-proof tokens by a well-founded multiset order, prove the remaining equal-rank routing fibres well-founded, and conclude that no DRAW positions exist. The linked repository contains the complete 138-section proof supplement, standard-library verification code, finite proof certificates, a conditional symbolic certificate for the global routing assembly, negative tests, and a Lean proof of the general certificate metatheorem. The global certificate explicitly retains four human proof obligations and is not represented as a complete formalization of the theorem.",
+  "description": "We study the two-player 3n+/-1 problem stated at https://althofer.de/collatz-prizes.html. The repository develops an exact binary normal form, constant-tail and source identities, finite WIN/LOSS proof heights, and a conditional symbolic routing certificate. An external audit by Ingo Althöfer identified a genuine gap in the old global entry argument. Corrected Sections 136--138 withdraw the invalid coefficient-source inference and prove a universal two-level arithmetic normalization for the previously omitted factorful exponent-one family. The remaining arbitrary exponent-one provenance/rank attachment lemma is explicitly OPEN, so this audited repair does not claim that the global no-DRAW theorem has been proved.",
   "access_right": "open",
   "license": "cc-by-4.0",
   "language": "eng",
-  "version": "1.0.0",
+  "version": "audit-repair-draft",
   "keywords": [
     "combinatorial game theory",
     "3n plus or minus 1",
     "Collatz-type dynamics",
     "optimal play",
-    "termination",
+    "binary normal form",
     "well-founded relation",
     "machine-checkable certificate",
     "Lean 4",
@@ -31,9 +31,9 @@
     },
     {
       "identifier": "10.5281/zenodo.21844684",
-      "relation": "isIdenticalTo",
+      "relation": "isNewVersionOf",
       "resource_type": "publication-preprint"
     }
   ],
-  "notes": "Published preprint DOI: https://doi.org/10.5281/zenodo.21844684. Correspondence: n_854@mail.ru. Verification repository: https://github.com/Grisha-Pochuev/3n-plus-minus-1-game. The symbolic global certificate has status CONDITIONAL_MACHINE_CHECK; consult the trust-boundary document before citing its scope."
+  "notes": "The published DOI 10.5281/zenodo.21844684 predates the external audit and contains the earlier proof claim. Do not create a new proof release from this repair branch while the arbitrary exponent-one attachment lemma remains open. Correspondence: n_854@mail.ru."
 }

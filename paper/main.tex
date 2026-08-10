@@ -19,13 +19,13 @@
 \newcommand{\LOSS}{\mathrm{LOSS}}
 \newcommand{\DRAW}{\mathrm{DRAW}}
 
-\title{Termination under Optimal Play in the Two-Player $3n\mathbin{\pm}1$ Game}
+\title{A Binary Normal Form and an Audited Proof Attempt for the Two-Player $3n\mathbin{\pm}1$ Game}
 \author{Grisha Pochuev\\
   \small\href{mailto:n_854@mail.ru}{n\_854@mail.ru}\\
   \small\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}\\
   \small\href{https://doi.org/10.5281/zenodo.21844684}%
   {doi:10.5281/zenodo.21844684}}
-\date{Preprint, 8 August 2026}
+\date{Audited repair draft, 9 August 2026}
 
 \begin{document}
 \maketitle
@@ -38,22 +38,20 @@
 \begin{abstract}
 We consider the impartial two-player game on positive odd integers in which a
 move replaces $n>1$ by the odd part of either $3n-1$ or $3n+1$, and the player
-who reaches $1$ wins. Arbitrary play need not terminate, so the relevant
-question is whether a draw can survive optimal play. We give a binary normal
-form with one expanding branch and one strictly contracting branch. The global
-argument marks finite outcome proofs by their canonical heights, ranks finite
-multisets of these tokens by an ordinal, and proves well-foundedness of the
-remaining equal-rank routing fibres. An exhaustive entry analysis then turns
-any hypothetical draw continuation into an infinite path in a well-founded
-marked transition system. Consequently no draw positions exist and optimal
-play reaches $1$ from every odd starting value. A detailed proof supplement,
-regression tests, and the exact status of the ongoing Lean formalization are
-included in the accompanying repository. The repository also contains a
-declarative global-routing certificate, a small independent checker, and a
-Lean proof of the general well-founded-certificate metatheorem. Their exact
-trust boundary is stated explicitly: the global assembly is machine-checked
-conditional on four local refinement obligations that remain part of the
-human proof.
+who reaches $1$ wins. Arbitrary play need not terminate. We give an exact
+binary normal form with one expanding and one strictly contracting branch and
+develop a large collection of source, factor, and finite proof-height
+normalizations. An external audit by Ingo Alth\"ofer identified a genuine gap
+in the previous global entry argument: a decrease of the canonical odd
+coefficient was incorrectly used as a decrease of its coefficient source,
+and an arbitrary factorful exponent-one family was not covered by the reverse
+factor lemma. The corrected supplement proves a universal two-level arithmetic
+normalization for that missing family using Sections 79--81, but the returned
+source can increase. The remaining provenance/rank attachment lemma is stated
+explicitly in corrected Section 137. Consequently the global no-draw theorem
+is \emph{not claimed as proved in this repair draft}. The computational,
+symbolic-certificate, and Lean artifacts remain supporting checks with the
+narrow trust boundary stated in the repository.
 \end{abstract}
 
 \section{Introduction}
@@ -81,10 +79,12 @@ main result concerns optimal play and is therefore strictly stronger than the
 existence of some terminating choice and different from termination under all
 choices.
 
-\begin{theorem}[Main theorem]\label{thm:main}
-For every positive odd starting integer, optimal play reaches $1$ after
-finitely many moves. Equivalently, the game has no $\DRAW$ positions.
-\end{theorem}
+\paragraph{Target theorem (open).}\label{thm:main}
+The target statement is that for every positive odd starting integer, optimal
+play reaches $1$ after finitely many moves, equivalently that the game has no
+$\DRAW$ positions. The external audit described above shows that the current
+manuscript does not yet prove this statement. Corrected Section 137 of the
+supplement isolates the remaining attachment lemma exactly.
 
 \paragraph{Independent verification package.}
 The complete proof supplement and the independently runnable verification
@@ -238,81 +238,77 @@ inside the current fibre. The formulation permits inner finite heights that
 are incomparable between different routes; only the retained outer projection
 must be monotone.
 
-\begin{lemma}[Fixed-fibre normalizer; Supplement Section 136]
-Fix the retained coefficient source and the outer proof-token multiset. The
-complete generic obligation/factor routing relation is well-founded.
+\begin{lemma}[Typed fixed-fibre normalizer; corrected Supplement Section 136]
+Once a provenance-preserving typed entry has supplied the retained source
+anchor and certified proof tokens required by Sections 91--135, the
+corresponding marked obligation/factor routing is well-founded in that fixed
+retained fibre.
 \end{lemma}
 
-\begin{proof}[Proof architecture]
-Canonical $A$-streaks have a four-side-test exit. Valuation-two $B$ transfers
-install and then lower a finite local witness. Higher valuations either lower
-the source or enter a factor fork that pays in source or proof height. A high
-return re-enters only the marked factor rows of the preceding section.
+\begin{proof}[Scope of the repaired statement]
+The retained arithmetic anchor is not the temporary obligation cursor.
+Canonical $A$-continuations may increase the cursor and are treated as bounded
+routing macros; they do not update the retained numerical rank. Strict source
+changes and finite proof-token replacements are admitted only where the cited
+lemmas prove the corresponding comparison. Sections 93--135 then control the
+bounded $A$-streaks, valuation-two witnesses, factor forks, and high-return
+cross-transitions for these typed entries. The missing issue is upstream: an
+arbitrary factorful exponent-one DRAW has not yet been proved to acquire such
+an entry without increasing the retained projection.
+\end{proof}
 
-Within the fibre, the internal source/token measure has the form
+\section{Audited entry gap and corrected arithmetic normalization}
+
+The previous version asserted an exhaustive entry trichotomy. That assertion
+was too strong. At a constant-tail boundary, Section 15 proves a decrease of
+the canonical odd coefficient, not necessarily a decrease of the coefficient
+\emph{source}. For example, $s=1$, $J(1)=5$, $a=15$, and $\epsilon=1$
+give the common child $R(44)=22$, whose canonical coefficient is $11<15$ but
+whose source is $3>1$ because $11=J(3)$.
+
+The omitted arithmetic family is
 \[
-  \omega^\omega a+\Psi(N),
+ Q_1^\epsilon(3^kJ(s)),\qquad k>0.
 \]
-where $a$ is the inner source and $N$ its finite token multiset. Every return
-from the generic subsystem crosses a strict high-return replacement before a
-new marked pair is installed. Consequently cross-transitions cannot alternate
-forever between two separately terminating subsystems. Applying the fibre
-lemma to the complete transition inventory proves the claim. All arithmetic
-subcases are expanded in Section 136 and its cited lemmas.
-\end{proof}
+The reverse-factor lemma applies only at exponent at least two. Corrected
+Supplement Section 137 instead applies the universal two-level factor scan of
+Sections 79--81. If the displayed state is DRAW, a DRAW occurs among the raw
+and signed exits at the current or next factor level. Writing
+\[
+ 3^{i+1}J(s)+1-2\epsilon=2^vJ(t),
+\]
+the signed exit is exactly $Q_v^{1-\epsilon}(J(t))$; for $v\ge2$ its raw
+sibling is $Q_{v-1}^{1-\epsilon}(J(t))$, and for $v=1$ a positive raw DRAW
+has coefficient source strictly below $t$.
 
-\section{Entry completeness}
+This repairs the arithmetic exhaustiveness defect but does not prove that
+$t<s$. In general the returned source may be larger. The remaining statement
+is therefore a provenance statement, not another arithmetic factorization.
 
-Two analyses feed the normalizer. Sections 14--27 treat a least coefficient
-source through constant-tail frames. Sections 69--90 treat height one
-separately; its resonance is coupled across consecutive factor levels and is
-not replaced by a fixed-depth computation.
+\paragraph{Remaining attachment lemma.}
+Let $s$ be the globally least coefficient source of a DRAW and suppose
+$Q_1^\epsilon(3^kJ(s))$ is DRAW with $k>0$. Starting from the two-level
+normalization above, one must prove that an outcome-compatible finite
+continuation either reaches an actual DRAW with retained source below $s$,
+performs a certified strict replacement of an already carried finite proof
+token, or enters the typed Section 136 normalizer while preserving the old
+retained source/token projection. A temporary returned source $t$ may be
+routing data but may not silently replace the retained anchor $s$.
 
-\begin{lemma}[Entry trichotomy; Supplement Section 137]
-Every outcome-compatible continuation from the minimum-source and height-one
-analyses has one of three outputs:
-\begin{enumerate}
-  \item strict coefficient-source descent;
-  \item strict descent of the retained proof-token multiset rank;
-  \item entry into the fixed-fibre normalizer of Section 136.
-\end{enumerate}
-There is no fourth arithmetic exit.
-\end{lemma}
+For $s>0$ the ordinary state $s$ itself is finite, since its own coefficient
+source is at most $(s-1)/6<s$. Sections 54, 57, and 61--64 therefore provide
+finite proof-tree provenance that may be used in a completion. The source-zero
+case is normalized separately in Sections 71--73.
 
-The supplement audits the earlier case splits against this trichotomy. This is
-the exhaustiveness step that connects the local arithmetic to the global
-well-founded relation.
+\section{Current theorem status}
 
-\section{Exclusion of draws}
-
-\begin{proof}[Proof of Theorem~\ref{thm:main}]
-Assume a $\DRAW$ exists and choose one with least coefficient source $s$.
-Following the exhaustive outcome diamonds produces a marked macro-configuration
-that still contains an actual $\DRAW$. By the entry trichotomy, every
-macrostep either reaches a $\DRAW$ below $s$, strictly decreases the retained
-token rank $\Phi$, or stays within a fixed normalizer fibre.
-
-The first alternative contradicts minimality of $s$. The second cannot occur
-infinitely because ordinals are well-founded. The third cannot occur
-infinitely by the fixed-fibre normalizer lemma. The well-founded fibre lemma
-therefore shows that the complete marked transition relation admits no
-infinite path.
-
-On the other hand, a $\DRAW$ position has no $\LOSS$ child and has at least one
-$\DRAW$ child. Repeatedly following such a child through the finite
-macro-normalizations would give an infinite marked transition path, a
-contradiction. Thus no $\DRAW$ exists.
-
-Every state is consequently $\WIN$ or $\LOSS$ with finite canonical proof
-height. Optimal play from a $\WIN$ state selects a lower-height $\LOSS$ child,
-and every move from a $\LOSS$ state reaches a lower-height $\WIN$ child. The
-height decreases until conjugated state $0$, corresponding to original state
-$1$.
-
-Finally, if an original odd state is divisible by three, then after either
-legal move the odd part of $3n\pm1$ is not divisible by three and lies in the
-conjugated image. Hence the conclusion covers every odd starting state.
-\end{proof}
+Because the attachment lemma above is still open, the no-$\DRAW$ theorem is
+open in this manuscript. Sections 129 and 132 remain valid order-theoretic
+lemmas, and corrected Section 136 remains valid for typed entries. If the
+attachment lemma is proved, the previous final well-foundedness assembly can
+be reinstated: strict retained-source and proof-token transitions cannot occur
+infinitely, and an equal retained-rank path is trapped in the typed
+well-founded normalizer. Until then, no such global conclusion is asserted.
 
 \section{Verification status and reproducibility}
 
@@ -343,9 +339,10 @@ obligations deliberately remain on the human side of the trust boundary:
         separately carried finite tokens;
   \item finite productivity of every macro-normalization.
 \end{enumerate}
-Thus acceptance of the JSON certificate validates the final size-change
-assembly conditional on the cited Sections 14--137; it is not presented as a
-complete machine proof from the original move relation.
+Thus acceptance of the JSON certificate validates only the declared typed
+size-change assembly. Corrected Section 137 leaves one semantic attachment
+obligation open, so certificate acceptance is not evidence for the global
+no-$\DRAW$ theorem.
 
 Fourth, a pinned Lean 4 project proves the general metatheory used by the
 certificate: the lexicographic product of well-founded relations is
@@ -389,12 +386,13 @@ itself imply termination of their union.
 
 \section{Conclusion}
 
-The binary normal form isolates the contracting branch but does not itself
-rule out strategic cycles. The missing global control is supplied by marked
-finite outcome witnesses: strict token replacement gives an ordinal
-projection, and the remaining equal-projection routing is well-founded by an
-explicit normalizer analysis. Entry completeness then excludes every possible
-draw continuation and proves finite optimal play from all odd starts.
+The binary normal form and the local factor/source identities survive the
+external audit. The audit nevertheless invalidates the previous global proof:
+the arbitrary factorful exponent-one family was not attached to the retained
+well-founded rank. The corrected supplement now gives a complete two-level
+arithmetic normalization of that family and isolates the remaining
+provenance/rank attachment lemma. The global termination statement remains
+open until that lemma is proved and independently re-audited.
 
 \section*{Data, code, and correspondence}
 

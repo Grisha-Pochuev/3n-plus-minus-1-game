@@ -1,9 +1,9 @@
 # Global routing assembly certificate
 
-Status: **IMPLEMENTED CONDITIONAL MACHINE CHECK**.
+Status: **IMPLEMENTED CONDITIONAL MACHINE CHECK FOR THE DECLARED TYPED ASSEMBLY**.
 
-The committed certificate is [`global-routing.json`](global-routing.json).
-The independent standard-library checker is
+The committed certificate is [`global-routing.json`](global-routing.json), and
+the independent standard-library checker is
 [`../scripts/verify_global_certificate.py`](../scripts/verify_global_certificate.py).
 
 Run from the repository root:
@@ -12,125 +12,113 @@ Run from the repository root:
 python scripts/verify_global_certificate.py
 ```
 
-The success banner is:
+The success banner includes:
 
 ```text
 GLOBAL ROUTING ASSEMBLY CERTIFICATE ACCEPTED
 status: CONDITIONAL_MACHINE_CHECK
 ```
 
-The word `CONDITIONAL` is essential. The file machine-checks the final
-well-foundedness assembly, not every arithmetic and game-semantic lemma that
-feeds that assembly.
+The word `CONDITIONAL` remains essential after the 10 August closure. The
+human proof now supplies the semantic entry that Althöfer's audit found
+missing, but the current JSON file does **not** encode that new one-shot entry
+component. It still checks only the declared typed control/rank assembly.
+
+## Audit history and closure
+
+The old proof used a false implication from decrease of the canonical odd
+coefficient to decrease of its coefficient source. It also failed to cover
+arbitrary
+
+\[
+Q_1^\epsilon(3^kJ(s)),\qquad k>0,
+\]
+
+because the reverse-factor lemma starts at exponent at least two.
+
+Corrected Section 137 withdrew both shortcuts and proved the universal
+factor/predecessor normalization, but conservatively left the attachment to
+the typed normalizer open.
+
+The missing human bridge is now supplied by
+[`../docs/althoefer-audit-closure.md`](../docs/althoefer-audit-closure.md).
+It proves:
+
+- the exact B-selecting base row (`v=1` plus an ordinary raw child);
+- the A-selecting split (`v>=4` source descent, `v=2` obligation, `v=3`
+  constructor satisfying Section 89);
+- the order-theoretic distinction between one-shot initialization and later
+  reset via an entry bit `eta`.
+
+Thus the repository again claims the global theorem as a **human proof**,
+pending independent re-audit. Certificate acceptance is supporting evidence
+for the typed assembly, not a machine proof of the closure addendum.
 
 ## What is encoded
 
-The JSON file gives a finite symbolic inventory of the macro system in
-Sections 129–138 of `docs/verified-results.md`:
+The JSON gives a finite symbolic inventory containing:
 
 - four lexicographic rank components: outer source, outer proof-token
   multiset, inner source, and inner proof-token multiset;
-- 15 named control states for upstream entry, the A/B obligation normalizer,
-  factor forks, high returns, marked tails, and terminal macros;
-- 12 semantic guard partitions, including unbounded interval partitions for
-  B-valuations and high-return valuations;
-- 46 transition schemas with their rank effect and exact proof-section
+- 15 named control states for the declared upstream entries, A/B obligation
+  normalizer, factor forks, high returns, marked tails, and terminal macros;
+- 12 semantic guard partitions, including unbounded valuation/tail intervals;
+- 46 transition schemas with declared rank effects and proof-section
   references.
 
-The certificate stores schemas, not enumerated game positions. For example,
-the marked-tail partition covers `D=1`, `D=2`, and the whole unbounded range
-`D>=3`; the high-return partition covers `v=5,6` and every `v>=7`.
-
-## Traceability to the proof
-
-| Proof block | Certificate controls | Role |
-|---|---|---|
-| Sections 14–27 | `minimum_source_entry` | source drop, outer-token drop, or generic normalizer entry |
-| Sections 69–90 | `height_one_entry` | complete height-one/resonance entry audit |
-| Sections 91–96 | `a_obligation`, `a_test_*`, `b_select`, `b2_*`, `factor_fork` | generic fixed-fibre normalizer |
-| Sections 97–103 | `factor_fork`, `high_return`, `marked_tail` | adjacent high return and strict carried-token replacement |
-| Sections 104–131 | `marked_tail`, `short_exact_lift` | all long tails and their three short endpoints |
-| Sections 121–133 | `terminal_macro` | exponent-two/three terminal entries after strict token replacement |
-| Sections 129 and 132 | `rank_components` plus checker reset rule | multiset descent and well-founded fibre composition |
-| Sections 134–135 | `marked_tail_result` | exhaustive `D=1`, `D=2`, and `D>=3` split |
-| Section 136 | complete equal-rank control DAG | fixed-fibre well-foundedness and subsystem composition |
-| Section 137 | both upstream entry states | completeness of all entries |
-| Section 138 | whole inventory | exclusion of an infinite marked `DRAW` route |
-
-Every transition also carries its own `proof_sections` list. A reviewer can
-therefore start from one JSON rule and jump directly to the human lemma that
-justifies it.
+The certificate predates the new explicit entry bit. Its `minimum_source_entry`
+control should therefore be read as a declared typed interface, not as a
+machine derivation of the one-shot bridge from the original game relation.
 
 ## What the checker proves
 
-The checker independently verifies all of the following.
+The checker verifies:
 
-1. The detailed proof file has the exact committed SHA-256 digest after
-   platform-independent UTF-8/LF normalization, and every cited section
-   exists.
-2. Every finite enumeration has distinct cases. Every integer-interval
-   partition is disjoint and covers its complete declared domain, including
-   an unbounded final interval when required.
-3. Every control state has exactly one transition for every declared guard
-   case—no missing case and no duplicate dispatch.
-4. A `reset` is permitted only after an earlier lexicographic component has
-   strictly decreased. Hence a strict schema really decreases the displayed
-   lexicographic rank.
-5. After all strict schemas are removed, the remaining equal-rank control
-   graph is acyclic. Thus a route cannot remain forever at equal outer and
-   inner ranks merely by alternating between control subsystems.
-6. The inventory cites all decisive assembly Sections 129, 132, 136, 137,
-   and 138.
+1. proof-source integrity and presence of cited sections;
+2. disjointness and declared coverage of finite and interval guard partitions;
+3. one transition for every declared guard case;
+4. lexicographically valid reset discipline inside the encoded rank;
+5. acyclicity of the equal-rank control graph after strict transitions are
+   removed;
+6. structural consistency of the declared typed routing inventory.
 
-The committed inventory currently contains 29 strict transitions and 17
-equal-rank transitions. The latter form a finite DAG.
+These are genuine finite checks. They do not establish the new semantic
+statement `eta:1->0` from the original game; that statement is proved in the
+closure addendum.
 
-## Explicit trust boundary
-
-Four obligations remain part of the human proof and are required fields of
-the certificate. The checker refuses a file that hides or relabels them:
+## Explicit trust boundary after closure
 
 | Obligation | Current status |
 |---|---|
-| Universal arithmetic and coordinate identities behind each macro | **HUMAN PROOF**, with finite regression support |
-| Refinement: the declared semantic guards cover every legal game case | **HUMAN PROOF** |
-| Outcome compatibility: every macro follows an actual `DRAW` continuation while carrying finite tokens separately | **HUMAN PROOF** |
-| Productivity: each macro normalization consumes finitely many outcome diamonds | **HUMAN PROOF** |
+| Universal arithmetic and coordinate identities behind each encoded macro | **HUMAN PROOF**, with finite regression support |
+| Declared typed guards/refinements used after entry | **HUMAN PROOF + CONDITIONAL MACHINE ASSEMBLY** |
+| Althöfer one-shot entry/attachment bridge | **HUMAN PROOF IN `docs/althoefer-audit-closure.md`; NOT ENCODED IN THIS JSON** |
+| Outcome-compatible DRAW continuation and carried finite tokens | **HUMAN PROOF** for the cited local/closure lemmas |
+| Each encoded normalization macro is finite | **HUMAN PROOF + structural machine checks** |
+| Global theorem | **HUMAN-PROOF CLAIM RESTORED; independent re-audit pending** |
 
-Therefore acceptance means:
+The correct reading is therefore:
 
-> If the cited local lemmas refine the game exactly as proved in Sections
-> 14–137, then the declared global routing system is well-founded and the
-> Section 138 infinite `DRAW` route is impossible.
+> The closure addendum supplies a provenance-preserving entry into the typed
+> relation. Conditional on the cited human arithmetic/outcome refinements,
+> this certificate verifies the finite size-change/control assembly of that
+> typed relation.
 
-It does not mean that Python has proved those four local obligations from the
-original `3n±1` move definition. Calling this a fully machine-checked proof
-would be incorrect.
+It would still be incorrect to call the combined repository an end-to-end
+machine-checked proof.
 
 ## Lean connection
 
 [`../formal/ThreeNPlusMinusOne/Certificate.lean`](../formal/ThreeNPlusMinusOne/Certificate.lean)
-kernel-checks the general metatheory used here:
-
-- a lexicographic product of well-founded relations is well-founded;
-- a concrete step relation that maps every step to such a decrease is
-  well-founded;
-- a well-founded certified relation has no infinite descending path.
-
-The Lean file contains no `axiom`, `admit`, or `sorry`. It does not parse the
-JSON or prove the four refinement obligations. The exact boundary is listed
-in [`../formal/COVERAGE.md`](../formal/COVERAGE.md).
+kernel-checks general well-founded-certificate metatheory. It does not parse
+the JSON, prove the new one-shot attachment lemma, or prove the global
+no-`DRAW` theorem. The exact formalization boundary is in
+[`../formal/COVERAGE.md`](../formal/COVERAGE.md).
 
 ## Negative tests
 
 [`../tests/test_global_certificate.py`](../tests/test_global_certificate.py)
-checks that the verifier rejects:
-
-- a missing declared case;
-- a reset before any strict decrease;
-- an equal-rank control cycle;
-- overlapping integer intervals;
-- a mismatched proof-source digest.
-
-These tests protect the checker against accepting the most important malformed
-assemblies; they do not enlarge its mathematical trust boundary.
+checks malformed declared assemblies such as missing declared cases, invalid
+resets, equal-rank cycles, overlapping intervals, and proof-source digest
+mismatch. These tests protect the finite checker; they cannot detect an error
+in a human semantic bridge that is outside the JSON schema.

@@ -3,11 +3,11 @@
   "certificate_kind": "global-routing-assembly-certificate",
   "status": "CONDITIONAL_MACHINE_CHECK",
   "game": "conjugated-3n-plus-minus-1",
-  "global_claim": "The marked DRAW macro-relation used in Sections 129-138 is well-founded.",
-  "claim_scope": "The checker validates the finite assembly and rank logic. The four listed refinement and outcome obligations remain part of the human proof.",
+  "global_claim": "The declared typed marked/obligation routing assembly is well-founded after a valid provenance-preserving entry.",
+  "claim_scope": "The checker validates the declared finite typed assembly and rank logic only. After the external audit, the arbitrary factorful exponent-one attachment in corrected Section 137 remains open; certificate acceptance is not evidence for the global no-DRAW theorem.",
   "proof_source": {
     "path": "docs/verified-results.md",
-    "sha256": "9f934a5497007e93227fcfcd95414825fe6ee2ed954ecc806d8f2eaa4108fbc8",
+    "sha256": "e8d4abdbb58f92ec0ae08b1c5627ae92b5c0810b0a05247df4a75a2b069f451f",
     "proof_section_ranges": ["14-27", "69-138"]
   },
   "machine_checked_obligations": [
@@ -29,13 +29,13 @@
       "id": "declared-guards-refine-all-game-cases",
       "status": "HUMAN_PROOF",
       "proof_sections": [91, 93, 94, 95, 96, 102, 103, 130, 133, 134, 135, 136, 137],
-      "description": "Every legal outcome-compatible continuation is represented by one of the declared semantic guard cases; the checker proves only that the declared cases themselves are total and nonoverlapping."
+      "description": "Every legal outcome-compatible continuation must be represented by one declared semantic guard. Corrected Section 137 leaves the arbitrary factorful exponent-one attachment open for the global theorem, so this human refinement obligation is not currently discharged globally."
     },
     {
       "id": "outcome-compatible-draw-continuation",
       "status": "HUMAN_PROOF",
       "proof_sections": [91, 96, 102, 103, 118, 130, 133, 134, 135, 137, 138],
-      "description": "Each macro rule follows an actual DRAW member while carrying finite WIN/LOSS witnesses separately; it never assumes that DRAW passes through a marked finite token."
+      "description": "Each used macro must follow an actual DRAW member while carrying finite WIN/LOSS witnesses separately. Corrected Section 137 isolates the still-open attachment step needed before this can be asserted for every global entry."
     },
     {
       "id": "finite-macrostep-productivity",

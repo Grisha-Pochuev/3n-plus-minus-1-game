@@ -1,41 +1,49 @@
 # Start here
 
-This page is for a reader opening the repository for the first time.
+This page is for a reader opening the repository after the external Althöfer
+audit and the subsequent closure repair.
+
+## First: understand the current status
+
+The target theorem is that optimal play from every odd positive start reaches
+`1`.
+
+**Current repair-branch status: HUMAN-PROOF CLAIM RESTORED; INDEPENDENT RE-AUDIT PENDING.**
+
+The sequence matters:
+
+1. the published/old proof claimed the theorem;
+2. Althöfer's audit found a genuine Section 137 gap;
+3. corrected Sections 136--138 conservatively withdrew the theorem and
+   isolated the missing attachment lemma;
+4. [`docs/althoefer-audit-closure.md`](docs/althoefer-audit-closure.md) now
+   supplies that attachment and supersedes the `OPEN` conclusion at the end
+   of those corrected sections on this branch.
+
+The closure does **not** restore the invalid shortcuts. It uses a one-shot
+entry component to distinguish first initialization of an inner source from a
+later forbidden reset.
+
+Read [`AUDIT.md`](AUDIT.md) before interpreting any machine output.
 
 ## I only want to check that the code runs
 
-Install Python 3.10 or newer, clone the repository, open a terminal in its
-root, and run:
+Install Python 3.10 or newer and run:
 
 ```bash
 python audit.py
 ```
 
-On a typical laptop this takes about one or two minutes. The final banner
-should be:
+This checks:
 
-```text
-=== AUDIT PASSED ===
-All machine-checkable local stages passed ...
-Next: review the four declared global-certificate trust obligations ...
-```
-
-This one command verifies:
-
-- all unit and regression tests;
+- unit and regression tests;
 - the stated finite range of arithmetic identities;
-- the committed symbolic global-routing assembly;
-- a committed finite outcome proof DAG;
-- a newly generated finite proof DAG with an independent checker.
+- finite outcome proof DAGs;
+- the declared symbolic typed-routing assembly.
 
-The global routing success is deliberately printed as
-`CONDITIONAL_MACHINE_CHECK`. It proves that the declared universal case
-inventory has no missing declared case, obeys its lexicographic rank, and has
-no equal-rank control cycle. Four links from those schemas to the original
-game remain human proof obligations; see
-[`certificates/global-routing-certificate.md`](certificates/global-routing-certificate.md).
-
-If your Python command is named `python3`, use `python3 audit.py`.
+The symbolic stage may print `CONDITIONAL_MACHINE_CHECK`. This is **not** an
+end-to-end machine proof of the global theorem. The new one-shot attachment is
+a human-proof bridge and is not encoded by the current JSON certificate.
 
 ## I want the shortest direct certificate check
 
@@ -45,67 +53,67 @@ Run:
 python scripts/verify_global_certificate.py
 ```
 
-Expected summary at the current revision:
+A successful result says that the **declared typed assembly** satisfies its
+machine-checked guard/rank conditions. Read the closure addendum separately
+for the semantic entry from the audited exponent-one family.
 
-```text
-GLOBAL ROUTING ASSEMBLY CERTIFICATE ACCEPTED
-status: CONDITIONAL_MACHINE_CHECK
-inventory: 15 states, 46 transitions, 12 total guard partitions
-rank check: 29 strict transitions; 17 equal-rank transitions form a DAG
-```
+## I want to understand the mathematical repair
 
-Read the checker scope before citing this as evidence. It is stronger than a
-finite numerical search but weaker than a complete formalization of the game.
+Read in this order:
 
-## I want to understand the claimed solution
+1. [`docs/problem.md`](docs/problem.md) — exact game semantics;
+2. [`docs/normal-form.md`](docs/normal-form.md) — binary conjugation;
+3. Sections 14--17 of [`docs/verified-results.md`](docs/verified-results.md) — constant-tail coordinates and the exponent-one obstruction;
+4. Sections 79--81 — universal consecutive-factor coupling;
+5. Sections 87--90 — typed first-factor gates and the additional hypothesis of Section 89;
+6. Sections 91--135 — marked obligation/factor normalizer;
+7. corrected Sections 136--138 — conservative repair that still ended `OPEN`;
+8. [`docs/althoefer-audit-closure.md`](docs/althoefer-audit-closure.md) — factor-free base split plus one-shot attachment;
+9. [`docs/global-proof.md`](docs/global-proof.md) — restored final assembly.
 
-Read these three files:
+The key new facts in the closure are:
 
-1. [`docs/problem.md`](docs/problem.md) — rules and outcome terminology;
-2. [`docs/normal-form.md`](docs/normal-form.md) — the exact binary reduction;
-3. [`docs/global-proof.md`](docs/global-proof.md) — the global argument.
-
-Then open [`docs/proof-map.md`](docs/proof-map.md) to see where every part is
-proved in the full supplement.
+- B-selecting factor-free exponent-two entry gives next factor valuation
+  exactly one;
+- A-selecting entry gives valuation at least two, with `v>=4` a strict source
+  return and `v=2` an exact obligation;
+- at `v=3`, the constructor itself proves the congruence required by Section
+  89;
+- a returned inner source may be larger on the unique `eta:1->0` entry, but
+  cannot be reinitialized in the same outer source/token fibre.
 
 ## I want to audit the mathematics
 
-Follow [`AUDIT.md`](AUDIT.md). Do not start by reading all 138 sections
-linearly. First inspect the four explicit certificate trust obligations, then
-read the final dependency chain in Sections 129–138 and follow only the cited
-earlier lemmas.
+Follow [`AUDIT.md`](AUDIT.md). In particular try to falsify:
 
-Expected time is hours or days, not minutes. The proof is long because it
-keeps exact source provenance and finite outcome witnesses through all routing
-cases.
+- the B-phase `v=1` derivation;
+- the exceptional raw B-child source estimate;
+- the A-phase `v>=4 => b<x` inequality;
+- the `v=3` Section 89 congruence;
+- the rule that the entry bit cannot reset from `0` to `1` without an earlier
+  strict outer source/token edge;
+- every claimed finite-token replacement.
 
 ## I want to inspect finite outcome certificates
 
-Read [`certificates/README.md`](certificates/README.md), then run:
+Read [`certificates/README.md`](certificates/README.md), then run for example:
 
 ```bash
 python scripts/verify_outcome_certificate.py certificates/examples/q10.json
 ```
 
-This proves the outcome of one finite root. It is separate from the symbolic
-global assembly.
-
-## I want to inspect or extend the code
-
-- [`src/README.md`](src/README.md) explains the library modules.
-- [`scripts/README.md`](scripts/README.md) lists every supported command.
-- [`tests/README.md`](tests/README.md) explains what the tests guarantee.
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) gives proof and reporting standards.
+This proves the outcome of one finite root. It is separate from the infinite
+human proof.
 
 ## I want the article
 
-The repository-only working manuscript is [`paper/main.tex`](paper/main.tex).
-It is not submitted automatically. Its detailed proof supplement is
-[`docs/verified-results.md`](docs/verified-results.md).
+The published Zenodo version predates the external audit. The current repair
+branch is the authoritative proof-repair record. The article under `paper/`
+should be rebuilt and independently reviewed before a new public proof release.
 
 ## I want the Lean check
 
-Lean is optional and is not needed for `python audit.py`:
+Lean is optional:
 
 ```bash
 cd formal
@@ -113,6 +121,5 @@ lake update
 lake build
 ```
 
-Read [`formal/COVERAGE.md`](formal/COVERAGE.md) first. Lean kernel-checks the
-general well-founded-certificate metatheorem, but not yet the concrete
-JSON-to-game refinement or the global no-`DRAW` theorem.
+Read [`formal/COVERAGE.md`](formal/COVERAGE.md) first. Lean does not currently
+check the global no-`DRAW` theorem.
