@@ -1,35 +1,43 @@
 # Althöfer audit repair — 9 August 2026
 
-This note records the external audit issue, the correction already proved,
-and the exact statement that still blocks the global theorem.
+This note records the defect found by Ingo Althöfer and the conservative
+repair that was made **before** the final attachment was closed.
+
+**Historical status of this note:** its last `OPEN` conclusion has been
+superseded on `repair/althoefer-audit-gap` by
+[`althoefer-audit-closure.md`](althoefer-audit-closure.md), dated 10 August
+2026.  The mathematical corrections recorded here remain part of the proof;
+only the final status changed after the new one-shot attachment argument.
 
 ## Audit issue
 
 The old Section 137 made two invalid moves.
 
 1. It used a decrease of the canonical odd coefficient as a decrease of the
-   coefficient **source**. Powers of three make this false. The smallest
-   explicit example used in the repair is
+   coefficient **source**. Powers of three make this false. The explicit
+   counterexample is
    \[
    s=1,\quad J(1)=5,\quad a=3J(1)=15,\quad \epsilon=1,
    \]
-   with common child
+   with
    \[
    R(3a-\epsilon)=R(44)=22.
    \]
-   The new canonical coefficient is `11<15`, but `11=J(3)`, so the source
+   The canonical coefficient is `11<15`, but `11=J(3)`, so the source
    increases from `1` to `3`.
-2. It used the reverse factor lemma of Section 16 as if that lemma removed
-   powers of three from constant-tail exponent one. Section 16 starts at
-   exponent at least two. The arbitrary family
+2. It used Section 16 as if its reverse-factor lemma removed powers of three
+   from constant-tail exponent one. Section 16 starts at exponent at least
+   two. Therefore
    \[
    Q_1^\epsilon(3^kJ(s)),\qquad k>0,
    \]
-   therefore had no proved entry to the final normalizer.
+   required a separate entry normalization.
+
+Both shortcuts remain withdrawn after the final closure.
 
 ## First repair: universal two-level arithmetic normalization
 
-Sections 79--81 are universal and do apply to the missing family. Put
+Sections 79--81 are universal. Put
 
 \[
 a=J(s),\qquad
@@ -37,16 +45,8 @@ P_k=Q_2^\epsilon(3^ka),\qquad
 R_k=Q_1^\epsilon(3^ka).
 \]
 
-If `R_k` is DRAW, the adjacent frame contains a DRAW. Section 80 gives a
-DRAW among
-
-\[
-C_k,T_k,C_{k+1},T_{k+1},
-\]
-
-where `C_i=B(P_i)=B(R_i)` and `T_i=A(R_i)`.
-
-At either exposed level factor
+If `R_k` is DRAW, Section 80 exposes a DRAW among the raw/signed exits at the
+current or next factor level. At either exposed level factor
 
 \[
 3^{i+1}J(s)+1-2\epsilon=2^vJ(t).
@@ -65,14 +65,13 @@ C_i=Q_{v-1}^{1-\epsilon}(J(t)),
 \]
 
 so the raw/signed pair is an exact factor-free adjacent frame over `t`.
-For `v=1`, the signed state is already an exponent-one factor-free lift; a
-positive raw DRAW has strict source `rho(C_i)<t`.
+For `v=1`, the signed state is a factor-free exponent-one lift; a positive
+raw DRAW has strict source `rho(C_i)<t`.
 
-This is an exact two-level normalization for arbitrary `k`; no bounded
-factor search is used. It repairs the arithmetic omission but does not prove
-`t<s`.
+This is the complete arithmetic normalization of the omitted family. It
+never asserts `t<s`.
 
-## Second repair: the predecessor removes the unbounded factor level
+## Second repair: predecessor reduction
 
 Suppose
 
@@ -87,7 +86,7 @@ the gate
 P_k\text{ LOSS},\qquad R_k\text{ DRAW}.
 \]
 
-In the gate case take the exact predecessor one factor level lower,
+In the gate take
 
 \[
 q=P_{k-1}=Q_2^\epsilon(3^{k-1}J(s)).
@@ -101,166 +100,100 @@ A(q)=R_k,\qquad B(q)=C_{k-1}.
 
 Because `R_k` is DRAW, `q` is not LOSS.
 
-- If `q` is DRAW, then for `k=1` it is already factor-free; for `k>1`,
-  Section 16 may be iterated at exponent two and removes all powers of
-  three. Thus a factor-free DRAW over the original source `s` is obtained.
-- If `q` is WIN, then `ell=C_{k-1}=B(q)` is its unique LOSS child and
-  `h(ell)=h(q)-1`.
-  - If `q` is nonexceptional, `C_k=B(A(q))` is a child of `ell`; hence
-    `C_k` is WIN with `h(C_k)<=h(q)-2`. Since `R_k` is DRAW, its other
-    child `T_k` is DRAW and is factor-free.
-  - If `q` is exceptional, Section 68 identifies `{C_k,T_k}` as an
-    adjacent factor-free pair over the actual LOSS token `ell`, and at least
-    one member is DRAW.
+- If `q` is DRAW, `k=1` is factor-free; for `k>1`, Section 16 may now be
+  applied legitimately at exponent two to remove the factors of three.
+- If `q` is WIN, `ell=C_{k-1}` is its unique LOSS child. If `q` is
+  nonexceptional, `C_k=B(A(q))` is a WIN child of `ell` and has height at
+  least two below `q`; `T_k` is forced DRAW. If `q` is exceptional, Section
+  68 gives an adjacent factor-free DRAW frame over the actual LOSS token
+  `ell`.
 
-Therefore every factorful exponent-one DRAW reaches either a factor-free
-DRAW over the same source, or a factor-free DRAW lift/frame while a certified
-finite WIN/LOSS token strictly decreases. The unbounded factor exponent is
-not a remaining obstruction.
+Thus the factor exponent cannot serve as an unmarked infinite escape.
 
-## Third repair: the first factor exit is anchored at the old boundary WIN
+## Third repair: exact base-boundary anchor
 
-The factor-free exponent-two base entry has an exact identity that removes
-another apparent source reset. Let `a` be positive and odd, `e` be a phase,
-and put
+For any positive odd `a` and phase `e`, put
 
 \[
 P=Q_1^e(a),\qquad U=Q_2^e(a),\qquad
 b=B(P)=B(U),\qquad F=A(U)=Q_1^e(3a).
 \]
 
-Then, for the exact valuation `v`,
+The exact first-factor identity is
 
 \[
-\boxed{9a+1-2e=2^vJ(b)}.
+\boxed{9a+1-2e=2^vJ(b)},
 \]
 
-Hence
+hence
 
 \[
 \boxed{A(F)=Q_v^{1-e}(J(b)).}
 \]
 
-This is proved from Sections 14 and 18, not guessed from computation. For
-`e=0`, Section 18 applied to `w=3a` gives
+The proof uses Sections 14 and 18. For `e=0`,
 
 \[
 \operatorname{oddpart}(9a+1)=J(R(3a))=J(b).
 \]
 
-For `e=1`, the second identity of Section 18 gives
+For `e=1`,
 
 \[
-\operatorname{oddpart}(9a-1)=J(R(6a-1)),
+\operatorname{oddpart}(9a-1)=J(R(6a-1))=J(R(3a-1))=J(b).
 \]
 
-and Section 14 gives `R(6a-1)=R(3a-1)=b`.
+At a globally minimum DRAW source, with `a=J(s)` and `U` DRAW, Section 15
+makes the common child `b` finite; because it is a child of a DRAW it is
+WIN. The other child `F` is DRAW. Therefore the first factor exit is anchored
+exactly at the already exposed WIN endpoint `b`, not at an unrelated source.
 
-Now take `a=J(s)` and suppose the factor-free exponent-two state `U` is
-DRAW at globally minimum DRAW source `s`. Its common child `b` has canonical
-coefficient below `J(s)`, so its own coefficient source is strictly below
-`s`; hence `b` is not DRAW. Since it is a child of `U`, it is not LOSS
-either, and therefore
+This identity is regression-supported by `tests/test_althoefer_repair.py`.
+
+## Why this note originally stopped at OPEN
+
+At this stage the returned inner arithmetic source could still exceed the
+old retained source.  The conservative 9 August repair therefore refused to
+promote it to the retained rank and isolated a **factor-free base-entry
+attachment lemma**.  That was the correct thing to do: the old false
+coefficient/source shortcut could not simply be replaced by another implicit
+reset.
+
+The remaining base geometry was
 
 \[
-\boxed{b\text{ is WIN}.}
+a=J(s),\qquad P=Q_1^\epsilon(a),\qquad U=Q_2^\epsilon(a),
 \]
 
-The other child `F` of `U` is DRAW. The exact factorization above says that
-the first signed factor exit is not over a new arbitrary source: it is over
-this already exposed finite WIN endpoint `b`. If `v>=2`, the two children of
-`F` are the adjacent factor-free frame
+with `U` DRAW, common child `b` WIN, and `F=A(U)` DRAW.
 
-\[
-Q_v^{1-e}(J(b)),\qquad Q_{v-1}^{1-e}(J(b));
-\]
+## 10 August closure
 
-if `v=1`, the signed child is the factor-free exponent-one lift over `b`,
-and a positive DRAW raw exit has the strict Section 81 source decrease.
+The missing step is now supplied by
+[`althoefer-audit-closure.md`](althoefer-audit-closure.md). The new argument
+adds two ingredients that were not present in this conservative note:
 
-This identity is also regression-tested in `tests/test_althoefer_repair.py`
-for the first 10,000 sources in both phases. The test is supporting evidence;
-the proof is the two-case argument above.
+1. an exact phase/valuation split of the factor-free exponent-two base:
+   B-selecting input gives `v=1`, while A-selecting input gives `v>=2`, with
+   `v>=4` a strict source return, `v=2` an obligation, and `v=3` a typed frame
+   whose constructor automatically proves the Section 89 congruence;
+2. a one-shot entry component `eta`, placed after the outer source/token rank,
+   that permits arbitrary finite **initialization** of the inner source while
+   forbidding a same-fibre **reinitialization** unless an earlier source/token
+   component has strictly decreased.
 
-## What remains after the stronger reductions
-
-The remaining difficulty is no longer an arbitrary factor exponent and no
-longer an arbitrary first returned source. It is now a **factor-free
-base-entry attachment over an already carried finite WIN token**.
-
-A factor-free DRAW at exponent one is handled by the source-lift analysis of
-Sections 17--27. The delicate base case is an exponent-two factor-free DRAW
-whose common contracting child `b` is a known WIN and whose expanding child
-enters the factor-one scan anchored exactly at `b` by the identity above.
-
-Put
-
-\[
-a=J(s),\qquad
-P=Q_1^\epsilon(a),\qquad U=Q_2^\epsilon(a).
-\]
-
-If `U` is DRAW, there are three possible outcomes for `P`:
-
-1. `P` DRAW — this is already the factor-free exponent-one source-lift
-   analysis; the B-selecting phase strictly returns below `s`, while the
-   A-selecting phase is the canonical obligation.
-2. `P` WIN — because the common child is WIN, the other child of `P` is an
-   actual LOSS token. Together with `U` DRAW and `A(U)` DRAW, this is the
-   local outcome geometry used by the typed factor fork; the remaining audit
-   question is to enter that subsystem without importing an unproved parent.
-3. `P` LOSS — both children of `P` are WIN while `U` and `A(U)` are DRAW.
-   This is the sharpest remaining orientation. When the Section 89
-   congruence fails, `{U,P}` has the complementary exact parent
-   \[
-   K'=\frac{8a-1-\epsilon}{3},\qquad
-   \operatorname{moves}(K')=\{U,P\}.
-   \]
-   In the complementary congruence rows, Section 89 supplies its hidden
-   parent to the exponent-three/two frame. These two exact parent geometries
-   are the remaining pieces that must be joined to the fixed-fibre token
-   normalizer without an unranked reset.
-
-## Why the old global proof still cannot simply be restored
-
-A temporary arithmetic source is not automatically a new retained rank
-anchor. Corrected Section 136 therefore separates **retained anchors/tokens**
-from routing cursors. A source can replace a retained anchor only after a
-proved strict comparison; a finite outcome can replace a proof token only
-after a proved height comparison.
-
-## Exact remaining lemma
-
-> **Factor-free base-entry attachment lemma.** Let `s` be the globally least
-> coefficient source of a DRAW. After the proved predecessor reduction has
-> reduced any factorful exponent-one entry to the factor-free base geometry,
-> and after the exact first-factor identity has exposed the finite WIN token
-> `b`, prove that every outcome-compatible continuation either:
->
-> 1. reaches an actual DRAW with retained source `<s`;
-> 2. strictly replaces an already carried finite proof token;
-> 3. enters a typed Section 136 normalizer state with the retained outer
->    source/token projection unchanged.
->
-> In particular, a long adjacent factor-free frame over `b` must be
-> normalized while `b` (or a certified descendant of it) remains marked.
-
-For `s>0`, the ordinary state `s` itself is finite (`WIN` or `LOSS`) because
-its coefficient source is at most `(s-1)/6<s`. Sections 54, 57, 61--64,
-79--90, and 91--96 contain most of the local transition machinery needed for
-this final attachment. Source zero has the separate exact treatment of
-Sections 71--73.
+The closure therefore proves the attachment lemma without ever proving or
+assuming `t<s`.
 
 ## Current status
 
-- old false Section 137 source-descent statement: **withdrawn**;
-- arbitrary factorful exponent-one arithmetic case split: **repaired / proved**;
-- unbounded factor-level obstruction: **removed by the predecessor reduction**;
-- first factor returned source: **proved to equal the already exposed WIN endpoint `b`**;
-- retained-anchor versus routing-cursor distinction: **made explicit**;
-- typed normalizer after a valid entry: **retained**;
-- factor-free base-entry provenance/rank attachment over the finite WIN token: **open**;
-- global no-DRAW theorem: **open in the manuscript pending that lemma**.
-
-The repair branch is intentionally conservative: no machine result or local
-lemma is presented as closing the remaining semantic attachment step.
+- old false Section 137 source-descent statement: **WITHDRAWN**;
+- invalid exponent-one use of Section 16: **WITHDRAWN**;
+- arbitrary factorful exponent-one arithmetic normalization: **PROVED**;
+- predecessor/token normalization: **PROVED**;
+- exact first-factor returned source `J(b)`: **PROVED**;
+- factor-free base-entry attachment: **PROVED IN THE 10 AUGUST CLOSURE ADDENDUM**;
+- one-shot initialization/reset distinction: **PROVED IN THE CLOSURE ADDENDUM**;
+- global no-DRAW theorem: **HUMAN-PROOF CLAIM RESTORED**;
+- independent re-audit: **PENDING**;
+- end-to-end Lean proof: **NOT CLAIMED**.
