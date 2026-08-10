@@ -1,147 +1,244 @@
-# Global proof status after the Althöfer audit
+# Global no-DRAW proof after the Althöfer audit
 
-Status: **OPEN IN THIS MANUSCRIPT — audited repair in progress.**
+Status: **HUMAN-PROOF CLAIM RESTORED; INDEPENDENT RE-AUDIT PENDING.**
 
-The target theorem is unchanged:
+The target theorem is:
 
 > For every odd positive starting integer, optimal play in the two-player
 > \(3n\pm1\) game reaches \(1\) after finitely many moves.
 >
 > Equivalently, the conjugated game has no `DRAW` positions.
 
-The previous version of this file described that theorem as proved.  An
-external audit by Ingo Althöfer, using an independent GPT-5.6 Sol audit,
-identified a genuine gap in the entry argument of old Section 137.  The
-corrected Sections 136--138 in `verified-results.md` withdraw the invalid
-step and isolate the remaining obligation exactly.
+The old Section 137 contained a real gap.  The conservative repair in
+`verified-results.md` withdrew the invalid step and left the theorem open.
+The missing attachment is now supplied in
+[`althoefer-audit-closure.md`](althoefer-audit-closure.md).  The addendum is
+the authoritative continuation after corrected Sections 136--138.
 
-## What failed in the old assembly
+## 1. What remains withdrawn
 
-The old Section 137 used the implication
+The proof does **not** use either of the statements rejected by the audit.
 
-\[
-\text{smaller canonical coefficient}
-\Longrightarrow
-\text{smaller coefficient source}.
-\]
+1. A smaller canonical coefficient is not treated as a smaller coefficient
+   source when powers of three are present.  The counterexample
+   `s=1, J(1)=5, a=15, e=1` remains valid.
+2. The reverse-factor lemma of Section 16 is used only from exponent at least
+   two; exponent-one powers of three are handled by Sections 79--81 and the
+   predecessor reduction.
 
-That implication is false when powers of three are present.  For example,
-with
+## 2. Order-theoretic backbone
 
-\[
-s=1,\qquad J(1)=5,\qquad a=15,\qquad \epsilon=1,
-\]
+Section 129 assigns every finite multiset `M` of certified WIN/LOSS proof
+heights the well-founded ordinal multiset rank `Phi(M)`.  Replacing any
+existing token by finitely many certified lower descendants strictly lowers
+that rank.
 
-the common boundary child is
+Section 132 supplies the well-founded-fibre principle.  A strict source edge
+may reset later data; at fixed source a strict proof-token replacement may
+reset all still-later routing data.  Equal retained source/token fibres must
+be well-founded on their own.
 
-\[
-R(3a-\epsilon)=R(44)=22.
-\]
+Corrected Section 136 proves that the typed obligation/factor relation of
+Sections 91--135 is well-founded in such a fixed retained fibre.  Temporary
+ordinary sources such as `x,A(x),A^2(x)` are routing cursors.  They are not
+silently substituted for the retained source anchor.
 
-Its canonical coefficient is \(11<15\), but \(11=J(3)\), so its source is
-\(3>1\).
+## 3. The missing one-shot entry component
 
-The old assembly also used the reverse factor lemma of Section 16 as if it
-removed factors of three from exponent one.  Section 16 starts at exponent
-at least two.  Hence the family
-
-\[
-Q_1^\epsilon(3^kJ(s)),\qquad k>0,
-\]
-
-was not covered.
-
-## What the repair now proves
-
-Sections 79--81 give a universal two-level normalization for exactly that
-missing arithmetic family.  If
+The Althöfer gap was precisely the transition from an arbitrary raw entry to
+that typed normalizer.  The closure addendum inserts one finite component
 
 \[
-Q_1^\epsilon(3^kJ(s))
+\eta\in\{1,0\},\qquad 1>0,
 \]
 
-is DRAW, then the adjacent factor scan exposes a DRAW at the current or next
-factor level.  Writing
+after the retained outer source and outer proof-token multiset.
+
+- `eta=1`: the current outer fibre has not initialized its typed inner
+  normalizer.
+- `eta=0`: the typed Section 136 normalizer is active.
+
+The transition
 
 \[
-3^{i+1}J(s)+1-2\epsilon=2^vJ(t),
+\eta:1\to0
 \]
 
-the signed exit is exactly
+is strict.  Therefore the first inner arithmetic source may be any finite
+value, even a returned source `t>s`.  The proof never calls this a source
+descent.  Once `eta=0`, it cannot reset to `1` in the same outer source/token
+fibre.  A later raw reset is permitted only after an earlier outer source or
+proof-token component has genuinely decreased.
+
+This separates a one-time initialization from a forbidden height/source
+reset and is the central order-theoretic repair.
+
+## 4. Arbitrary factorful exponent one
+
+Suppose
 
 \[
-Q_v^{1-\epsilon}(J(t)).
+Q_1^e(3^kJ(s))\text{ is DRAW},\qquad k>0.
 \]
 
-For \(v\ge2\), its raw sibling is exactly
+Sections 79--81 give a universal current/next-factor exit.  The corrected
+Section 137 predecessor reduction sharpens it:
+
+- either a factor-free DRAW is recovered over the original source `s`;
+- or an exact factor-free DRAW lift/frame is exposed while an actual finite
+  predecessor token is replaced by a certified lower descendant.
+
+Thus an arbitrary power of three at exponent one cannot produce an unmarked
+restart.  The second alternative is already a strict Section 129 edge and
+may reset the inner routing task.  The first alternative reduces to the
+factor-free base entry below.
+
+## 5. Factor-free exponent-two base entry
+
+Let
 
 \[
-Q_{v-1}^{1-\epsilon}(J(t)),
+a=J(x),\quad P=Q_1^e(a),\quad U=Q_2^e(a),
 \]
-
-so the exit is a factor-free lift or adjacent factor-free frame over the
-returned source \(t\).  For \(v=1\), a DRAW on the positive raw side has a
-genuine strict source descent relative to \(t\).
-
-This repairs the omitted **arithmetic case split**.  It does not imply
-\(t<s\), and the corrected proof never claims that it does.
-
-## The remaining lemma
-
-The sole global obstruction is now stated explicitly in corrected Section
-137.
-
-**Arbitrary exponent-one attachment lemma.**  Let \(s\) be the globally
-least coefficient source of a DRAW and suppose
 
 \[
-Q_1^\epsilon(3^kJ(s))\text{ is DRAW},\qquad k>0.
+b=B(P)=B(U),\quad F=A(U)=Q_1^e(3a),\quad g=1-e.
 \]
 
-The two-level normalization must be attached to the already retained
-source/proof-token data so that, after finitely many outcome-compatible
-moves, one obtains one of:
+At the globally minimum DRAW source, `U DRAW` makes the common child `b`
+WIN and therefore forces `F` DRAW.  Corrected Section 137 proves
 
-1. an actual DRAW with retained source strictly below \(s\);
-2. a certified strict replacement of an already carried finite proof
-   token;
-3. a typed entry into the Section 136 normalizer with the old retained
-   source/token projection unchanged.
+\[
+\boxed{9J(x)+1-2e=2^vJ(b).}
+\]
 
-The returned arithmetic source \(t\) may be larger than \(s\).  It may be
-used as temporary routing data, but it may not silently replace the retained
-source anchor.
+The closure addendum splits by the source phase.
 
-For \(s>0\), the ordinary state \(s\) itself is necessarily finite
-(`WIN` or `LOSS`), because its own coefficient source is strictly below
-\(s\).  Sections 54, 57, and 61--64 therefore provide substantial finite
-proof-tree provenance for attacking the remaining attachment lemma.  The
-source-zero case has its separate normalization in Sections 71--73.
+### B-selecting phase
 
-## What remains valid
+If `e=1-alpha(x)`, then
 
-The external audit does not invalidate the following proved local pieces:
+\[
+\boxed{v=1},\qquad \boxed{b=3A(x)+1}.
+\]
 
-- the conjugated normal form and strict contraction \(B(q)<q\);
-- the finite `WIN`/`LOSS` proof-height formalism;
-- the exact constant-tail identities;
-- the factor-level coupling of Sections 79--81;
-- the multiset proof-token order of Section 129;
-- the well-founded-fibre lemma of Section 132;
-- the typed marked/obligation normalizer of corrected Section 136, **once a
-  provenance-preserving typed entry has been established**.
+The DRAW state `F` has children
 
-The symbolic certificate remains useful only for the declared typed
-assembly.  It does not certify the still-open semantic attachment of the
-arbitrary factorful exponent-one family to that assembly.
+\[
+T=Q_1^g(J(b)),\qquad C=R(T),
+\]
 
-## Conditional final implication
+and Section 119 identifies `C` as an actual ordinary child of `b`.
 
-If the attachment lemma above is proved, the final contradiction argument
-from the old Section 138 becomes valid again: every hypothetical DRAW gives
-a finite marked macrostep; strict source or proof-token transitions cannot
-occur infinitely, and an equal retained-rank path is trapped in the
-well-founded typed normalizer.  Hence no infinite marked DRAW path exists.
+- `T DRAW` is the first alternative of the exact obligation `O(b,g)` and
+  consumes the one-shot entry bit.
+- `C DRAW` makes the other ordinary child of the WIN state `b` an actual LOSS
+  token.  The ordinary side diamond gives a lower boundary token; the
+  exceptional A-child row is Section 68's exact frame over that LOSS token;
+  and the remaining exceptional B-child row has strict coefficient source
+  `<x` by the explicit estimate in the closure addendum.
 
-Until that lemma is proved, however, this repository must not describe the
-global theorem as established.
+Hence no B-selecting base row is untyped.
+
+### A-selecting phase
+
+If `e=alpha(x)`, then `v>=2`.
+
+For `v>=4`, the exact factorization gives
+
+\[
+16J(b)\le9J(x)+1\le27x+19,
+\]
+
+hence
+
+\[
+\boxed{b\le(9x+1)/16<x}.
+\]
+
+Thus a DRAW child of `F` is a strict source exit.
+
+At `v=2`, `F` is exactly a DRAW parent of the exponent-two/one pair over
+`b`, so `O(b,g)` holds.
+
+At `v=3`, the frame is
+
+\[
+Q_3^g(J(b)),\qquad Q_2^g(J(b)).
+\]
+
+Reducing the constructor equation modulo three gives
+
+\[
+\boxed{J(b)\equiv1+g\pmod3},
+\]
+
+which is exactly the additional hypothesis required by Section 89.  Hence
+Sections 87--90 legitimately normalize this frame to a strict source/token
+edge or a typed obligation.  Section 89 is not applied to an arbitrary first
+frame.
+
+This closes the factor-free exponent-two base case that remained open in the
+9 August repair note.
+
+## 6. Complete marked relation
+
+Use the lexicographic retained data
+
+\[
+(\text{outer source},\ \Phi(M),\ \eta,\ \text{typed inner rank}).
+\]
+
+Every outcome-compatible macrostep now has one of the following forms.
+
+1. **Outer source decrease.**  The first component strictly falls and all
+   later data may reset.
+2. **Finite proof-token decrease.**  The source is fixed and Section 129
+   strictly lowers `Phi(M)`; later entry/inner data may reset.
+3. **Initial typed entry.**  The first two components are fixed and
+   `eta:1->0`; the new inner source may be numerically larger.
+4. **Typed routing.**  `eta=0` and the path stays in the well-founded
+   Section 136 fibre until a preceding strict component falls.
+
+There is no fifth unranked transition after the closure addendum.
+
+Section 132 therefore makes the complete marked macro-relation
+well-founded.
+
+## 7. Excluding DRAW
+
+Assume a DRAW exists and choose the least coefficient source `s` occurring
+at a DRAW.  Sections 14--17, 69--90, the corrected Section 137 predecessor
+reduction, and the closure addendum supply a finite marked macrostep
+containing an actual DRAW.
+
+A DRAW has no LOSS child and at least one DRAW child, so unless a strict
+smaller-source contradiction has already occurred the construction can be
+repeated.  An infinite DRAW would therefore create an infinite path in the
+marked macro-relation.
+
+That is impossible by Section 6.  Hence
+
+\[
+\boxed{\text{there are no DRAW positions in the conjugated game}.}
+\]
+
+Every position is consequently WIN or LOSS with finite canonical proof
+height.  Optimal play decreases the appropriate finite outcome height until
+conjugated state `0`, which is original odd state `1`.  Odd original states
+divisible by three enter the conjugated image after one legal move, so the
+conclusion holds for every odd positive start.
+
+## 8. Verification boundary
+
+This is again a **human proof claim**.  It is not an assertion that the whole
+theorem is formally verified.
+
+- `tests/test_althoefer_closure.py` regression-checks the new phase/valuation,
+  raw-child, strict-source, and Section 89 congruence identities on a finite
+  range.
+- `certificates/global-routing.json` remains a conditional machine check of
+  the declared typed assembly; it does not itself prove the one-shot bridge.
+- Lean checks only the subset listed in `formal/COVERAGE.md`.
+- Independent external re-audit of this repaired entry bridge remains
+  pending.
