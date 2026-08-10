@@ -13,51 +13,60 @@ The target theorem is:
 > For every odd positive starting integer, optimal play reaches `1` after
 > finitely many moves. Equivalently, the game has no `DRAW` positions.
 
-**Current status on this repair branch: OPEN IN THE MANUSCRIPT.**
+**Current status on this repair branch: HUMAN-PROOF CLAIM RESTORED; INDEPENDENT RE-AUDIT PENDING.**
 
-The earlier repository revision labelled the theorem `PROVED (human proof)`.
-An external audit by Ingo Althöfer identified a genuine gap in the old
-Section 137: a decrease of the canonical odd coefficient was incorrectly
-used as a decrease of its coefficient source, and the arbitrary
-factorful exponent-one family was not covered by the reverse-factor lemma.
+Ingo Althöfer's external audit found two genuine defects in the previous
+Section 137: the proof confused decrease of the canonical odd coefficient
+with decrease of its coefficient source, and it used the reverse-factor lemma
+outside its exponent range. Both shortcuts remain withdrawn.
 
-Corrected Sections 136--138 in
-[`docs/verified-results.md`](docs/verified-results.md) now:
+The repair now has two stages:
 
-- withdraw the false source-descent inference;
-- prove an exact two-level arithmetic normalization for every
-  `Q_1^epsilon(3^k J(s))`, `k>0`, using Sections 79--81;
-- distinguish retained source anchors from temporary routing cursors;
-- isolate the remaining **arbitrary exponent-one attachment lemma** needed
-  to reconnect that normalization to the global source/proof-token rank.
+1. corrected Sections 136--138 in
+   [`docs/verified-results.md`](docs/verified-results.md) withdraw the invalid
+   inference and prove the universal factor/predecessor normalization;
+2. [`docs/althoefer-audit-closure.md`](docs/althoefer-audit-closure.md) supplies
+   the missing provenance/rank bridge. It proves the factor-free exponent-two
+   base split and introduces a one-shot entry component that permits a returned
+   inner source to be initialized once even when it exceeds the retained outer
+   source. Re-entry can reset that component only after a genuine outer source
+   or proof-token decrease.
 
-Until that attachment lemma is proved, neither the symbolic certificate nor
-the finite computations should be cited as a proof of the infinite no-`DRAW`
-theorem.
+The addendum therefore supersedes the `OPEN` conclusion at the end of the
+historical corrected Sections 137--138 on this branch. The global no-`DRAW`
+theorem is again claimed as a **human proof**, not as an end-to-end formal or
+machine proof.
 
-The concise status and remaining lemma are in
-[`docs/global-proof.md`](docs/global-proof.md).  The complete local mathematics
-is in [`docs/verified-results.md`](docs/verified-results.md).
+The most important audit distinction is unchanged:
+
+- the new closure is a human mathematical argument;
+- `certificates/global-routing.json` remains a **conditional** machine check of
+  the declared typed assembly;
+- the finite Python computations are supporting regressions, not an infinite
+  proof;
+- the current Lean project does not kernel-check the complete game theorem;
+- independent external re-audit of the repaired bridge is still pending.
 
 ## Start here
 
 For an independent check, begin with [`AUDIT.md`](AUDIT.md). The first-time
-reader guide is [`START_HERE.md`](START_HERE.md). A useful mathematical reading
-route is:
+reader guide is [`START_HERE.md`](START_HERE.md). The shortest mathematical
+reading route is:
 
 1. [`docs/problem.md`](docs/problem.md) — exact rules and provenance;
 2. [`docs/normal-form.md`](docs/normal-form.md) — binary conjugation;
-3. Sections 14--17 of [`docs/verified-results.md`](docs/verified-results.md) — the original exponent-one obstruction;
-4. Sections 79--81 — the universal factor-level normalization used in the repair;
-5. Sections 91--135 — typed normalizer and proof-token provenance;
-6. corrected Sections 136--138 — repaired entry audit and the exact remaining lemma;
-7. [`docs/global-proof.md`](docs/global-proof.md) — concise current status.
+3. Sections 14--17 of [`docs/verified-results.md`](docs/verified-results.md) — constant-tail coordinates and the original exponent-one obstruction;
+4. Sections 79--81 and 87--90 — universal factor coupling and typed first-factor gates;
+5. Sections 91--135 — obligation/factor normalizer and proof-token provenance;
+6. corrected Sections 136--138 — the conservative audit repair before closure;
+7. [`docs/althoefer-audit-closure.md`](docs/althoefer-audit-closure.md) — the one-shot attachment and restored final implication;
+8. [`docs/global-proof.md`](docs/global-proof.md) — concise final assembly.
 
-The article source and reviewed PDF live under [`paper/`](paper/).  The
-published preprint remains archived at
-[doi:10.5281/zenodo.21844684](https://doi.org/10.5281/zenodo.21844684); the
-repair branch should be read as a correction to the proof status of that
-version.
+The published preprint remains archived at
+[doi:10.5281/zenodo.21844684](https://doi.org/10.5281/zenodo.21844684). It
+predates Althöfer's audit and should not be cited by itself as the current
+proof text. The repair branch plus the closure addendum is the current audit
+record.
 
 ## Reproduce the checks
 
@@ -71,11 +80,10 @@ python audit.py
 
 The command checks repository layout, tests, finite arithmetic identities,
 finite outcome certificates, and the declared symbolic routing assembly.
-The symbolic stage may report `CONDITIONAL_MACHINE_CHECK`.  After the
-external audit this status has a deliberately narrow meaning: it validates
-the declared typed control/rank graph, while the semantic attachment of the
-arbitrary factorful exponent-one entry remains a human-proof obligation and
-is currently open.
+The symbolic stage may report `CONDITIONAL_MACHINE_CHECK`. That status still
+means only that the declared typed control/rank graph passed its checker; the
+new one-shot semantic bridge is a human-proof layer documented in the closure
+addendum.
 
 The main stages can also be run separately:
 
@@ -84,6 +92,9 @@ python -m unittest discover -s tests -v
 python scripts/verify_claims.py --limit 100000
 python scripts/verify_global_certificate.py
 ```
+
+The new audit-closure arithmetic regressions are in
+[`tests/test_althoefer_closure.py`](tests/test_althoefer_closure.py).
 
 Optional larger experiments:
 
@@ -115,29 +126,29 @@ The current Lean project does not kernel-check the global no-`DRAW` theorem.
 |---|---|
 | [`AUDIT.md`](AUDIT.md) | independent audit protocol and current trust boundary |
 | [`START_HERE.md`](START_HERE.md) | first-time reader guide |
-| [`docs/global-proof.md`](docs/global-proof.md) | concise global status and remaining attachment lemma |
-| [`docs/verified-results.md`](docs/verified-results.md) | detailed local results and corrected Sections 136--138 |
-| [`docs/proof-ledger.md`](docs/proof-ledger.md) | claim/dependency ledger; being synchronized with the audited repair |
-| [`docs/proof-map.md`](docs/proof-map.md) | dependency map |
+| [`docs/althoefer-audit-repair.md`](docs/althoefer-audit-repair.md) | original external-audit repair and withdrawn shortcuts |
+| [`docs/althoefer-audit-closure.md`](docs/althoefer-audit-closure.md) | closure of the remaining attachment lemma |
+| [`docs/global-proof.md`](docs/global-proof.md) | concise restored global assembly |
+| [`docs/verified-results.md`](docs/verified-results.md) | detailed local results and conservative corrected Sections 136--138 |
+| [`docs/proof-map.md`](docs/proof-map.md) | dependency map including the closure addendum |
 | [`src/optimal_3n1/`](src/optimal_3n1/) | exact arithmetic and bounded solvers |
 | [`tests/`](tests/) | regression and soundness tests |
-| [`scripts/`](scripts/) | reproducible verification and exploration |
 | [`certificates/`](certificates/) | finite proof DAGs and conditional typed-routing assembly |
 | [`formal/`](formal/) | Lean project and explicit formalization coverage |
-| [`paper/`](paper/) | article source and publication files |
+| [`paper/`](paper/) | article source and publication files; rebuild/re-audit before a new release |
 
 ## Status vocabulary
 
-Research claims should be read according to their explicit local status.
-In particular, local lemmas marked `PROVED` remain distinct from the current
-`OPEN` status of the global theorem.
+Local results keep their explicit statuses. The restored global theorem is a
+**human-proof claim pending independent re-audit**. This must not be conflated
+with the narrower machine or Lean verification scopes.
 
 ## Problem provenance
 
 Ingo Althöfer's official page states the `3n+-1 game` problem addressed by
 this repository and records Michael Hartisch's finite verification below one
-million. See [`docs/problem.md`](docs/problem.md) for the complete
-bibliographic information.
+million. See [`docs/problem.md`](docs/problem.md) for complete bibliographic
+information.
 
 - Official problem page: <https://althofer.de/collatz-prizes.html>
 - Althöfer, Hartisch, Zipproth (2024), DOI:
