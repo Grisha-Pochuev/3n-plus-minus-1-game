@@ -6,10 +6,11 @@ suite, verifies exact arithmetic over a stated finite range, validates the
 declared typed global-routing assembly, generates one finite outcome proof
 DAG, and validates it with the independent checker.
 
-After the external Althöfer audit, the global no-DRAW theorem is OPEN in this
-manuscript.  Corrected Section 137 isolates the arbitrary exponent-one
-provenance/rank attachment lemma that is not proved by this command or by the
-symbolic routing certificate.  See AUDIT.md and docs/althoefer-audit-repair.md.
+The Althöfer audit gap now has a separate human-proof closure addendum at
+``docs/althoefer-audit-closure.md``.  This command does not prove that human
+bridge: the global-routing JSON remains a conditional machine check of the
+declared typed assembly, and Lean still does not kernel-check the full game
+theorem.  See AUDIT.md for the exact trust boundary.
 """
 
 from __future__ import annotations
@@ -33,6 +34,7 @@ REQUIRED_FILES = (
     "certificates/global-routing-certificate.md",
     "certificates/global-routing.json",
     "docs/althoefer-audit-repair.md",
+    "docs/althoefer-audit-closure.md",
     "docs/problem.md",
     "docs/normal-form.md",
     "docs/global-proof.md",
@@ -218,9 +220,8 @@ def main() -> None:
     print(
         "Scope: regression tests + finite identities + conditional typed "
         "routing assembly + one finite proof DAG.\n"
-        "IMPORTANT: the global no-DRAW theorem is OPEN in this repair. "
-        "Corrected Section 137 leaves the arbitrary exponent-one attachment "
-        "lemma as a human mathematical obligation."
+        "IMPORTANT: the Althöfer entry gap is now claimed closed by a human "
+        "proof addendum, but that bridge is NOT machine-checked by this command."
     )
 
     total_started = time.monotonic()
@@ -283,8 +284,9 @@ def main() -> None:
     print("\n=== MACHINE-CHECKABLE AUDIT PASSED ===")
     print(f"All machine-checkable local stages passed in {elapsed:.2f}s.")
     print(
-        "This does NOT close the global theorem. Next mathematical target: "
-        "the arbitrary exponent-one attachment lemma in corrected Section 137."
+        "Human-proof status: the entry bridge is supplied in "
+        "docs/althoefer-audit-closure.md and remains pending independent re-audit. "
+        "The JSON certificate and Lean subset have narrower scopes."
     )
 
 
