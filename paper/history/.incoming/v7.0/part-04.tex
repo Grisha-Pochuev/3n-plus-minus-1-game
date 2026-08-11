@@ -1,0 +1,296 @@
+\end{lemma}
+
+\begin{proof}
+Now $b=4C-g$, and
+\[
+ 9J(b)+1-2g=
+ \begin{cases}
+  2(54C+5),&g=0,\\
+  2(54C-5),&g=1.
+ \end{cases}
+\]
+The parenthesized integer is odd, so the valuation is exactly one.  Put
+$z=3C-g$.  The shared exponent-two/one boundary gives $y=R(z)$.
+When $g=0$, the integer $z$ is odd and
+Lemma~\ref{lem:alt-factor} gives
+\[
+  3z+1=2^\lambda J(y).
+\]
+The returned source is $w=18C+1=2(3z+1)-1$, and therefore
+\[
+  w=Q_{\lambda+1}^{1}(J(y)).
+\]
+When $g=1$, the integer $z$ is even and the same lemma gives
+\[
+  3z+2=2^\lambda J(y).
+\]
+Now $w=18C-2=2(3z+2)$, so
+\[
+  w=Q_{\lambda+1}^{0}(J(y)).
+\]
+Here $\lambda\ge1$ is the maximal alternating-suffix length of $z$ when
+$y>0$.  Thus in both phases
+$w=Q_{\lambda+1}^{1-g}(J(y))$ and $m=\lambda+1\ge2$.  If $R(z)=0$,
+Lemma~\ref{lem:alt-factor} instead gives a constant-tail state over
+$J(0)=1$, which is exactly the source-zero alternative.
+\end{proof}
+
+Lemma~\ref{lem:D2} proves attachment of the first returned cursor to the
+actual \LOSS\ token $y$.  It does not prove that every later raw and signed
+exit preserves that attachment until a descendant is paid.  That latter
+statement is the second principal global obligation.
+
+\section{The exact remaining global obligations}
+
+The earlier versions attempted to assemble local arithmetic into a marked
+transition system with source anchors, one-shot token seeds, proof-token
+multisets, and finite control counters.  The order-theoretic idea is sound,
+but the semantic refinement to every legal \DRAW\ continuation is not yet
+complete.  The missing content is now isolated as follows.
+
+\begin{obligation}[Z: source-zero $j=1$ bootstrap]\label{obl:Z}
+In the second branch of Lemma~\ref{lem:zero-j1}, where both the raw child and
+its ordinary parent $y$ are \DRAW, construct a marked transition that either
+pays a previously retained source/token component or consumes a declared
+one-shot bootstrap which cannot be consumed again in the same earlier
+fibre.  Prove that every later return to source zero is compatible with this
+non-reseeding rule.
+\end{obligation}
+
+\begin{obligation}[H: high-return pair provenance]\label{obl:H}
+Reserve an inner one-shot seed for the first long high-return pair
+$\{u,c\}$, or prove that the pair consists of descendants of already retained
+tokens.  After the seed has been consumed, prove for every subsequent long
+high return in the same outer fibre that its incoming pair is exactly the
+currently retained pair or certified descendants of it.  No merely finite
+routing witness may be promoted to the rank.
+\end{obligation}
+
+\begin{obligation}[L: complete LOSS-anchored $D=2$ module]\label{obl:L}
+Starting from the exact lift of Lemma~\ref{lem:D2}, enumerate every legal
+raw/signed outcome branch, every remaining factor exponent, and the terminal
+tail classes $m=1,2,3,\ge4$.  Prove that each macro-step either decreases an
+explicit finite counter while retaining the same \LOSS\ token $y$, or
+replaces $y$ by an actual child or certified descendant before any generic
+obligation is re-entered.  In particular, prove that no branch exits as a
+fresh free obligation at an unrelated arithmetic cursor.
+\end{obligation}
+
+\begin{obligation}[E: semantic exhaustiveness of the combined router]\label{obl:E}
+After Obligations~\ref{obl:Z}--\ref{obl:L} are supplied, construct a
+marked macro-relation satisfying every clause of
+Definition~\ref{def:complete-router} below.  In particular, give a disjoint
+and complete case partition for every control transition.  For each
+equal-rank cycle, exhibit a natural counter that strictly decreases; for
+each control reset, exhibit a preceding strict source or token replacement.
+This proof must refine the actual game outcomes, not only an acyclic graph
+of declared control labels.
+\end{obligation}
+
+\begin{remark}
+Lemma~\ref{lem:fixed-tail-progress} closes the former fixed-tail part of the
+entry countdown, and Lemma~\ref{lem:exp-one-progress} closes the local
+exponent-one misuse.  They reduce Obligation~\ref{obl:E}, but do not imply
+Obligations~\ref{obl:Z}--\ref{obl:L}.
+\end{remark}
+
+\section{A complete conditional closure theorem}
+
+This section records the exact abstract statement supplied by the marked-rank
+architecture.  The theorem is conditional, but the condition is now a
+mathematically explicit property rather than the name of a control graph.
+
+Let a marked configuration retain
+\[
+  \Pi=(s,\eta,\Phi(M),\zeta,\Psi(N),a),
+\]
+ordered lexicographically.  Here $s,a\in\Natz$ are genuine retained source anchors, $M,N$ are
+finite multisets of certified token heights, $\Psi(N)$ is defined by the
+same natural-sum formula as $\Phi(M)$, and $\eta,\zeta\in\{1,0\}$ are
+one-shot seed bits ordered by $1>0$.  With the usual orders on the natural
+and ordinal components, this finite lexicographic product is a well-order.
+Temporary sources, phases, valuations, and tail lengths are not components
+of $\Pi$ unless an explicit strict comparison installs them as retained
+data.
+
+\begin{definition}[Complete marked-router hypothesis]
+\label{def:complete-router}
+A marked macro-relation $\Longrightarrow$ is called complete for this game
+when all of the following hold.
+\begin{enumerate}[label=(C\arabic*)]
+\item Every conjugated \DRAW\ state produces an initial marked configuration
+      carrying that same actual \DRAW\ as its continuing cursor.
+\item From every marked configuration carrying an actual \DRAW, a finite
+      outcome-compatible normalization produces a successor marked
+      configuration carrying an actual \DRAW.  Reverse-parent transformations
+      are permitted only as proof transformations; whenever the cursor follows
+      play, it follows a legal \DRAW\ child.
+\item Every macro-step weakly decreases $\Pi$.  A token-changing step is a
+      one-shot seed or a certified proper-descendant replacement; a
+      source-changing step uses an explicit strict comparison of retained
+      sources.
+\item For each fixed value of $\Pi$, the restriction of
+      $\Longrightarrow$ to that fibre is well-founded.  In particular, every
+      equal-$\Pi$ control cycle has an explicitly decreasing natural counter.
+\end{enumerate}
+\end{definition}
+
+\begin{lemma}[Well-founded fibre principle]\label{lem:fibre}
+Let a transition relation carry a value in a well-order.  Suppose every
+transition weakly decreases that value and the restriction of the relation
+to each fixed-value fibre is well-founded.  Then the full relation is
+well-founded.
+\end{lemma}
+
+\begin{proof}
+An infinite path would induce a nonincreasing sequence in a well-order.  If
+it had infinitely many strict decreases, those decreases would form an
+infinite descending subsequence, which is impossible.  Hence its tail would
+lie in one fixed fibre, contradicting fibre well-foundedness.
+\end{proof}
+
+\begin{theorem}[Conditional no-draw closure]\label{thm:conditional}
+If a complete marked macro-relation in the sense of
+Definition~\ref{def:complete-router} is constructed from the game relation,
+then the conjugated game has no \DRAW\ positions.  Consequently every
+original positive odd start has finite remoteness.
+\end{theorem}
+
+\begin{proof}
+Assume a conjugated \DRAW\ exists.  Clause (C1) gives an initial marked
+configuration carrying it.  Clause (C2), applied recursively, gives an
+infinite sequence of marked configurations, each carrying an actual
+continuing \DRAW.  Clauses (C3)--(C4) and
+Lemma~\ref{lem:fibre} say that the same macro-relation is well-founded, so
+such an infinite sequence cannot exist.  Hence no conjugated \DRAW\ exists.
+Proposition~\ref{prop:first-normal} transfers the conclusion to every
+original odd start: after the first move both possible children are
+conjugated finite-remoteness states, so the original state is itself
+\WIN\ or \LOSS\ with finite height.
+\end{proof}
+
+\begin{remark}
+Theorem~\ref{thm:conditional} is not a proof of
+Conjecture~\ref{conj:main}.  Obligations~\ref{obl:Z}--\ref{obl:L} are
+specific missing semantic modules, and Obligation~\ref{obl:E} is the
+remaining task of constructing a relation satisfying
+Definition~\ref{def:complete-router}.  None is assumed silently in an
+unconditional theorem.
+\end{remark}
+
+\section{Computational verification boundary}
+
+The companion program \texttt{verify\_v7\_0.py} checks, over configurable
+finite ranges:
+\begin{enumerate}[label=(\arabic*)]
+\item the original-to-binary normal form and strict contraction of $B$;
+\item the long-tail recurrence and shared boundary;
+\item the alternating-suffix factorization, the bijection $J$, ordinary
+      coefficient-source recovery, the ordinary side relation, the
+      source-boundary selector, and the exceptional child-pair identity;
+\item the two permanent negative regressions;
+\item every arithmetic identity in Lemmas
+      \ref{lem:fixed-tail-progress}, \ref{lem:exp-one-progress},
+      \ref{lem:zero-table}, \ref{lem:zero-j1},
+      \ref{lem:high-return}, \ref{lem:D1}, and \ref{lem:D2}.
+\end{enumerate}
+The program does not infer infinite outcome classes and does not check
+Obligations~\ref{obl:Z}--\ref{obl:E}.  Its final message explicitly says
+that the run is supporting evidence, not a no-draw proof.
+
+\section{Hostile-audit matrix}
+
+\renewcommand{\arraystretch}{1.18}
+\begin{longtable}{>{\raggedright\arraybackslash}p{0.24\textwidth}
+                  >{\raggedright\arraybackslash}p{0.17\textwidth}
+                  >{\raggedright\arraybackslash}p{0.49\textwidth}}
+\toprule
+Item & Status in v7.0 & Audit conclusion \\
+\midrule
+\endfirsthead
+\toprule
+Item & Status in v7.0 & Audit conclusion \\
+\midrule
+\endhead
+Binary conjugation and $B(q)<q$ & Proved & Exact algebra; finite regression included. \\
+Long-tail identities & Proved & Uniform in $a,r,e$; no bounded-modulus assumption. \\
+Coefficient versus source & Corrected & The explicit $1\to3$ counterexample is retained permanently. \\
+Multi-$A$ numerical anchor & Corrected & The $20\to30\to45\to68$, $B(68)=25$ counterexample is retained permanently. \\
+Fixed-tail reverse entry & Proved locally & Lemma~\ref{lem:fixed-tail-progress} adds the missing continuing-DRAW and descendant-token alternatives. \\
+Exponent-one reverse entry & Proved locally & Lemma~\ref{lem:exp-one-progress}; no use of the $r\ge2$ reverse lemma at $r=1$. \\
+Source-zero $j=1$ row & Partly proved & Arithmetic and outcome split proved; global non-reseeding bootstrap is Obligation~\ref{obl:Z}. \\
+Long high-return heights & Proved conditionally on token legitimacy & The inequalities are valid; rank insertion is isolated as Obligation~\ref{obl:H}. \\
+Marked tail $D=1$ & Proved & Actual child of the retained LOSS token. \\
+Marked tail $D=2$ & Exact first lift proved & Full raw/signed provenance remains Obligation~\ref{obl:L}. \\
+Complete router & Open for the target theorem & No unconditional exhaustiveness claim; Obligation~\ref{obl:E}. \\
+No-draw conclusion & Conditional only & Theorem~\ref{thm:conditional} under
+Definition~\ref{def:complete-router}; Conjecture~\ref{conj:main} remains
+open here. \\
+\bottomrule
+\end{longtable}
+
+\section{Conclusion}
+
+Version 7.0 does not repeat the cycle in which one local repair is followed
+by a new hidden global assumption.  It makes three changes of principle.
+First, it proves complete local progress statements for the fixed-tail and
+exponent-one reverse rows rather than merely naming a finite witness.
+Second, it never identifies a routing witness with a retained token without
+a seed or a descendant comparison.  Third, it records the prize statement
+as a conjecture until the source-zero bootstrap, high-return pair continuity,
+LOSS-anchored $D=2$ module, and combined semantic exhaustiveness have all
+been proved.
+
+The result is a manuscript whose stated theorems are auditable and whose
+remaining barrier is explicit.  It is not yet a solution of the prize
+problem.  Any future Version 8 claiming the no-draw theorem must contain
+proofs of Obligations~\ref{obl:Z}--\ref{obl:E}, or replace the marked-router
+architecture by a genuinely different complete argument.
+
+\section*{Acknowledgment of the audit}
+Questions from Ingo Althoefer and subsequent hostile review exposed the
+coefficient/source error, the exponent-one misuse, and the later token
+provenance failures.  Version 7.0 treats those findings as permanent
+regressions rather than cosmetic edits.
+
+\begingroup
+\raggedright
+\begin{thebibliography}{9}
+\bibitem{Guy1986}
+R. K. Guy,
+``John Isbell's Game of Beanstalk and John Conway's Game of Beans-Don't-Talk,''
+\emph{Mathematics Magazine} 59(5) (1986), 259--269.
+\href{https://doi.org/10.1080/0025570X.1986.11977258}{doi:10.1080/0025570X.1986.11977258}.
+
+\bibitem{Guy1996}
+R. K. Guy,
+``Unsolved Problems in Combinatorial Games,'' Problem 42,
+in \emph{Games of No Chance}, MSRI Publications 29,
+Cambridge University Press, 1996.
+
+\bibitem{AHZ2024}
+I. Althoefer, M. Hartisch, and T. Zipproth,
+``Analysis of a Collatz Game and Other Variants of the $3n+1$ Problem,''
+in \emph{Advances in Computer Games}, LNCS 14528 (2024), 123--132.
+\href{https://doi.org/10.1007/978-3-031-54968-7_11}{doi:10.1007/978-3-031-54968-7\_11}.
+
+\bibitem{Prize}
+I. Althoefer,
+``Collatz Problems: The Two-Player $3n{+}{-}1$ Game,''
+\url{https://althofer.de/collatz-prizes.html}, accessed 11 August 2026.
+
+\bibitem{Zenodo}
+G. Pochuev,
+``Optimal Play in the Two-Player $3n\pm1$ Game,''
+Zenodo, 2026.
+\href{https://doi.org/10.5281/zenodo.21844684}{doi:10.5281/zenodo.21844684}.
+The archived record predates the hostile audits summarized here.
+
+\bibitem{Repo}
+G. Pochuev,
+``Optimal $3n\pm1$ Game: Proof and Verification Repository,'' 2026.
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+\end{thebibliography}
+\endgroup
+
+\end{document}
