@@ -1,0 +1,324 @@
+routing data. Sections 93--96 bound or rank the canonical $A$-streak and the
+subsequent B-selecting transfers. Sections 94--95 rank factor forks, and
+Sections 97--135 transport the finite tokens through every high-return and
+long-tail recurrence. Every operation that changes a retained source or token
+is supported by a strict comparison; pure routing preserves the retained
+projection and is well-founded inside the fixed fibre.
+
+\begin{lemma}[Well-founded fibre principle]\label{lem:fibre}
+Let a transition relation have an ordinal-valued projection $\pi$. If
+$C\to C'$ implies $\pi(C')\le\pi(C)$ and the relation restricted to every
+fibre $\pi^{-1}(\{\alpha\})$ is well-founded, then the full relation is
+well-founded.
+\end{lemma}
+
+\section{The external audit and the repaired entry}\label{sec:audit}
+
+An external audit of an earlier version found two genuine defects.
+
+First, the proof used
+\[
+ \text{smaller canonical coefficient}
+ \Longrightarrow
+ \text{smaller coefficient source},
+\]
+which is false when powers of three are present. The explicit counterexample
+is
+\[
+ s=1,\qquad J(1)=5,\qquad a=3J(1)=15,\qquad e=1.
+\]
+The common boundary child is
+\[
+ R(3a-e)=R(44)=22.
+\]
+Its canonical coefficient is $11<15$, but $11=J(3)$, so the source has
+increased from $1$ to $3$.
+
+Second, the reverse-factor lemma was used at exponent one even though it is
+valid only from exponent two. Hence the family
+\[
+ Q_1^e(3^kJ(s)),\qquad k>0,
+\]
+needed a separate entry proof. Section~\ref{sec:audit} gives that proof
+without reinstating either invalid shortcut.
+
+\subsection{One-shot initialization}
+
+The key observation is that there are two logically different operations:
+initializing the typed normalizer after the raw entry has been normalized,
+and resetting a normalizer that is already running. Only the second requires
+a preceding strict source/token decrease.
+
+Refine the retained lexicographic rank by an entry bit
+\[
+ \eta\in\{1,0\},\qquad 1>0,
+\]
+placed after the outer source and outer token multiset:
+\[
+ \boxed{
+ (\text{outer source},\ \PhiM(M),\ \eta,\
+   \text{inner source/token rank},\ \text{finite control rank}).}
+\]
+Here $\eta=1$ means that the current outer fibre has not yet initialized its
+typed inner normalizer, and $\eta=0$ means that Proposition
+\ref{prop:typed-normalizer} is running.
+
+The transition
+\[
+ \boxed{\eta:1\longrightarrow0}
+\]
+is strict independently of the numerical value assigned to the newly
+initialized inner source. Thus the first returned source may be larger than
+the original source. Within an unchanged outer source/token fibre, the bit can
+never return from $0$ to $1$. A later raw reinitialization is allowed only
+after an earlier outer source or outer proof-token component has strictly
+decreased, exactly as permitted by Lemma~\ref{lem:fibre}. Therefore the entry
+bit cannot hide a repeated source-growth cycle.
+
+\subsection{The factor-free exponent-two bootstrap}
+
+Let $x>0$, $a=J(x)$, and put
+\[
+ P=Q_1^e(a),\qquad U=Q_2^e(a),
+\]
+\[
+ b=B(P)=B(U),\qquad F=A(U)=Q_1^e(3a),\qquad g=1-e.
+\]
+Suppose $U$ is \DRAW\ at the globally least outer DRAW source $x$. The common
+child $b$ has smaller canonical coefficient than $J(x)$, hence its coefficient
+source is below $x$; so $b$ is not \DRAW. A child of a \DRAW\ cannot be
+\LOSS, therefore
+\[
+ \boxed{b\text{ is \WIN},\qquad F\text{ is \DRAW}.}
+\]
+The exact first-factor identity is
+\[
+ \boxed{9a+1-2e=2^vJ(b)}.
+\]
+It follows that
+\[
+ A(F)=Q_v^g(J(b)).
+\]
+We now split according to whether the input phase at $x$ is B-selecting or
+A-selecting.
+
+\subsubsection{B-selecting input}
+
+Assume $e=1-\alpha(x)$. The first source-boundary numerator is divisible by
+$4$. The consecutive numerator relation gives
+\[
+ 9J(x)+1-2e
+ =3(3J(x)+1-2e)-2(1-2e)
+ \equiv2\pmod4,
+\]
+so
+\[
+ \boxed{v=1.}
+\]
+Writing $u=A(x)$ and using the parity that characterizes the B-selecting
+phase gives the exact common endpoint
+\[
+ \boxed{b=3A(x)+1.}
+\]
+The two children of the \DRAW\ state $F$ are therefore
+\[
+ T=Q_1^g(J(b)),\qquad C=R(T).
+\]
+The signed-prefix identity identifies the raw state $C$ with the ordinary
+child of $b$ selected by phase $g$:
+\[
+ \boxed{C\in\{A(b),B(b)\}.}
+\]
+At least one of $T,C$ is \DRAW.
+
+If $T$ is \DRAW, it is the direct exponent-one typed obligation at source
+$b$, and the one-shot bit initializes the normalizer.
+
+If $C$ is \DRAW, the other ordinary child $\ell$ of the \WIN\ state $b$ is
+\LOSS. For nonexceptional $b$, the ordinary side diamond exposes
+$B(A(b))$ as a \WIN\ child of $\ell$ and as a child of the continuing
+\DRAW, hence a strict proof-token/boundary descent. If $b$ is exceptional
+and $C=A(b)$, the exceptional side formula gives an adjacent \DRAW\ frame over
+the actual \LOSS\ token $\ell$.
+
+The sole remaining exceptional orientation is $C=B(b)$ \DRAW. Since
+$b=3A(x)+1$,
+\[
+ b\le\frac{9x+5}{2}.
+\]
+For exceptional $b$, the alternating suffix of $A(b)$ has length at least
+three, whence
+\[
+ C=B(b)\le\frac{A(b)}8\le\frac{3b+1}{16}.
+\]
+If $\rho(C)$ is the coefficient source of $C$, then
+\[
+ \rho(C)<\frac C6
+ \le\frac{3b+1}{96}
+ \le\frac{27x+17}{192}<x.
+\]
+Thus this last row is a genuine strict outer-source transition.
+
+\subsubsection{A-selecting input}
+
+Assume $e=\alpha(x)$. Lemma~\ref{lem:source-transition} gives
+\[
+ 3J(x)+1-2e=2J(A(x)),
+\]
+and the consecutive numerator identity implies
+\[
+ \boxed{v\ge2.}
+\]
+Retain
+\[
+ 9J(x)+1-2e=2^vJ(b).
+\]
+If $v\ge4$, then
+\[
+ 16J(b)\le9J(x)+1\le27x+19.
+\]
+Since $J(b)\ge3b+1$,
+\[
+ 48b+16\le27x+19,
+ \qquad
+ \boxed{b\le\frac{9x+1}{16}<x.}
+\]
+Both children of $F$ have factor-free source $b$, so this is a strict
+outer-source exit.
+
+Only $v=2,3$ remain. If $v=2$, $F$ is a \DRAW\ parent whose children are
+\[
+ Q_2^g(J(b)),\qquad Q_1^g(J(b)),
+\]
+which is exactly the second form of the typed obligation $O(b,g)$.
+
+If $v=3$, the children are the valuation-three frame
+\[
+ Q_3^g(J(b)),\qquad Q_2^g(J(b)).
+\]
+The constructor automatically supplies the congruence hypothesis needed by
+the first-factor hidden-parent lemma. Reducing
+\[
+ 9J(x)+1-2e=8J(b)
+\]
+modulo $3$ and using $g=1-e$ yields
+\[
+ \boxed{J(b)\equiv1+g\pmod3.}
+\]
+Thus that hidden-parent lemma is used only in the typed rows for which its
+hypothesis is proved. The ensuing factor-frame normalization produces a
+strict source edge, a strict boundary/token edge, or the already typed
+obligation entry.
+
+We have proved the following.
+
+\begin{proposition}[Factor-free base-entry attachment]\label{prop:baseattach}
+Every factor-free exponent-two \DRAW\ at a globally minimal outer source has
+an outcome-compatible finite continuation that either strictly lowers the
+retained outer source, strictly lowers a certified finite proof token, or
+consumes the one-shot entry bit and enters the typed normalizer.
+\end{proposition}
+
+\subsection{Arbitrary factorful exponent one}
+
+Return to
+\[
+ Q_1^e(3^kJ(s))\text{ \DRAW},\qquad k>0.
+\]
+The predecessor reduction described after Lemma~\ref{lem:twolevel} has two
+outputs. Either it returns to a factor-free \DRAW\ over the same source, in
+which case the factor-free analysis terminates at exponent one or at the
+exponent-two bootstrap of Proposition~\ref{prop:baseattach}; or it exposes a
+factor-free \DRAW\ lift/frame together with an actual finite \WIN/\LOSS\
+descendant of the predecessor token. In the latter case Lemma
+\ref{lem:multiset} supplies a strict token edge, after which Lemma
+\ref{lem:fibre} permits the inner arithmetic task to reset.
+
+Consequently:
+\begin{proposition}[Repaired arbitrary exponent-one attachment]\label{prop:attachment}
+Every arbitrary factorful exponent-one \DRAW\ has a finite outcome-compatible
+normalization that either strictly lowers the retained source, strictly lowers
+an already marked finite proof token, or consumes the one-shot entry bit and
+enters the typed normalizer. No comparison $t<s$ is required for the temporary
+returned inner source.
+\end{proposition}
+
+\section{Proof of the main theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Assume that a \DRAW\ exists and choose the least coefficient source $s$ of a
+\DRAW. The source-zero case is handled by the explicit zero-source
+constant-tail normalization in the supplement. Assume $s>0$.
+
+The constant-tail/source analysis and the factor scan reduce the continuing
+actual \DRAW\ to a marked macro-configuration. By Proposition
+\ref{prop:attachment}, every macrostep has one of three effects:
+\begin{enumerate}[label=(\arabic*)]
+\item the retained outer source strictly decreases;
+\item at fixed outer source, the finite proof-token multiset strictly
+      decreases under $\PhiM$;
+\item with both outer components fixed, the one-shot bit changes from
+      $\eta=1$ to $\eta=0$, after which the route lies in the typed fixed-fibre
+      normalizer of Proposition~\ref{prop:typed-normalizer}.
+\end{enumerate}
+The first effect contradicts minimality when it occurs at the initial outer
+source and, more generally, is a strict first lexicographic component. The
+second is well-founded by Lemma~\ref{lem:multiset}. The third is strict at the
+entry bit and cannot reset back to $1$ while the preceding components are
+unchanged. Once $\eta=0$, Proposition~\ref{prop:typed-normalizer} gives
+well-foundedness of the equal-retained-data fibre. Lemma~\ref{lem:fibre}
+therefore makes the complete marked macro relation well-founded.
+
+On the other hand, every \DRAW\ position has no \LOSS\ child and has at least
+one \DRAW\ child. Hence from any marked \DRAW\ configuration one may choose an
+outcome-compatible continuing \DRAW\ and repeat the finite normalization
+macrostep forever. This would produce an infinite path in the well-founded
+marked relation, a contradiction.
+
+Therefore the conjugated game has no \DRAW\ positions. Conjugacy with the
+original odd-integer game proves that every positive odd starting state has
+finite remoteness and optimal play reaches $1$.
+\end{proof}
+
+\section{Verification boundary and reproducibility}\label{sec:repro}
+
+The mathematical claim above is a human proof. The computational artifacts
+have deliberately narrower roles.
+
+\begin{itemize}
+\item The repository's standard-library Python tests check exact arithmetic
+      identities, finite outcome certificates, and finite regression ranges.
+\item The symbolic global-routing JSON checks the declared typed control/rank
+      assembly. It does not encode the new one-shot $\eta$ bridge and therefore
+      remains a conditional machine check rather than an end-to-end proof.
+\item The Lean project kernel-checks general metatheory and selected definitions,
+      but does not kernel-check the complete concrete no-\DRAW\ theorem.
+\end{itemize}
+
+The corrected proof package used for this manuscript is the branch
+\path{repair/althoefer-audit-gap} of
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game},
+with the closure addendum \path{docs/althoefer-audit-closure.md}. At the time
+this manuscript was prepared, the corresponding draft pull request was PR~\#1.
+The earlier archived preprint is
+\url{https://doi.org/10.5281/zenodo.21844684}.
+That archived version predates the external audit and should not be used in
+place of this corrected manuscript.
+
+The companion file \texttt{verify\_closure.py} supplied with this manuscript
+is a standalone arithmetic regression for the new repair identities. It has
+no third-party dependencies and explicitly labels itself as supporting
+verification, not as a proof.
+
+\section{Audit checklist for the repaired bridge}
+
+An independent reviewer should try to falsify the following points first:
+\begin{enumerate}
+\item no step identifies a smaller canonical coefficient with a smaller
+      coefficient source;
+\item the reverse-factor lemma is never used at exponent one;
+\item the B-selecting exponent-two base row really has factor valuation one;
+\item the exceptional raw B-child estimate gives a source strictly below the
+      old source;
+\item the A-selecting row with $v\ge4$ really has $b<x$;
+\item the $v=3$ constructor really satisfies the additional hidden-parent
