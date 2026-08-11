@@ -1,0 +1,400 @@
+no claim about how the factor fork is normalized and installs no additional
+inner witness.  That strictly later task belongs to the factor/return closure
+of Section~\ref{sec:P2closed}; if it eventually needs its first inner token,
+Lemma~\ref{lem:seed-policy} governs the one possible use of $\zeta$.
+
+Suppose instead that the obligation continues canonically.  With
+$y=A(x)$ and $g=1-\alpha(x)$, Lemma~\ref{lem:phase-aligned-side} gives
+\[
+ b=\chi_g(y).
+\]
+Thus the next obligation is aligned with the token just installed.
+Lemma~\ref{lem:aligned-catch} says that within this next macro either its
+ordinary source becomes exactly $b$, or $b$ is strictly replaced before the
+route becomes attached.  In particular there is no tokenless multi-$A$
+streak after the first seed.
+
+Once an ordinary obligation source itself is a retained finite token,
+Lemma~\ref{lem:finite-front} applies to every $A$-selecting continuation and
+forces a strict token replacement (or an attached exceptional constructor)
+before any later high return.  Hence an arbitrarily long canonical $A$-streak
+is a finite concatenation of strict token events and attached routing; it is
+not an equal-rank walk through the numerical cursors
+$x,A(x),A^2(x),\ldots$.  This is exactly the point at which the old
+pre-streak estimate failed.
+
+It remains to inspect a valuation-two $B$ return from a retained finite
+source $q$.  Corollary~\ref{cor:exceptional-no-b2} excludes all four
+exceptional residue classes.  Put $y=B(q)$ and let the transferred phase be
+$g=\alpha(q)$.  If $q$ is LOSS, then $y$ is a WIN child with
+$h(y)\le h(q)-1$, so $q\mapsto y$ is strict.  If $q$ is WIN, choose a
+canonical LOSS child.  When that child is $y$, the same strict replacement
+holds.  In the remaining orientation the canonical LOSS child is $A(q)$.
+The ordinary side identity gives
+\[
+ c=B(A(q))\in\operatorname{moves}(A(q))\cap\operatorname{moves}(y),
+ \qquad h(c)\le h(q)-2.
+\]
+Lemma~\ref{lem:second-selector} says that the transferred phase at $y$
+selects this exact $c$.  Therefore the reset is entered already carrying the
+strict descendant $c$; it is either caught by the aligned/source-token case
+or treated as an attached task.  No temporary cursor is promoted.
+
+Finally, if a canonical streak reaches a $B$-selecting phase only after
+several $A$ steps, the preceding argument is still exhaustive: immediately
+after the first outer seed the next obligation is aligned; within at most one
+canonical step its source catches the retained token unless that token has
+already decreased.  Every subsequent $A$-obligation whose source is finite
+spends a descendant by Lemma~\ref{lem:finite-front}.  Thus every
+outcome-compatible streak length is covered without a numerical bound on the
+pre-streak source.  The mandatory regression
+$20\to30\to45\to68$, $B(68)=25>20$, is therefore harmless: the proof never
+uses the comparison $25<20$ (which is false).
+\end{proof}
+
+
+\section{Semantic closure of factor, return and attached routing}
+\label{sec:P2closed}
+
+The remaining task is to prove that an attached token cannot disappear when
+the arithmetic passes through a factor fork, a high return, a marked tail or
+a short terminal lift.  We state the local facts in the form needed for the
+global rank.  For audit provenance, the same arithmetic identities also occur with longer
+case-by-case derivations in Sections 91--135 of the frozen proof ledger
+\texttt{docs/verified-results.md} at repository revision
+\nolinkurl{9d12789de3dbd841851f3faff1a237018d43879d}.  The proofs below reproduce
+the incidences and rank payments actually used, so that ledger is a
+cross-check rather than a logical black box.  Sections 137--138 of the ledger
+are not used here; the audited entry argument below replaces them.
+
+\begin{lemma}[Finite-source export]\label{lem:finite-export}
+Let $O(x,\alpha(x))$ be an $A$-selecting obligation, let its common side be
+\WIN, and suppose the ordinary source $x$ is finite.
+\begin{enumerate}[label=(\alph*)]
+\item If $x$ is \LOSS, the canonical branch exports an actual \LOSS token
+      at least two proof levels below $x$ before any later high return.
+\item If $x$ is \WIN and either $x$ is ordinary or $A(x)$ is the
+      canonical \LOSS child, the return carries a \WIN token of height at
+      most $h(x)-2$.
+\item In the sole remaining orientation, $x$ is exceptional and $B(x)$ is
+      its canonical \LOSS child; the returned adjacent pair is an exact
+      factor-free lift over that token, whose height is $h(x)-1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Put $y=A(x)$ and let $b$ be the common \WIN side of the obligation.  If
+$x$ is \LOSS, then $y$ is \WIN with $h(y)\le h(x)-1$.  Since one child of
+$y$ is the \WIN state $b$, its other child is \LOSS and has height at most
+$h(x)-2$.
+
+If $x$ is \WIN, choose its canonical \LOSS child $\ell_0$.  When $x$ is
+ordinary, Lemma~\ref{lem:side} makes $p=B(A(x))$ a child of $\ell_0$ in the
+orientation where $\ell_0=B(x)$; if $\ell_0=A(x)$, $p$ is directly a child
+of that LOSS state.  In either case $p$ is \WIN and
+$h(p)\le h(x)-2$.  When $x$ is exceptional and
+$\ell_0=B(x)$, Lemma~\ref{lem:exceptional-side} gives the two returned
+children as adjacent lifts over $\ell_0$.  These are exactly the three rows.
+\end{proof}
+
+\begin{lemma}[Generic lower factor forks spend the retained mark]
+\label{lem:factor-fork-pay}
+Consider the factor alternative of a typed $A$-selecting obligation, with the
+finite provenance supplied by that alternative.  Then every lower factor
+exponent pays or remains attached before control can restart.
+
+For lower exponent $r=1$, let $b$ be the WIN factor source, let $V$ be the
+retained LOSS state from the factor alternative and put $D=B(V)$.  If $y$ is
+the ordinary child of $b$ selected by the factor phase, the exact twin identity
+is
+\[
+ \{D,y\}=\{A(b),B(b)\},\qquad D\ne y.
+\]
+Hence $D$ is WIN, $y$ is the actual LOSS child of $b$, and the row either
+exposes a boundary WIN at least two proof levels below $b$ or transfers the
+DRAW to an adjacent frame over this same LOSS token.
+
+For every $r\ge2$, let $x$ be the finite ordinary source from which the
+factor fork was generated.  Then $x$ is ordinary and the factor common side is
+$b=B(A(x))$, a child of both $A(x)$ and $B(x)$.  Splitting the actual outcome
+of $x$ gives respectively: a strict canonical coefficient-source edge for the
+same DRAW state; a common WIN child of a canonical LOSS child with height at
+most $h(x)-2$; or the LOSS state $A^2(x)$ with height at most $h(x)-2$.
+\end{lemma}
+
+\begin{proof}
+In the $r=1$ factor alternative the standard twin calculation gives
+\[
+ \{D,y\}=\{A(b),B(b)\},\qquad D\ne y.
+\]
+Since $V$ is LOSS, its
+child $D=B(V)$ is WIN.  The factor source $b$ is also WIN, so its other child
+$y$ is necessarily LOSS and $h(b)=h(y)+1$.  If the factor phase is
+A-selecting, the common side of the exponent-one/two frame is a child of $y$
+and therefore is WIN with height at most $h(b)-2$.  A continuing DRAW member
+of that frame points to this lower WIN boundary.  If the phase is B-selecting,
+Lemma~\ref{lem:b-diamond} transfers the DRAW to the exact adjacent frame over
+the selected source $y$, retaining the actual LOSS token.  No unproved
+finite outcome is introduced.
+
+For $r\ge2$, the signed transition at $A(x)$ is B-selecting, so the selected
+source is $b=B(A(x))$.  The four exceptional residue classes would make this
+phase A-selecting with valuation one; hence this row is ordinary.  By
+Lemma~\ref{lem:side}, $b$ is a child of both ordinary children of $x$.
+
+If $x$ is DRAW, no new game state is inferred: the \emph{same actual DRAW
+state} $x$, written in its canonical constant-tail coordinates, has coefficient
+source $\rho(x)<x$ by Lemma~\ref{lem:source-bound}.  Replacing the retained
+inner numerical anchor $x$ by its genuine canonical source is therefore a
+strict source edge.
+
+If $x$ is WIN, choose a canonical LOSS child of $x$.  The common state $b$ is
+a child of it, hence is WIN and $h(b)\le h(x)-2$.  If $x$ is LOSS, both
+ordinary children are WIN; the factor row already makes $b$ WIN, so the other
+child $A^2(x)$ of $A(x)$ is LOSS and has height at most $h(x)-2$.  These are
+all outcome orientations and every finite-token comparison is a genuine
+parent/child comparison.
+\end{proof}
+
+\begin{lemma}[High-return token descent]\label{lem:high-return-pay}
+Assume the high-return guard, including the exact obligation
+$O(c,\alpha(c))$ and the finite return provenance supplied by the preceding
+factor scan. A high return can never be a pure reset.
+\begin{enumerate}[label=(\alph*)]
+\item In each short return row $v=5,6$, the exact finite return token
+      $c=Q_{v-3}^g(3J(t))$ is already marked with its proved finite outcome.
+      The common-side split either replaces a retained token by a proper
+      descendant or enters the exact exceptional lift over its canonical
+      lower LOSS token.
+\item For every $v\ge7$ the return guard supplies finite WIN states
+\[
+ u=Q_{v-1}^g(J(t)),\qquad c=Q_{v-3}^g(3J(t)),
+\]
+with $A(u)$ LOSS. Put $p=B(A(u))=A(c)$ and let $b=B(p)$. Then
+\[
+ h(p)\le h(u)-2,\qquad h(b)\le h(c)-2.
+\]
+Thus the pair replacement $(u,c)\mapsto(p,b)$ is strict before either
+continuation of $O(c,\alpha(c))$ is followed.
+
+If the obligation takes its canonical continuation, the next ordinary
+source is exactly $p=A(c)$, so the strict token $p$ is inherited and no
+marked-tail task is installed. If it takes its factor alternative, there are
+further finite states $q,y$ such that
+\[
+ (p,b)\longmapsto(q,y)
+\]
+is componentwise strict, the continuing DRAW lies in the exact frame
+\[
+ \{Q_3^g(J(b)),Q_2^g(J(b))\},
+\]
+and, with $D=v-6$ and $C=27J(t)$,
+\[
+ b=Q_D^g(C),\qquad
+\begin{array}{c|cc}
+ v&q\text{ WIN}&y\text{ LOSS}\\ \hline
+ 7&B(b)&A(b)\\
+ 8&A(b)&B(b)\\
+ v\ge9&A(b)&B(b).
+\end{array}
+\]
+Hence only the factor alternative enters the marked-tail control, and it
+does so after a strict pair-token replacement.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+For $v=6$ the common side is $b=B(A(c))$. If this side is DRAW, the
+constant-tail state $c$ cannot be WIN: its canonical LOSS child would also
+have $b$ as a child and would force $b$ WIN. Hence $c$ is LOSS. The WIN child
+$A(c)$ has the DRAW child $b$, so its other child $A^2(c)$ is LOSS with
+$h(A^2(c))\le h(c)-2$.
+
+For $v=5$ the common side is $b=A^2(c)$. If $b$ is DRAW and $c$ is LOSS,
+then $A(c)$ is WIN and its other child $B(A(c))$ is LOSS at least two levels
+below $c$. If $c$ is WIN, then $A(c)$ is not LOSS because it has the DRAW
+child $b$; therefore $B(c)$ is the canonical LOSS child of $c$. In the
+ordinary row $B(A(c))$ is a WIN child of this LOSS token, while in the
+exceptional row Lemma~\ref{lem:exceptional-side} gives the exact adjacent
+lift over it. If the common side is WIN instead, Lemma~\ref{lem:finite-export}
+applies because the statement explicitly retains the finite outcome of $c$.
+Thus both short rows pay or remain attached to an already lower token.
+
+Now let $v\ge7$. Direct constant-tail reduction gives
+\[
+ p=B(A(u))=A(c).
+\]
+The return guard makes $A(u)$ LOSS, so $p$ is its WIN child and
+$h(p)\le h(u)-2$. The state $c$ is ordinary in this range. Since $p=A(c)$
+is WIN, the other child $B(c)$ is LOSS, and
+\[
+ b=B(p)=B(A(c))
+\]
+is a child of that LOSS state. Hence $b$ is WIN and
+$h(b)\le h(c)-2$. This proves the first strict pair replacement before the
+obligation branch is selected.
+
+In the canonical alternative of $O(c,\alpha(c))$, the next source is
+$A(c)=p$ exactly. Thus the already lower token is inherited and the route
+returns directly to an obligation over $p$.
+
+In the factor alternative, $p$ is ordinary. Because $p$ and its child $b$
+are WIN, the other child of $p$ is LOSS. Its ordinary common child
+$q=B(A(p))$ is WIN and satisfies $h(q)\le h(p)-2$. The factor phase selects
+the other child $y$ of the WIN state $b$; since $q$ is already its WIN child,
+$y$ is the unique LOSS child and $h(y)=h(b)-1$. Hence
+$(p,b)\mapsto(q,y)$ is strict in the multiset order.
+
+Finally direct substitution gives $b=Q_{v-6}^g(27J(t))$. The signed
+transition at $b$ selects $A(b)$ at $v=7$, $B(b)$ with valuation at least
+three at $v=8$, and $B(b)$ with valuation two for every $v\ge9$. In the
+factor alternative the selected state is exactly the LOSS token $y$ and the
+other child is the WIN token $q$, yielding the displayed orientation table.
+Thus the factor branch, and only that branch, enters the marked-tail frame
+with an actual continuing DRAW and with the required tokens already marked.
+\end{proof}
+
+\begin{lemma}[Every long marked tail pays its LOSS token]
+\label{lem:marked-tail-pay}
+Let $C$ be positive and odd, let $D\ge3$, and put
+\[
+ b=Q_D^g(C),\qquad q=A(b),\qquad y=B(b).
+\]
+Suppose the marked high-return constructor retains the exact outcomes and
+DRAW frame
+\[
+ b,q\text{ \WIN},\qquad y\text{ \LOSS},\qquad
+ \{Q_3^g(J(b)),Q_2^g(J(b))\}\text{ contains a \DRAW}.
+\]
+Put
+\[
+ r=\begin{cases}
+    B(q)=B(y),&D=3,\\
+    B(q)=A(y),&D\ge4.
+   \end{cases}
+\]
+Then $r$ is a \WIN child of the retained LOSS state $y$, so
+\[
+ h(r)\le h(y)-1,
+\]
+and the complete marked tail may replace $y$ by $r$ before any inner reset.
+\end{lemma}
+
+\begin{proof}
+For $D=3$, the exponent-two/one common-child identity gives
+$B(q)=B(y)$.  For $D\ge4$, Lemma~\ref{lem:long-tail} gives
+$B(q)=A(y)$.  In either row $r$ is a child of the LOSS state $y$, hence is
+WIN and has strictly smaller height.
+
+The attachment survives the complete two-level scan by exact coordinates,
+not by a comparison of canonical coefficients.  At $D=3$ the first raw
+member is $Q_M^g(J(r))$ for its actual suffix exponent $M\ge2$.  For every
+$D\ge4$ it is exactly
+\[
+ S=Q_1^g(J(r)).
+\]
+If the signed branch is taken, its common side is an exact lift over the
+phase-selected ordinary child of $r$; if neither first exit is DRAW, the
+second bridge is the obligation over this same $S$ and its transferred
+source is again an exact lift over that selected child.  At the three short
+endpoints $D=3,4,5$ these states coincide with the first/second signed and
+raw exits of the original factor scan over $r$.  Hence no branch introduces
+a source unrelated to $r$.
+
+Therefore the strict replacement $y\mapsto r$ may be performed before the
+raw/signed choice, after which all later routing data are allowed to reset:
+the multiset rank has already decreased.  The displayed identities prove the exact attachment and use no source
+comparison on a factorful cursor.  They agree with the marked-tail identities
+of the frozen local ledger.
+\end{proof}
+
+\begin{lemma}[The two shortest marked tails]
+\label{lem:short-tail}
+Let $C$ be positive and odd, put $b=Q_D^g(C)$, and assume the exact marked
+frame contains a continuing DRAW.
+
+For $D=1$ the retained orientation is
+\[
+ q=B(b)\text{ WIN},\qquad y=A(b)\text{ LOSS}.
+\]
+If
+\[
+ 9J(b)+1-2g=2^jJ(w),
+\]
+then $j\ge2$; moreover $w=A(y)$ when $j=2$ and $w=B(y)$ when
+$j\ge3$. Hence the $D=1$ row always replaces the LOSS token $y$ by an
+actual WIN child before any inner reset.
+
+For $D=2$ the retained orientation is
+\[
+ q=A(b)\text{ WIN},\qquad y=B(b)\text{ LOSS}.
+\]
+If $y=0$, the returned arithmetic has coefficient source zero and is routed
+by Lemma~\ref{lem:zero-source}.  If $y>0$, the first factor numerator has
+valuation exactly one and its returned source has the exact form
+\[
+ w=Q_m^\delta(J(y)),\qquad \delta=1-g,\qquad m\ge2.
+\]
+Thus the row is not a free restart: it is a constant-tail lift over the
+already retained LOSS token $y$.
+\end{lemma}
+
+\begin{proof}
+For $D=1$, $b=2C-g$. Direct substitution gives
+\[
+9J(b)+1-2g=
+\begin{cases}
+2(27C+5),&g=0,\\
+2(27C-5),&g=1.
+\end{cases}
+\]
+Since $C$ is odd, the parenthesized integer is even, so $j\ge2$.  Moreover,
+with $y=A(b)=3C-g$ the same identity is exactly
+\[
+ 9J(b)+1-2g
+ =2\bigl(3J(y)+1-2(1-g)\bigr).
+\]
+The expression in parentheses is the ordinary signed source transition at
+$y$ in phase $1-g$.  If its valuation is one (total $j=2$) it selects
+$A(y)$; if its valuation is at least two (total $j\ge3$) it selects $B(y)$.
+Thus $w=A(y)$ for $j=2$ and $w=B(y)$ for $j\ge3$. Both are actual children
+of the retained LOSS state $y$ and are therefore WIN proper descendants. In
+particular the apparent $j=1$ lift row sometimes listed in a coarse
+trichotomy is arithmetically empty here.
+
+For $D=2$, $b=4C-g$ and
+\[
+9J(b)+1-2g=
+\begin{cases}
+2(54C+5),&g=0,\\
+2(54C-5),&g=1.
+\end{cases}
+\]
+The parenthesized integer is odd, so the valuation is exactly one.  Let
+$z=3C-g$; by the exponent-two/one boundary identity $y=R(z)$.  The returned
+source $w$ is determined by
+\[
+ J(w)=54C+5-10g,
+\]
+so $w=18C+1$ for $g=0$ and $w=18C-2$ for $g=1$.  Its canonical odd
+coefficient is
+\[
+ \kappa(w)=\begin{cases}
+ \odd(9C+1),&g=0,\\
+ \odd(9C-1),&g=1.
+ \end{cases}
+\]
+Lemma~\ref{lem:alt-lift}, applied to $3C$ in the first row and to $3C-1$ in
+the second, gives $\kappa(w)=J(y)$, so no factor of three is hidden in the
+coefficient of $w$.
+
+When $y>0$, let $\lambda$ be the maximal alternating-suffix length of $z$.
+For $g=0$ the alternating-lift identity is
+$3z+1=2^\lambda J(y)$, whence
+\[
+ w=2(3z+1)-1=Q_{\lambda+1}^{1}(J(y)).
+\]
+For $g=1$ the same identity reads $3z+2=2^\lambda J(y)$, whence
+\[
+ w=2(3z+2)=Q_{\lambda+1}^{0}(J(y)).
+\]
