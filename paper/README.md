@@ -34,6 +34,16 @@ The repository uses only common LaTeX packages. Before release, inspect every
 rendered PDF page and confirm that bibliography entries, URLs, formulas, page
 numbers, and the email link render correctly.
 
+## Manuscript history
+
+The complete preserved development line is stored in [`history/`](history/):
+
+```text
+v1 -> v2 -> v3.0 -> v4.0 -> v5.0 -> v6.3 -> v7.0 -> ...
+```
+
+The history directory is append-only in spirit. Old snapshots are retained as they were so that the evolution of the proof, audits, repairs, and verification code remains inspectable. Historical versions may contain arguments that were later superseded or found incomplete; `main.tex` / `main.pdf` remain the current working manuscript.
+
 ## Zenodo bundle
 
 After the PDF exists and all changes are committed, run from the repository
