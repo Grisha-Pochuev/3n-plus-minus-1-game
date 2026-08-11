@@ -1,0 +1,400 @@
+\[
+  3a+1-2e=2^jJ(y),\qquad j\ge2,
+\]
+so $y=B(x)$. Define
+\[
+ P=Q_1^e(a),\quad U=Q_2^e(a),\quad
+ D=Q_j^g(J(y)),\quad C=Q_{j-1}^g(J(y)),\quad F=A(U).
+\]
+Then $D=A(P)$ and $C=B(P)=B(U)$. If $X$ is the common child of $D,C$ and
+$Y$ is the other child of $C$, then
+\[
+  B(F)=Y.
+\]
+Consequently an obligation in the $B$-selecting phase transfers a continuing
+\DRAW\ to the adjacent frame $\{D,C\}$; when $j=2$ the transferred frame is
+again an obligation in the opposite phase.
+\end{lemma}
+
+\begin{proof}
+The formulas for $D$ and $C$ are the signed boundary formula and the
+shared-child identity. The remaining equality is a direct substitution in the
+three cases $j=2$, $j=3$, and $j\ge4$: the constant suffix of $D$ determines
+its common child $X$, while the one-step longer factor state $F$ has the same
+raw side $Y$. For the outcome assertion, a common child of a \DRAW\ cannot be
+\LOSS. If the exponent-one member is \DRAW, the frame $\{D,C\}$ already
+contains a \DRAW. In the parent form of an obligation, the only remaining
+orientation has the exponent-two member \DRAW; if $C$ were \WIN, outcome
+recursion through the displayed diamond would force $Y$ both \LOSS\ and a
+child of the \DRAW\ state $F$, impossible. Hence $C$ is \DRAW. For $j=2$,
+$D,C$ are exactly the exponent-two/one pair over $J(y)$.
+\end{proof}
+
+
+\section{The closed routing bridge}\label{sec:closed-routing}
+
+The local arithmetic in Sections 2--8 is deliberately left unchanged from the
+audit-hardened reduction.  We now close the two global obligations that were
+left open there.  Two negative regressions are retained throughout:
+
+\begin{enumerate}[label=(N\arabic*)]
+\item a smaller canonical coefficient is not, in the presence of a factor
+      $3^k$, a smaller coefficient source;
+\item a $B$ return after several canonical $A$ steps need not lie below the
+      numerical source present before that streak.
+\end{enumerate}
+
+The proof below never uses either implication.  Numerical values displayed
+along a canonical streak are routing cursors until a stated source comparison
+promotes one of them to a ranked anchor.
+
+\subsection{Permanent multi-$A$ regression}
+
+\begin{lemma}[Pre-streak anchor counterexample]\label{lem:anchor-stress}
+Let $x_0=20$ and $x_{i+1}=A(x_i)$.  Then
+\[
+ 20\longmapsto30\longmapsto45\longmapsto68,
+ \qquad B(68)=25>20.
+\]
+The phase carried by the canonical lift switches to the $B$-selecting phase
+at $68$, and the corresponding signed valuation is $3$.
+\end{lemma}
+
+\begin{proof}
+The three $A$ values are immediate.  Moreover
+\[
+ \alpha(20),\alpha(30),\alpha(45),\alpha(68)=1,0,1,1,
+\]
+whereas the lifted phase flips after each canonical $A$ continuation.  At
+$68$ the carried phase is therefore $0\ne\alpha(68)$, and
+\[
+ 3J(68)+1=616=2^3\,77,
+ \qquad 77=J(25).
+\]
+Thus the return is $25$, not a value below the pre-streak source $20$.
+\end{proof}
+
+\subsection{The exact raw selector}
+
+For $s>0$ and $e\in\{0,1\}$ define the ordinary source selected by phase $e$
+by
+\[
+ \chi_e(s)=
+ \begin{cases}
+   A(s),&e=\alpha(s),\\
+   B(s),&e=1-\alpha(s).
+ \end{cases}
+\]
+
+\begin{lemma}[Raw-selector identity]\label{lem:raw-selector}
+For every $s>0$ and phase $e$,
+\[
+ \boxed{R\!\left(Q_1^e(J(s))\right)=\chi_e(s).}
+\]
+\end{lemma}
+
+\begin{proof}
+Put $z=Q_1^e(J(s))=2J(s)-e$ and $t=R(z)$.  Since
+$z\bmod2=e$, Lemma~\ref{lem:alt-lift}, applied to $z$, gives for some
+$m\ge1$
+\[
+ 3z+1=Q_m^{1-e}(J(t))=2^mJ(t)-(1-e).
+\]
+After substituting $z=2J(s)-e$ and dividing by $2$,
+\[
+ 3J(s)+1-2e=2^{m-1}J(t).
+\]
+The unique factor-free source in this signed transition is therefore $t$.
+Lemma~\ref{lem:source-boundary} says that this source is $A(s)$ in the
+$A$-selecting phase and $B(s)$ in the opposite phase.  Hence
+$t=\chi_e(s)$.
+\end{proof}
+
+The next lemma is the missing provenance statement behind the old
+$A/B_2$ reset.
+
+\begin{lemma}[Second selector across an ordinary side diamond]
+\label{lem:second-selector}
+Let $q>0$ be ordinary, put $y=B(q)$ and $g=\alpha(q)$.  Then
+\[
+ \boxed{B(A(q))=\chi_g(y).}
+\]
+In particular, if the phase at $q$ is $B$-selecting and its signed valuation
+is $2$, the transferred obligation at $y=B(q)$ selects on its next source
+step the exact common side $B(A(q))$.
+\end{lemma}
+
+\begin{proof}
+Let $k$ be the alternating-suffix length of $A(q)$.  Ordinary means
+$k\in\{1,2\}$.  The proof of Lemma~\ref{lem:side} gives the refined table
+\[
+\begin{array}{c|c|c|c}
+ k&g& B(A(q))=A(y) & g=\alpha(y)\\ \hline
+ 1&1-(y\bmod2)&y\bmod4\in\{0,3\}&y\bmod4\in\{0,3\}\\
+ 2&y\bmod2&y\bmod4\in\{1,2\}&y\bmod4\in\{1,2\}.
+\end{array}
+\]
+The formulas for $g$ follow directly by substituting the one-bit and two-bit
+alternating suffixes in $A(q)=2^k y+t_{k,y\bmod2}$ and using the two-bit
+definition of $\alpha$.  Thus $B(A(q))=A(y)$ exactly when
+$g=\alpha(y)$; otherwise it is $B(y)$.  Lemma~\ref{lem:raw-selector}
+identifies this with $\chi_g(y)$.
+
+For the last assertion note that the signed $B$-valuation equals $k+1$.
+Valuation $2$ therefore has $k=1$, so $q$ is ordinary automatically; the
+transferred phase is $g=1-(1-\alpha(q))=\alpha(q)$.
+\end{proof}
+
+\begin{corollary}[Exceptional rows never form a $B_2$ recycle]
+\label{cor:exceptional-no-b2}
+If $q\bmod16\in\{1,3,12,14\}$, then the $B$-selecting signed valuation at
+$q$ is at least $4$.
+\end{corollary}
+
+\begin{proof}
+For an exceptional $q$, the alternating suffix of $A(q)$ has length at least
+three.  The signed $B$-valuation is one more than that suffix length, hence is
+at least four.
+\end{proof}
+
+\subsection{Retained data, two one-shot seeds, and phase alignment}
+
+The earlier versions used two different finite-token layers.  That distinction
+is essential and is restored here, but without the invalid pre-streak numerical
+comparison of Lemma~\ref{lem:anchor-stress}.  A marked configuration retains
+
+\[
+  (s,\eta,M,\zeta,N,a;\ \text{routing data}).
+\]
+
+Here $s$ is the outer coefficient-source anchor; $M$ is a finite multiset of
+certified outer proof-token heights; $\eta\in\{1,0\}$ is the unique outer
+seed bit; $N$ is a finite multiset of certified inner proof-token heights;
+$\zeta\in\{1,0\}$ is the inner seed bit; and $a$ is the retained numerical
+anchor supplied by the currently active typed entry.  When the entry is a
+free obligation its factor-free coefficient is $J(a)$.  In an attached
+factor/lift task, $a$ is the nested source anchor inherited from the exact
+parent/child geometry.  Temporary ordinary sources, phases, valuations and
+tail exponents are routing data and are not silently promoted to $s$ or $a$.
+
+Put
+\[
+ \Phi(M)=\mathop{\#}_{h\in M}\omega^h,
+ \qquad
+ \Psi(N)=\mathop{\#}_{h\in N}\omega^h,
+\]
+and order retained data lexicographically by
+\begin{equation}\label{eq:v6-rank}
+ \boxed{\Pi=(s,\eta,\Phi(M),\zeta,\Psi(N),a).}
+\end{equation}
+Both bits are ordered by $1>0$.  A step classified as an outer token
+decrease preserves the preceding outer source $s$; a step classified as an
+inner token decrease preserves $(s,\eta,M,\zeta)$.  Thus no decrease of
+$\Phi(M)$ or $\Psi(N)$ can pay for an increase in an earlier retained
+component.  The seed bits are governed by the following non-reseeding rule.
+
+\begin{lemma}[Seed admissibility and non-reseeding]\label{lem:seed-policy}
+At a new outer-source fibre, while $\eta=1$, the inner seed $\zeta$ is
+unavailable.  The first exact finite WIN/LOSS token produced by any typed
+entry diamond---boundary, loss-sibling, base-entry, or the first free
+obligation---may be installed in $M$ only together with the unique strict
+transition $\eta:1\to0$.  After that transition, $M$ changes only by
+certified proper-descendant replacement.
+
+At fixed $(s,\eta=0,M)$, the unique transition $\zeta:1\to0$ may install the
+first exact finite token of the active attached inner task in $N$.  After
+$\zeta=0$, $N$ changes only by certified proper-descendant replacement.  If
+both seed bits have been spent, no unrelated finite state may ever be added
+to either multiset merely because its outcome is known.  This restriction is
+about \emph{ranked tokens}.  A typed fixed-fibre subroutine may use a finite
+WIN/LOSS state of unrelated height as temporary routing data, provided it is
+not inserted into $M$ or $N$ and the subroutine is proved well-founded for
+every possible initial value of that temporary witness.  This is the well-founded-fibre distinction used later for attached fixed-fibre subroutines.
+
+A strict decrease of $M$ may reset $\zeta,N,a$; a strict decrease of $N$ may
+reset $a$.  With all token data fixed, $a$ changes only by a separately
+proved strict source comparison.  In particular, the two seed transitions
+cannot occur in the opposite order and neither can be repeated in an
+unchanged earlier fibre.
+\end{lemma}
+
+\begin{proof}
+This is exactly the lexicographic discipline of \eqref{eq:v6-rank}.  Since
+$\eta$ precedes $\Phi(M)$, the transition $\eta:1\to0$ is strict even when it
+installs an arbitrary finite first multiset $M$.  While $\eta=1$, allowing a
+$\zeta$ transition would leave the earlier unused seed available and would
+permit two incomparable initializations, so it is excluded by definition of
+the marked relation.  Once $\eta=0$, $\zeta$ precedes $\Psi(N)$ and gives the
+same one-shot payment for the first inner token.  After a seed is zero, adding
+an unrelated token would increase the corresponding ordinal multiset and is
+therefore not a permitted transition.  Only a strict decrease in an earlier
+component permits later components to be reset.
+\end{proof}
+
+\begin{lemma}[Phase-aligned common side]\label{lem:phase-aligned-side}
+Let $O(x,e)$ be an $A$-selecting obligation, so $e=\alpha(x)$.  Put
+\[
+ y=A(x),\qquad g=1-e,
+\]
+and let $b$ be the common side of its exponent-one/two boundary.  In the
+canonical branch, whose next obligation is $O(y,g)$,
+\[
+ \boxed{b=\chi_g(y).}
+\]
+Consequently, if $g$ is $A$-selecting at $y$, then $b=A(y)$; if $g$ is
+$B$-selecting, then $b=B(y)$.
+\end{lemma}
+
+\begin{proof}
+With the notation of the obligation put
+\[
+ P=Q_1^e(J(x)),\qquad V=A(P).
+\]
+The canonical identity is
+\[
+ V=Q_1^g(J(y)).
+\]
+The common side is $b=B(P)=R(A(P))=R(V)$.  Lemma~\ref{lem:raw-selector}
+therefore gives $b=\chi_g(y)$ exactly.
+\end{proof}
+
+\begin{lemma}[Finite-source front end]\label{lem:finite-front}
+Suppose an $A$-selecting obligation $O(x,\alpha(x))$ is reached while the
+ordinary source $x$ itself is already a retained finite WIN/LOSS token.
+Before any later high return or free reset, one of the following occurs:
+\begin{enumerate}[label=(\alph*)]
+\item that token is replaced by a certified proper proof-tree descendant;
+\item if $x$ is exceptional and its canonical LOSS child is $B(x)$, the
+      route becomes an exact adjacent factor-free lift over this strict
+      descendant token.
+\end{enumerate}
+The statement includes both possible outcomes, WIN or DRAW, of the common
+side; no fresh finite endpoint of unrelated height is inserted.
+\end{lemma}
+
+\begin{proof}
+Put $y=A(x)$ and let $b$ be the common side of the obligation.  As in the
+universal obligation fork, $b$ is never LOSS.
+
+If $x$ is LOSS, then $y$ is WIN and $h(y)\le h(x)-1$.  Since one child of
+the WIN state $y$ is the non-LOSS state $b$, its other child $\ell$ is the
+unique LOSS child.  Hence
+\[
+ h(\ell)=h(y)-1\le h(x)-2.
+\]
+Thus $x\mapsto\ell$ is strict, independently of whether $b$ is WIN or DRAW.
+
+Now let $x$ be WIN and choose a canonical LOSS child $\ell_0$ of $x$.
+If $\ell_0=y=A(x)$, then every child of $y$ is WIN; in particular the common
+side $b$ is WIN and
+\[
+ h(b)\le h(\ell_0)-1=h(x)-2.
+\]
+So $x\mapsto b$ is strict.
+
+It remains that $\ell_0=B(x)$.  If $x$ is ordinary, the ordinary side
+identity makes
+\[
+ p=B(A(x))
+\]
+a child of the LOSS state $\ell_0$.  Therefore $p$ is WIN and
+\[
+ h(p)\le h(\ell_0)-1=h(x)-2.
+\]
+This strict token is retained before the obligation chooses any later
+canonical or factor continuation.
+
+If $x$ is exceptional, the unconditional exceptional child-pair identity
+(Lemma~\ref{lem:exceptional-side}) gives the two children of $y=A(x)$ as an
+exact adjacent pair
+\[
+ \{A(y),B(y)\}
+ =\{Q_{m+1}^{\delta}(J(\ell_0)),Q_m^{\delta}(J(\ell_0))\}
+\]
+for some $m\ge1$ and phase $\delta$.  The token replacement
+$x\mapsto\ell_0$ is strict because $h(\ell_0)=h(x)-1$, and the later
+arithmetic is attached to this same token.  These cases are exhaustive.
+\end{proof}
+
+\begin{lemma}[Aligned obligation catches or spends its token]
+\label{lem:aligned-catch}
+Suppose $O(x,e)$ carries a retained WIN token
+\[
+ w=\chi_e(x).
+\]
+Then the next outcome-compatible macro either reaches an obligation whose
+ordinary source is exactly the retained token $w$, or strictly replaces
+$w$ by a proper descendant before any reset.
+
+If $e$ is $B$-selecting, every valuation-two return reaches source $w$
+exactly; valuations at least three enter an attached factor frame over $w$.
+If $e$ is $A$-selecting, then $w=A(x)$.  A canonical continuation reaches
+source $w$; every noncanonical continuation replaces $w$ by its unique LOSS
+child before entering the attached factor/side constructor.
+\end{lemma}
+
+\begin{proof}
+If $e$ is $B$-selecting, the selected ordinary source is by definition
+$w=B(x)$.  Lemma~\ref{lem:b-diamond} transfers the DRAW to the exact adjacent
+frame over $w$.  At valuation two this frame is the next obligation itself,
+with ordinary source $w$; at larger valuation it is an attached factor frame
+over the same retained token.
+
+Now let $e=\alpha(x)$.  Then $w=A(x)$.  Let $d$ be the common side of
+$O(x,e)$.  Lemma~\ref{lem:phase-aligned-side}, applied one level later,
+places $d$ among the two ordinary children of $w$.  The state $d$ is never
+LOSS.  If the obligation takes its canonical branch, the next ordinary
+source is $A(x)=w$ exactly.  Otherwise $d$ is either DRAW or the WIN common
+side of the factor branch.  Since the retained state $w$ is WIN and one of
+its children $d$ is non-LOSS, its other child $\ell$ is the unique LOSS
+child, so
+\[
+ h(\ell)=h(w)-1.
+\]
+Replace $w$ by $\ell$ before entering the corresponding attached side/factor
+constructor.  Thus no noncanonical row can reset at equal token rank.
+\end{proof}
+
+\subsection{Closure of the seeded $A/B_2$ reset (former P1)}
+
+\begin{proposition}[Seeded $A/B_2$ reset provenance]\label{prop:P1-closed}
+Every outcome-compatible canonical $A$ continuation and every valuation-two
+$B$ return from a typed free/aligned obligation satisfies the P1 acceptance
+conditions.  More precisely, before a control reset to a fresh $A$-obligation
+is permitted, one of the following has happened:
+\begin{enumerate}[label=(\roman*)]
+\item a retained numerical source has strictly decreased;
+\item an available seed has installed an exact finite token according to
+      Lemma~\ref{lem:seed-policy};
+\item an existing retained proof token has been replaced by a certified proper
+      proof-tree descendant; or
+\item the route has become an attached factor/lift task over such a retained
+      token, in which case it is no longer eligible for a free reseed.
+\end{enumerate}
+This statement covers canonical $A$-streaks of every outcome-compatible
+length and all exceptional residue classes.  It never compares a final
+$B$-return with the numerical cursor present before the streak.
+\end{proposition}
+
+\begin{proof}
+First consider a free obligation whose ordinary source $x$ is the current
+retained inner anchor and which does not yet carry an aligned finite token.
+Such a free obligation is admissible only while a seed is available under
+Lemma~\ref{lem:seed-policy}; once both seeds have been spent, all obligations
+arrive through the aligned/attached cases below.  A $B$-selecting source
+returns to $B(x)<x$, hence makes a genuine retained inner-source decrease.
+At an $A$-selecting source the universal obligation fork has a common side
+$b$ which is not LOSS.  If $b$ is DRAW, the standard source estimate
+\[
+ \rho(b)\le\frac{9x+1}{24}<x
+\]
+is a genuine source comparison against the factor-free retained source $x$
+and gives (i).  If $b$ is WIN, install this exact boundary token using the
+earliest admissible seed: $\eta:1\to0$ if this is the first finite token in
+the outer fibre, otherwise $\zeta:1\to0$ with $\eta=0$ for the first inner
+token of the current task.  No such installation is allowed if both bits are
+zero.
+
+Suppose first that the obligation then takes its factor branch.  The token
+$b$ remains marked, and the factor fork is by definition an attached entry
+over this exact token.  This is alternative (iv), so P1 stops here: it makes
