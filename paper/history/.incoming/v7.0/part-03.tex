@@ -1,0 +1,320 @@
+exposes a strict finite descendant before continuing the \DRAW.
+\end{corollary}
+
+\begin{proof}
+Every occurrence of alternative (i) reduces $k$ by one.  The nonnegative
+integer $k$ cannot be reduced infinitely.  Alternative (ii) is the stated
+strict finite descendant event.
+\end{proof}
+
+\begin{remark}
+The replacement $X\rightsquigarrow H$ is a reverse proof normalization,
+not a legal move from $X$.  Any global use must still preserve an actual
+continuing \DRAW\ cursor, as required later in
+Definition~\ref{def:complete-router}.
+\end{remark}
+
+\section{A complete exponent-one predecessor split}
+
+A reverse factor lemma valid for tail exponent at least two must not be used
+at exponent one.  The correct exponent-one predecessor is as follows.
+
+\begin{lemma}[Exponent-one predecessor progress]\label{lem:exp-one-progress}
+Let $a$ be positive and odd, $k\ge1$, and put
+\[
+ X=Q_1^e(3^k a),
+ \qquad
+ P=Q_2^e(3^{k-1}a).
+\]
+Then $A(P)=X$.  If $X$ is \DRAW, $P$ is either \DRAW\ or \WIN.
+
+If $P$ is \DRAW, the displayed factor exponent decreases from $k$ to
+$k-1$.  If $P$ is \WIN, put $L=B(P)$.  Then $L$ is \LOSS.  Moreover:
+\begin{enumerate}[label=(\alph*)]
+\item if $P\not\equiv1,3,12,14\pmod{16}$, then
+      $w=B(X)=B(A(P))$ is an actual \WIN\ child of $L$,
+      $h(w)\le h(L)-1$, and $A(X)$ is \DRAW;
+\item if $P\equiv1,3,12,14\pmod{16}$, then the two children of
+      $X=A(P)$ form an exact adjacent factor-free pair
+      \[
+        \{Q_m^\delta(J(L)),Q_{m+1}^\delta(J(L))\}
+      \]
+      for some $m\ge1$ and $\delta\in\{0,1\}$, and this pair contains a
+      continuing \DRAW.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The formula $A(P)=X$ is the $Q_2\mapsto Q_1$ instance of the constant-tail
+calculation.  A state with a \DRAW\ child cannot be \LOSS.  If $P$ is
+\WIN, the \DRAW\ child $X$ cannot witness the win, so the other child
+$L=B(P)$ is \LOSS.
+
+Assume first that $P$ is ordinary.  Then $L>0$: if $B(P)=0$, the
+binary word $A(P)$ is wholly alternating, and the residue argument used in
+Lemma~\ref{lem:ordinary-side} puts $P$ in an exceptional class.
+Lemma~\ref{lem:ordinary-side} therefore gives
+\[
+ B(A(P))\in\{A(B(P)),B(B(P))\}=\Moves(L).
+\]
+Thus $w=B(X)=B(A(P))$ is a child of the \LOSS\ state $L$, hence is \WIN\
+and has height at most $h(L)-1$.  Since $X$ is \DRAW\ and its $B$-child
+$w$ is \WIN, its other child $A(X)$ is \DRAW.
+
+If $P$ is exceptional, write $P=16t+c$ with
+$c\in\{1,3,12,14\}$.  Lemma~\ref{lem:exceptional-pair} gives exactly the adjacent pair over $L=B(P)$.
+Because $X$ is \DRAW, neither child is \LOSS\ and at least one is \DRAW.
+\end{proof}
+
+\begin{remark}
+Lemma~\ref{lem:exp-one-progress} closes the local misuse of reverse factor
+removal at exponent one.  It does \emph{not} by itself prove that the newly
+exposed $L$ is already a retained token in a global rank.  That is a
+separate initialization/provenance question.
+\end{remark}
+
+\section{The source-zero valuation-one row, corrected}
+
+Source zero means that the odd coefficient is a power of three.  Put
+\[
+  S_{k,r}^e=Q_r^e(3^k).
+\]
+Long tails reduce to $r\in\{1,2\}$ in finitely many forward moves.  The
+resulting signed boundary has, for some $n\ge1$,
+\[
+  3^n+1-2e=2^j J(y).
+\]
+
+\begin{lemma}[Exact source-zero valuation table]\label{lem:zero-table}
+The valuation is
+\[
+\begin{array}{c|cc}
+ &n\text{ odd}&n\text{ even}\\ \hline
+ e=0&j=2&j=1\\
+ e=1&j=1&j=2+v_2(n).
+\end{array}
+\]
+When $j=1$,
+\[
+  y=\frac{3^{n-1}-1}{2}.
+\]
+\end{lemma}
+
+\begin{proof}
+For $e=0$, the lifting-the-exponent formula gives
+$v_2(3^n+1)=2$ for odd $n$, while $3^n+1\equiv2\pmod4$ for even $n$.
+For $e=1$, $3^n-1$ has valuation $1$ for odd $n$ and
+$2+v_2(n)$ for even $n$.  It remains to identify $y$ in the two $j=1$
+rows.  Put $y=(3^{n-1}-1)/2$.  If $e=0$, then $n$ is even, so $y$ is odd
+and
+\[
+ J(y)=3y+2=\frac{3^n+1}{2}.
+\]
+If $e=1$, then $n$ is odd, so $y$ is even and
+\[
+ J(y)=3y+1=\frac{3^n-1}{2}.
+\]
+These are exactly the odd quotients after the single factor of two is
+removed.
+\end{proof}
+
+\begin{lemma}[Correct raw selector in the $j=1$ row]\label{lem:zero-j1}
+Assume $j=1$ and put $d=1-e$.  The signed exit is
+\[
+  T=Q_1^d(J(y)),
+\]
+and its raw companion is
+\[
+  R(T)=
+  \begin{cases}
+    A(y),&e=0,\\
+    B(y),&e=1.
+  \end{cases}
+\]
+Suppose this signed/raw pair is exposed as the two children of a \DRAW\
+boundary state, the raw companion is \DRAW, and $T$ is finite.  Then $T$ is
+\WIN.  The following split is exhaustive:
+\begin{enumerate}[label=(\roman*)]
+\item if $y$ is \WIN, the other ordinary child of $y$ is an exact
+      \LOSS\ sibling of the raw \DRAW;
+\item if $y$ is \DRAW, the row yields a reverse \DRAW\ parent $y$, but it
+      does not yield a finite token or a source decrease.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The first identity is the definition of the signed exit.  In the $e=0$
+valuation-one row, $n$ is even and
+$y=(3^{n-1}-1)/2\equiv1\pmod4$.  Hence $A(y)$ is even and
+\[
+ T=2J(y)-1=4A(y)+1
+\]
+is obtained by appending the bits $01$ after a final $0$; deleting that
+maximal alternating suffix leaves $A(y)$.  In the $e=1$ row, $n$ is odd and
+$y\equiv0\pmod4$, so $A(y)$ is again even and
+\[
+ T=2J(y)=4A(y)+2.
+\]
+The appended bits are $10$ and the alternating deletion continues through
+exactly the maximal alternating suffix of $A(y)$, leaving
+$R(A(y))=B(y)$.
+
+The raw and signed exits are the two children of the same \DRAW\ boundary
+configuration.  If the signed exit is finite, it cannot be \LOSS, because a
+\DRAW\ state has no \LOSS\ child; hence it is \WIN.  Since the raw exit is
+an actual child of $y$, the state $y$ cannot be \LOSS.  If $y$ is \WIN, its
+other child must be \LOSS\ because the displayed child is \DRAW.  If $y$
+is \DRAW, no finite sibling follows.  These are all possible outcomes of
+$y$.
+\end{proof}
+
+The second branch of Lemma~\ref{lem:zero-j1} was incorrectly compressed in
+Version 6.3 into a generic ``loss-sibling entry.''  It is not such an entry.
+It is one of the explicit global obligations below.
+
+\section{High returns: the identities are proved, the rank provenance is not}
+
+The long high-return coordinates used in Version 6.3 are arithmetically
+correct.  Let $t>0$, $g\in\{0,1\}$, and $v\ge7$.  Put
+\[
+ u=Q_{v-1}^g(J(t)),
+ \qquad
+ c=Q_{v-3}^g(3J(t)),
+ \qquad
+ p=B(A(u)),
+ \qquad
+ b=B(p).
+\]
+
+\begin{lemma}[Exact long high-return diamond]\label{lem:high-return}
+The identities
+\[
+ p=A(c)=Q_{v-4}^g(9J(t)),
+ \qquad
+ b=Q_{v-6}^g(27J(t))
+\]
+hold.  Suppose, in addition, that the outcome guard proves
+\[
+ u,c,p,b\text{ are \WIN},
+ \qquad A(u)\text{ is \LOSS},
+ \qquad B(c)\text{ is \LOSS}.
+\]
+Then
+\[
+ h(p)\le h(u)-2,
+ \qquad
+ h(b)\le h(c)-2.
+\]
+Consequently, if $u,c$ are already retained tokens, the replacement
+\[
+  (u,c)\longmapsto(p,b)
+\]
+is strict in the multiset token rank.  A declared one-shot seed may first
+install the pair $\{u,c\}$; after that installation the same replacement
+is strict, while the initialization itself must be paid by the separate
+seed component rather than by $\Phi$.
+\end{lemma}
+
+\begin{proof}
+Constant-tail reduction gives
+\[
+ A(u)=Q_{v-2}^g(3J(t)),
+ \qquad
+ B(A(u))=Q_{v-4}^g(9J(t))=A(c),
+\]
+where the boundary rows $v=7$ are included by direct substitution.  Applying
+the same calculation to $p$ gives the formula for $b$.
+
+Here $B(u)=c$, and the outcome guard says that $c$ is \WIN.  Thus
+$A(u)$ is the unique \LOSS\ child of the \WIN\ state $u$.  Since $p$ is a
+child of $A(u)$,
+\[
+ h(p)\le h(A(u))-1=h(u)-2.
+\]
+Similarly, $v-3\ge4$ makes $c\equiv0$ or $15\pmod {16}$, so $c$ is
+ordinary.  Its child $A(c)=p$ is \WIN, while the guard says that $B(c)$ is
+\LOSS; hence $B(c)$ is the unique \LOSS\ child witnessing $c$ as \WIN.
+Lemma~\ref{lem:ordinary-side} makes $b=B(A(c))$ a child of $B(c)$, and
+therefore
+\[
+ h(b)\le h(B(c))-1=h(c)-2.
+\]
+Lemma~\ref{lem:token-rank} gives the final conditional conclusion.
+\end{proof}
+
+\begin{remark}[The precise old gap]
+The hypotheses ``$u$ and $c$ are finite \WIN\ states'' do not imply that
+they are already members of a ranked multiset.  Version 6.3 silently made
+that promotion.  Lemma~\ref{lem:high-return} deliberately separates the
+valid height inequalities from the still missing global initialization and
+continuity invariant.
+\end{remark}
+
+\section{The two shortest marked tails}
+
+The shortest marked-tail arithmetic can also be stated without overclaim.
+Let $C$ be positive and odd and put $b=Q_D^g(C)$.
+
+\begin{lemma}[The $D=1$ row pays an actual loss token]\label{lem:D1}
+Assume
+\[
+ q=B(b)\text{ is \WIN},
+ \qquad
+ y=A(b)\text{ is \LOSS},
+ \qquad D=1.
+\]
+Factor
+\[
+ 9J(b)+1-2g=2^j J(w).
+\]
+Then $j\ge2$ and
+\[
+ w=\begin{cases}
+     A(y),&j=2,\\
+     B(y),&j\ge3.
+   \end{cases}
+\]
+Thus $w$ is an actual \WIN\ child of the retained \LOSS\ token $y$ and
+$h(w)\le h(y)-1$.
+\end{lemma}
+
+\begin{proof}
+Since $b=2C-g$,
+\[
+ 9J(b)+1-2g=
+ \begin{cases}
+  2(27C+5),&g=0,\\
+  2(27C-5),&g=1.
+ \end{cases}
+\]
+The parenthesized integer is even because $C$ is odd, so $j\ge2$.
+With $y=A(b)=3C-g$, the same identity is
+\[
+ 9J(b)+1-2g
+ =2\bigl(3J(y)+1-2(1-g)\bigr).
+\]
+The expression in parentheses is the signed source transition at
+$y$ in phase $1-g$.  Lemma~\ref{lem:source-selector} says that valuation one
+in that inner transition (total $j=2$) selects $A(y)$, while larger valuation
+selects $B(y)$.  Both are children of the
+\LOSS\ state $y$.
+\end{proof}
+
+\begin{lemma}[Exact $D=2$ lift]\label{lem:D2}
+Assume
+\[
+ q=A(b)\text{ is \WIN},
+ \qquad
+ y=B(b)\text{ is \LOSS},
+ \qquad D=2.
+\]
+Factor
+\[
+ 9J(b)+1-2g=2^j J(w).
+\]
+Then $j=1$.  If $y>0$, the returned source is
+\[
+  w=Q_m^{1-g}(J(y))
+\]
+for an exact integer $m\ge2$.  If $y=0$, the returned state has coefficient
+source zero.
