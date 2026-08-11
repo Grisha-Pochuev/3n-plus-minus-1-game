@@ -1,0 +1,386 @@
+gives the exact common-side split: a certified proper descendant, or the
+exceptional adjacent lift over the canonical lower LOSS token.  Hence neither
+short row is a pure reset.
+
+\item \textbf{Long high return.}  The returned valuation is $v\ge7$.  With
+\[
+ u=Q_{v-1}^g(J(t)),\qquad c=Q_{v-3}^g(3J(t)),
+\]
+the guard includes $O(c,\alpha(c))$ and the finite return provenance.
+Lemma~\ref{lem:high-return-pay}(b) first makes the strict pair replacement
+$(u,c)\mapsto(p,b)$.  The canonical alternative then returns directly to an
+obligation at the already lower token $p$.  Only the factor alternative makes
+the second strict replacement $(p,b)\mapsto(q,y)$ and enters the exact
+marked-tail frame. Thus every long high return is strict, but only its factor
+branch creates a marked tail.
+
+\item \textbf{Marked tail.}  Its guard records a positive odd $C$, a phase $g$,
+and an exact tail length $D$, with $b=Q_D^g(C)$ WIN and the exact marked
+factor frame
+\[
+ \{Q_3^g(J(b)),Q_2^g(J(b))\}\text{ containing a \DRAW}.
+\]
+The retained WIN/LOSS pair is orientation-sensitive:
+\[
+\begin{array}{c|cc}
+D&q\text{ WIN}&y\text{ LOSS}\\ \hline
+1&B(b)&A(b)\\
+2&A(b)&B(b)\\
+D\ge3&A(b)&B(b).
+\end{array}
+\]
+Lemma~\ref{lem:short-tail} proves that $D=1$ is itself strict: its first
+factor source is an actual child of the retained LOSS token.  At $D=2$ the first source is an exact lift over the retained LOSS token
+$y$. Lemmas~\ref{lem:loss-anchored-lift} and~\ref{lem:D2-pure} keep this
+row attached: no unrelated finite endpoint is promoted, equal-token routing
+only decreases its exact tail/factor counter, and every restart pays a strict
+child-token edge.  For every $D\ge3$,
+Lemma~\ref{lem:marked-tail-pay} replaces the retained LOSS token $y$ by its
+actual WIN child
+\[
+ r=B(q)=B(y)\quad(D=3),\qquad
+ r=B(q)=A(y)\quad(D\ge4),
+\]
+so $h(r)<h(y)$ before any new task is installed.
+
+\item \textbf{Attached lift.}  There are two semantically distinct attached
+lift origins, and they are not conflated.  The $D=2$ row is the exact lift over the already retained LOSS token $y$ of
+Lemma~\ref{lem:short-tail}. It is normalized by
+Lemma~\ref{lem:loss-anchored-lift}: while $y$ is fixed an exact tail/factor
+counter decreases, and before any genuine restart $y$ is replaced by an
+actual WIN child or certified descendant. It is not sent through the $D=3$
+terminal-barrier proof.
+
+The post-payment $D=3$ row has an exact raw lift $Q_m^g(J(r))$, $m\ge2$,
+over the lower token $r$. Lemma~\ref{lem:attached-lift} gives its complete
+three-row arithmetic.  The stable row $m\ge4$ performs only
+$(m,a)\mapsto(m-3,9a)$, and the terminal rows are paid by
+Lemma~\ref{lem:terminal-pay}.  Corollary~\ref{cor:short-lift-closed} closes
+this module without any appeal to the $D=2$ row.
+
+\item \textbf{Attached B lift.}  Every B-selecting exponent-one lift has the
+form
+\[
+ S=Q_1^d(J(r)),\qquad e=1-d.
+\]
+Lemma~\ref{lem:attached-b} gives either terminal source or
+$\rho(B(S))<r$.  Thus the selected source is a strict nested-source exit;
+it is not a free reseed at the numerical cursor $S$.
+
+\item \textbf{Post-payment $D=3$ terminal barriers.}  The terminal exponent is
+exactly one, two, or three inside the shortest marked lift of (S8).
+Lemma~\ref{lem:terminal-pay} treats all three.  The $D=2$ LOSS-anchored entry never uses this terminal lemma; it is already
+covered by Lemmas~\ref{lem:loss-anchored-lift} and~\ref{lem:D2-pure}.
+Exponent one
+first reconstructs a lower LOSS token and then has only the symbolic suffix
+rows $\lambda=1,2,3$ or $\lambda\ge4$; exponent two and positive-recycle
+exponent three reconstruct a strictly lower LOSS token; the sole
+zero-recycle exponent-three row replaces the existing LOSS token by its
+actual WIN child.  Thus every terminal return pays before re-entering an
+obligation.
+\end{enumerate}
+
+These rows cover every exponent and every returned tail length.  Therefore
+P2 is closed: an upward control return is either preceded by a strict
+retained source/token edge or is a finite same-retained-data route whose
+remaining exponent is explicitly decreasing.
+\end{proposition}
+
+\begin{proof}
+The coverage is by the exact parameters used to construct the controls, not
+by a numerical cutoff.  Boundary and loss-sibling entries carry the true
+finite local tail/factor counter $\tau$, and marked-tail controls carry their
+true constant-tail exponent.  Factor forks split at $r=1$ versus $r\ge2$.
+High returns split at the only two short valuations $5,6$ versus the uniform
+range $v\ge7$.  Attached lifts split at $m=1,2,3,\ge4$.  Terminal rows split by
+exponent $1,2,3$, and the exponent-one suffix is split by its actual
+alternating-suffix length $\lambda=1,2,3,\ge4$.  These partitions are
+disjoint except where two exact descriptions meet at a boundary, and in such
+overlaps the certified conclusion is the same.
+
+The parent/child incidences and rank payments are precisely the conclusions
+of Lemmas~\ref{lem:factor-fork-pay}--\ref{lem:terminal-pay}.  A factor
+alternative whose ordinary source is itself the retained anchor/token uses
+the generic lower factor fork (S4).  A factor alternative at a temporary
+short-lift cursor does \emph{not} use (S4): it remains inside (S8), keeps the
+incoming $q/y$ provenance, and follows the exact finite lift/terminal
+transport of Lemma~\ref{lem:attached-lift}.  Thus a temporary numerical
+cursor is never promoted to a retained source merely to make a factor lemma
+applicable.  The generic fork either pays a source/token component or reaches
+(S5)--(S6).  A long return (S6) pays the pair-token edge before the marked
+source is installed.  Its marked source then has an actual tail length $D$.
+Rows $D\ge3$ pay the LOSS-token edge of (S7) before any raw/signed exit.
+The $D=1$ row is itself strict. The $D=2$ row is not a free pure reset: it
+remains LOSS-anchored by Lemma~\ref{lem:loss-anchored-lift}; equal-token
+routing only decreases its exact tail/factor counter, and every restart first
+pays a child-token edge.  Thus following the arrows gives the
+closed cycle
+
+\[
+  \text{obligation}\to\text{factor fork}\to\text{high return}
+  \to\text{marked tail}\to\text{attached lift}\to\text{obligation},
+\]
+
+but every traversal contains a strict retained edge before a new marked tail
+is installed.  Inside the already post-payment $D=3$ lift, equal-retained-data
+routing can additionally decrease the displayed natural lift exponent before
+returning to the obligation.  The $D=2$ LOSS-anchored route is finite at fixed token/counter data and
+cannot restart without the strict child-token event of
+Lemma~\ref{lem:loss-anchored-lift}. Terminal exits in the $D=3$ module
+are (S10) and pay a strict token first.  Therefore no finite raw cursor is ever promoted to
+$M$ or $N$ merely because its outcome is known, and there is no semantic
+``other'' row or unranked reverse edge.
+\end{proof}
+
+\section{Well-foundedness and the no-DRAW theorem}\label{sec:global}
+
+\begin{lemma}[Well-founded-fibre principle]\label{lem:fibre-principle}
+Let a transition relation carry a value in a well-order.  Suppose every
+transition weakly decreases that value and the relation restricted to every
+fixed value is well-founded.  Then the full relation is well-founded.
+\end{lemma}
+
+\begin{proof}
+An infinite transition path would give a nonincreasing sequence in a
+well-order.  It can contain only finitely many strict decreases, so from some
+point onward the retained value would be constant.  The remaining infinite
+path would lie inside one fixed fibre, contrary to the hypothesis.
+\end{proof}
+
+\begin{proposition}[Fixed-retained-data routing is well-founded]
+\label{prop:fixed-fibre}
+Fix the complete retained tuple
+\[
+ (s,\eta,M,\zeta,N,a).
+\]
+The routing relation that preserves every one of these values is
+well-founded.
+\end{proposition}
+
+\begin{proof}
+In a fixed fibre no seed transition, token replacement or source decrease is
+available.  Proposition~\ref{prop:P2-closed} then leaves only finite routing
+rows.
+
+A boundary or loss-sibling tail has a finite exact exponent and decreases it
+until an obligation/factor boundary.  A canonical A-side run cannot pass four
+consecutive WIN side states (Corollary~\ref{cor:no-four-win}); before that it
+reaches a B phase or one of the strict/attached exits.  A valuation-two B
+reset cannot occur as a pure reverse edge: Proposition~\ref{prop:P1-closed}
+requires a seed, source edge or token edge, all impossible in the fixed
+fibre.  A larger B valuation enters a factor row.
+
+A lower factor fork either leaves by a strict source/token edge or reaches a
+high return.  Every high return is strict in a retained token by
+Lemma~\ref{lem:high-return-pay}, so no high-return cycle survives in the
+fixed fibre.  Consequently a marked tail cannot be \emph{re-entered} in a
+fixed token fibre.  The $D=1$ row is itself strict, and every $D\ge3$ marked
+row is strict by Lemma~\ref{lem:marked-tail-pay}.  The $D=2$ row may occur as an initial attached control after a high return,
+but Lemma~\ref{lem:loss-anchored-lift} leaves no equal-fibre restart: while
+its token is fixed the exact tail/factor counter decreases, and any return to
+a fresh generic control is preceded by a strict replacement of that LOSS
+token.
+
+The post-payment $D=3$ shortest-lift module is the only remaining local module
+with an unbounded displayed tail counter.  By Lemma~\ref{lem:attached-lift}
+and Corollary~\ref{cor:short-lift-closed}, its sole same-provenance recurrence
+is $m\mapsto m-3$ for $m\ge4$. Between two such updates the control moves
+forward through finite raw-factor/terminal stages; at $m=1,2,3$ it meets a
+terminal barrier and pays a token. Thus a fixed-fibre path is a finite
+concatenation of decreasing natural counters and finite acyclic routing
+segments. It cannot be infinite.
+\end{proof}
+
+\begin{proposition}[Well-founded marked normalizer]\label{prop:normalizer}
+The complete marked routing relation is well-founded under the retained
+projection $\Pi$ of \eqref{eq:v6-rank} together with
+Proposition~\ref{prop:fixed-fibre}.
+\end{proposition}
+
+\begin{proof}
+A strict outer-source transition lowers $s$ and may reset every later
+component.  At fixed $s$, the unique transition $\eta:1\to0$ is strict and
+may install $M$ and reset later data.  Once $\eta=0$, every change of $M$ is
+a certified proper-descendant replacement and strictly lowers $\Phi(M)$ by
+Lemma~\ref{lem:token-rank}; it may reset $\zeta,N,a$.
+
+Only after $\eta=0$, at fixed preceding components, $\zeta:1\to0$ is a
+one-time strict inner-token seed.  Thereafter every change of $N$ is a
+certified descendant replacement
+and strictly lowers $\Psi(N)$; it may reset $a$.  With both token layers
+fixed, every change of the retained numerical anchor $a$ is a separately
+proved strict source decrease.  Hence every transition weakly decreases
+$\Pi$, and every transition that changes retained data decreases it
+strictly.  The equal-$\Pi$ fibre is well-founded by
+Proposition~\ref{prop:fixed-fibre}.  Lemma~\ref{lem:fibre-principle} now
+proves the claim.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Assume that a DRAW exists and choose the least coefficient source $s$ among
+DRAW positions.  Start with the corresponding outer fibre and $\eta=1$.
+
+If $s=0$, Lemma~\ref{lem:zero-source} performs a finite normalization to a
+boundary or loss-sibling entry.  If $s>0$, follow a continuing DRAW through
+long constant tails until exponent one or two.  Proposition~\ref{prop:boundary-reduction}
+then gives a typed entry or the factor-free exponent-two base state; the
+latter is handled by Proposition~\ref{prop:base-entry}.  The factorful
+exponent-one case is handled by Proposition~\ref{prop:factorful-entry}; the
+reverse-factor lemma is never used at exponent one.  At no point is a
+decrease of a factorful canonical coefficient treated as a source decrease.
+
+The first exact finite token may appear in a loss-sibling diamond, in the
+factor-free base entry, or in the first free obligation.  Whichever typed
+entry produces it, Lemma~\ref{lem:seed-policy} installs it in $M$ on the
+unique transition $\eta:1\to0$; no earlier use of $\zeta$ is allowed.  If a
+free obligation is reached before any finite endpoint, Proposition~\ref{prop:P1-closed}
+either strictly decreases its retained source or produces exactly such a
+seedable token.  Once $\eta=0$, the first additional finite witness of an
+attached inner task may consume $\zeta$ once; after that, every free
+$A/B_2$ reset is strict in an already declared source/token component or is
+an attached route over existing provenance.  Every factor/high-return/marked-
+tail/terminal route is exhaustive by Proposition~\ref{prop:P2-closed}.
+Therefore all subsequent outcome-compatible normalization takes place in the
+well-founded marked relation of Proposition~\ref{prop:normalizer}.
+
+Every macro is justified by exact parent/child incidences and preserves an
+actual DRAW continuation separately from its finite tokens.  A macro may use
+a reverse parent as a proof transformation; it is not asserted to be a
+forward play sequence.  Whenever it follows play, it uses an actual child.
+A DRAW has no LOSS child and has at least one DRAW child, so whenever the
+macro requires a continuing game branch a DRAW child exists.  Repeating the finite macros from the hypothetical DRAW
+would therefore create an infinite path in the well-founded marked relation,
+a contradiction.
+
+Hence the conjugated game has no DRAW positions.  Proposition~\ref{prop:first-normal}
+returns this conclusion to the original odd-integer game, with terminal
+conjugated state $0$ corresponding to original state $1$.  Thus every
+positive odd start has finite remoteness and optimal play reaches $1$.
+\end{proof}
+
+
+\section{Verification boundary and reproducibility}\label{sec:verification}
+
+The theorem above is a human mathematical claim.  The accompanying Python
+program checks the exact arithmetic identities used in Sections 2--9,
+including the raw-selector and second-selector identities, both permanent
+negative regressions, the exceptional no-$B_2$ assertion, and the declared
+finite pure-control order.  It also checks the constant-tail, fixed-tail,
+base-entry, zero-source and exceptional-side identities inherited unchanged
+from version 5.0 over large finite ranges.
+
+The finite program is supporting verification, not an infinite proof.  In
+particular it does not assign outcomes to all integers and it does not replace
+the proof-height arguments in Sections~\ref{sec:P2closed}--\ref{sec:global}.
+The local high-return and terminal formulas used in the semantic closure are
+cross-referenced, for audit provenance only, to Sections 91--135 of the frozen
+repository proof ledger at revision
+\nolinkurl{9d12789de3dbd841851f3faff1a237018d43879d}.  All statements needed for
+the theorem are reproduced and proved in this manuscript.  The globally
+audited but invalid entry statement formerly appearing as Section 137 of that
+ledger is not a dependency of this manuscript.
+
+No end-to-end Lean formalization is claimed.  The purpose of the machine files
+is to make transcription and arithmetic regressions easy to attack
+independently.
+
+\appendix
+\section{Permanent adversarial regressions}
+
+The following examples are normative tests for any later revision.
+
+\paragraph{Coefficient/source separation.}
+For $s=1$, $J(1)=5$, $a=3J(1)=15$ and $e=1$, the common boundary child is
+$R(44)=22$.  Its canonical coefficient is $11<15$, but $11=J(3)$, so its
+coefficient source has grown from $1$ to $3$.  Therefore no factorful step may
+use ``smaller coefficient'' as a synonym for ``smaller source''.
+
+\paragraph{Pre-streak anchor separation.}
+Lemma~\ref{lem:anchor-stress} gives
+$20\to30\to45\to68$ and $B(68)=25>20$.  The proof of
+Proposition~\ref{prop:P1-closed} deliberately compares only exact parent/child
+proof tokens or the immediate typed inner source; it never compares $25$ with
+$20$.
+
+\section{Closed semantic inventory}\label{app:inventory}
+
+\begin{center}
+\small
+\begin{tabular}{@{}p{.22\linewidth}p{.31\linewidth}p{.37\linewidth}@{}}
+\toprule
+Constructor & Exhaustive rows & Rank effect before restart \\
+\midrule
+loss-sibling entry & fixed-tail; exponent-one predecessor; side/hidden parent &
+finite $\tau$ countdown while retaining the exact witness \\
+free obligation & $A$ canonical; $B_2$; factor exit &
+Prop.~\ref{prop:P1-closed}: source, seed, strict token, or attached entry \\
+attached obligation & ordinary; exceptional exact lift &
+retains existing token; factor/lift lemmas, never reseeds \\
+factor fork & $r=1$; $r\ge2$ &
+strict source/token or same-token high return \\
+high return & $v=5$; $v=6$; $v\ge7$ &
+strict descendant; for $v\ge7$ strict two-token multiset descent \\
+marked tail & $D=1$; $D=2$; $D\ge3$ &
+$D=1$ strict LOSS-child; $D=2$ LOSS-anchored countdown/child-token payment; $D\ge3$ strict $y\mapsto r$ \\
+short lift & $D=2$ coupled entry; post-payment $D=3$ with $m\ge2$ &
+$D=2$ stays LOSS-anchored and pays before restart; $D=3$ decreases $m$ by $3$ or pays a token \\
+terminal & zero-recycle $m=2$; exponent $1$; positive $2/3$; zero $3$ &
+strict descendant or exact lower-LOSS attached frame before restart \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\section{Frozen local-proof provenance map}
+
+For reproducibility, the following map records where the same local incidence
+calculations appeared in the research ledger.  It is an audit provenance map,
+not an additional proof assumption: the theorem above uses the statements and
+proofs reproduced in this manuscript.  At frozen revision
+\nolinkurl{9d12789de3dbd841851f3faff1a237018d43879d}, the corresponding ranges
+are:
+\begin{itemize}[leftmargin=*]
+\item Sections 91--95: obligation and lower factor-fork source/token exits;
+\item Sections 97--103: short and long high-return provenance and the
+      two-token descent;
+\item Sections 104--120: transport of the lower token through raw/signed
+      factor exits and exact lifts;
+\item Sections 121--128: terminal reconstruction and the three finite gate
+      lengths;
+\item Sections 129--135: multiset token rank, fibre principle, terminal entry,
+      the two short marked-tail rows, and the universal $D\ge3$ LOSS-token
+      replacement.
+\end{itemize}
+Section 136 is useful as a historical assembly, but the present proof instead
+uses Propositions~\ref{prop:P1-closed}, \ref{prop:P2-closed}, and
+\ref{prop:normalizer}.  Sections 137--138 are explicitly excluded because the
+former contained the audited coefficient/source shortcut.
+
+\begin{thebibliography}{9}
+\bibitem{Guy1986}
+R. K. Guy, John Isbell's Game of Beanstalk and John Conway's Game of
+Beans-Don't-Talk, \emph{Mathematics Magazine} 59(5) (1986), 259--269.
+
+\bibitem{Guy1996}
+R. K. Guy, Unsolved Problems in Combinatorial Games, Problem 42, in
+\emph{Games of No Chance}, MSRI Publications 29, Cambridge University Press,
+1996.
+
+\bibitem{Althofer2024}
+I. Alth\"ofer, M. Hartisch, T. Zipproth, Analysis of a Collatz Game and Other
+Variants of the $3n+1$ Problem, \emph{Advances in Computer Games} (2024),
+123--132. DOI: \url{https://doi.org/10.1007/978-3-031-54968-7_11}.
+
+\bibitem{AlthoferPage}
+I. Alth\"ofer, Collatz Problems: The Two-Player $3n+-1$ Game,
+\url{https://althofer.de/collatz-prizes.html}.
+
+\bibitem{Repo}
+G. Pochuev, Optimal $3n\pm1$ Game: Proof and Verification Repository,
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+
+\bibitem{Zenodo}
+G. Pochuev, Optimal Play in the Two-Player $3n\pm1$ Game, Zenodo,
+\url{https://doi.org/10.5281/zenodo.21844684}, 2026.
+\end{thebibliography}
+
+\end{document}
