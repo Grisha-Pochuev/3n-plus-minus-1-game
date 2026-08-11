@@ -1,0 +1,342 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\WIN}{\ensuremath{\mathrm{WIN}}}
+\newcommand{\LOSS}{\ensuremath{\mathrm{LOSS}}}
+\newcommand{\DRAW}{\ensuremath{\mathrm{DRAW}}}
+\newcommand{\R}{\mathcal R}
+\newcommand{\PhiM}{\Phi}
+\newcommand{\odd}{\operatorname{odd}}
+\newcommand{\vTwo}{v_2}
+\newcommand{\source}{\operatorname{src}}
+
+\title{The Two-Player $3n\mathbin{\pm}1$ Game:\\
+A Binary Normal Form and a Well-Founded No-Draw Proof}
+\author{Grisha Pochuev\\
+  \small\href{mailto:n_854@mail.ru}{n\_854@mail.ru}\\
+  \small\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}}
+\date{Corrected manuscript, 10 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\small\textbf{Audit status.} This manuscript presents the repaired human proof after
+an external audit of an earlier version. The two invalid shortcuts identified by
+that audit remain withdrawn. Independent external re-audit of the repaired bridge
+is still pending, and no end-to-end Lean formalization is claimed.
+\end{center}
+
+\begin{abstract}
+Consider the impartial two-player game on positive odd integers in which a move
+from $n>1$ chooses $3n-1$ or $3n+1$ and removes all powers of two; reaching $1$
+wins immediately. Arbitrary play need not terminate, since $5\to7\to5$ is a
+legal cycle. The problem is whether optimal play nevertheless has finite
+remoteness from every start. We pass to a conjugated binary game with an
+expanding move $A$ and a strictly contracting move $B$, introduce constant-tail
+coordinates, an embedded source map, and finite proof-height tokens for certified
+winning and losing positions. The global argument is a well-founded marked
+normalization: source decreases and certified token replacements form the outer
+rank, while a typed factor/obligation system is well-founded inside each fixed
+outer fibre. An external audit found that an earlier entry argument incorrectly
+identified a smaller canonical coefficient with a smaller coefficient source and
+also used a reverse-factor lemma outside its valid exponent range. We repair both
+issues. The key final step is a one-shot entry component that permits a returned
+inner source to be larger than the original source exactly once, during typed
+normalizer initialization, while forbidding any repeated unranked reset. A direct
+phase analysis of the remaining factor-free exponent-two base entry closes the
+last attachment case. The resulting human proof rules out all draw positions.
+Machine regressions and symbolic certificates are supporting checks with a
+strictly narrower scope than the human theorem.
+\end{abstract}
+
+\tableofcontents
+
+\section{The game and the theorem}
+
+The current state is a positive odd integer $n$. For $n>1$ the player to move
+chooses one of
+\[
+  3n-1,\qquad 3n+1,
+\]
+and divides the chosen value by $2$ until it is odd. If the resulting odd value
+is $1$, the player who made the move wins. Players alternate with perfect
+information.
+
+For the player to move, a position is \WIN\ if some move leads to a \LOSS\
+position, and is \LOSS\ if every move leads to a \WIN\ position. Because the
+game graph is infinite, these inductively generated classes need not a priori
+exhaust all positions. Every remaining position is called \DRAW. This is the
+standard finite-remoteness interpretation of Conway's Beans-Don't-Talk game
+\cite{Guy1986,Guy1996}; the modern prize formulation is given by Alth\"ofer
+\cite{AlthoferPage,Althofer2024}.
+
+\begin{theorem}[Main theorem]\label{thm:main}
+Every positive odd starting position has finite remoteness. Equivalently, the
+game has no \DRAW\ positions, and optimal play reaches $1$ after finitely many
+moves.
+\end{theorem}
+
+The proof is not a termination proof for arbitrary play. For example,
+\[
+  5\longrightarrow7\longrightarrow5
+\]
+is a legal two-ply cycle under suitable choices.
+
+\section{Binary conjugation}
+
+Write an odd original state as $n=2m+1$ and put
+\[
+  F(m)=\left\lceil\frac{3m}{2}\right\rceil.
+\]
+For a nonnegative integer $x$, let $R(x)$ be the integer obtained by deleting
+the maximal alternating suffix of the binary expansion of $x$. For example,
+$R(1001_2)=10_2$ and $R(10101_2)=0$.
+
+\begin{proposition}[First normal form]\label{prop:firstnormal}
+For $m>0$, the two children in $m$-coordinates are exactly
+\[
+  F(m),\qquad F(R(m)).
+\]
+\end{proposition}
+
+\begin{proof}
+We have
+\[
+  3(2m+1)-1=2(3m+1),\qquad
+  3(2m+1)+1=2(3m+2).
+\]
+Exactly one of $3m+1$ and $3m+2$ is odd. In the other expression, each
+additional factor of two removed corresponds to crossing one more alternating
+bit of the binary suffix of $m$. The division stops at the first repeated
+adjacent bit, which is precisely deletion of the maximal alternating suffix.
+The remaining odd value, returned to $m$-coordinates, is $F(R(m))$.
+\end{proof}
+
+Every child in Proposition~\ref{prop:firstnormal} lies in the image of $F$.
+Representing $F(q)$ by $q$ gives the conjugated game
+\[
+  A(q)=F(q)=\left\lceil\frac{3q}{2}\right\rceil,
+  \qquad B(q)=R(F(q)),
+\]
+with terminal state $q=0$.
+
+\begin{proposition}[Strict contraction]\label{prop:Bcontracts}
+For every $q>0$,
+\[
+  B(q)<q.
+\]
+\end{proposition}
+
+\begin{proof}
+Deleting a nonempty binary suffix gives
+\[
+ B(q)\le \left\lfloor\frac{F(q)}2\right\rfloor
+ \le \left\lfloor\frac{3q+1}{4}\right\rfloor<q
+\]
+for $q\ge2$, and $B(1)=0$ directly.
+\end{proof}
+
+The difficulty is therefore concentrated in the expanding branch $A$ and in
+the unbounded length of the alternating suffix deleted by $B$.
+
+\section{Constant-tail coordinates and source coordinates}
+
+For positive odd $a$, $r\ge1$, and $e\in\{0,1\}$ define
+\[
+  Q_r^e(a)=a2^r-e.
+\]
+This is the canonical form of a positive binary word with a maximal constant
+suffix of $r$ copies of the bit $e$.
+
+\begin{lemma}[Long-tail recurrence]\label{lem:longtail}
+For every $r\ge3$,
+\[
+ \boxed{
+ A(Q_r^e(a))=Q_{r-1}^e(3a),\qquad
+ B(Q_r^e(a))=Q_{r-2}^e(3a).}
+\]
+Moreover the two boundary states share their contracting child:
+\[
+ \boxed{B(Q_1^e(a))=B(Q_2^e(a)).}
+\]
+\end{lemma}
+
+\begin{proof}
+For $r\ge3$, the expanding child still ends in at least two equal bits, so
+its maximal alternating suffix consists only of the final bit. The boundary
+identity follows by comparing the binary words of $3a-e$ and $6a-e$; the
+additional appended bit extends the same alternating suffix and therefore
+deletes to the same prefix.
+\end{proof}
+
+Define the embedded three-free coefficient
+\[
+  J(s)=2A(s)+1.
+\]
+Every positive odd coefficient has a unique factorization
+\[
+  a=3^kJ(s),\qquad k\ge0,
+\]
+which defines its coefficient source $s$.
+
+\begin{lemma}[Embedded source transition]\label{lem:source-transition}
+For $s>0$, the two signed boundary transitions from the coefficient $J(s)$
+select exactly the two ordinary children $A(s)$ and $B(s)$. More precisely,
+there is a phase
+\[
+ \alpha(s)=1-\left(\left\lfloor\frac s2\right\rfloor\bmod2\right)
+\]
+such that
+\[
+ \odd(3J(s)+1-2\alpha(s))=J(A(s))
+\]
+with $2$-adic valuation one, while the opposite phase selects $J(B(s))$ with
+valuation at least two.
+\end{lemma}
+
+The point of this embedding is that multiplication of a constant-tail
+coefficient by $3$ preserves its source, while a signed exponent-one boundary
+reveals one ordinary $A/B$ move on the source.
+
+\section{Finite outcome certificates and token rank}
+
+Every certified \WIN\ or \LOSS\ position has a finite canonical proof height:
+\[
+ h(0)=0,
+\]
+\[
+ h(x)=1+\min\{h(y):y\text{ is a \LOSS\ child of }x\}
+ \quad(x\text{ \WIN}),
+\]
+and
+\[
+ h(x)=1+\max\{h(y):y\text{ is a child of }x\}
+ \quad(x\text{ \LOSS}).
+\]
+
+A marked normalization configuration carries only finite states whose outcome
+and height comparison have actually been proved. These states are called proof
+tokens.
+
+\begin{lemma}[Multiset token rank]\label{lem:multiset}
+For a finite multiset $M$ of proof heights define
+\[
+ \PhiM(M)=\mathop{\#}_{h\in M}\omega^h,
+\]
+the natural ordinal sum of the monomials $\omega^h$. Replacing one token of
+height $H$ by any finite multiset of certified descendants of heights strictly
+below $H$ strictly decreases $\PhiM$.
+\end{lemma}
+
+\begin{proof}
+In Cantor normal form the coefficient of $\omega^H$ decreases by one, while
+all inserted terms have lower exponent. No collection of lower monomials can
+compensate for the loss at exponent $H$.
+\end{proof}
+
+This rank permits an exceptional local diamond to split one token into several
+certified descendants without losing well-foundedness.
+
+\section{Universal factor scan}
+
+Fix a three-free odd base $a=J(s)$ and a phase $e$. For $k\ge0$ put
+\[
+ P_k=Q_2^e(3^ka),\qquad R_k=Q_1^e(3^ka),
+\]
+\[
+ C_k=B(P_k)=B(R_k),\qquad T_k=A(R_k).
+\]
+Then
+\[
+ \operatorname{moves}(P_k)=\{R_{k+1},C_k\},\qquad
+ \operatorname{moves}(R_k)=\{T_k,C_k\}.
+\]
+
+\begin{lemma}[Two-level DRAW horizon]\label{lem:twolevel}
+If the adjacent frame $\{P_k,R_k\}$ contains a \DRAW, then
+\[
+ \boxed{\{C_k,T_k,C_{k+1},T_{k+1}\}\text{ contains a \DRAW}.}
+\]
+\end{lemma}
+
+\begin{proof}
+The common child $C_k$ cannot be \LOSS, otherwise both frame members would be
+\WIN. If $C_k$ is \DRAW\ we are done. If $C_k$ is \WIN\ and $R_k$ is \DRAW,
+then $T_k$ is \DRAW. The only remaining case has $P_k$ \DRAW\ and $R_k$
+non-draw; then $R_{k+1}$ is \DRAW, so one of its two children
+$T_{k+1},C_{k+1}$ is \DRAW.
+\end{proof}
+
+Factor at either exposed level
+\[
+ 3^{i+1}J(s)+1-2e=2^vJ(t),\qquad v\ge1.
+\]
+Then
+\[
+ T_i=Q_v^{1-e}(J(t)).
+\]
+If $v\ge2$, the raw sibling is exactly
+\[
+ \boxed{C_i=Q_{v-1}^{1-e}(J(t)).}
+\]
+If $v=1$ and the positive raw sibling is \DRAW, its coefficient source is
+strictly smaller than $t$. Thus every factorful exponent-one \DRAW\ reaches a
+factor-free lift, a factor-free adjacent frame, or a genuine source descent
+within at most two consecutive factor levels.
+
+A second reverse argument removes the unbounded factor exponent itself. If a
+factor frame does not pull back to a factor-free \DRAW\ over the same source,
+then its only residual orientation is a marked gate
+\[
+  P_k\text{ \LOSS},\qquad R_k\text{ \DRAW}.
+\]
+The exact predecessor $Q_2^e(3^{k-1}J(s))$ is then either \DRAW, in which case
+factors of three are removed at exponent two, or \WIN, in which case its
+other child is an actual \LOSS\ proof token. The nonexceptional side exposes a
+strictly lower \WIN\ descendant; the exceptional side is an exact adjacent
+frame over that \LOSS\ token. Hence no factor level creates an unmarked reset.
+
+\section{The typed fixed-fibre normalizer}
+
+The local source, factor, and proof-token lemmas form a finite collection of
+routing macros. Their full case proofs are recorded in Sections 91--135 of the
+proof supplement at the repository revision cited in
+Section~\ref{sec:repro}. We use only the following assembled statement.
+
+\begin{proposition}[Typed normalizer]\label{prop:typed-normalizer}
+Suppose a marked entry has already been supplied with
+\begin{enumerate}[label=(\roman*)]
+\item a retained arithmetic source anchor,
+\item a finite multiset of certified \WIN/\LOSS\ proof tokens with proved
+      provenance, and
+\item one of the typed obligation/factor control states of the supplement.
+\end{enumerate}
+Then the equal-retained-data routing relation is well-founded.
+\end{proposition}
+
+The crucial scope restriction is that temporary routing cursors are not rank
+anchors. In particular a canonical continuation
+\[
+ O(x,e)\longrightarrow O(A(x),1-e)
+\]
+usually increases the displayed ordinary source $x$, but this $A(x)$ is only
