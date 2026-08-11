@@ -1,0 +1,361 @@
+ Q_1^1(1)=1\ \WIN,\quad Q_2^1(1)=3\ \WIN,\quad
+ Q_1^0(1)=2\ \LOSS,\quad Q_2^0(1)=4\ \LOSS.
+\]
+Hence a boundary \DRAW\ must have accumulated at least one factor of $3$.
+
+If the reached boundary has tail exponent one, put $n=k+1$.  If it has
+tail exponent two, its children are the common raw child and
+$S_{k+1,1}^e$.  If the raw child is \DRAW, again put $n=k+1$; otherwise the
+raw child is \WIN\ and forces $S_{k+1,1}^e$ to be \DRAW, in which case put
+$n=k+2$.  Thus in all cases one obtains a boundary \DRAW\ configuration whose
+raw/signed exits are governed, for some $n\ge1$, by
+\[
+  3^n+1-2e=2^jJ(y).
+\]
+The exact $2$-adic valuation is
+\[
+\begin{array}{c|cc}
+ &n\text{ odd}&n\text{ even}\\ \hline
+ e=0&j=2&j=1\\
+ e=1&j=1&j=2+v_2(n).
+\end{array}
+\]
+For $j\ge2$ the raw and signed exits form the adjacent factor-free frame
+\[
+  Q_{j-1}^{1-e}(J(y)),\qquad Q_j^{1-e}(J(y)),
+\]
+containing a continuing \DRAW; by Definition~\ref{def:entry-controls} this is a boundary entry, with its finite tail length recorded in $\tau$. For $j=1$ one has
+\[
+  y=\frac{3^{n-1}-1}{2}.
+\]
+When $e=0$ the raw exit is $A(y)$; when $e=1$ it is $B(y)$. The raw and
+signed states are the two exits of the same boundary \DRAW\ configuration.
+If the signed exit is \DRAW, it is already the exponent-one form of an
+obligation. If the raw exit is the continuing \DRAW\ and the signed exit is
+finite, that finite state is necessarily \WIN; choosing a canonical \LOSS\
+child of it supplies an exact finite routing witness, hence a loss-sibling
+entry. If both exits are \DRAW, use the signed obligation. Thus every row
+reaches a typed entry after a finite pre-entry computation; no impossible
+``source below zero'' comparison is used.
+\end{proof}
+
+\begin{lemma}[$A$-selecting side diamond]\label{lem:a-side}
+Let $x>0$, $e=\alpha(x)$, $w=Q_1^e(J(x))$, and $y=A(x)$. Then
+\[
+  B(w)\in\{A(y),B(y)\}.
+\]
+\end{lemma}
+
+\begin{proof}
+The source-boundary identity gives
+$A(w)=Q_1^{1-e}(J(y))=4A(y)+1+e$. For $e=0$ the appended bits are $01$;
+for $e=1$ they are $10$. If the first appended bit repeats the last bit of
+$A(y)$, deleting the alternating suffix leaves $A(y)$; otherwise the deletion
+continues through the maximal alternating suffix of $A(y)$ and leaves
+$B(y)$.
+\end{proof}
+
+\begin{lemma}[Universal $B$-transfer diamond]\label{lem:b-diamond}
+Let $x>0$, let $e=1-\alpha(x)$, put $a=J(x)$ and $g=1-e$, and factor
+\[
+  3a+1-2e=2^jJ(y),\qquad j\ge2,
+\]
+so $y=B(x)$. Define
+\[
+ P=Q_1^e(a),\quad U=Q_2^e(a),\quad
+ D=Q_j^g(J(y)),\quad C=Q_{j-1}^g(J(y)),\quad F=A(U).
+\]
+Then $D=A(P)$ and $C=B(P)=B(U)$. If $X$ is the common child of $D,C$ and
+$Y$ is the other child of $C$, then
+\[
+  B(F)=Y.
+\]
+Consequently an obligation in the $B$-selecting phase transfers a continuing
+\DRAW\ to the adjacent frame $\{D,C\}$; when $j=2$ the transferred frame is
+again an obligation in the opposite phase.
+\end{lemma}
+
+\begin{proof}
+The formulas for $D$ and $C$ are the signed boundary formula and the
+shared-child identity. The remaining equality is a direct substitution in the
+three cases $j=2$, $j=3$, and $j\ge4$: the constant suffix of $D$ determines
+its common child $X$, while the one-step longer factor state $F$ has the same
+raw side $Y$. For the outcome assertion, a common child of a \DRAW\ cannot be
+\LOSS. If the exponent-one member is \DRAW, the frame $\{D,C\}$ already
+contains a \DRAW. In the parent form of an obligation, the only remaining
+orientation has the exponent-two member \DRAW; if $C$ were \WIN, outcome
+recursion through the displayed diamond would force $Y$ both \LOSS\ and a
+child of the \DRAW\ state $F$, impossible. Hence $C$ is \DRAW. For $j=2$,
+$D,C$ are exactly the exponent-two/one pair over $J(y)$.
+\end{proof}
+
+
+\section{Audit-hardened routing reduction}\label{sec:routing}
+
+The preceding sections are local arithmetic and outcome lemmas.  The remaining
+issue is not another binary identity; it is the global bookkeeping needed to
+compose the local diamonds without silently installing an unrelated proof
+height or silently changing a ranked source anchor.
+
+\subsection{The old anchor shortcut is permanently withdrawn}
+
+The earlier routing proof attached a retained integer $p$ to an $A$-streak and,
+at a later $B$-selecting cursor $y$, used an estimate of the form
+\[
+ y\le \frac{3p+1}{2}
+\]
+to conclude that a high-valuation $B$ step lowered the retained source.  That
+provenance is false after more than one canonical $A$ continuation.
+
+\begin{lemma}[Anchor stress test]\label{lem:anchor-stress}
+Let $x_0=20$ and $x_{i+1}=A(x_i)$.  Then
+\[
+ x_0,x_1,x_2,x_3=20,30,45,68.
+\]
+The canonical phases remain $A$-selecting through the first three sources and
+switch at $68$.  The selected $B$ transition at $68$ has valuation $3$ and
+\[
+ B(68)=25>20.
+\]
+Consequently no proof may infer a decrease relative to the original anchor
+$20$ merely from the later high-valuation $B$ transfer.
+\end{lemma}
+
+\begin{proof}
+Directly,
+\[
+ A(20)=30,\qquad A(30)=45,\qquad A(45)=68,
+\]
+and
+\[
+ \alpha(20),\alpha(30),\alpha(45),\alpha(68)=1,0,1,1.
+\]
+The lifted phase flips at every canonical $A$ continuation, so the required
+phase at $68$ is $0$, opposite to $\alpha(68)=1$.  Moreover
+\[
+ 3J(68)+1=616=2^3\cdot77,
+ \qquad 77=J(25),
+\]
+which gives the asserted valuation and $B(68)=25$.
+\end{proof}
+
+The revised routing architecture therefore treats the displayed integers in an
+$A$-streak as \emph{temporary cursors}.  A cursor is never promoted to a ranked
+source merely because it is smaller than a later cursor.  A control reset may
+be justified only by one of the two certificates below:
+\begin{enumerate}[label=(R\arabic*)]
+\item an actual DRAW state whose retained coefficient source is proved smaller
+than the currently ranked source by an exact factor-free/source lemma;
+\item a finite WIN/LOSS proof token that is proved to be a proper proof-tree
+descendant of a token already present in the ranked multiset (or the unique
+initial token installation).
+\end{enumerate}
+
+\subsection{Finite control is not semantic completeness}
+
+The finite control vocabulary consists of the following names:
+\begin{center}
+\begin{tabular}{lll}
+\texttt{boundary\_entry} & \texttt{loss\_sibling\_entry} & \texttt{a\_obligation}\\
+\texttt{a\_test\_4} & \texttt{a\_test\_3} & \texttt{a\_test\_2}\\
+\texttt{a\_test\_1} & \texttt{b\_select} & \texttt{b2\_first}\\
+\texttt{b2\_ready} & \texttt{factor\_fork} & \texttt{high\_return}\\
+\texttt{marked\_tail} & \texttt{short\_lift} & \texttt{terminal\_macro}.
+\end{tabular}
+\end{center}
+The finite graph of these names is only a bookkeeping device.  A graph edge is
+admissible in the mathematical proof only when its guard is derived from the
+actual game states and its finite witnesses have the exact parent/child
+incidence claimed for them.  The accompanying JSON file therefore calls its
+edges \emph{declared routing edges}, not proved game transitions.
+
+The arithmetic part of a $B$-selecting transfer is safe without any retained
+anchor comparison.  Lemma~\ref{lem:b-diamond} gives an adjacent frame over the
+actual selected source $z=B(y)$.  If the selected valuation is $2$, this frame
+is again an exact obligation.  If the valuation is at least $3$, it is routed
+to the factor-frame normalizer.  In neither row do we assert that $z$ is below
+an older pre-streak source.
+
+\section{The two remaining proof obligations}\label{sec:remaining}
+
+The following statements are deliberately separated from the proved lemmas.
+They are the only assertions needed to turn the present reduction back into an
+unconditional no-DRAW proof, and they are \emph{not} claimed proved in this
+version.
+
+\paragraph{Obligation P1: seeded $A/B_2$ reset provenance.}
+Suppose the inner routing layer already contains a ranked finite proof token.
+Follow an actual DRAW through any finite canonical $A$-streak and then through
+a valuation-two $B$ transfer that returns to an obligation.  Before the
+control is reset to a new \texttt{a\_obligation}, one must exhibit either
+(i) a genuine ranked source decrease, or (ii) a finite witness which is a
+strict proof-tree descendant of an already ranked token.  The statement must
+include multi-$A$ streaks and all four exceptional residue classes.  It is not
+enough that the new source is WIN, and it is not enough that it is smaller
+than the immediate cursor.
+
+\paragraph{Obligation P2: semantic exhaustiveness of the factor router.}
+For every actual DRAW entering any factor-router control, the complete
+outcome split must be derived from the game relation.  The relevant controls
+are \texttt{factor\_fork}, \texttt{high\_return},
+\texttt{marked\_tail}, \texttt{short\_lift}, and
+\texttt{terminal\_macro}.  Every case must land either in a declared
+non-reset routing edge or in a strict source/token edge.  In particular, every reset to a higher control
+must carry the explicit descendant certificate for the token it replaces.
+No finite endpoint of unrelated height may be inserted merely because it is
+WIN or LOSS.
+
+The long proof ledger in the repository contains many of the local identities
+needed for P1 and P2, including the factor-fork and high-return descendants.
+They are useful evidence, but the present manuscript does not promote the two
+global composition statements to theorems until their guards and provenance
+are checked as one closed transition system.
+
+\begin{proposition}[Conditional routing closure]\label{prop:conditional-routing}
+Assume P1 and P2.  Then the marked routing relation admits a well-founded
+lexicographic/multiset ranking in which every control reset is preceded by a
+strict retained source or certified proof-token decrease, while all remaining
+routing is finite by the bounded control graph and its explicit tail/factor
+counters.
+\end{proposition}
+
+\begin{proof}
+The proof is the standard well-founded-fibre assembly.  Rank finite proof
+witnesses by the natural multiset sum
+\[
+ \Phi(M)=\mathop{\#}_{h\in M}\omega^h
+\]
+from Lemma~\ref{lem:token-rank}.  A certified descendant replacement strictly
+lowers $\Phi$.  A genuine retained-source edge lowers the numerical source and
+may reset later data.  At fixed retained source and token multiset, P1 and P2
+say exactly that no edge which resets the finite control is unranked.  Delete
+the strict source/token edges.  What remains is the declared finite control
+graph together with same-control recurrences whose explicit natural tail or
+factor counter decreases.  The residual relation is well-founded.  The
+well-founded-fibre lemma then gives the full marked relation.
+\end{proof}
+
+\section{Conditional no-DRAW consequence and present status}
+
+\begin{theorem}[Conditional no-DRAW theorem]\label{thm:conditional}
+If Obligations P1 and P2 hold, then the target no-DRAW statement of
+Section~\ref{target:nodraw} follows.
+\end{theorem}
+
+\begin{proof}
+Assume a DRAW exists and choose a least coefficient source among DRAW
+positions.  The long-tail reduction, the four explicit exponent-one/two
+boundary cases of Proposition~\ref{prop:boundary-reduction}, and the
+factor-free base entry of Proposition~\ref{prop:base-entry} yield either a
+strict smaller-source DRAW (contradicting minimality) or a typed entry.  The
+factorful exponent-one row is handled by Proposition~\ref{prop:factorful-entry};
+no reverse-factor lemma is used at exponent one and no coefficient/source
+shortcut is used with a factor $3^k$.
+
+Under P1 and P2, Proposition~\ref{prop:conditional-routing} makes every
+outcome-compatible marked continuation well-founded.  But every DRAW has no
+LOSS child and at least one DRAW child, so the local outcome diamonds could be
+iterated forever while retaining an actual DRAW member.  This contradicts
+well-foundedness.  Hence no DRAW exists in the conjugated game, and
+Proposition~\ref{prop:first-normal} transfers finite remoteness to every
+original positive odd start.
+\end{proof}
+
+\paragraph{Status.}
+The implication above is proved; P1 and P2 are not.  Accordingly version 5.0
+\textbf{does not claim that the prize problem is solved}.  This wording is
+intentional.  It prevents a finite control certificate, a regression test, or
+a moving repository supplement from being mistaken for the missing semantic
+proof.
+
+\section{Verification boundary and reproducibility}
+
+The package contains three kinds of checks.
+\begin{itemize}[leftmargin=*]
+\item \texttt{verify\_v5\_0.py} checks the exact arithmetic identities used in
+the proved part, the old source/coefficient counterexample, the permanent
+$20\to30\to45\to68$ anchor counterexample, and the declared finite control
+graph.
+\item \texttt{routing\_certificate\_v5\_0.json} records controls and guards.
+Every edge is labelled either \texttt{pure-routing}, \texttt{strict-source},
+\texttt{strict-token}, or \texttt{OPEN-P1/P2}.  The verifier rejects an
+unlabelled reset edge.
+\item \texttt{OPEN\_PROOF\_OBLIGATIONS\_v5\_0.md} gives the exact mathematical
+targets still required for an unconditional theorem.
+\end{itemize}
+
+These checks are deliberately narrower than a formal proof.  No end-to-end
+Lean formalization is claimed.
+
+\appendix
+\section{Permanent adversarial regression cases}\label{app:regressions}
+
+The following two examples are normative negative tests for every future
+revision.
+
+\paragraph{Coefficient/source separation.}
+For $s=1$, $J(1)=5$, $a=3J(1)=15$, and $e=1$, the common boundary child is
+$R(44)=22$.  Its canonical coefficient is $11<15$, but $11=J(3)$, so the
+coefficient source grows from $1$ to $3$.  Therefore a smaller canonical
+coefficient does not imply a smaller source when powers of three are present.
+
+\paragraph{Pre-streak anchor separation.}
+The calculation of Lemma~\ref{lem:anchor-stress} gives
+$20\to30\to45\to68$ and $B(68)=25>20$.  Therefore a high-valuation $B$
+transfer after several $A$ steps does not by itself lower the source retained
+at the beginning of the streak.
+
+\section{Declared routing inventory}\label{app:routing}
+
+The table is a checklist, not a proof of P1/P2.
+\begin{center}
+\small
+\begin{tabular}{@{}p{.25\linewidth}p{.61\linewidth}@{}}
+\toprule
+Control & Allowed non-strict successor classes \\
+\midrule
+\texttt{boundary\_entry} & finite tail countdown; then
+  \texttt{a\_obligation} or \texttt{factor\_fork} \\
+\texttt{loss\_sibling\_entry} & finite tail countdown; then
+  \texttt{factor\_fork} \\
+\texttt{a\_obligation} & bounded $A$ test or factor fork; a smaller-source
+  DRAW may re-enter only through a proved source comparison \\
+\texttt{a\_test\_4,3,2,1} & next lower test or \texttt{b\_select} \\
+\texttt{b\_select} & valuation $2$ to \texttt{b2\_first}; valuation
+  $\ge3$ to \texttt{factor\_fork}; no retained-anchor descent is asserted \\
+\texttt{b2\_first} & \texttt{b2\_ready} \\
+\texttt{b2\_ready} & reset requires P1 \\
+\texttt{factor\_fork} & \texttt{high\_return} or strict certified exit \\
+\texttt{high\_return} & reset requires the P2 descendant certificate \\
+\texttt{marked\_tail} & shorter tail/short lift, or strict P2 token exit \\
+\texttt{short\_lift} & \texttt{a\_obligation} \\
+\texttt{terminal\_macro} & every reset requires a P2 token certificate \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{thebibliography}{9}
+\bibitem{Guy1986}
+R. K. Guy, John Isbell's Game of Beanstalk and John Conway's Game of
+Beans-Don't-Talk, \emph{Mathematics Magazine} 59(5) (1986), 259--269.
+
+\bibitem{Guy1996}
+R. K. Guy, Unsolved Problems in Combinatorial Games, Problem 42, in
+\emph{Games of No Chance}, MSRI Publications 29, Cambridge University Press,
+1996.
+
+\bibitem{Althofer2024}
+I. Alth\"ofer, M. Hartisch, T. Zipproth, Analysis of a Collatz Game and Other
+Variants of the $3n+1$ Problem, \emph{Advances in Computer Games} (2024),
+123--132.
+
+\bibitem{AlthoferPage}
+I. Alth\"ofer, Collatz Problems: The Two-Player $3n+-1$ Game,
+\url{https://althofer.de/collatz-prizes.html}.
+
+\bibitem{Repo}
+G. Pochuev, Optimal $3n\pm1$ Game: Proof and Verification Repository,
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+\end{thebibliography}
+
+\end{document}
