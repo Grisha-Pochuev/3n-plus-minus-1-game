@@ -318,3 +318,61 @@ For every $q>0$,
 Write $q=Q_r^e(3^kJ(s))$. Since $r\ge1$ and $e\le1$,
 $q\ge2J(s)-1$. Moreover
 $J(s)=2\lceil3s/2\rceil+1\ge3s+1$. Hence
+$q\ge6s+1$.
+\end{proof}
+
+\begin{lemma}[Boundary coefficient descent]\label{lem:boundary-coeff}
+Let $a$ be positive and odd and
+\[
+ p=B(Q_1^e(a))=B(Q_2^e(a)).
+\]
+If $p>0$, then its canonical coefficient satisfies
+\[
+  \kappa(p)\le\frac{3a+1}{4}.
+\]
+In particular $\kappa(p)<a$ for $a\ge3$.
+\end{lemma}
+
+\begin{proof}
+The common child is $p=R(3a-e)$. Deleting a nonempty suffix gives
+$p\le\lfloor(3a-e)/2\rfloor$. For every positive integer $y$, the odd
+coefficient in its canonical constant-tail coordinates is at most $(y+1)/2$.
+Therefore
+\[
+ \kappa(p)\le\frac{p+1}{2}\le\frac{3a+1}{4}.
+\]
+The final inequality is strict relative to $a$ for $a\ge3$.
+\end{proof}
+
+\section{Side identities and typed boundary objects}
+
+The finite routing system uses two elementary binary identities. We record
+them here because they are the only places where an exceptional residue class
+enters.
+
+\begin{lemma}[Ordinary side relation]\label{lem:side}
+Put $S(q)=B(q)$ and $T(q)=B(A(q))$. If
+\[
+  q\not\equiv1,3,12,14\pmod{16},
+\]
+then
+\[
+  T(q)\in\{A(S(q)),B(S(q))\}.
+\]
+If $q$ is in one of the four exceptional classes, then $A(q)$ is not
+exceptional.
+\end{lemma}
+
+\begin{proof}
+Let $x=A(q)$ and let $k$ be the length of the maximal alternating suffix of
+$x$. Direct reduction of $A(q)$ modulo $8$ shows that $k\ge3$ is possible
+exactly for $q\equiv1,3,12,14\pmod{16}$. Outside these classes $k=1$ or
+$2$. Writing $x$ as $S(q)$ followed by that one- or two-bit alternating word,
+the formulas
+\[
+  A(2u)=3u,\qquad A(2u+1)=3u+2
+\]
+show that $A(x)$ is obtained from $A(S(q))$ by appending the corresponding
+one- or two-bit alternating word. Deleting its maximal alternating suffix
+therefore leaves either $A(S(q))$ or $B(S(q))$. The four exceptional residue
+classes map under $A$ to $2,5,10,13\pmod{16}$, none of which is exceptional.
