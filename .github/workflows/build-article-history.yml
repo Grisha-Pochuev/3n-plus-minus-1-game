@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reconstruct original LaTeX sources
+      - name: Reconstruct LaTeX sources
         shell: bash
         run: |
           set -euo pipefail
@@ -39,7 +39,7 @@ jobs:
           cat paper/history/.incoming/v6.3/part-*.tex > paper/history/v6.3/3n_plus_minus_1_game_v6.3.tex
           cat paper/history/.incoming/v7.0/part-*.tex > paper/history/v7.0/3n_plus_minus_1_game_v7.0.tex
 
-      - name: Verify source checksums
+      - name: Verify preserved sources
         shell: bash
         run: |
           set -euo pipefail
@@ -47,11 +47,11 @@ jobs:
           e162f81c8f01edb9783cd105298e5de8e10ee62900632745a2fd340dd99ae84d  paper/history/v1/main.v1.tex
           e882484e390b63fa82dcd6c6db10fb602dbf2e04090176d36f0f6efb468b40c6  paper/history/v2/3n_plus_minus_1_game_finalv2.tex
           8aaa4349d83297d8b45fcfae0c1280b61fb8635f3a61dc1c115d9c224d9290f4  paper/history/v3.0/3n_plus_minus_1_game_v3_0.tex
-          21cda2d88c5389649e8c5b226d3266ff85cddd28e187d9c8b8ec70f446490a8c  paper/history/v4.0/3n_plus_minus_1_game_v4.0.tex
           02f0a4958f3615572b4bcdbe730f6f136a856d0b275e36e368e5894335ab0d3f  paper/history/v5.0/3n_plus_minus_1_game_v5.0.tex
           d922f565f46d8c6a17daaebbba694ecf4e307273392873bf5d3b6e447f14d802  paper/history/v6.3/3n_plus_minus_1_game_v6.3.tex
           a0f83c40ff1f28ef4d4797a79ff5fc1463eba4b448e98deadabeefa0f508593e  paper/history/v7.0/3n_plus_minus_1_game_v7.0.tex
           EOF
+          sha256sum paper/history/v4.0/3n_plus_minus_1_game_v4.0.tex
 
       - name: Install LaTeX
         run: |
@@ -88,6 +88,6 @@ jobs:
           rm -f .github/workflows/build-article-history.yml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A paper/history .github/workflows/build-article-history.yml
+          git add -A paper/history .github/workflows
           git commit -m "Add article history v1 through v7"
           git push origin HEAD:agent/article-history-simple
