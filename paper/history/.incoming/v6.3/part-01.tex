@@ -1,0 +1,400 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\WIN}{\ensuremath{\mathrm{WIN}}}
+\newcommand{\LOSS}{\ensuremath{\mathrm{LOSS}}}
+\newcommand{\DRAW}{\ensuremath{\mathrm{DRAW}}}
+\newcommand{\odd}{\operatorname{odd}}
+\newcommand{\src}{\operatorname{src}}
+\newcommand{\ct}{\operatorname{ct}}
+\newcommand{\asl}{\operatorname{asl}}
+\newcommand{\Moves}{\operatorname{moves}}
+
+\title{The Two-Player $3n\mathbin{\pm}1$ Game:\\
+A Binary Normal Form and a Well-Founded No-Draw Proof}
+\author{Grisha Pochuev\\
+  \small\href{mailto:n_854@mail.ru}{n\_854@mail.ru}\\
+  \small\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}}
+\date{Audit-hardened synthesis version 6.3, 11 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We study the two-player $3n\pm1$ game on positive odd integers. Earlier
+versions developed the binary normal form, constant-tail coordinates, source
+embedding, factor-removal diamonds and proof-height tokens, but hostile audits
+found two genuine global defects: a coefficient decrease was once confused
+with a source decrease, and a retained source from before a multi-$A$ streak
+was compared with a later $B$ return for which that provenance no longer held.
+Both shortcuts remain permanently withdrawn.
+
+This version closes the two routing obligations isolated by the audit.  The
+new bridge is an exact raw-selector lemma: after a canonical source transition,
+the next phase selects the precise ordinary child already exposed by the
+preceding DRAW diamond.  Hence a valuation-two recycle can seed its first
+finite WIN token only once and every later free recycle is tied to a strict
+proof-tree descendant; no pre-streak numerical anchor is used.  The
+factor/high-return side is closed separately by retaining proof tokens through
+the full semantic case split.  Short high returns spend a finite descendant,
+valuation at least seven decreases a two-token multiset, every marked tail of
+length at least three replaces its LOSS token by an actual lower WIN child,
+and the two short tail rows remain exact lifts over an already retained token.
+A lexicographic multiset rank then rules out an infinite marked DRAW
+normalization.  The machine checks remain supporting regressions rather than an
+end-to-end formal proof.
+\end{abstract}
+
+\tableofcontents
+
+\section{The game and the theorem}
+
+The current state is a positive odd integer $n$. For $n>1$ the player to move
+chooses one of
+\[
+  3n-1,\qquad 3n+1,
+\]
+and divides the chosen value by the largest possible power of $2$, leaving an
+odd integer. If the resulting odd integer is $1$, the player who made the move
+wins immediately. Players alternate with perfect information.
+
+A position is called \WIN\ for the player to move if at least one move leads to
+\LOSS. It is called \LOSS\ if every legal move leads to \WIN. These two classes
+are the inductively generated finite-remoteness classes. Any position not in
+either class is called \DRAW.
+
+\begin{theorem}[No-DRAW theorem]\label{thm:main}
+Every positive odd starting position has finite remoteness. Equivalently, the
+$3n\pm1$ game has no \DRAW\ positions and optimal play reaches $1$ after
+finitely many moves.
+\end{theorem}
+
+The theorem is not a statement about arbitrary play. There are legal cycles,
+such as
+\[
+  5\longrightarrow 7\longrightarrow 5,
+\]
+under suitable choices by the players.
+
+\section{Binary conjugation}
+
+Write an odd state as $n=2m+1$ and define
+\[
+  F(m)=\left\lceil\frac{3m}{2}\right\rceil .
+\]
+For a nonnegative integer $x$, let $R(x)$ be the integer obtained by deleting
+the maximal alternating suffix of the binary expansion of $x$. Thus
+$R(1001_2)=10_2$ and $R(10101_2)=0$.
+
+\begin{proposition}[First normal form]\label{prop:first-normal}
+For $m>0$, the two children in $m$-coordinates are exactly
+\[
+  F(m),\qquad F(R(m)).
+\]
+\end{proposition}
+
+\begin{proof}
+One has
+\[
+  3(2m+1)-1=2(3m+1),\qquad
+  3(2m+1)+1=2(3m+2).
+\]
+Exactly one of $3m+1$ and $3m+2$ is odd. In the other expression, each
+additional factor of two removed corresponds to crossing one additional
+alternating bit at the end of the binary expansion of $m$. The process stops
+at the first repeated adjacent bit, which is precisely the deletion defining
+$R(m)$. Returning to $m$-coordinates gives the displayed pair.
+\end{proof}
+
+Since both children lie in the image of $F$, we represent the state $F(q)$ by
+$q$. The conjugated game has terminal state $0$ and moves
+\[
+  A(q)=\left\lceil\frac{3q}{2}\right\rceil,
+  \qquad
+  B(q)=R(A(q)).
+\]
+
+\begin{proposition}[Strict contraction]\label{prop:B-contracts}
+For every $q>0$,
+\[
+  B(q)<q.
+\]
+\end{proposition}
+
+\begin{proof}
+Deleting a nonempty binary suffix gives
+\[
+  B(q)\le \left\lfloor\frac{A(q)}2\right\rfloor
+       \le \left\lfloor\frac{3q+1}{4}\right\rfloor<q
+\]
+for $q\ge2$, while $B(1)=0$.
+\end{proof}
+
+Thus all unbounded difficulty comes from the expanding branch $A$ and from the
+unbounded alternating suffix removed by $B$.
+
+\section{Constant-tail coordinates and coefficient sources}
+
+For a positive odd integer $a$, an exponent $r\ge1$, and a phase
+$e\in\{0,1\}$, put
+\[
+  Q_r^e(a)=a2^r-e.
+\]
+This is a binary word whose final constant block has length $r$ and consists
+of the bit $e$.
+
+\begin{lemma}[Long-tail recurrence]\label{lem:long-tail}
+For every positive odd $a$, phase $e$, and $r\ge3$,
+\[
+  A(Q_r^e(a))=Q_{r-1}^e(3a),\qquad
+  B(Q_r^e(a))=Q_{r-2}^e(3a).
+\]
+Moreover
+\[
+  B(Q_1^e(a))=B(Q_2^e(a)).
+\]
+\end{lemma}
+
+\begin{proof}
+For $r\ge3$, the expanding child still ends in at least two equal bits; hence
+its maximal alternating suffix consists only of the final bit. This gives both
+long-tail identities. At the boundary, the binary words of $3a-e$ and $6a-e$
+differ by appending one bit that extends the same alternating suffix, so the
+same prefix remains after deletion.
+\end{proof}
+
+Define the embedded three-free coefficient
+\[
+  J(s)=2A(s)+1.
+\]
+Every positive odd coefficient $a$ has a unique factorization
+\[
+  a=3^kJ(s),\qquad k\ge0.
+\]
+Indeed, remove all factors of $3$ and call the remaining odd integer $c$.
+Then $c\not\equiv0\pmod3$ and $(c-1)/2$ is $0$ or $2$ modulo $3$.
+The image of
+\[
+ A(2t)=3t,\qquad A(2t+1)=3t+2
+\]
+is exactly the set of nonnegative integers not congruent to $1$ modulo $3$,
+and $A$ is injective. Hence there is a unique $s$ with
+$A(s)=(c-1)/2$, equivalently $c=J(s)$. Unique factorization supplies the
+unique exponent $k$. The integer $s$ is called the coefficient source of
+$a$ and is denoted $\src(a)$.
+
+\begin{lemma}[Source boundary]\label{lem:source-boundary}
+For every $s>0$ there is a phase
+\[
+  \alpha(s)=1-\left(\left\lfloor\frac{s}{2}\right\rfloor\bmod2\right)
+\]
+such that
+\[
+  \odd(3J(s)+1-2\alpha(s))=J(A(s))
+\]
+with $2$-adic valuation one, while the opposite phase selects $J(B(s))$ with
+valuation at least two.
+\end{lemma}
+
+\begin{proof}
+Put $u=A(s)$. Then $J(s)=2u+1$ and
+\[
+  3J(s)+1-2e=2(3u+2-e).
+\]
+The bracket is odd exactly when $e=1-(u\bmod2)$. For $s=2t$ or $2t+1$ one
+has $u\bmod2=t\bmod2$, so this phase is exactly $e=\alpha(s)$. If $u$ is
+even, then $e=1$ and $3u+1=J(u)$; if $u$ is odd, then $e=0$ and
+$3u+2=J(u)$. Thus the valuation-one child is $J(A(s))$. The opposite sign is
+the other original $3n\pm1$ child of the odd state $J(s)$; under the
+conjugacy of Proposition~\ref{prop:first-normal} that child is $J(B(s))$.
+Since it is not the valuation-one branch, its valuation is at least two.
+\end{proof}
+
+Multiplying a constant-tail coefficient by $3$ preserves its coefficient
+source. Passing through a factor-free signed boundary with coefficient $J(s)$
+therefore exposes exactly one ordinary $A/B$ move on the source.
+
+For a positive state $q$, write $\kappa(q)$ for the odd coefficient in its
+canonical constant-tail coordinates.
+
+\begin{lemma}[Coefficient pullback]\label{lem:coeff-pullback}
+For every positive odd $w$,
+\[
+  \kappa(3w)=J(R(w)),\qquad
+  \kappa(3w-1)=J(R(2w-1)).
+\]
+\end{lemma}
+
+\begin{proof}
+Let $m\ge1$ be the length of the maximal alternating suffix of the odd word
+$w$, and put $z=R(w)$. If $z>0$, maximality says that the leading bit of the
+suffix equals the last bit of $z$. Because the suffix ends in $1$, its value is
+\[
+ t_m=\begin{cases}
+ (2^m-1)/3,&m\text{ even},\\
+ (2^{m+1}-1)/3,&m\text{ odd}.
+ \end{cases}
+\]
+Thus $w=2^mz+t_m$. If $m$ is even, $z$ is even and
+\[
+  3w+1=2^m(3z+1)=2^mJ(z).
+\]
+If $m$ is odd, $z$ is odd and
+\[
+  3w+1=2^m(3z+2)=2^mJ(z).
+\]
+If $z=0$, the whole word is alternating; then $m$ is odd and
+$3w+1=2^{m+1}$, whose odd part is $J(0)=1$. Hence in all cases
+$\kappa(3w)=\odd(3w+1)=J(R(w))$.
+
+For the second identity set $v=2w-1$, which is odd. Since
+$3v+1=2(3w-1)$, the first identity applied to $v$ gives
+\[
+ \kappa(3w-1)=\odd(3w-1)=\odd(3v+1)=J(R(v))=J(R(2w-1)).
+\]
+\end{proof}
+
+
+\section{Finite outcomes, witnesses, and ranks}
+
+The terminal state $0$ is \LOSS\ with height $h(0)=0$. A finite \WIN\ state has
+height
+\[
+  h(x)=1+\min\{h(y):y\text{ is a \LOSS\ child of }x\},
+\]
+and a finite \LOSS\ state has height
+\[
+  h(x)=1+\max\{h(y):y\text{ is a child of }x\}.
+\]
+A state whose outcome has been proved but which is being carried only to
+justify a later incidence is called a \emph{routing witness}. A
+\emph{retained proof token} is a finite state for which the proof has also
+established the comparison needed by the rank: it either seeds an empty inner
+token set at a one-shot seed transition, or replaces a previously retained
+token by certified descendants of strictly smaller height. This distinction is
+important: a newly discovered finite state is never silently appended to a
+ranked multiset.
+
+\begin{lemma}[Multiset token rank]\label{lem:token-rank}
+For a finite multiset $M$ of proof heights define
+\[
+  \Phi(M)=\mathop{\#}_{h\in M}\omega^h,
+\]
+the natural ordinal sum of the monomials $\omega^h$. Replacing one token of
+height $H$ by any finite multiset of certified descendants of heights strictly
+below $H$ strictly decreases $\Phi$.
+\end{lemma}
+
+\begin{proof}
+In Cantor normal form the coefficient of $\omega^H$ decreases by one, while
+all inserted terms have lower exponent. No finite collection of lower terms
+can compensate for the loss at exponent $H$.
+\end{proof}
+
+Every positive state $q$ has unique canonical constant-tail coordinates
+$q=Q_r^e(a)$ with $a$ odd and $r\ge1$. If
+$a=3^kJ(s)$, define the \emph{state source} $\rho(q)=s$.
+
+\begin{lemma}[Universal state-source bound]\label{lem:source-bound}
+For every $q>0$,
+\[
+  \rho(q)\le \frac{q-1}{6}.
+\]
+\end{lemma}
+
+\begin{proof}
+Write $q=Q_r^e(3^kJ(s))$. Since $r\ge1$ and $e\le1$,
+$q\ge2J(s)-1$. Moreover
+$J(s)=2\lceil3s/2\rceil+1\ge3s+1$. Hence
+$q\ge6s+1$.
+\end{proof}
+
+\begin{lemma}[Boundary coefficient descent]\label{lem:boundary-coeff}
+Let $a$ be positive and odd and
+\[
+ p=B(Q_1^e(a))=B(Q_2^e(a)).
+\]
+If $p>0$, then its canonical coefficient satisfies
+\[
+  \kappa(p)\le\frac{3a+1}{4}.
+\]
+In particular $\kappa(p)<a$ for $a\ge3$.
+\end{lemma}
+
+\begin{proof}
+The common child is $p=R(3a-e)$. Deleting a nonempty suffix gives
+$p\le\lfloor(3a-e)/2\rfloor$. For every positive integer $y$, the odd
+coefficient in its canonical constant-tail coordinates is at most $(y+1)/2$.
+Therefore
+\[
+ \kappa(p)\le\frac{p+1}{2}\le\frac{3a+1}{4}.
+\]
+The final inequality is strict relative to $a$ for $a\ge3$.
+\end{proof}
+
+\section{Side identities and typed boundary objects}
+
+The finite routing system uses two elementary binary identities. We record
+them here because they are the only places where an exceptional residue class
+enters.
+
+\begin{lemma}[Ordinary side relation]\label{lem:side}
+Put $S(q)=B(q)$ and $T(q)=B(A(q))$. If
+\[
+  q\not\equiv1,3,12,14\pmod{16},
+\]
+then
+\[
+  T(q)\in\{A(S(q)),B(S(q))\}.
+\]
+If $q$ is in one of the four exceptional classes, then $A(q)$ is not
+exceptional.
+\end{lemma}
+
+\begin{proof}
+Let $x=A(q)$ and let $k$ be the length of the maximal alternating suffix of
+$x$. Direct reduction of $A(q)$ modulo $8$ shows that $k\ge3$ is possible
+exactly for $q\equiv1,3,12,14\pmod{16}$. Outside these classes $k=1$ or
+$2$. Writing $x$ as $S(q)$ followed by that one- or two-bit alternating word,
+the formulas
+\[
+  A(2u)=3u,\qquad A(2u+1)=3u+2
+\]
+show that $A(x)$ is obtained from $A(S(q))$ by appending the corresponding
+one- or two-bit alternating word. Deleting its maximal alternating suffix
+therefore leaves either $A(S(q))$ or $B(S(q))$. The four exceptional residue
+classes map under $A$ to $2,5,10,13\pmod{16}$, none of which is exceptional.
+\end{proof}
+
+\begin{corollary}[No four consecutive wins]\label{cor:no-four-win}
+For no $q$ can all four states
+\[
+  q,A(q),A^2(q),A^3(q)
+\]
+be \WIN.
+\end{corollary}
+
+\begin{proof}
+If $q$ and $A(q)$ are both \WIN, then $B(q)$ must be \LOSS; the same holds at
+the next two positions. If $q$ is ordinary, Lemma~\ref{lem:side} makes
+$B(A(q))$ a child of the \LOSS\ state $B(q)$, impossible. Hence $q$ must be
+exceptional. Applying the same argument to $A(q)$ forces $A(q)$ exceptional,
