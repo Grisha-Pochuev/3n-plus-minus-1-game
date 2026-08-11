@@ -1,0 +1,278 @@
+replacement. An exceptional side can occur for only one step because its
+$A$-successor is ordinary. Thus an equal-rank passage strictly decreases
+$\tau$ and must reach the exponent-one/two factor boundary. No new witness is
+introduced during this countdown.
+\end{proof}
+
+\begin{lemma}[Factor and marked-tail routing]\label{lem:factor-routing}
+Every factor-fork, high-return, marked-tail, short-lift, and terminal control
+has one of the following effects:
+\begin{enumerate}[label=(\alph*)]
+\item strict inner-source decrease;
+\item strict replacement of an existing inner token by certified lower
+      descendant token(s);
+\item a control change listed in Table~\ref{tab:control} with the retained
+      source and token multiset unchanged; or
+\item a same-control recurrence with strictly smaller local counter $\tau$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The boundary and loss-sibling controls are covered by Lemmas~\ref{lem:boundary-normalize} and~\ref{lem:loss-sibling}.
+
+The factor exponent-one row uses the shared exponent-one/two child. If the
+selected finite source is ordinary, Lemma~\ref{lem:side} exposes a common
+child of the retained \LOSS\ witness and hence a lower \WIN\ token; the
+exceptional row is an exact constant-tail lift over the same \LOSS\ witness.
+For factor exponent at least two, the reverse constant-tail parent either
+removes a factor at exponent at least two or exposes a finite parent-child
+witness; in the latter case its common child is a certified descendant.
+
+A high return has valuation $5,6$, or at least $7$. In the first two rows the
+explicit short-tail formulas replace the carried return token before the new
+marked task is installed. For valuation at least $7$, the universal
+three/two frame carries a \WIN/LOSS\ pair; the selected common child is a
+certified descendant before the tail is restarted. Hence every high-return
+edge is strict in $\Psi(N)$.
+
+For a marked constant tail of length $D\ge3$, if its marked states are
+$q$ (\WIN) and $y$ (\LOSS), the common child
+\[
+  r=B(q)=A(y)
+\]
+for $D\ge4$ (and the boundary common child for $D=3$) is a \WIN\ child of
+$y$, so $h(r)<h(y)$. Thus the existing token $y$ is replaced before any new
+inner task is installed. The two short rows $D=1,2$ are exact lifts over an
+already carried token and merely change control. Long exact-lift recurrences
+strictly lower their remaining tail/factor exponent, which is $\tau$.
+Terminal exponent-two/three macros reconstruct a finite descendant token
+before they restart any obligation. The strict token replacements used in these rows are collected explicitly in Table~\ref{tab:tokens}. These cases exhaust the factor/tail constructors because their only unbounded parameters are the valuation and tail intervals just split above.
+\end{proof}
+
+The equal-retained-rank control edges and a concrete control height $c(v)$ are
+shown in Table~\ref{tab:control}. Any edge not listed there is strict in an
+earlier component of \eqref{eq:full-rank}. Same-control tail/factor recurrences
+strictly decrease $\tau$.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{@{}lll@{}}
+\toprule
+Control $v$ & $c(v)$ & Equal-rank successors \\
+\midrule
+\texttt{marked\_tail} & 9 & \texttt{short\_lift} \\
+\texttt{boundary\_entry} & 8 & \texttt{a\_obligation}, \texttt{factor\_fork} \\
+\texttt{short\_lift} & 8 & \texttt{a\_obligation} \\
+\texttt{a\_obligation} & 7 & \texttt{a\_test\_4}, \texttt{factor\_fork} \\
+\texttt{a\_test\_4} & 6 & \texttt{a\_test\_3}, \texttt{b\_select} \\
+\texttt{a\_test\_3} & 5 & \texttt{a\_test\_2}, \texttt{b\_select} \\
+\texttt{a\_test\_2} & 4 & \texttt{a\_test\_1}, \texttt{b\_select} \\
+\texttt{a\_test\_1} & 3 & \texttt{b\_select} \\
+\texttt{b\_select} & 2 & \texttt{b2\_first} \\
+\texttt{loss\_sibling\_entry} & 2 & \texttt{factor\_fork} \\
+\texttt{b2\_first} & 1 & \texttt{b2\_ready} \\
+\texttt{factor\_fork} & 1 & \texttt{high\_return} \\
+\texttt{b2\_ready} & 0 & -- \\
+\texttt{high\_return} & 0 & -- \\
+\texttt{terminal\_macro} & 0 & -- \\
+\bottomrule
+\end{tabular}
+\caption{Equal-rank control graph. Every listed edge strictly lowers $c(v)$.
+Strict source/token/bit edges may reset $c$ and $\tau$.}
+\label{tab:control}
+\end{table}
+
+\begin{proposition}[Well-founded typed normalizer]\label{prop:typed-normalizer}
+The typed routing relation is well-founded for every typed entry.
+\end{proposition}
+
+\begin{proof}
+Consider the rank \eqref{eq:full-rank}. A retained-source decrease is strict in
+the first component and may reset all later data. At fixed retained source,
+$\eta:1\to0$ is strict and may seed $M$ and all later routing data. Once
+$\eta=0$, every change of $M$ is a certified strict descendant replacement
+and therefore decreases $\Phi(M)$ by Lemma~\ref{lem:token-rank}; it may reset
+all later inner data.
+
+At fixed earlier components, $\zeta:1\to0$ is a one-time strict inner-token
+seed. Thereafter every change of $N$ strictly decreases $\Psi(N)$. With the
+token components fixed, a promoted inner-source comparison strictly lowers
+$a$. If all preceding components are unchanged, the semantic routing lemmas
+above show that a control-changing equal-rank edge is one of the edges of
+Table~\ref{tab:control}, hence strictly lowers $c(v)$; a same-control
+tail/factor recurrence strictly lowers $\tau$. Thus every transition
+strictly decreases one component while preserving all earlier components.
+The lexicographic product of these well-orders is well-founded.
+\end{proof}
+
+\section{Proof of the main theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Assume that a \DRAW\ exists and choose the least state source $s$ occurring
+among \DRAW\ positions. Begin with $\eta=1$; no ranked token has yet been installed.
+
+If $s=0$, Lemma~\ref{lem:zero-source} performs a finite pre-entry
+normalization and reaches a boundary or loss-sibling typed entry. Consume
+$\eta:1\to0$ exactly there and invoke Proposition~\ref{prop:typed-normalizer}.
+
+Let $s>0$. Follow an actual \DRAW\ child through long constant tails until
+the tail exponent is one or two. Proposition~\ref{prop:boundary-reduction}
+then gives a typed entry, a strict retained-source exit, or the factor-free
+exponent-two state $Q_2^e(J(s))$ \DRAW. The last case is handled by
+Proposition~\ref{prop:base-entry}. A strict smaller-source exit contradicts
+the choice of $s$; otherwise a typed entry is obtained and $\eta$ is
+consumed. Thus all four boundary combinations $(r,k)=(1,0),(1,>0),(2,0)$ and
+$(2,>0)$ are covered.
+
+From then on every macro transition lies in the well-founded relation of
+Proposition~\ref{prop:typed-normalizer}, unless an earlier outer component
+strictly decreases, in which case the lexicographic rank decreases even more
+strongly. Yet every \DRAW\ has no \LOSS\ child and at least one \DRAW\ child.
+Therefore from every marked \DRAW\ configuration an outcome-compatible
+continuing \DRAW\ can be chosen, yielding another finite macro transition.
+Iteration would create an infinite descending chain in the rank
+\eqref{eq:full-rank}, impossible. Hence no \DRAW\ exists in the conjugated
+game.
+
+It remains only to transfer the conclusion back to an arbitrary original
+odd starting state. Write it as $n=2m+1$. If $m=0$, then $n=1$ is terminal.
+For $m>0$, Proposition~\ref{prop:first-normal} says that its two original
+children are $F(m)$ and $F(R(m))$. These are represented in the conjugated game
+by the states $m$ and $R(m)$, respectively, and both have finite remoteness by
+the no-\DRAW\ conclusion just proved. Hence the original state $n$ is itself
+\WIN\ or \LOSS\ with finite height. Thus every positive odd starting position
+has finite remoteness and optimal play reaches $1$.
+\end{proof}
+
+\section{Verification boundary and reproducibility}
+
+The theorem above is a human mathematical claim. The accompanying files have
+narrower roles.
+\begin{itemize}[leftmargin=*]
+\item \texttt{verify\_v3\_0.py} checks the long-tail identities, fixed-tail
+      diamonds, ordinary side relation, base-entry valuations and inequalities,
+      source-zero valuation table, hidden-parent identity, and the finite
+      equal-rank control graph over large finite ranges.
+\item \texttt{routing\_certificate\_v3\_0.json} records the control states,
+      equal-rank edges, strict edge classes, and rank components used in
+      Table~\ref{tab:control}. It is a structural certificate, not a substitute
+      for the semantic proofs in this article.
+\item The repository's Lean development checks selected definitions and
+      general well-founded metatheory. It is not claimed to kernel-check the
+      complete concrete theorem.
+\end{itemize}
+
+The finite computations support the arithmetic and the transcription of the
+routing table; the infinite conclusion rests on the proved identities,
+outcome recursion, and the well-founded rank.
+
+\appendix
+\section{Exceptional side formulas}\label{app:exceptional}
+
+For completeness, the four exceptional classes of Lemma~\ref{lem:side} have
+exact formulas. For $t\ge0$,
+\[
+\begin{array}{c|c|c}
+q&B(q)&B(A(q))\\ \hline
+16t+1  &R(6t)   &18t+1\\
+16t+3  &R(6t+1) &18t+4\\
+16t+12 &R(6t+4) &18t+13\\
+16t+14 &R(6t+5) &18t+16.
+\end{array}
+\]
+The displayed $B(A(q))$ value always has constant-tail length one. Hence an
+exceptional side step cannot repeat immediately; its next $A$-source is
+ordinary. These formulas also justify the exceptional branch used in
+Proposition~\ref{prop:base-entry}.
+
+\section{Routing inventory}\label{app:routing}
+
+The equal-rank graph in Table~\ref{tab:control} is deliberately smaller than
+the full outcome case split: source and token exits are omitted from the graph
+because they are already strict in earlier components. The semantic partitions
+are as follows.
+\begin{center}
+\small
+\begin{tabular}{@{}p{.28\linewidth}p{.62\linewidth}@{}}
+\toprule
+Control & Exhaustive nonterminal partition \\
+\midrule
+\texttt{boundary\_entry} & source/token exit,
+  $\texttt{a\_obligation}$, or $\texttt{factor\_fork}$ after finite tail countdown \\
+\texttt{loss\_sibling\_entry} & source/token exit, or
+  $\texttt{factor\_fork}$ after finite tail countdown \\
+\texttt{a\_obligation} & source exit, token exit, canonical $A$ test, or
+  retained-witness factor fork \\
+\texttt{a\_test\_4,3,2,1} & source exit, token exit, next test, or
+  $B$-selecting switch; the last test has no next-test row \\
+\texttt{b\_select} & valuation $2$, or valuation at least $3$ (strict source) \\
+\texttt{b2\_first} & strict source, or one-time witness installation \\
+\texttt{b2\_ready} & strict source, or strict witness descendant \\
+\texttt{factor\_fork} & exponent-one source/token, higher source/token, or
+  adjacent high return \\
+\texttt{high\_return} & valuations $5,6$ or at least $7$; each spends a token
+  before marked-tail restart \\
+\texttt{marked\_tail} & $D=1$, $D=2$, or $D\ge3$; long row replaces the
+  marked \LOSS\ token by its common \WIN\ child \\
+\texttt{short\_lift} & exact lift into an obligation \\
+\texttt{terminal\_macro} & exponent-two/three terminal rows; each begins
+  after a strict token replacement \\
+\bottomrule
+\end{tabular}
+\end{center}
+This inventory is exactly the case structure used in the proof of
+Proposition~\ref{prop:typed-normalizer}; there is no implicit ``other'' row.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{@{}p{.23\linewidth}p{.29\linewidth}p{.37\linewidth}@{}}
+\toprule
+Routing row & Retained replacement & Certified comparison \\
+\midrule
+ordinary factor fork & $b\mapsto X$ & $X$ is a child of the canonical
+  \LOSS\ child of $b$, hence $h(X)\le h(b)-2$ \\
+exceptional factor fork & $b\mapsto \ell$ & $\ell$ is the actual \LOSS\
+  child of $b$, hence $h(\ell)=h(b)-1$ \\
+high return & $(u,c)\mapsto(p,b)\mapsto(q,y)$ & each new state is an actual
+  descendant of the token it replaces; each replacement is strict \\
+marked tail $D\ge3$ & $y\mapsto r$ & $r$ is a child of the retained
+  \LOSS\ state $y$, so $h(r)\le h(y)-1$ \\
+terminal exponent $2/3$ & $\ell\mapsto Z_2$ or $Z_3$ & the reconstructed
+  terminal token is a proper proof-tree descendant of $\ell$ \\
+zero-recycle exponent $3$ & $y\mapsto r$ & $r$ is a child of the retained
+  \LOSS\ token $y$ \\
+\bottomrule
+\end{tabular}
+\caption{Token replacements used by the strict routing rows. A branching
+exceptional diamond may replace one token by several descendants; in that
+case Lemma~\ref{lem:token-rank} applies to the resulting multiset.}
+\label{tab:tokens}
+\end{table}
+
+\begin{thebibliography}{9}
+\bibitem{Guy1986}
+R. K. Guy, John Isbell's Game of Beanstalk and John Conway's Game of
+Beans-Don't-Talk, \emph{Mathematics Magazine} 59(5) (1986), 259--269.
+
+\bibitem{Guy1996}
+R. K. Guy, Unsolved Problems in Combinatorial Games, Problem 42, in
+\emph{Games of No Chance}, MSRI Publications 29, Cambridge University Press,
+1996.
+
+\bibitem{Althofer2024}
+I. Alth\"ofer, M. Hartisch, T. Zipproth, Analysis of a Collatz Game and Other
+Variants of the $3n+1$ Problem, \emph{Advances in Computer Games} (2024),
+123--132.
+
+\bibitem{AlthoferPage}
+I. Alth\"ofer, Collatz Problems: The Two-Player $3n+-1$ Game,
+\url{https://althofer.de/collatz-prizes.html}.
+
+\bibitem{Repo}
+G. Pochuev, Optimal $3n\pm1$ Game: Proof and Verification Repository,
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+\end{thebibliography}
+
+\end{document}
