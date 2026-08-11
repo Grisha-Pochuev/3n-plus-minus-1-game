@@ -1,0 +1,319 @@
+$q\ge6s+1$.
+\end{proof}
+
+\begin{lemma}[Boundary coefficient descent]\label{lem:boundary-coeff}
+Let $a$ be positive and odd and
+\[
+ p=B(Q_1^e(a))=B(Q_2^e(a)).
+\]
+If $p>0$, then its canonical coefficient satisfies
+\[
+  \kappa(p)\le\frac{3a+1}{4}.
+\]
+In particular $\kappa(p)<a$ for $a\ge3$.
+\end{lemma}
+
+\begin{proof}
+The common child is $p=R(3a-e)$. Deleting a nonempty suffix gives
+$p\le\lfloor(3a-e)/2\rfloor$. For every positive integer $y$, the odd
+coefficient in its canonical constant-tail coordinates is at most $(y+1)/2$.
+Therefore
+\[
+ \kappa(p)\le\frac{p+1}{2}\le\frac{3a+1}{4}.
+\]
+The final inequality is strict relative to $a$ for $a\ge3$.
+\end{proof}
+
+\section{Side identities and typed boundary objects}
+
+The finite routing system uses two elementary binary identities. We record
+them here because they are the only places where an exceptional residue class
+enters.
+
+\begin{lemma}[Ordinary side relation]\label{lem:side}
+Put $S(q)=B(q)$ and $T(q)=B(A(q))$. If
+\[
+  q\not\equiv1,3,12,14\pmod{16},
+\]
+then
+\[
+  T(q)\in\{A(S(q)),B(S(q))\}.
+\]
+If $q$ is in one of the four exceptional classes, then $A(q)$ is not
+exceptional.
+\end{lemma}
+
+\begin{proof}
+Let $x=A(q)$ and let $k$ be the length of the maximal alternating suffix of
+$x$. Direct reduction of $A(q)$ modulo $8$ shows that $k\ge3$ is possible
+exactly for $q\equiv1,3,12,14\pmod{16}$. Outside these classes $k=1$ or
+$2$. Writing $x$ as $S(q)$ followed by that one- or two-bit alternating word,
+the formulas
+\[
+  A(2u)=3u,\qquad A(2u+1)=3u+2
+\]
+show that $A(x)$ is obtained from $A(S(q))$ by appending the corresponding
+one- or two-bit alternating word. Deleting its maximal alternating suffix
+therefore leaves either $A(S(q))$ or $B(S(q))$. The four exceptional residue
+classes map under $A$ to $2,5,10,13\pmod{16}$, none of which is exceptional.
+\end{proof}
+
+\begin{corollary}[No four consecutive wins]\label{cor:no-four-win}
+For no $q$ can all four states
+\[
+  q,A(q),A^2(q),A^3(q)
+\]
+be \WIN.
+\end{corollary}
+
+\begin{proof}
+If $q$ and $A(q)$ are both \WIN, then $B(q)$ must be \LOSS; the same holds at
+the next two positions. If $q$ is ordinary, Lemma~\ref{lem:side} makes
+$B(A(q))$ a child of the \LOSS\ state $B(q)$, impossible. Hence $q$ must be
+exceptional. Applying the same argument to $A(q)$ forces $A(q)$ exceptional,
+contrary to Lemma~\ref{lem:side}.
+\end{proof}
+
+\begin{lemma}[Alternating lift identity]\label{lem:alt-lift}
+For every positive integer $z$ there are $m\ge1$ and
+$\delta=1-(z\bmod2)$ such that
+\[
+  3z+1=Q_m^\delta(J(R(z))).
+\]
+If $R(z)>0$, one may take $m$ equal to the length of the maximal alternating
+suffix of $z$; if $R(z)=0$, one takes one more than the binary length of $z$.
+\end{lemma}
+
+\begin{proof}
+First suppose $r=R(z)>0$, let $k$ be the alternating-suffix length and put
+$\epsilon=r\bmod2$. Then
+\[
+ z=2^k r+t_{k,\epsilon},\qquad
+ t_{k,0}=\Big\lfloor\frac{2^k}{3}\Big\rfloor,
+ \quad t_{k,1}=\Big\lfloor\frac{2^{k+1}}{3}\Big\rfloor.
+\]
+Since $J(r)=3r+1+\epsilon$, direct substitution gives
+\[
+ 3t_{k,\epsilon}+1+\delta=2^k(1+\epsilon),
+\]
+the two parity cases being exactly the two remainders of a power of $2$
+modulo $3$. Hence
+\[
+ 3z+1+\delta=2^kJ(r),
+\]
+which is the required identity with $m=k$. If $R(z)=0$, the whole binary word
+of $z$ is alternating and starts with $1$, so
+$z=t_{k,1}$. The same calculation gives
+$3z+1+\delta=2^{k+1}=2^{k+1}J(0)$.
+\end{proof}
+
+\begin{lemma}[Exceptional side attachment]\label{lem:exceptional-side}
+Let $q$ be exceptional and suppose
+\[
+ q\text{ is \WIN},\qquad A(q)\text{ is \DRAW},\qquad
+ \ell=B(q)\text{ is \LOSS}.
+\]
+Then for some $m\ge1$ and $\delta\in\{0,1\}$ the two children of $A(q)$ are
+exactly
+\[
+  Q_m^\delta(J(\ell)),\qquad Q_{m+1}^\delta(J(\ell)),
+\]
+and this adjacent pair contains a continuing \DRAW.
+\end{lemma}
+
+\begin{proof}
+Write $q=16t+c$ with $c\in\{1,3,12,14\}$. The four direct exceptional
+formulas are
+\[
+\begin{array}{c|c|c|c}
+c&\ell&B(A(q))&A^2(q)\\ \hline
+1&R(6t)&18t+1&36t+3\\
+3&R(6t+1)&18t+4&36t+8\\
+12&R(6t+4)&18t+13&36t+27\\
+14&R(6t+5)&18t+16&36t+32.
+\end{array}
+\]
+In every row put respectively $z=6t,6t+1,6t+4,6t+5$. Then
+$\ell=R(z)$ and $B(A(q))=3z+1$. By Lemma~\ref{lem:alt-lift},
+\[
+  B(A(q))=Q_m^\delta(J(\ell))
+\]
+for some $m\ge1$. The last column is $2B(A(q))+\delta$, so it equals
+$Q_{m+1}^\delta(J(\ell))$. These are precisely the two children of the
+\DRAW\ state $A(q)$; therefore neither is \LOSS\ and at least one is \DRAW.
+\end{proof}
+
+For a source $x$ and phase $e$, let $O(x,e)$ denote the following exact
+\emph{DRAW obligation}:
+\begin{enumerate}[label=(\alph*)]
+\item $Q_1^e(J(x))$ is \DRAW; or
+\item there is a \DRAW\ state whose two children are exactly
+      $Q_2^e(J(x))$ and $Q_1^e(J(x))$.
+\end{enumerate}
+This definition introduces no outcome assumption beyond the displayed
+\DRAW\ state.
+
+\begin{lemma}[Hidden parent for a typed three/two frame]\label{lem:hidden-parent}
+Let $a$ be positive, odd and not divisible by $3$, and suppose
+\[
+  a\equiv1+e\pmod3.
+\]
+Put $H=Q_3^e(a)$, $G=Q_2^e(a)$ and
+\[
+  K=\frac{2H+e-1}{3}.
+\]
+Then $K$ is an integer and
+\[
+  \Moves(K)=\{H,G\}.
+\]
+\end{lemma}
+
+\begin{proof}
+For $e=0$ the congruence gives $H\equiv2\pmod3$ and
+$K=(2H-1)/3$; for $e=1$ it gives $H\equiv0\pmod3$ and $K=2H/3$.
+These are exactly the two inverse branches of the injective map
+$A(q)=\lceil3q/2\rceil$. The last three bits of $H$ are equal, so the
+contracting child removes only the last bit and equals $G$.
+\end{proof}
+
+\section{Fixed-tail factor removal and entry typing}
+
+The next two lemmas isolate the only raw entry phenomenon that is not already
+an obligation or a factor frame.
+
+\begin{lemma}[Fixed-tail factor-removal diamond]\label{lem:fixed-tail-factor}
+Let $c$ be positive and odd, $e\in\{0,1\}$, and $r\ge2$. Put
+\[
+  X=Q_r^e(3c),\qquad G=Q_r^e(c),\qquad H=Q_{r+1}^e(c),\qquad Y=A(G).
+\]
+Then
+\[
+  \Moves(H)=\{X,Y\}.
+\]
+If $X$ is \DRAW, either $G$ is \DRAW, or the diamond determines a finite
+routing witness together with its exact incidence to $G,H,X,Y$ and the other
+child of $G$.
+\end{lemma}
+
+\begin{proof}
+Since $r+1\ge3$, Lemma~\ref{lem:long-tail} gives $A(H)=X$. For $r\ge3$ it
+also gives $B(H)=Q_{r-1}^e(3c)=A(G)$; for $r=2$ the boundary identity gives
+the same equality. Thus $B(H)=Y$.
+
+Because $X$ is \DRAW, $H$ is not \LOSS. If $H$ is \WIN, then $Y$ is a
+\LOSS\ child of $H$. Assume $H$ is \DRAW. Then $Y$ is not \LOSS. If $G$ is
+\LOSS, then $Y$ is \WIN. If $G$ is \WIN, either $Y$ itself is a \LOSS\
+witness, or the other child of $G$ is a \LOSS\ witness. These are all outcome
+orientations. In every finite branch the witness and the parent-child
+incidence just displayed are known exactly; no token-rank comparison is
+asserted at this stage.
+\end{proof}
+
+\begin{definition}[Entry controls]\label{def:entry-controls}
+A \emph{boundary entry} is an obligation $O(x,e)$ or, more generally, a
+factor-free adjacent frame
+\[
+ \{Q_{m+1}^e(J(x)),Q_m^e(J(x))\},\qquad m\ge1,
+\]
+known to contain a continuing \DRAW. Its remaining tail length is recorded as
+$\tau$. The typed three/two frame satisfying Lemma~\ref{lem:hidden-parent} is
+a distinguished $m=2$ boundary constructor.
+A \emph{loss-sibling entry} is one of the finitely many local constructors
+in which a continuing \DRAW\ is accompanied by a finite \WIN/\LOSS\ routing
+witness with a proved parent/child incidence: the fixed-tail diamond of Lemma~\ref{lem:fixed-tail-factor}, the exponent-one predecessor diamond of Lemma~\ref{lem:exp-one-lift}, an ordinary side diamond of Lemma~\ref{lem:side}, the exceptional side attachment of Lemma~\ref{lem:exceptional-side}, or the hidden-parent frame of Lemma~\ref{lem:hidden-parent}. The constructor records its remaining
+constant-tail/factor exponent as the local counter $\tau$.
+\end{definition}
+
+\begin{lemma}[Entry typing]\label{lem:entry-typing}
+Every finite branch produced by Lemma~\ref{lem:fixed-tail-factor} is a
+loss-sibling entry in the sense of Definition~\ref{def:entry-controls}; no
+ranked multiset is changed in order to make this classification.
+\end{lemma}
+
+\begin{proof}
+The proof of Lemma~\ref{lem:fixed-tail-factor} gives the finite witness and
+its exact incidence to $G,H,X,Y$ and the other child of $G$. These are
+precisely the data of the first loss-sibling constructor. Classification is
+therefore immediate; subsequent tail/factor normalization belongs to the
+typed routing relation and is ranked there by $\tau$ and, when available,
+by descendant-token comparisons.
+\end{proof}
+
+\begin{lemma}[Exponent-one lift]\label{lem:exp-one-lift}
+Let $a$ be positive and odd and $k\ge1$. If
+$R_k=Q_1^e(3^ka)$ is \DRAW, then
+\[
+  P_{k-1}=Q_2^e(3^{k-1}a)
+\]
+is either \DRAW\ or \WIN; in the latter case its other child is a finite
+\LOSS\ witness.
+\end{lemma}
+
+\begin{proof}
+The boundary recurrence gives $A(P_{k-1})=R_k$. A state with a \DRAW\ child
+cannot be \LOSS. If $P_{k-1}$ is \WIN, the \DRAW\ child cannot witness the
+win, so its other child is \LOSS.
+\end{proof}
+
+\begin{proposition}[Arbitrary factorful exponent-one entry]\label{prop:factorful-entry}
+Let $a=J(s)$ and $k>0$. If $Q_1^e(3^ka)$ is \DRAW, then after finitely many
+outcome-compatible local steps one obtains either a typed entry of
+Lemma~\ref{lem:entry-typing}, or the factor-free exponent-two state
+\[
+  Q_2^e(a)\text{ \DRAW}.
+\]
+\end{proposition}
+
+\begin{proof}
+Apply Lemma~\ref{lem:exp-one-lift}. Its finite branch is a loss-sibling entry by Definition~\ref{def:entry-controls}. Otherwise $Q_2^e(3^{k-1}a)$ is \DRAW. Apply
+Lemma~\ref{lem:fixed-tail-factor} with $r=2$ repeatedly. Whenever its finite
+branch occurs, Lemma~\ref{lem:entry-typing} supplies a typed entry. If it never
+occurs, one factor of $3$ is removed at the same tail exponent at each step,
+so after $k-1$ steps the displayed factor-free exponent-two state is reached.
+\end{proof}
+
+\begin{proposition}[Complete exponent-one/two boundary reduction]\label{prop:boundary-reduction}
+Let $s\ge0$, $k\ge0$, $e\in\{0,1\}$, and let
+\[
+  Q_r^e(3^kJ(s)),\qquad r\in\{1,2\},
+\]
+be \DRAW. For $s>0$, after finitely many local steps at least one of the following occurs: a typed entry is obtained, the retained source strictly
+decreases, or the factor-free exponent-two state $Q_2^e(J(s))$ is \DRAW.
+For $s=0$ the corresponding statement is Lemma~\ref{lem:zero-source}.
+\end{proposition}
+
+\begin{proof}
+Assume $s>0$. There are four cases. If $r=1,k=0$, the state is the first
+alternative of the obligation $O(s,e)$ and is already a boundary entry. If
+$r=1,k>0$, use Proposition~\ref{prop:factorful-entry}. If $r=2,k=0$, we are
+at the displayed factor-free exponent-two state. Finally, if $r=2,k>0$, apply
+Lemma~\ref{lem:fixed-tail-factor} repeatedly with $r=2$: a finite branch is a
+loss-sibling entry by Definition~\ref{def:entry-controls}, while otherwise
+one factor of $3$ is removed at the same exponent at each step and after $k$
+steps the factor-free exponent-two state is reached. These cases are disjoint
+and exhaustive.
+\end{proof}
+
+\section{Factor-free exponent-two base entry}
+
+Let $x>0$, $a=J(x)$ and
+\[
+  P=Q_1^e(a),\quad U=Q_2^e(a),\quad
+  b=B(P)=B(U),\quad F=A(U)=Q_1^e(3a),\quad g=1-e.
+\]
+Assume $U$ is \DRAW\ and $x$ is the least coefficient source of any \DRAW. The common child $b$ cannot be $0$, because $0$ is \LOSS\ and a \DRAW\ has no \LOSS\ child. By Lemma~\ref{lem:boundary-coeff}, $b$ has canonical coefficient strictly below $J(x)$; because $J$ is strictly increasing, its state source is below $x$. Hence $b$ is not \DRAW.
+As a child of a \DRAW\ it is not \LOSS, so
+\[
+  b\text{ is \WIN},\qquad F\text{ is \DRAW}.
+\]
+\begin{lemma}[First-factor anchor identity]\label{lem:first-factor}
+For the states above,
+\begin{equation}\label{eq:first-factor}
+  9J(x)+1-2e=2^vJ(b),\qquad v\ge1.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Put $a=J(x)$. If $e=0$, then $P=2a$, $A(P)=3a$ and $b=R(3a)$.
+Apply the first identity of Lemma~\ref{lem:coeff-pullback} to the odd integer
+$w=3a$:
