@@ -1,0 +1,320 @@
+ \odd(9a+1)=\kappa(9a)=J(R(3a))=J(b).
+\]
+If $e=1$, then $P=2a-1$, $A(P)=3a-1$ and $b=R(3a-1)$. The second identity
+of Lemma~\ref{lem:coeff-pullback}, again with $w=3a$, gives
+\[
+ \odd(9a-1)=J(R(6a-1)).
+\]
+By the boundary identity of Lemma~\ref{lem:long-tail},
+$R(6a-1)=R(3a-1)=b$. Hence in both phases the odd part of
+$9a+1-2e$ is exactly $J(b)$, which proves \eqref{eq:first-factor}.
+\end{proof}
+
+\begin{proposition}[Base-entry attachment]\label{prop:base-entry}
+Every factor-free exponent-two \DRAW\ at a globally minimal source has a
+finite continuation which either strictly lowers the retained source or
+produces a boundary/loss-sibling typed entry.
+\end{proposition}
+
+\begin{proof}
+Suppose first that $e=1-\alpha(x)$. The first source-boundary numerator is
+divisible by $4$, while
+\[
+9J(x)+1-2e=3(3J(x)+1-2e)-2(1-2e)\equiv2\pmod4.
+\]
+Thus $v=1$. Writing $u=A(x)$ gives $b=3u+1$. The two children of the \DRAW\
+state $F$ are
+\[
+  T=Q_1^g(J(b)),\qquad C=R(T),
+\]
+and direct appended-bit deletion gives
+$C\in\{A(b),B(b)\}$. If $T$ is \DRAW, this is the boundary entry
+$O(b,g)$. If $C$ is \DRAW, the other child $\ell$ of the \WIN\ state $b$ is a
+finite \LOSS\ witness. If $b$ is ordinary, this is the ordinary-side
+loss-sibling constructor. If $b$ is exceptional and $C=A(b)$,
+Lemma~\ref{lem:exceptional-side} gives an adjacent \DRAW\ frame over
+$\ell$, hence a boundary/loss-sibling entry. It remains only the exceptional
+orientation $C=B(b)$. In that orientation
+$b\le(9x+5)/2$ and the alternating suffix of $A(b)$ has length at least three,
+so
+\[
+ C=B(b)\le\frac{A(b)}8\le\frac{3b+1}{16}.
+\]
+Lemma~\ref{lem:source-bound} then yields
+\[
+ \rho(C)\le\frac{C-1}{6}<\frac{3b+1}{96}
+ \le\frac{27x+17}{192}<x,
+\]
+a strict retained-source exit.
+
+Now suppose $e=\alpha(x)$. Lemma~\ref{lem:source-boundary} gives
+$3J(x)+1-2e=2J(A(x))$, hence $v\ge2$. If $v\ge4$, then
+\[
+16J(b)\le9J(x)+1\le27x+19,
+\]
+and $J(b)\ge3b+1$ implies
+\[
+  b\le\frac{9x+1}{16}<x.
+\]
+Thus the continuing \DRAW\ has smaller retained source. If $v=2$, the two
+children of $F$ are exactly $Q_2^g(J(b))$ and $Q_1^g(J(b))$, which is the
+second form of $O(b,g)$. If $v=3$, they are the typed three/two frame
+$Q_3^g(J(b)),Q_2^g(J(b))$. Reducing
+\eqref{eq:first-factor} modulo $3$ gives
+\[
+  J(b)\equiv1+g\pmod3,
+\]
+so Lemma~\ref{lem:hidden-parent} applies. The hidden parent is a boundary
+entry; its finite side, if one is exposed, is a loss-sibling entry. Hence no
+untyped base row remains.
+\end{proof}
+
+\section{The source-zero branch}
+
+For $k\ge0$, $r\ge1$ and $e\in\{0,1\}$ put
+\[
+  S_{k,r}^e=Q_r^e(3^k).
+\]
+These are precisely the constant-tail states with coefficient source zero.
+
+\begin{lemma}[Zero-source boundary normalization]\label{lem:zero-source}
+If a source-zero \DRAW\ exists, then after finitely many outcome-compatible
+moves one reaches a typed boundary or loss-sibling entry. The one-shot entry
+bit is not consumed before this finite normalization is complete.
+\end{lemma}
+
+\begin{proof}
+For $r\ge3$, Lemma~\ref{lem:long-tail} gives
+\[
+  \Moves(S_{k,r}^e)=\{S_{k+1,r-1}^e,S_{k+1,r-2}^e\}.
+\]
+Following a \DRAW\ child strictly lowers $r$, so a \DRAW\ with $r\in\{1,2\}$
+is reached after finitely many moves. If $k=0$ already at that boundary, the
+four possibilities are explicit:
+\[
+ Q_1^1(1)=1\ \WIN,\quad Q_2^1(1)=3\ \WIN,\quad
+ Q_1^0(1)=2\ \LOSS,\quad Q_2^0(1)=4\ \LOSS.
+\]
+Hence a boundary \DRAW\ must have accumulated at least one factor of $3$.
+
+At the boundary write, for some $n\ge1$,
+\[
+  3^n+1-2e=2^jJ(y).
+\]
+The exact $2$-adic valuation is
+\[
+\begin{array}{c|cc}
+ &n\text{ odd}&n\text{ even}\\ \hline
+ e=0&j=2&j=1\\
+ e=1&j=1&j=2+v_2(n).
+\end{array}
+\]
+For $j\ge2$ the raw and signed exits form the adjacent factor-free frame
+\[
+  Q_{j-1}^{1-e}(J(y)),\qquad Q_j^{1-e}(J(y)),
+\]
+containing a continuing \DRAW; by Definition~\ref{def:entry-controls} this is a boundary entry, with its finite tail length recorded in $\tau$. For $j=1$ one has
+\[
+  y=\frac{3^{n-1}-1}{2}.
+\]
+When $e=0$ the raw exit is $A(y)$; when $e=1$ it is $B(y)$. The raw and
+signed states are the two exits of the same boundary \DRAW\ configuration.
+If the signed exit is \DRAW, it is already the exponent-one form of an
+obligation. If the raw exit is the continuing \DRAW\ and the signed exit is
+finite, that finite state is necessarily \WIN; choosing a canonical \LOSS\
+child of it supplies an exact finite routing witness, hence a loss-sibling
+entry. If both exits are \DRAW, use the signed obligation. Thus every row
+reaches a typed entry after a finite pre-entry computation; no impossible
+``source below zero'' comparison is used.
+\end{proof}
+
+\begin{lemma}[$A$-selecting side diamond]\label{lem:a-side}
+Let $x>0$, $e=\alpha(x)$, $w=Q_1^e(J(x))$, and $y=A(x)$. Then
+\[
+  B(w)\in\{A(y),B(y)\}.
+\]
+\end{lemma}
+
+\begin{proof}
+The source-boundary identity gives
+$A(w)=Q_1^{1-e}(J(y))=4A(y)+1+e$. For $e=0$ the appended bits are $01$;
+for $e=1$ they are $10$. If the first appended bit repeats the last bit of
+$A(y)$, deleting the alternating suffix leaves $A(y)$; otherwise the deletion
+continues through the maximal alternating suffix of $A(y)$ and leaves
+$B(y)$.
+\end{proof}
+
+\begin{lemma}[Universal $B$-transfer diamond]\label{lem:b-diamond}
+Let $x>0$, let $e=1-\alpha(x)$, put $a=J(x)$ and $g=1-e$, and factor
+\[
+  3a+1-2e=2^jJ(y),\qquad j\ge2,
+\]
+so $y=B(x)$. Define
+\[
+ P=Q_1^e(a),\quad U=Q_2^e(a),\quad
+ D=Q_j^g(J(y)),\quad C=Q_{j-1}^g(J(y)),\quad F=A(U).
+\]
+Then $D=A(P)$ and $C=B(P)=B(U)$. If $X$ is the common child of $D,C$ and
+$Y$ is the other child of $C$, then
+\[
+  B(F)=Y.
+\]
+Consequently an obligation in the $B$-selecting phase transfers a continuing
+\DRAW\ to the adjacent frame $\{D,C\}$; when $j=2$ the transferred frame is
+again an obligation in the opposite phase.
+\end{lemma}
+
+\begin{proof}
+The formulas for $D$ and $C$ are the signed boundary formula and the
+shared-child identity. The remaining equality is a direct substitution in the
+three cases $j=2$, $j=3$, and $j\ge4$: the constant suffix of $D$ determines
+its common child $X$, while the one-step longer factor state $F$ has the same
+raw side $Y$. For the outcome assertion, a common child of a \DRAW\ cannot be
+\LOSS. If the exponent-one member is \DRAW, the frame $\{D,C\}$ already
+contains a \DRAW. In the parent form of an obligation, the only remaining
+orientation has the exponent-two member \DRAW; if $C$ were \WIN, outcome
+recursion through the displayed diamond would force $Y$ both \LOSS\ and a
+child of the \DRAW\ state $F$, impossible. Hence $C$ is \DRAW. For $j=2$,
+$D,C$ are exactly the exponent-two/one pair over $J(y)$.
+\end{proof}
+
+\section{The typed routing system}
+
+We now define the marked relation used after entry. A configuration contains
+an outer retained source $s$, an outer token multiset $M$, an entry bit
+$\eta\in\{1,0\}$, and, after entry, inner data
+\[
+  (a,\zeta,N,v,\tau).
+\]
+Here $a$ is the retained inner source anchor; $N$ is the finite multiset of
+inner proof-token heights; $\zeta\in\{1,0\}$ is a one-shot token-seed bit;
+$v$ is one of the finite control states below; and $\tau\in\N$ is a local
+tail/factor counter. Temporary arithmetic cursors are not rank anchors. An inner source is promoted to the ranked anchor $a$ only when every already retained token remains a valid witness for the new typed state; otherwise the numerical value remains a cursor until a preceding token decrease permits a reset.
+
+The bit $\eta=1$ means that the current retained-source fibre has not yet
+initialized the typed relation. The strict transition $\eta:1\to0$ may
+install the initial finite outer-token multiset $M$, an arbitrary finite inner
+routing source $a$, and any already proved routing witnesses. This is why
+$\eta$ is placed \emph{before} the token and inner-source components of the
+rank. After $\eta=0$, $M$ can change only by certified strict descendant
+replacement. If entry contains no token suitable for ranking, the inner
+seed bit is set to $\zeta=1$; the first later certified token may be installed
+in $N$ by the strict transition $\zeta:1\to0$. Once $\zeta=0$, every change of
+$N$ is a certified strict descendant replacement.
+
+Define
+\[
+  \Psi(N)=\mathop{\#}_{h\in N}\omega^h.
+\]
+The full lexicographic rank is
+\begin{equation}\label{eq:full-rank}
+  \mathcal R=(s,\eta,\Phi(M),\zeta,\Psi(N),a,c(v),\tau).
+\end{equation}
+Thus an entry-bit decrease may seed $M$ and $a$; a later token decrease may
+reset the still-later source/control data. All natural components use their
+usual well-order and both bits are ordered $1>0$.
+
+The finite control set $\mathcal V$ consists of the fifteen names listed in Table~\ref{tab:control}; the names are labels for semantic constructors, not additional mathematical assumptions.
+
+\begin{lemma}[A-obligation routing]\label{lem:a-routing}
+An $A$-selecting obligation $O(x,\alpha(x))$ has only the following
+outcome-compatible exits: a strict inner-source decrease, a strict inner-token
+replacement, a bounded canonical $A$-streak, or a factor fork carrying an
+actual finite witness.
+\end{lemma}
+
+\begin{proof}
+Let $e=\alpha(x)$, $g=1-e$, $P=Q_1^e(J(x))$, $U=Q_2^e(J(x))$ and
+$b=B(P)=B(U)$. Lemma~\ref{lem:a-side} makes $b$ an ordinary child of $A(x)$ and gives
+\[
+ \rho(b)\le\frac{9x+1}{24}<x.
+\]
+Thus a \DRAW\ at $b$ is a strict inner-source exit. Suppose $b$ is \WIN. If
+$P$ is \DRAW, its other child is \DRAW\ and is exactly the next obligation
+$O(A(x),1-e)$. In the parent form of $O(x,e)$, the exponent-one state is
+\WIN, the exponent-two state is \DRAW, and outcome recursion forces an
+actual \LOSS\ sibling; the other child of the exponent-two state is an
+adjacent factor frame carrying that witness. These are the stated rows.
+\end{proof}
+
+\begin{lemma}[Bounded canonical $A$-streak]\label{lem:a-streak}
+A canonical $A$-continuation from an $A$-selecting obligation performs at
+most four equal-rank side tests before reaching a $B$-selecting control or a
+strict source/token exit.
+\end{lemma}
+
+\begin{proof}
+During the streak the side states are consecutive points
+$x_2,x_3,x_4,x_5$ on one $A$-ray. If all four were \WIN, this would contradict
+Corollary~\ref{cor:no-four-win}. The first non-\WIN\ side state is either a
+\DRAW, giving a strict source exit in the ordinary case or the adjacent frame of
+Lemma~\ref{lem:exceptional-side} in the exceptional case, or the phase has already become
+$B$-selecting. Thus no fifth equal-rank test exists.
+\end{proof}
+
+\begin{lemma}[$B$-selecting transfer]\label{lem:b-routing}
+Every \texttt{b\_select} control carries, as part of its provenance, a retained
+anchor $p$ and a current $B$-selecting cursor $y$ with
+\[
+  y\le\frac{3p+1}{2}.
+\]
+Let $j\ge2$ be the selected signed valuation and $z=B(y)$. If $j\ge3$, then
+\[
+  z\le\frac{27p+7}{48}<p,
+\]
+so the retained inner source strictly decreases. If $j=2$, the transferred
+frame is again an exact obligation. Its first occurrence may use the one-shot
+token seed; every later compatible valuation-two recycle either strictly
+lowers the retained inner source or replaces the retained witness by a
+certified lower descendant.
+\end{lemma}
+
+\begin{proof}
+Lemma~\ref{lem:b-diamond} sends the $B$-selecting obligation to an adjacent frame over $z=B(y)$. When $j\ge3$, at least two additional suffix
+bits are deleted after the mandatory first division, and the exact source
+estimate is
+\[
+ z\le\frac{9y-1}{24}
+   \le\frac{27p+7}{48}<p.
+\]
+For $j=2$ the transferred exponent-two/one pair is exactly the same
+obligation type in the opposite phase. The first occurrence exposes the
+finite ordinary-side witness and, if no inner token has yet been seeded,
+uses $\zeta:1\to0$. In a later valuation-two recycle the common-side identity
+places the new witness below the currently retained finite witness in its
+proof tree; hence its height is strictly smaller. No unrelated token is
+inserted after $\zeta=0$.
+\end{proof}
+
+\begin{lemma}[Boundary-entry normalization]\label{lem:boundary-normalize}
+A \texttt{boundary\_entry} either makes a strict source/token transition or,
+after finitely many equal-rank tail steps, reaches
+\texttt{a\_obligation} or \texttt{factor\_fork}.
+\end{lemma}
+
+\begin{proof}
+For an obligation there is nothing to normalize. Otherwise the entry is an
+adjacent factor-free frame with finite lower exponent $m$. Follow a continuing
+\DRAW\ through the long-tail recurrence while the lower exponent is at least
+three. Each pure routing step lowers the recorded tail counter $\tau$. At the
+first exponent-one/two boundary, the shared-child/source identities give an
+obligation if the coefficient is factor-free and a factor fork if powers of
+$3$ have accumulated. The hidden-parent congruence handles the typed
+three/two constructor without introducing an additional row. Thus the macro is
+finite; any earlier source or certified token exit is already strict.
+\end{proof}
+
+\begin{lemma}[Loss-sibling normalization]\label{lem:loss-sibling}
+A \texttt{loss\_sibling\_entry} either makes a strict token/source transition
+or reaches \texttt{factor\_fork} after finitely many equal-rank steps.
+\end{lemma}
+
+\begin{proof}
+The entry records one of the finite constructors of
+Definition~\ref{def:entry-controls} and the remaining tail/factor length
+$\tau$. If the constructor is already an exponent-one/two or hidden-parent
+frame, it is a factor fork. Otherwise, choose the continuing \DRAW\ branch in
+the long-tail diamond. Lemma~\ref{lem:long-tail} reduces the remaining tail
+length. Whenever the carried finite witness meets the continuing branch in an
+ordinary side diamond, Lemma~\ref{lem:side} either keeps the same witness
+incidence or replaces it by an actual child, which is a strict proof-height
