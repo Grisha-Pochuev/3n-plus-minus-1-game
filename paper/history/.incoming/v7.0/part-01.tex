@@ -1,0 +1,320 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{geometry}
+\geometry{margin=27mm}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{enumitem}
+\usepackage{booktabs,longtable,array}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!55!black,
+  citecolor=blue!55!black,
+  urlcolor=blue!55!black,
+  pdftitle={The Two-Player 3n plus or minus 1 Game - Version 7.0},
+  pdfauthor={Grisha Pochuev}
+}
+
+\pagestyle{fancy}
+\setlength{\headheight}{14pt}
+\fancyhf{}
+\lhead{Two-Player $3n\pm1$ Game, Version 7.0}
+\rhead{Audited status manuscript}
+\cfoot{\thepage\ of \pageref{LastPage}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{obligation}[theorem]{Open obligation}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\WIN}{\textnormal{\textsc{Win}}}
+\newcommand{\LOSS}{\textnormal{\textsc{Loss}}}
+\newcommand{\DRAW}{\textnormal{\textsc{Draw}}}
+\newcommand{\odd}{\operatorname{odd}}
+\newcommand{\Moves}{\operatorname{Moves}}
+\newcommand{\asl}{\operatorname{asl}}
+\newcommand{\rhoo}{\rho}
+\newcommand{\Nat}{\mathbb N}
+\newcommand{\Natz}{\mathbb N_0}
+
+\title{\textbf{The Two-Player $3n\pm1$ Game}\\[2mm]
+\large An Audited Binary Core, Strengthened Local Normalizations,\\
+and the Exact Remaining Global Barrier\\[2mm]
+\normalsize Version 7.0}
+\author{Grisha Pochuev\\
+\texttt{n\_854@mail.ru}\\
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}}
+\date{11 August 2026}
+
+\begin{document}
+\maketitle
+
+\noindent
+\fbox{\parbox{0.94\textwidth}{
+\textbf{Audit status of Version 7.0.}
+This document does \emph{not} claim a proof of the all-start no-draw
+conjecture.  Earlier versions did make that claim, but hostile review found
+that their global marked-router argument used finite states as ranked proof
+tokens without first proving the required provenance, and compressed an
+attached short-tail module into an unproved exhaustiveness assertion.
+Those claims are withdrawn here.  Every unconditional theorem in this
+version is proved in the text.  The global conclusion is stated only as a
+conditional theorem under four explicit open obligations.  Thus Version 7.0
+is intended to be gap-free as a status manuscript, not to conceal an open
+step inside a claimed prize solution.
+}}
+
+\begin{abstract}
+The two-player $3n\pm1$ game is played on positive odd integers.  A move
+chooses $3n-1$ or $3n+1$, removes all powers of two, and wins immediately
+when the result is $1$.  Arbitrary play can cycle, so the question is whether
+optimal play nevertheless has finite remoteness from every start.  We retain
+the exact binary conjugation used in earlier manuscripts, in which the two
+moves are an expanding map $A$ and a strictly contracting map $B$.  We then
+separate four notions that earlier drafts sometimes conflated: a finite
+outcome, a routing witness, a retained proof token, and a temporary arithmetic
+cursor.
+
+Two local repairs are proved completely.  First, a reverse fixed-tail step
+from $Q_r^e(3c)$ either removes one factor of three while preserving an
+actual draw, or exposes a genuine loss state and a strictly lower win child
+before the draw continues.  Second, the exponent-one predecessor has the
+same complete dichotomy; in the exceptional residue classes its two
+continuing children form an exact adjacent lift over the actual loss sibling.
+We also give a corrected audit of the source-zero valuation-one row and of
+the long high-return pair.  These results close several former local gaps,
+but they do not establish the global provenance invariant required to
+iterate the marked router indefinitely.  The remaining obligations are
+isolated precisely, and a complete order-theoretic proof shows that they
+would imply the no-draw conjecture.  A companion Python program checks the
+arithmetic identities and permanent counterexamples used in the audit; it is
+explicitly supporting evidence rather than a proof of the infinite theorem.
+\end{abstract}
+
+\tableofcontents
+
+\section{The game, outcomes, and the exact status}
+
+The current state is a positive odd integer $n$.  From $n>1$ the player to
+move chooses one of
+\[
+  3n-1,\qquad 3n+1,
+\]
+and repeatedly divides the chosen integer by $2$ until it is odd.  Reaching
+$1$ wins immediately.  Equivalently, state $1$ is terminal and losing for
+the player to move.
+
+For an infinite game graph, the finite-remoteness outcome classes are defined
+inductively.  A state is \WIN\ when it has a \LOSS\ child; it is \LOSS\ when
+all of its children are \WIN.  These are the least classes closed under the
+two rules.  Every remaining state is called \DRAW.
+
+\begin{lemma}[Elementary draw recursion]\label{lem:draw-recursion}
+A \DRAW\ state has no \LOSS\ child and has at least one \DRAW\ child.
+\end{lemma}
+
+\begin{proof}
+A state with a \LOSS\ child is \WIN.  A state all of whose children are
+\WIN\ is \LOSS.  Therefore a state in neither finite class has no \LOSS\
+child and cannot have all children \WIN; at least one child is \DRAW.
+\end{proof}
+
+Arbitrary play does not terminate: in the original game, suitable choices
+give $5\to7\to5$.  The target is therefore not termination under all choices.
+
+\begin{conjecture}[No-draw conjecture]\label{conj:main}
+Every positive odd starting state has finite remoteness.  Equivalently, the
+game has no \DRAW\ positions and optimal play reaches $1$ after finitely
+many moves.
+\end{conjecture}
+
+Conjecture~\ref{conj:main} is the target of the EUR 500 problem posed by
+Ingo Althoefer~\cite{Prize}.  It is \emph{not} promoted to a theorem in this
+manuscript.
+
+\section{Binary conjugation}
+
+Write an original odd state as $n=2m+1$ and define
+\[
+  F(m)=\left\lceil\frac{3m}{2}\right\rceil
+       =\frac{3m+(m\bmod2)}{2}.
+\]
+For later factorization, also put
+\[
+ J(s)=2F(s)+1=
+ \begin{cases}
+  3s+1,&s\text{ even},\\
+  3s+2,&s\text{ odd}.
+ \end{cases}
+\]
+For a positive integer $x$, let $R(x)$ be the integer obtained by deleting
+the maximal alternating suffix of the binary expansion of $x$, and let
+$\asl(x)$ denote the number of deleted bits.  Put $R(0)=0$ and
+$\asl(0)=0$.
+For example,
+\[
+ R(1001_2)=10_2,
+ \qquad
+ R(10101_2)=0.
+\]
+
+\begin{lemma}[Alternating-suffix factorization]\label{lem:alt-factor}
+For every positive integer $z$, put $\delta=1-(z\bmod2)$.  There is an
+integer $k\ge1$ such that
+\[
+  3z+1+\delta=2^k J(R(z)).
+\]
+If $R(z)>0$, $k$ is the length of the maximal alternating suffix of $z$;
+if $R(z)=0$, $k$ is one more than the binary length of $z$.
+\end{lemma}
+
+\begin{proof}
+First suppose $r=R(z)>0$, let $k=\asl(z)$, and put
+$\epsilon=r\bmod2$.  The deleted alternating word has the exact numerical
+value
+\[
+ t_{k,0}=\left\lfloor\frac{2^k}{3}\right\rfloor,
+ \qquad
+ t_{k,1}=\left\lfloor\frac{2^{k+1}}{3}\right\rfloor,
+\]
+according as $\epsilon=0$ or $1$, so $z=2^k r+t_{k,\epsilon}$.
+Since $J(r)=3r+1+\epsilon$, direct substitution in the two parity cases
+gives
+\[
+  3t_{k,\epsilon}+1+\delta=2^k(1+\epsilon).
+\]
+Adding the contribution $3\cdot2^k r$ yields the claimed identity.
+If $R(z)=0$, the whole binary word is alternating and starts with $1$.
+Let $\ell$ be its binary length.  Then $z=t_{\ell,1}$, and the same
+calculation gives
+\[
+  3z+1+\delta=2^{\ell+1}=2^{\ell+1}J(0).
+\]
+Thus the exponent in the statement is $k=\ell+1$.
+\end{proof}
+
+\begin{proposition}[First normal form]\label{prop:first-normal}
+For $m>0$, the two children in $m$-coordinates are exactly
+\[
+  F(m),\qquad F(R(m)).
+\]
+\end{proposition}
+
+\begin{proof}
+Since
+\[
+  3(2m+1)-1=2(3m+1),\qquad
+  3(2m+1)+1=2(3m+2),
+\]
+exactly one of $3m+1$ and $3m+2$ is odd.  If $m$ is even, the direct odd
+expression is $3m+1$ and its new $m$-coordinate is $3m/2=F(m)$.  If $m$
+is odd, the direct odd expression is $3m+2$ and its new coordinate is
+$(3m+1)/2=F(m)$.
+
+The other expression is
+\[
+  3m+2-(m\bmod2)=3m+1+\delta,
+  \qquad \delta=1-(m\bmod2).
+\]
+Lemma~\ref{lem:alt-factor} says that its odd part is $J(R(m))$.  Returning
+to $m$-coordinates gives
+\[
+  \frac{J(R(m))-1}{2}=F(R(m)).
+\]
+Thus the two children are exactly the displayed pair.
+\end{proof}
+
+Every child in Proposition~\ref{prop:first-normal} lies in the image of
+$F$.  Representing the state $F(q)$ by $q$ gives the conjugated game
+\[
+  A(q)=F(q)=\left\lceil\frac{3q}{2}\right\rceil,
+  \qquad
+  B(q)=R(F(q)),
+\]
+with terminal state $q=0$.
+
+\begin{proposition}[Strict contraction]\label{prop:B-contracts}
+For every $q>0$,
+\[
+  B(q)<q.
+\]
+\end{proposition}
+
+\begin{proof}
+The deletion defining $R$ removes at least one binary digit, so
+\[
+ B(q)\le \left\lfloor\frac{F(q)}2\right\rfloor
+ \le \left\lfloor\frac{3q+1}{4}\right\rfloor<q
+\]
+for $q\ge2$.  Directly, $B(1)=0$.
+\end{proof}
+
+After one original move, the $m$-coordinate is in the image of $F$.
+Consequently a proof that every conjugated state $q$ has finite remoteness
+would imply Conjecture~\ref{conj:main}; the first original move would then
+lead to one of two finite-remoteness states.
+
+\section{Constant tails and coefficient sources}
+
+For a positive odd integer $a$, a phase $e\in\{0,1\}$, and $r\ge1$, define
+\[
+  Q_r^e(a)=a2^r-e.
+\]
+This is the unique representation of a positive binary word whose maximal
+constant suffix consists of $r$ copies of the bit $e$.
+
+\begin{lemma}[Long-tail recurrence and shared boundary]\label{lem:long-tail}
+For every $r\ge3$,
+\[
+ A(Q_r^e(a))=Q_{r-1}^e(3a),
+ \qquad
+ B(Q_r^e(a))=Q_{r-2}^e(3a).
+\]
+Moreover,
+\[
+ B(Q_1^e(a))=B(Q_2^e(a)).
+\]
+\end{lemma}
+
+\begin{proof}
+The formula for $A$ follows directly from the two phase cases:
+\[
+ A(a2^r)=3a2^{r-1},
+ \qquad
+ A(a2^r-1)=3a2^{r-1}-1.
+\]
+When $r\ge3$, the image still ends in at least two equal bits.  Its maximal
+alternating suffix therefore consists only of the last bit, and applying
+$R$ removes one further constant bit, proving the formula for $B$.
+
+At the boundary,
+\[
+ A(Q_1^e(a))=3a-e,
+ \qquad
+ A(Q_2^e(a))=6a-e=2(3a-e)+e.
+\]
+The last bit of $3a-e$ is $1-e$, so the appended bit $e$ extends the same
+maximal alternating suffix by one digit.  Deleting it leaves the same
+prefix in both cases.
+\end{proof}
+
+Recall that $J(s)=2A(s)+1$.  The map $J$ is an increasing bijection
+from $\Natz$ to the positive odd integers not divisible by $3$: explicitly,
+$6u+1=J(2u)$ and $6u+5=J(2u+1)$.  Thus every positive odd coefficient has a
+unique factorization
+\[
