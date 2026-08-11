@@ -1,0 +1,400 @@
+Thus $\delta=1-g$ and $m=\lambda+1\ge2$.  If $y=0$, the complete-word row of
+Lemma~\ref{lem:alt-lift} gives a source-zero constant-tail state instead.
+\end{proof}
+
+\begin{lemma}[LOSS-anchored lift and factor module]
+\label{lem:loss-anchored-lift}
+Let $y$ be an already retained finite LOSS token.  Suppose a continuing DRAW
+obligation or adjacent factor frame is attached, by exact coordinates, to a
+constant-tail state
+\[
+ x=Q_m^d(3^kJ(y)),\qquad m\ge1,\quad k\ge0.
+\]
+Then the attached normalization has only two kinds of outcome-compatible
+macro-exit:
+\begin{enumerate}[label=(\alph*)]
+\item $y$ is replaced by one of its actual WIN children, or by a certified
+      descendant of such a child, and the proof-token rank is strict;
+\item $y$ is retained and an exact tail/factor counter decreases.  No
+      unrelated finite endpoint is inserted into a ranked token multiset.
+\end{enumerate}
+In particular the module never exits as a fresh free obligation at an
+unrelated numerical cursor.
+\end{lemma}
+
+\begin{proof}
+Both ordinary children
+\[
+ c_A=A(y),\qquad c_B=B(y)
+\]
+of the LOSS state $y$ are WIN and satisfy
+$h(c_A),h(c_B)\le h(y)-1$.  While a constant tail has length at least three,
+Lemma~\ref{lem:long-tail} removes one or two tail bits and merely multiplies
+the odd coefficient by $3$; its underlying three-free source remains $y$.
+The valuation-two transfer and the canonical $A$ continuation therefore stay
+inside the same attached module while the exact tail counter decreases.  No
+finite endpoint encountered during this countdown is inserted into a ranked
+multiset merely because its outcome is known.
+
+It remains to audit a factor boundary.  The universal current/next-level
+coupling reduces its first factor-free signed source over the finite source
+$y$ to
+\[
+ 9J(y)+1-2f=2^vJ(t).
+\]
+The exact source trichotomy is
+\[
+ t=\begin{cases}
+   Q_r^\epsilon(J(c_B))\quad(r\ge1),&v=1,\\
+   A(c_A),&v=2,\\
+   B(c_A),&v\ge3.
+  \end{cases}
+\]
+For $v=1$ this is Lemma~\ref{lem:alt-lift} applied to $A(y)$; for
+$v\ge2$ it is the ordinary source-boundary transition at $A(y)$.  Thus the
+$v=1$ row is already an exact lift over the proper WIN child $c_B$, whereas
+$v\ge2$ is an actual child of the proper WIN child $c_A$.  Before any new
+normalizer is installed we may therefore make the strict retained-token
+replacement $y\mapsto c_B$ in the first row or $y\mapsto c_A$ in the other
+two rows.  The returned cursor itself is not inserted as a token.
+
+The consecutive-factor identity is equally important: when the current
+valuation is at least two, the next factor source is an exact lift over the
+already displayed $t$; when it is one, the next factor source is exactly one
+ordinary selected-source step from that first lift.  Hence a DRAW choosing a
+raw rather than signed exit cannot bypass the strict child token.  If powers
+of three remain at tail exponent at least two,
+Lemma~\ref{lem:fixed-tail-factor} removes them one level at a time or exposes
+one of its typed finite side diamonds.  At exponent one the same two-level
+factor coupling is used instead; the reverse-factor lemma is never invoked
+there.  Consequently equal-token routing has a decreasing exact natural
+counter, and every genuine restart is preceded by the displayed child-token
+replacement.  This is the LOSS-source provenance lemma of the older local
+proof, rewritten here so that it is not hidden inside the global assembly.
+\end{proof}
+
+\begin{lemma}[The $D=2$ exact lift remains LOSS-anchored]
+\label{lem:D2-pure}
+The $D=2$ row of Lemma~\ref{lem:short-tail} is an instance of
+Lemma~\ref{lem:loss-anchored-lift} with retained LOSS token $y$.  Therefore
+it either makes a strict descendant-token transition before control restarts,
+or stays in a finite exact tail/factor countdown over the same $y$.  It never
+uses a new seed and never becomes a free obligation at the returned cursor
+$w$.
+\end{lemma}
+
+\begin{proof}
+For $y=0$ this is Lemma~\ref{lem:zero-source}.  For $y>0$ the preceding
+calculation gives $w=Q_m^{1-g}(J(y))$ with $m\ge2$.  If the first factor
+numerator is $N_1=2J(w)$, then consecutive factor levels satisfy
+\[
+ N_2=3N_1-2(1-2g)
+    =2\bigl(3J(w)+1-2(1-g)\bigr).
+\]
+Thus the next signed source is exactly the ordinary source-boundary
+transition of this lift.  Lemma~\ref{lem:loss-anchored-lift} applies from
+that point and keeps $y$ as the retained provenance until a strict
+child-token event occurs.  A later marked-tail return is therefore either
+after that strict event or still inside the same decreasing attached
+countdown; there is no unranked same-fibre reseed.
+\end{proof}
+
+\begin{lemma}[Post-payment shortest marked lift arithmetic]
+\label{lem:attached-lift}
+Consider the $D=3$ row of Lemma~\ref{lem:marked-tail-pay} after the strict
+replacement $y\mapsto r$ has already been made. Thus
+\[
+ b=Q_3^g(C),\quad q=A(b)\text{ WIN},\quad y=B(b)\text{ LOSS},\quad
+ r=B(q)=B(y)\text{ WIN}.
+\]
+Since $q$ and $r$ are WIN, its other child $\ell=A(q)$ is LOSS. The two
+children of $\ell$ are WIN and are proper descendants of $q$.
+
+The first raw exit of the marked factor scan is an exact lift
+\[
+ S=Q_m^g(J(r)),\qquad m\ge2.
+\]
+For an arbitrary A-selecting lift cursor $x=Q_m^g(a)$, with
+$e=1-g=\alpha(x)$, the common side $d$ of $O(x,e)$ satisfies
+\[
+ d=\begin{cases}
+ 9a-g,&m=2,\\
+ R(Q_1^g(9a)),&m=3,\\
+ Q_{m-3}^g(9a),&m\ge4,
+ \end{cases}
+\]
+and the source transition at $A(x)$ has respectively valuation $1$, at least
+$3$, and $2$. Hence every same-provenance canonical recycle with $m\ge4$
+has the exact update
+\[
+ (m,a)\longmapsto(m-3,9a),
+\]
+which preserves the underlying three-free source and lowers the natural lift
+counter. Every noncanonical exit remains an exact raw/signed boundary over
+$r$ or over an actual child of the transported lower pair. No temporary
+finite endpoint is promoted to the retained token multiset.
+\end{lemma}
+
+\begin{proof}
+The identity $S=Q_m^g(J(r))$, $m\ge2$, is the exact appended-suffix
+calculation at the $D=3$ boundary. The three-row formula follows by applying
+Lemma~\ref{lem:long-tail} to $A(x)$ and by using the shared exponent-two/one
+boundary at $m=2,3$. For $m\ge4$ the tail has at least four constant bits,
+so one canonical A/B$_2$ block removes three of them and multiplies the odd
+coefficient by $9$, giving the displayed update.
+
+The retained geometry is independent of the value of $m$. The WIN state $q$
+has the WIN child $r$, hence $\ell=A(q)$ is LOSS; both children of $\ell$
+are WIN proper descendants of $q$. Repeated common-child steps transport this
+pair componentwise while the raw exponent is reduced by three. Therefore the
+factor/signed exits stay on the exact boundary generated by $r$ and its actual
+children. This lemma asserts provenance transport only.  The proof-height
+payment at the terminal classes is proved separately after this arithmetic
+transport has been established.
+\end{proof}
+
+\begin{lemma}[Attached $B$-selecting exponent-one lifts descend]
+\label{lem:attached-b}
+Let $r>0$, $d\in\{0,1\}$, and put
+\[
+ S=Q_1^d(J(r)),\qquad e=1-d.
+\]
+Then $e$ is the $B$-selecting phase at $S$.  If $k=B(S)>0$, its state source
+satisfies
+\[
+ \boxed{\rho(k)<r}.
+\]
+Hence a $B$-selecting obligation attached to this exact exponent-one lift
+transfers, by Lemma~\ref{lem:b-diamond}, either to the terminal source or to
+an adjacent frame with a strictly smaller retained nested source.  It never
+becomes a fresh free obligation at the numerical cursor $S$.
+\end{lemma}
+
+\begin{proof}
+A one-bit tail of bit $d$ has A-selecting phase $d$, so $e=1-d$ is
+B-selecting.  The universal contraction and source bounds give
+\[
+ k=B(S)\le\left\lfloor\frac{3S+1}{4}\right\rfloor,
+ \qquad
+ \rho(k)\le\frac{k-1}{6}\le\frac{S-1}{8}.
+\]
+Since $J(r)\le3r+2$, one has $S\le6r+4$, and therefore
+$(S-1)/8<r$ for $r\ge2$.  For $r=1$ the two lifts are $S=10,9$;
+their B-children are $7,3$, both of state source $0$.  Thus the inequality
+holds in every positive case.  Lemma~\ref{lem:b-diamond} supplies the exact
+transferred adjacent frame over $k$.
+\end{proof}
+
+\begin{lemma}[Every terminal macro pays a retained token]
+\label{lem:terminal-pay}
+Suppose a terminal row is reached by the post-payment $D=3$ lift transport of
+Lemma~\ref{lem:attached-lift}.  Let $\ell=A(q)$ be the retained LOSS token
+whose two WIN children form the transported lower pair; in the zero-recycle
+endpoint the already retained marked LOSS token is $y$.  The common-child transport is componentwise: after every
+three-bit recurrence both transported WIN states are proper descendants of
+the corresponding incoming WIN states.  At the terminal barrier they are
+the complete child set of one reconstructed LOSS state $Z_n$.
+
+Every terminal exponent-one, exponent-two, or exponent-three restart is
+therefore preceded by a strict replacement of retained provenance.  More
+precisely:
+\begin{enumerate}[label=(\alph*)]
+\item the zero-recycle two-bit row $m=2$ either exposes a boundary WIN at
+      least two proof levels below its boundary-WIN source, or enters an exact
+      adjacent DRAW frame over that source's actual LOSS child one level
+      lower;
+\item the exponent-one row first reconstructs a canonical LOSS token $L$
+      with $h(L)\le h(\ell)-2$ and only then enters its $B$-selecting gate;
+\item every positive-recycle exponent-two or exponent-three row reconstructs
+      a LOSS token $Z_n$ with $h(Z_n)<h(\ell)$ before the new inner task is
+      installed;
+\item in the sole zero-recycle exponent-three row, the existing marked LOSS
+      token $y$ is replaced by its actual WIN child $r$ with
+      $h(r)\le h(y)-1$.
+\end{enumerate}
+Consequently no terminal row is a pure control reset.
+\end{lemma}
+
+\begin{proof}
+First isolate the zero-recycle two-bit row, which must not be hidden inside
+the positive-recycle inverse-parent formulas.  Let
+\[
+ x=Q_2^g(a)\text{ WIN},\qquad e=1-g,\qquad O(x,e),
+\]
+and put
+\[
+ y=A(x),\quad c=B(x),\quad d=A(y),\quad p=B(y),
+\]
+where $d$ is the common side of the obligation.  If $d$ is DRAW, then $y$ is non-LOSS, so the WIN state $x$ has the
+actual LOSS child $c$ and $h(c)=h(x)-1$.  If $x$ is ordinary, the ordinary
+side identity makes $p=B(A(x))$ a child of the LOSS state $c$.  Hence $p$ is
+WIN and $h(p)\le h(x)-2$.  The two children of $y$ are precisely $d$ and
+$p$; since $d$ is DRAW and $p$ is WIN, outcome recursion now gives that $y$
+is DRAW.  Thus $y\to p$ is the required lower boundary.  If $x$ is
+exceptional, Lemma~\ref{lem:exceptional-side} gives the exact adjacent DRAW
+frame over the actual LOSS child $c$.
+
+If $d$ is WIN, apply the finite-source export lemma
+(Lemma~\ref{lem:finite-front}) directly to the finite WIN source $x$ and the
+A-selecting obligation $O(x,e)$.  It gives a certified proper descendant
+before the continuation can restart, except in the unique exceptional
+orientation in which the canonical LOSS child is $c=B(x)$; there the exact
+exceptional child-pair identity retains an adjacent frame over $c$, with
+$h(c)=h(x)-1$.  Thus the $m=2$, zero-recycle row always pays a genuine
+descendant token before any restart.
+
+The remaining componentwise claim is the exact inverse-parent calculation for
+the shortest marked pair after at least one three-bit transport step (or for
+the zero-recycle exponent-three row).  If the first raw lift exponent is $M=3h+n$ with
+$n\in\{1,2,3\}$, one common-child recurrence replaces both coordinates by
+actual children and lowers their proof heights componentwise; after $h$
+recurrences the pair is one of the three terminal barriers.  In the
+exponent-two barrier the two WIN states are exactly the children of
+\[
+ Z_2=Q_2^e(3^{2h-1}J(r))\quad(h\ge1),
+\]
+and in the positive exponent-three barrier they are the two children of
+\[
+ Z_3=Q_3^e(3^{2h-1}J(r))\quad(h\ge1).
+\]
+The LOSS height formula (one plus the maximum of its two child heights)
+preserves the componentwise decrement.  In the exponent-one barrier, for
+$h\ge2$ the two WIN states are exactly the children of
+\[
+ Z_1=Q_4^e(3^{2h-3}J(r)),
+\]
+while for $h=1$ this parent is the original $\ell$.  Hence
+\[
+ h(Z_1)\le h(\ell)-2h+2,
+\]
+and the analogous positive-recycle $Z_2,Z_3$ bounds are strict.  These are
+exact state identities; no new finite outcome is inferred from a numerical
+source label.
+
+For the exponent-one row retain the terminal notation
+\[
+ a=3^{2h}J(r),\qquad h\ge1,\qquad X=Q_1^g(a),\qquad e=1-g.
+\]
+The reverse terminal barrier reconstructs a LOSS state $Z_1$.  Its upper
+child is
+\[
+ U=Q_3^e(a/9)=A(Z_1)\quad\text{WIN}.
+\]
+The two children of $U$ are exactly
+\[
+ Q_2^e(a/3),\qquad Q_1^e(a/3).
+\]
+Choose a canonical LOSS child $L$ of this WIN state.  Then
+\[
+ h(L)=h(U)-1\le h(Z_1)-2\le h(\ell)-2,
+\]
+(the sharper bound in the positive-recycle rows is not needed here).  With
+$c=a/3$ the new terminal source is $X=Q_1^g(3c)$ and its phase $e$ is
+$B$-selecting.  Thus the old token has already been replaced strictly before
+this gate is normalized.
+
+For completeness, that gate has no hidden unbounded restart.  Put
+\[
+ W=B(Q_1^e(c))=B(Q_2^e(c)).
+\]
+Since $L$ is one of the displayed exponent-one/two states, $W$ is an actual
+WIN child of $L$ and $h(W)\le h(L)-1$.  If
+$\lambda=\operatorname{asl}(9c-g)$ is at least four, its transferred source
+$R(9c-g)$ is strictly below $c$.  For $\lambda=1,2,3$ the exact short rows
+are respectively: a factor-free lift over $R(W)<c$; a factor-free lift over
+the lower WIN token $W$; or the ordinary child $A(W)$.  Hence all three
+short rows occur only after the strict source/token payment already displayed.
+They may therefore initialize later inner routing data, but none is a
+same-rank reseed of a free obligation.
+
+For positive-recycle exponent three, the reconstructed parent can be written
+\[
+ Z_3=Q_3^e(3^{2h-1}J(r))\quad(h\ge1),
+\]
+whose two terminal barrier children are WIN; the reverse construction gives
+$h(Z_3)\le h(\ell)-2h<h(\ell)$.  For exponent two ($h\ge1$),
+\[
+ Z_2=Q_2^e(3^{2h-1}J(r))
+\]
+has the two reconstructed WIN barrier children and likewise
+$h(Z_2)\le h(\ell)-2h<h(\ell)$.  These are strict replacements before the
+new obligation/factor state is installed.
+
+Finally, in the zero-recycle exponent-three row the marked configuration is
+precisely the $D=3$ case of Lemma~\ref{lem:marked-tail-pay}; hence
+$r=B(q)=B(y)$ is an actual WIN child of the already present LOSS token $y$.
+Thus $h(r)\le h(y)-1$.  Every terminal row therefore pays a source/token
+component before any reset.
+\end{proof}
+
+\begin{corollary}[The post-payment $D=3$ lift module is well-founded]
+\label{cor:short-lift-closed}
+After the strict marked-tail token edge at $D=3$, every outcome-compatible
+shortest-row lift continuation either makes another strict retained
+source/token transition or, with retained provenance fixed, decreases the
+exact natural lift exponent until it reaches $m\in\{1,2,3\}$, where
+Lemma~\ref{lem:terminal-pay} makes a strict retained-token transition before
+any restart. Hence no equal-retained-data cycle is contained in this module.
+\end{corollary}
+
+\begin{proof}
+Lemma~\ref{lem:attached-lift} gives
+$(m,a)\mapsto(m-3,9a)$ for every same-provenance canonical row with
+$m\ge4$ and transports the exact lower pair through all temporary factor
+exits. Thus $m$ reaches $1,2$ or $3$ in finitely many recurrences unless a
+strict source/token exit occurs earlier. At those barriers
+Lemma~\ref{lem:terminal-pay} supplies the strict payment. The arithmetic
+transport is proved before the terminal payment, so the dependency is
+one-way rather than circular.
+\end{proof}
+
+\begin{proposition}[Semantic exhaustiveness of the marked router]
+\label{prop:P2-closed}
+Every actual outcome-compatible DRAW continuation entering the typed routing
+system belongs to one of the semantic rows below.  In each row all finite
+states inserted into $M$ or $N$ are states already present in the displayed
+parent/child geometry; no unrelated finite endpoint is promoted merely because
+its outcome is known.
+
+\begin{enumerate}[label=\textnormal{(S\arabic*)},leftmargin=*]
+\item \textbf{Boundary or loss-sibling countdown.}  A factor-free frame
+\[
+ \{Q_{m+1}^e(J(r)),Q_m^e(J(r))\},\qquad m\ge1,
+\]
+known to contain a DRAW uses Lemma~\ref{lem:long-tail} while $m\ge3$.
+The exact tail exponent decreases.  At $m=1,2$ the row is respectively an
+obligation/factor boundary or the typed three/two constructor of
+Lemma~\ref{lem:hidden-parent}.  A loss-sibling entry of
+Definition~\ref{def:entry-controls} carries, in addition, its exact finite
+WIN/LOSS witness and the finite local counter $\tau$ supplied by the
+constructing diamond.  The fixed-tail and exponent-one predecessor rows
+remove one factor/tail level at each reverse normalization step; the
+ordinary, exceptional and hidden-parent side rows are one-step exact
+attachments.  Thus before leaving (S1) the witness is merely retained (or is
+replaced by a proved descendant) while $\tau$ strictly decreases to a
+boundary, free obligation, or attached factor/lift row.  No fresh token is
+needed inside this countdown.
+
+\item \textbf{Free/outer obligation.}  A free obligation before the first
+finite token may use the outer seed only according to
+Lemma~\ref{lem:seed-policy}; after $\eta=0$ a first inner witness may use
+$\zeta$ once.  Every canonical continuation and valuation-two reset is
+exactly one of Proposition~\ref{prop:P1-closed}'s source/seed/descendant/
+attached exits.  A reverse edge to a new free obligation is forbidden unless
+that proposition has already paid one of those components.
+
+\item \textbf{Finite-source A obligation.}  If its ordinary source is an
+outer or inner finite token, Lemma~\ref{lem:finite-front} exports a certified
+proper descendant before a later high return.  In the exceptional orientation
+the two children are the exact adjacent lifts over the canonical lower LOSS
+token given by Lemma~\ref{lem:exceptional-side}.
+
+\item \textbf{Lower factor fork.}  Its lower exponent is exactly $r=1$ or
+$r\ge2$.  Lemma~\ref{lem:factor-fork-pay} gives, respectively, a lower
+boundary/LOSS token or the source/WIN/LOSS trichotomy.  The only nonterminal
+continuation is the typed high-return scan carrying the same finite
+provenance.
+
+\item \textbf{Short high return.}  The returned valuation is $v=5$ or
+$v=6$, and the constructor carries the finite return token
+$c=Q_{v-3}^g(3J(t))$ with its proved outcome.  Lemma~\ref{lem:high-return-pay}(a)
