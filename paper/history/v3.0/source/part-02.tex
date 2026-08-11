@@ -1,0 +1,238 @@
+provides a finite proof-token descent, or enters the typed obligation
+normalizer through the one-shot entry component.
+\end{proposition}
+
+\begin{proof}
+We split according to the phase at $x$.
+
+First suppose $e=1-\alpha(x)$, the $B$-selecting phase. The first source
+boundary numerator is divisible by $4$, and
+\[
+  9J(x)+1-2e=3(3J(x)+1-2e)-2(1-2e)\equiv2\pmod4.
+\]
+Thus $v=1$ in (1). Writing $u=A(x)$ and using the parity defining the
+$B$-selecting phase gives the exact endpoint
+\[
+  b=3A(x)+1.
+\]
+The two children of $F$ are
+\[
+  T=Q_1^g(J(b)),\qquad C=R(T),
+\]
+and the signed-prefix identity identifies $C$ as the ordinary child of $b$
+selected by phase $g$:
+\[
+  C\in\{A(b),B(b)\}.
+\]
+At least one of $T,C$ is \DRAW. If $T$ is \DRAW, the first alternative of the
+obligation $O(b,g)$ holds and the typed normalizer is initialized. If $C$ is
+\DRAW, the other ordinary child of the \WIN\ state $b$ is a genuine \LOSS\
+token. For nonexceptional $b$, the ordinary side diamond gives a lower boundary
+\WIN\ token. For the exceptional $A$-child orientation, the exceptional side
+formula gives an adjacent \DRAW\ frame over the actual \LOSS\ token. In the
+sole exceptional $B$-child orientation, the estimate
+\[
+  C=B(b)\le \frac{A(b)}8\le \frac{3b+1}{16}
+\]
+combined with $b\le(9x+5)/2$ yields
+\[
+  \src(C)<\frac{C}{6}\le\frac{3b+1}{96}
+  \le\frac{27x+17}{192}<x,
+\]
+so the retained source strictly decreases.
+
+Now suppose $e=\alpha(x)$, the $A$-selecting phase. Lemma~\ref{lem:source-boundary}
+gives
+\[
+  3J(x)+1-2e=2J(A(x)),
+\]
+and (1) therefore has $v\ge2$. If $v\ge4$, then
+\[
+  16J(b)\le 9J(x)+1\le 27x+19.
+\]
+Since $J(b)\ge3b+1$, we get
+\[
+  48b+16\le27x+19,
+  \qquad
+  b\le\frac{9x+1}{16}<x.
+\]
+Thus any \DRAW\ child of $F$ lies below the retained source.
+
+If $v=2$, the two children of $F$ are exactly
+\[
+  Q_2^g(J(b)),\qquad Q_1^g(J(b)),
+\]
+so the obligation $O(b,g)$ holds. If $v=3$, the children form the frame
+\[
+  Q_3^g(J(b)),\qquad Q_2^g(J(b)).
+\]
+Reducing (1) modulo $3$ gives
+\[
+  J(b)\equiv1+g\pmod3,
+\]
+which is precisely the hidden-parent congruence required for the typed
+three/two frame. That frame is therefore normalized by the same source/token
+routing used for typed factor frames.
+\end{proof}
+
+\section{Typed fixed-fibre normalization}
+
+The local source, factor, and proof-token diamonds used after a typed entry form
+a finite routing system. Its control states include $A$-selecting obligations,
+$B$-selecting transfers, finite factor forks, high returns, and marked terminal
+rows. The important distinction is between retained data and routing data.
+
+The retained data are:
+\[
+  (\text{outer source},\; \Phi(M),\;\eta),
+\]
+where $M$ is the finite multiset of carried proof-token heights and
+$\eta\in\{1,0\}$ is ordered by $1>0$. The value $\eta=1$ means that the current
+outer source/token fibre has not yet initialized the typed normalizer; the
+value $\eta=0$ means that the typed normalizer is active.
+
+Routing data include the current source cursor, phase, factor exponent, tail
+exponent, and local control state. These quantities may increase numerically.
+They do not replace the retained source unless a cited local lemma proves a
+strict source comparison.
+
+\begin{proposition}[Typed normalizer]\label{prop:typed-normalizer}
+For every typed entry supplied with a retained arithmetic source anchor and the
+finite proof-token provenance required by the local diamonds, the equal-retained
+data routing relation is well-founded.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The finite routing system has only the following non-strict transitions inside a
+fixed retained fibre: bounded canonical $A$-streaks, valuation-two $B$-transfers
+with an installed witness, and factor-tail recurrences that carry an existing
+finite token. The canonical $A$-streak exits after at most four side tests, since
+four consecutive \WIN\ states cannot occur on one $A$-ray. The valuation-two
+recycle replaces its witness by a certified lower descendant whenever it repeats.
+Marked factor tails either lower their tail counter or replace an existing
+\WIN/\LOSS\ token by lower token(s). Hence there is no equal-rank cycle in a
+fixed retained fibre. Strict source or token transitions are handled outside the
+fibre by the lexicographic rank.
+\end{proof}
+
+\begin{lemma}[One-shot entry]\label{lem:eta}
+A transition that changes $\eta$ from $1$ to $0$ is strict regardless of the
+numerical value of the newly initialized inner routing source. Inside an
+unchanged outer source/token fibre, $\eta$ never changes from $0$ back to $1$.
+A later raw reset is allowed only after a strict earlier source decrease or a
+strict proof-token replacement.
+\end{lemma}
+
+\begin{proof}
+Use the lexicographic order
+\[
+  (\text{outer source},\Phi(M),\eta,\text{inner typed rank}).
+\]
+The component $\eta:1\to0$ strictly decreases after the retained source and
+outer token components have been fixed. Because $\eta$ is placed before all
+inner routing data, the new inner source may be larger than the old outer source
+without being counted as a source update. A change $0\to1$ in the same outer
+fibre would increase the rank, so it is not a permitted routing transition.
+Only a strict decrease in an earlier component may reset later components.
+\end{proof}
+
+\section{Proof of the main theorem}
+
+Assume for contradiction that a \DRAW\ exists and choose the least coefficient
+source $s$ of a \DRAW. The source-zero case is handled by the explicit
+zero-source constant-tail normalization: a zero-source \DRAW\ reaches an
+exponent-one/two boundary with either a strict source exit or a typed finite
+terminal token.
+
+Let $s>0$. Take an actual \DRAW\ whose coefficient source is $s$. Long-tail
+recurrence reduces it to tail exponent one or two after finitely many
+outcome-compatible moves. If a factorful exponent-one state
+\[
+  Q_1^e(3^kJ(s)),\qquad k>0,
+\]
+is reached, Proposition~\ref{prop:factorful-entry} gives either finite
+provenance for a one-shot typed entry or the factor-free exponent-two state
+\[
+  Q_2^e(J(s))\text{ \DRAW}.
+\]
+The latter is handled by Proposition~\ref{prop:base-entry}.
+
+Thus every marked macrostep from a \DRAW\ configuration has one of the following
+forms:
+\begin{enumerate}[label=(\roman*)]
+\item the retained coefficient source strictly decreases;
+\item at fixed retained source, an existing finite proof token is replaced by
+      certified lower token(s), so Lemma~\ref{lem:token-rank} strictly lowers
+      $\Phi$;
+\item the retained source and token multiset are unchanged, and the one-shot
+      component changes $\eta:1\to0$;
+\item $\eta=0$ and the path remains inside the well-founded typed fibre of
+      Proposition~\ref{prop:typed-normalizer}.
+\end{enumerate}
+The lexicographic rank
+\[
+  (\text{retained source},\Phi(M),\eta,\text{typed fibre rank})
+\]
+is therefore well-founded.
+
+On the other hand, a \DRAW\ state has no \LOSS\ child and at least one \DRAW\
+child. Hence after each finite macrostep one may choose an outcome-compatible
+continuing \DRAW\ unless a strict smaller-source contradiction has already
+occurred. Repeating this choice would produce an infinite descending path in the
+well-founded marked relation, impossible. Hence the conjugated game has no
+\DRAW\ positions.
+
+The conjugacy of Section~2 sends the terminal conjugated state $0$ to the
+original odd state $1$. Therefore every positive odd starting position has finite
+remoteness and optimal play reaches $1$.
+
+\section{Verification boundary and reproducibility}
+
+The proof above is a mathematical proof. The accompanying computational files
+are supporting checks with a narrower role:
+\begin{itemize}[leftmargin=*]
+\item finite Python regressions check the arithmetic identities, valuation rows,
+      source inequalities, and finite outcome certificates on stated finite
+      ranges;
+\item the symbolic global-routing certificate checks the declared typed
+      control/rank assembly, but it is not an end-to-end formal proof of the
+      theorem;
+\item the Lean files in the repository kernel-check selected definitions and
+      general well-founded metatheory, not the complete concrete no-\DRAW\
+      theorem.
+\end{itemize}
+A reproducible check should record the repository revision, run the standard
+Python check script, run the accompanying arithmetic regression, and read the formal
+coverage file before interpreting the machine outputs.
+
+\begin{thebibliography}{9}
+
+\bibitem{Guy1986}
+R. K. Guy,
+John Isbell's Game of Beanstalk and John Conway's Game of Beans-Don't-Talk,
+\emph{Mathematics Magazine} 59(5) (1986), 259--269.
+
+\bibitem{Guy1996}
+R. K. Guy,
+Unsolved Problems in Combinatorial Games, Problem 42,
+in \emph{Games of No Chance}, MSRI Publications 29, Cambridge University Press,
+1996.
+
+\bibitem{Althofer2024}
+I. Alth\"ofer, M. Hartisch, T. Zipproth,
+Analysis of a Collatz Game and Other Variants of the $3n+1$ Problem,
+\emph{Advances in Computer Games} (2024), 123--132.
+
+\bibitem{AlthoferPage}
+I. Alth\"ofer,
+Collatz Problems: The Two-Player $3n+-1$ Game,
+\url{https://althofer.de/collatz-prizes.html}.
+
+\bibitem{Repo}
+G. Pochuev,
+Optimal $3n\pm1$ Game: Proof and Verification Repository,
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+
+\end{thebibliography}
+
+\end{document}
