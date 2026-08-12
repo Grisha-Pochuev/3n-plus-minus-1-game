@@ -1,0 +1,4 @@
+v5.0 supporting checks passed (claim-safe partial package)
+maximum declared pure-routing control height: 9
+OPEN mathematical obligations: P1, P2
+This output is not a proof of the no-DRAW theorem.

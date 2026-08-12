@@ -1,0 +1,608 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{array}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\N}{\mathbb N}
+\newcommand{\WIN}{\ensuremath{\mathrm{WIN}}}
+\newcommand{\LOSS}{\ensuremath{\mathrm{LOSS}}}
+\newcommand{\DRAW}{\ensuremath{\mathrm{DRAW}}}
+\newcommand{\odd}{\operatorname{odd}}
+\newcommand{\src}{\operatorname{src}}
+\newcommand{\ct}{\operatorname{ct}}
+\newcommand{\asl}{\operatorname{asl}}
+\newcommand{\Moves}{\operatorname{moves}}
+
+\title{The Two-Player $3n\mathbin{\pm}1$ Game:\
+A Binary Normal Form and a Well-Founded No-Draw Proof}
+\author{Grisha Pochuev\\
+  \small\href{mailto:n_854@mail.ru}{n\_854@mail.ru}\\
+  \small\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}}
+\date{10 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Consider the impartial two-player game on positive odd integers in which a
+move from $n>1$ chooses $3n-1$ or $3n+1$ and removes all powers of two; reaching
+$1$ wins immediately. Arbitrary play need not terminate: for example
+$5\to 7\to 5$ is a legal cycle. The question is whether optimal play nevertheless
+has finite remoteness from every starting position. We conjugate the game to a
+binary normal form with an expanding move $A$ and a strictly contracting move
+$B$, introduce constant-tail coordinates and a three-free source map, and rank
+marked proof configurations by retained source, finite proof-height tokens, and
+a typed fixed-fibre normalizer. The key entry step is a factor-removal lemma
+that either removes one factor of three at the same tail exponent or produces
+finite outcome provenance. This prevents an unranked return from a factor-free
+three/two frame to the preceding exponent-one state. A one-shot initialization
+then allows the typed normalizer to be entered without treating a larger
+temporary inner source as a source decrease. The resulting well-founded marked
+normalization excludes all draw positions.
+\end{abstract}
+
+\tableofcontents
+
+\section{The game and the theorem}
+
+The current state is a positive odd integer $n$. For $n>1$ the player to move
+chooses one of
+\[
+  3n-1,\qquad 3n+1,
+\]
+and divides the chosen value by the largest possible power of $2$, leaving an
+odd integer. If the resulting odd integer is $1$, the player who made the move
+wins immediately. Players alternate with perfect information.
+
+A position is called \WIN\ for the player to move if at least one move leads to
+\LOSS. It is called \LOSS\ if every legal move leads to \WIN. These two classes
+are the inductively generated finite-remoteness classes. Any position not in
+either class is called \DRAW.
+
+\begin{theorem}[Main theorem]\label{thm:main}
+Every positive odd starting position has finite remoteness. Equivalently, the
+$3n\pm1$ game has no \DRAW\ positions, and optimal play reaches $1$ after
+finitely many moves.
+\end{theorem}
+
+The theorem is not a statement about arbitrary play. There are legal cycles,
+such as
+\[
+  5\longrightarrow 7\longrightarrow 5,
+\]
+under suitable choices by the players.
+
+\section{Binary conjugation}
+
+Write an odd state as $n=2m+1$ and define
+\[
+  F(m)=\left\lceil\frac{3m}{2}\right\rceil .
+\]
+For a nonnegative integer $x$, let $R(x)$ be the integer obtained by deleting
+the maximal alternating suffix of the binary expansion of $x$. Thus
+$R(1001_2)=10_2$ and $R(10101_2)=0$.
+
+\begin{proposition}[First normal form]\label{prop:first-normal}
+For $m>0$, the two children in $m$-coordinates are exactly
+\[
+  F(m),\qquad F(R(m)).
+\]
+\end{proposition}
+
+\begin{proof}
+One has
+\[
+  3(2m+1)-1=2(3m+1),\qquad
+  3(2m+1)+1=2(3m+2).
+\]
+Exactly one of $3m+1$ and $3m+2$ is odd. In the other expression, each
+additional factor of two removed corresponds to crossing one additional
+alternating bit at the end of the binary expansion of $m$. The process stops
+at the first repeated adjacent bit, which is precisely the deletion defining
+$R(m)$. Returning to $m$-coordinates gives the displayed pair.
+\end{proof}
+
+Since both children lie in the image of $F$, we represent the state $F(q)$ by
+$q$. The conjugated game has terminal state $0$ and moves
+\[
+  A(q)=\left\lceil\frac{3q}{2}\right\rceil,
+  \qquad
+  B(q)=R(A(q)).
+\]
+
+\begin{proposition}[Strict contraction]\label{prop:B-contracts}
+For every $q>0$,
+\[
+  B(q)<q.
+\]
+\end{proposition}
+
+\begin{proof}
+Deleting a nonempty binary suffix gives
+\[
+  B(q)\le \left\lfloor\frac{A(q)}2\right\rfloor
+       \le \left\lfloor\frac{3q+1}{4}\right\rfloor<q
+\]
+for $q\ge2$, while $B(1)=0$.
+\end{proof}
+
+Thus all unbounded difficulty comes from the expanding branch $A$ and from the
+unbounded alternating suffix removed by $B$.
+
+\section{Constant-tail coordinates and coefficient sources}
+
+For a positive odd integer $a$, an exponent $r\ge1$, and a phase
+$e\in\{0,1\}$, put
+\[
+  Q_r^e(a)=a2^r-e.
+\]
+This is a binary word whose final constant block has length $r$ and consists
+of the bit $e$.
+
+\begin{lemma}[Long-tail recurrence]\label{lem:long-tail}
+For every positive odd $a$, phase $e$, and $r\ge3$,
+\[
+  A(Q_r^e(a))=Q_{r-1}^e(3a),\qquad
+  B(Q_r^e(a))=Q_{r-2}^e(3a).
+\]
+Moreover
+\[
+  B(Q_1^e(a))=B(Q_2^e(a)).
+\]
+\end{lemma}
+
+\begin{proof}
+For $r\ge3$, the expanding child still ends in at least two equal bits; hence
+its maximal alternating suffix consists only of the final bit. This gives both
+long-tail identities. At the boundary, the binary words of $3a-e$ and $6a-e$
+differ by appending one bit that extends the same alternating suffix, so the
+same prefix remains after deletion.
+\end{proof}
+
+Define the embedded three-free coefficient
+\[
+  J(s)=2A(s)+1.
+\]
+Every positive odd coefficient $a$ has a unique factorization
+\[
+  a=3^kJ(s),\qquad k\ge0.
+\]
+The integer $s$ is called the coefficient source of $a$ and is denoted
+$\src(a)$.
+
+\begin{lemma}[Source boundary]\label{lem:source-boundary}
+For every $s>0$ there is a phase
+\[
+  \alpha(s)=1-\left(\left\lfloor\frac{s}{2}\right\rfloor\bmod2\right)
+\]
+such that
+\[
+  \odd(3J(s)+1-2\alpha(s))=J(A(s))
+\]
+with $2$-adic valuation one, while the opposite phase selects $J(B(s))$ with
+valuation at least two.
+\end{lemma}
+
+Multiplying a constant-tail coefficient by $3$ preserves its coefficient
+source. Passing through a factor-free signed boundary with coefficient $J(s)$
+therefore exposes exactly one ordinary $A/B$ move on the source.
+
+\section{Finite proof tokens}
+
+The terminal state $0$ is \LOSS\ with height $h(0)=0$. A finite \WIN\ state has
+height
+\[
+  h(x)=1+\min\{h(y):y\text{ is a \LOSS\ child of }x\},
+\]
+and a finite \LOSS\ state has height
+\[
+  h(x)=1+\max\{h(y):y\text{ is a child of }x\}.
+\]
+Only finite states whose outcome and height comparison have actually been
+established are inserted into the marked configuration. They are called proof
+tokens.
+
+\begin{lemma}[Multiset token rank]\label{lem:token-rank}
+For a finite multiset $M$ of proof heights define
+\[
+  \Phi(M)=\mathop{\#}_{h\in M}\omega^h,
+\]
+the natural ordinal sum of the monomials $\omega^h$. Replacing one token of
+height $H$ by any finite multiset of certified descendants of heights strictly
+below $H$ strictly decreases $\Phi$.
+\end{lemma}
+
+\begin{proof}
+In Cantor normal form the coefficient of $\omega^H$ decreases by one, and all
+inserted terms have lower exponent. No finite collection of lower terms can
+compensate for the loss at exponent $H$.
+\end{proof}
+
+\section{Factor removal at fixed tail exponent}
+
+The next lemma is the entry device that prevents a factorful exponent-one
+state from creating an unranked restart.
+
+\begin{lemma}[Fixed-tail factor removal]\label{lem:fixed-tail-factor}
+Let $c$ be positive and odd, $e\in\{0,1\}$, and $r\ge2$. Put
+\[
+  X=Q_r^e(3c),\qquad G=Q_r^e(c),\qquad H=Q_{r+1}^e(c).
+\]
+If $X$ is \DRAW, then either $G$ is \DRAW, or the local configuration supplies
+finite outcome provenance suitable for a marked typed entry. More explicitly,
+if $Y=A(G)$, then
+\[
+  \Moves(H)=\{X,Y\},
+\]
+and, whenever $G$ is not \DRAW, at least one finite \WIN/\LOSS\ token is forced
+among $G,Y$ and the other child of $G$.
+\end{lemma}
+
+\begin{proof}
+Since $r+1\ge3$, Lemma~\ref{lem:long-tail} gives
+\[
+  A(H)=Q_r^e(3c)=X,
+  \qquad
+  B(H)=Q_{r-1}^e(3c).
+\]
+For $r\ge3$ this second state is $A(G)$ by the same long-tail recurrence. For
+$r=2$, $G=Q_2^e(c)$ and $A(G)=Q_1^e(3c)$, again equal to $B(H)$. Thus
+$\Moves(H)=\{X,Y\}$.
+
+Because $X$ is \DRAW, the state $H$ cannot be \LOSS. If $H$ is \WIN, then its
+other child $Y$ is \LOSS, giving a finite token. Assume therefore that $H$ is
+\DRAW. Then $Y$ cannot be \LOSS. If $G$ is \DRAW, we are in the first
+alternative.
+
+It remains to suppose that $G$ is finite. If $G$ is \LOSS, then all its
+children, including $Y$, are \WIN. If $G$ is \WIN, then either $Y$ is a \LOSS\
+witness or, since $Y$ is not \LOSS, the other child of $G$ is a \LOSS\ witness.
+In all cases the displayed local diamond provides an actual finite outcome
+token with proved incidence.
+\end{proof}
+
+\begin{corollary}[Removing all factor powers at exponent two]\label{cor:remove-to-base}
+Let $a=J(s)$ and $k\ge1$. If
+\[
+  Q_2^e(3^ka)
+\]
+is \DRAW, then either a finite provenance token is obtained, or
+\[
+  Q_2^e(a)
+\]
+is \DRAW.
+\end{corollary}
+
+\begin{proof}
+Apply Lemma~\ref{lem:fixed-tail-factor} repeatedly with $r=2$ and
+$c=3^{i-1}a$. If the token alternative never occurs, the factor exponent is
+reduced by one at each step until it reaches zero.
+\end{proof}
+
+\begin{lemma}[Exponent-one lift to exponent two]\label{lem:exp-one-lift}
+Let $a$ be positive and odd and $k\ge1$. If
+\[
+  R_k=Q_1^e(3^ka)
+\]
+is \DRAW, then either
+\[
+  P_{k-1}=Q_2^e(3^{k-1}a)
+\]
+is \DRAW, or $P_{k-1}$ is \WIN\ and its other child is a finite \LOSS\ token.
+\end{lemma}
+
+\begin{proof}
+The long-tail boundary identities give
+\[
+  A(P_{k-1})=R_k.
+\]
+Since $P_{k-1}$ has a \DRAW\ child, it cannot be \LOSS. If it is not \DRAW,
+it is \WIN; its \DRAW\ child $R_k$ cannot witness that it is \WIN, so its other
+child is \LOSS.
+\end{proof}
+
+\begin{proposition}[Arbitrary factorful exponent-one entry]\label{prop:factorful-entry}
+Let $a=J(s)$ and $k>0$. If
+\[
+  Q_1^e(3^ka)
+\]
+is \DRAW, then after finitely many outcome-compatible local steps either a
+finite provenance token has been produced, or
+\[
+  Q_2^e(a)
+\]
+is \DRAW.
+\end{proposition}
+
+\begin{proof}
+Apply Lemma~\ref{lem:exp-one-lift}. If it produces a finite token, stop. If it
+produces the exponent-two \DRAW\ state $Q_2^e(3^{k-1}a)$, apply
+Corollary~\ref{cor:remove-to-base}. This either produces a finite provenance
+token or removes all remaining factors of three at the same exponent two.
+\end{proof}
+
+\section{Factor-free exponent-two base entry}
+
+It remains to analyze the base state produced by
+Proposition~\ref{prop:factorful-entry}. Let $x>0$, put
+\[
+  a=J(x),\qquad P=Q_1^e(a),\qquad U=Q_2^e(a),
+\]
+\[
+  b=B(P)=B(U),\qquad F=A(U)=Q_1^e(3a),\qquad g=1-e.
+\]
+
+Suppose $U$ is \DRAW\ and $x$ is the globally least coefficient source of a
+\DRAW. The common child $b$ has canonical coefficient strictly below $J(x)$.
+Since $a=J(x)$ is factor-free, this implies that the coefficient source of $b$
+is below $x$. Therefore $b$ is not \DRAW. As a child of a \DRAW\ state it also
+cannot be \LOSS; hence
+\[
+  b\text{ is \WIN},\qquad F\text{ is \DRAW}.
+\]
+The exact first-factor identity is
+\[
+  \boxed{9J(x)+1-2e=2^vJ(b)}. \tag{1}
+\]
+Consequently the signed child of $F$ is
+\[
+  A(F)=Q_v^g(J(b)).
+\]
+
+\begin{proposition}[Base-entry attachment]\label{prop:base-entry}
+Every factor-free exponent-two \DRAW\ at a globally minimal coefficient source
+has a finite continuation that either strictly lowers the retained source,
+provides a finite proof-token descent, or enters the typed obligation
+normalizer through the one-shot entry component.
+\end{proposition}
+
+\begin{proof}
+We split according to the phase at $x$.
+
+First suppose $e=1-\alpha(x)$, the $B$-selecting phase. The first source
+boundary numerator is divisible by $4$, and
+\[
+  9J(x)+1-2e=3(3J(x)+1-2e)-2(1-2e)\equiv2\pmod4.
+\]
+Thus $v=1$ in (1). Writing $u=A(x)$ and using the parity defining the
+$B$-selecting phase gives the exact endpoint
+\[
+  b=3A(x)+1.
+\]
+The two children of $F$ are
+\[
+  T=Q_1^g(J(b)),\qquad C=R(T),
+\]
+and the signed-prefix identity identifies $C$ as the ordinary child of $b$
+selected by phase $g$:
+\[
+  C\in\{A(b),B(b)\}.
+\]
+At least one of $T,C$ is \DRAW. If $T$ is \DRAW, the first alternative of the
+obligation $O(b,g)$ holds and the typed normalizer is initialized. If $C$ is
+\DRAW, the other ordinary child of the \WIN\ state $b$ is a genuine \LOSS\
+token. For nonexceptional $b$, the ordinary side diamond gives a lower boundary
+\WIN\ token. For the exceptional $A$-child orientation, the exceptional side
+formula gives an adjacent \DRAW\ frame over the actual \LOSS\ token. In the
+sole exceptional $B$-child orientation, the estimate
+\[
+  C=B(b)\le \frac{A(b)}8\le \frac{3b+1}{16}
+\]
+combined with $b\le(9x+5)/2$ yields
+\[
+  \src(C)<\frac{C}{6}\le\frac{3b+1}{96}
+  \le\frac{27x+17}{192}<x,
+\]
+so the retained source strictly decreases.
+
+Now suppose $e=\alpha(x)$, the $A$-selecting phase. Lemma~\ref{lem:source-boundary}
+gives
+\[
+  3J(x)+1-2e=2J(A(x)),
+\]
+and (1) therefore has $v\ge2$. If $v\ge4$, then
+\[
+  16J(b)\le 9J(x)+1\le 27x+19.
+\]
+Since $J(b)\ge3b+1$, we get
+\[
+  48b+16\le27x+19,
+  \qquad
+  b\le\frac{9x+1}{16}<x.
+\]
+Thus any \DRAW\ child of $F$ lies below the retained source.
+
+If $v=2$, the two children of $F$ are exactly
+\[
+  Q_2^g(J(b)),\qquad Q_1^g(J(b)),
+\]
+so the obligation $O(b,g)$ holds. If $v=3$, the children form the frame
+\[
+  Q_3^g(J(b)),\qquad Q_2^g(J(b)).
+\]
+Reducing (1) modulo $3$ gives
+\[
+  J(b)\equiv1+g\pmod3,
+\]
+which is precisely the hidden-parent congruence required for the typed
+three/two frame. That frame is therefore normalized by the same source/token
+routing used for typed factor frames.
+\end{proof}
+
+\section{Typed fixed-fibre normalization}
+
+The local source, factor, and proof-token diamonds used after a typed entry form
+a finite routing system. Its control states include $A$-selecting obligations,
+$B$-selecting transfers, finite factor forks, high returns, and marked terminal
+rows. The important distinction is between retained data and routing data.
+
+The retained data are:
+\[
+  (\text{outer source},\; \Phi(M),\;\eta),
+\]
+where $M$ is the finite multiset of carried proof-token heights and
+$\eta\in\{1,0\}$ is ordered by $1>0$. The value $\eta=1$ means that the current
+outer source/token fibre has not yet initialized the typed normalizer; the
+value $\eta=0$ means that the typed normalizer is active.
+
+Routing data include the current source cursor, phase, factor exponent, tail
+exponent, and local control state. These quantities may increase numerically.
+They do not replace the retained source unless a cited local lemma proves a
+strict source comparison.
+
+\begin{proposition}[Typed normalizer]\label{prop:typed-normalizer}
+For every typed entry supplied with a retained arithmetic source anchor and the
+finite proof-token provenance required by the local diamonds, the equal-retained
+data routing relation is well-founded.
+\end{proposition}
+
+\begin{proof}[Proof sketch]
+The finite routing system has only the following non-strict transitions inside a
+fixed retained fibre: bounded canonical $A$-streaks, valuation-two $B$-transfers
+with an installed witness, and factor-tail recurrences that carry an existing
+finite token. The canonical $A$-streak exits after at most four side tests, since
+four consecutive \WIN\ states cannot occur on one $A$-ray. The valuation-two
+recycle replaces its witness by a certified lower descendant whenever it repeats.
+Marked factor tails either lower their tail counter or replace an existing
+\WIN/\LOSS\ token by lower token(s). Hence there is no equal-rank cycle in a
+fixed retained fibre. Strict source or token transitions are handled outside the
+fibre by the lexicographic rank.
+\end{proof}
+
+\begin{lemma}[One-shot entry]\label{lem:eta}
+A transition that changes $\eta$ from $1$ to $0$ is strict regardless of the
+numerical value of the newly initialized inner routing source. Inside an
+unchanged outer source/token fibre, $\eta$ never changes from $0$ back to $1$.
+A later raw reset is allowed only after a strict earlier source decrease or a
+strict proof-token replacement.
+\end{lemma}
+
+\begin{proof}
+Use the lexicographic order
+\[
+  (\text{outer source},\Phi(M),\eta,\text{inner typed rank}).
+\]
+The component $\eta:1\to0$ strictly decreases after the retained source and
+outer token components have been fixed. Because $\eta$ is placed before all
+inner routing data, the new inner source may be larger than the old outer source
+without being counted as a source update. A change $0\to1$ in the same outer
+fibre would increase the rank, so it is not a permitted routing transition.
+Only a strict decrease in an earlier component may reset later components.
+\end{proof}
+
+\section{Proof of the main theorem}
+
+Assume for contradiction that a \DRAW\ exists and choose the least coefficient
+source $s$ of a \DRAW. The source-zero case is handled by the explicit
+zero-source constant-tail normalization: a zero-source \DRAW\ reaches an
+exponent-one/two boundary with either a strict source exit or a typed finite
+terminal token.
+
+Let $s>0$. Take an actual \DRAW\ whose coefficient source is $s$. Long-tail
+recurrence reduces it to tail exponent one or two after finitely many
+outcome-compatible moves. If a factorful exponent-one state
+\[
+  Q_1^e(3^kJ(s)),\qquad k>0,
+\]
+is reached, Proposition~\ref{prop:factorful-entry} gives either finite
+provenance for a one-shot typed entry or the factor-free exponent-two state
+\[
+  Q_2^e(J(s))\text{ \DRAW}.
+\]
+The latter is handled by Proposition~\ref{prop:base-entry}.
+
+Thus every marked macrostep from a \DRAW\ configuration has one of the following
+forms:
+\begin{enumerate}[label=(\roman*)]
+\item the retained coefficient source strictly decreases;
+\item at fixed retained source, an existing finite proof token is replaced by
+      certified lower token(s), so Lemma~\ref{lem:token-rank} strictly lowers
+      $\Phi$;
+\item the retained source and token multiset are unchanged, and the one-shot
+      component changes $\eta:1\to0$;
+\item $\eta=0$ and the path remains inside the well-founded typed fibre of
+      Proposition~\ref{prop:typed-normalizer}.
+\end{enumerate}
+The lexicographic rank
+\[
+  (\text{retained source},\Phi(M),\eta,\text{typed fibre rank})
+\]
+is therefore well-founded.
+
+On the other hand, a \DRAW\ state has no \LOSS\ child and at least one \DRAW\
+child. Hence after each finite macrostep one may choose an outcome-compatible
+continuing \DRAW\ unless a strict smaller-source contradiction has already
+occurred. Repeating this choice would produce an infinite descending path in the
+well-founded marked relation, impossible. Hence the conjugated game has no
+\DRAW\ positions.
+
+The conjugacy of Section~2 sends the terminal conjugated state $0$ to the
+original odd state $1$. Therefore every positive odd starting position has finite
+remoteness and optimal play reaches $1$.
+
+\section{Verification boundary and reproducibility}
+
+The proof above is a mathematical proof. The accompanying computational files
+are supporting checks with a narrower role:
+\begin{itemize}[leftmargin=*]
+\item finite Python regressions check the arithmetic identities, valuation rows,
+      source inequalities, and finite outcome certificates on stated finite
+      ranges;
+\item the symbolic global-routing certificate checks the declared typed
+      control/rank assembly, but it is not an end-to-end formal proof of the
+      theorem;
+\item the Lean files in the repository kernel-check selected definitions and
+      general well-founded metatheory, not the complete concrete no-\DRAW\
+      theorem.
+\end{itemize}
+A reproducible check should record the repository revision, run the standard
+Python check script, run the accompanying arithmetic regression, and read the formal
+coverage file before interpreting the machine outputs.
+
+\begin{thebibliography}{9}
+
+\bibitem{Guy1986}
+R. K. Guy,
+John Isbell's Game of Beanstalk and John Conway's Game of Beans-Don't-Talk,
+\emph{Mathematics Magazine} 59(5) (1986), 259--269.
+
+\bibitem{Guy1996}
+R. K. Guy,
+Unsolved Problems in Combinatorial Games, Problem 42,
+in \emph{Games of No Chance}, MSRI Publications 29, Cambridge University Press,
+1996.
+
+\bibitem{Althofer2024}
+I. Alth\"ofer, M. Hartisch, T. Zipproth,
+Analysis of a Collatz Game and Other Variants of the $3n+1$ Problem,
+\emph{Advances in Computer Games} (2024), 123--132.
+
+\bibitem{AlthoferPage}
+I. Alth\"ofer,
+Collatz Problems: The Two-Player $3n+-1$ Game,
+\url{https://althofer.de/collatz-prizes.html}.
+
+\bibitem{Repo}
+G. Pochuev,
+Optimal $3n\pm1$ Game: Proof and Verification Repository,
+\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+
+\end{thebibliography}
+
+\end{document}

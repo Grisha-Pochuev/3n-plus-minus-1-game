@@ -12,6 +12,10 @@ and gap-report article.  It proves every theorem it asserts, but it does not
 claim the still-open unconditional no-DRAW theorem.  Advertising it as a
 complete solution would invalidate the audit verdict.
 
+The historical article archive is in [`versions/`](versions/). Drafts v1--v6
+are preserved there for provenance, and the current snapshot is provided as
+`versions/v7/v.7.tex` together with `versions/v7/v.7.pdf`.
+
 `main.tex` is an English hostile-audit draft. It currently presents a rigorous
 conditional proof architecture, not a proof of the unconditional theorem. The
 shared long high-return token installation/carry/no-reseed lifecycle remains

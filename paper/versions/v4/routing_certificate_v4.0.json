@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "game": "conjugated-3n-plus-minus-1",
+  "rank": [
+    "retained_source",
+    "entry_bit",
+    "outer_tokens",
+    "token_seed_bit",
+    "inner_tokens",
+    "inner_source",
+    "control_rank",
+    "local_counter"
+  ],
+  "controls": [
+    "boundary_entry",
+    "loss_sibling_entry",
+    "a_obligation",
+    "a_test_4",
+    "a_test_3",
+    "a_test_2",
+    "a_test_1",
+    "b_select",
+    "b2_first",
+    "b2_ready",
+    "factor_fork",
+    "high_return",
+    "marked_tail",
+    "short_lift",
+    "terminal_macro"
+  ],
+  "equal_rank_edges": [
+    [
+      "boundary_entry",
+      "a_obligation"
+    ],
+    [
+      "loss_sibling_entry",
+      "factor_fork"
+    ],
+    [
+      "a_obligation",
+      "a_test_4"
+    ],
+    [
+      "a_obligation",
+      "factor_fork"
+    ],
+    [
+      "a_test_4",
+      "a_test_3"
+    ],
+    [
+      "a_test_4",
+      "b_select"
+    ],
+    [
+      "a_test_3",
+      "a_test_2"
+    ],
+    [
+      "a_test_3",
+      "b_select"
+    ],
+    [
+      "a_test_2",
+      "a_test_1"
+    ],
+    [
+      "a_test_2",
+      "b_select"
+    ],
+    [
+      "a_test_1",
+      "b_select"
+    ],
+    [
+      "b_select",
+      "b2_first"
+    ],
+    [
+      "b2_first",
+      "b2_ready"
+    ],
+    [
+      "factor_fork",
+      "high_return"
+    ],
+    [
+      "marked_tail",
+      "short_lift"
+    ],
+    [
+      "short_lift",
+      "a_obligation"
+    ],
+    [
+      "boundary_entry",
+      "factor_fork"
+    ]
+  ],
+  "strict_edge_classes": [
+    "retained_source_decrease",
+    "outer_token_decrease",
+    "entry_bit_1_to_0",
+    "inner_source_decrease",
+    "inner_token_decrease",
+    "high_return_token_decrease",
+    "marked_tail_token_decrease",
+    "terminal_token_decrease",
+    "token_seed_bit_1_to_0",
+    "control_rank_decrease",
+    "local_counter_decrease"
+  ],
+  "notes": [
+    "entry_bit 1->0 may seed the initial outer token multiset and arbitrary finite inner routing data; entry_bit is ordered before those components.",
+    "After entry_bit=0, outer_tokens change only by certified strict descendant replacement.",
+    "token_seed_bit 1->0 may seed the first inner token if entry had no rankable token; after it is 0, inner_tokens change only by certified strict descendant replacement.",
+    "Equal-rank control graph is finite and acyclic; control_rank is longest remaining equal-rank path length.",
+    "Same-control tail/factor recurrences strictly decrease local_counter.",
+    "The exceptional-side attachment is explicit in the article: an exceptional WIN with DRAW A-child and LOSS B-child exports an adjacent factor-free DRAW frame over the LOSS token."
+  ]
+}

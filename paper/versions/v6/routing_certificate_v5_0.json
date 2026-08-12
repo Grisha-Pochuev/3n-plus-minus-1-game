@@ -1,0 +1,72 @@
+{
+  "schema_version": 2,
+  "package_version": "5.0",
+  "status": "PARTIAL_CLAIM_SAFE",
+  "purpose": "Finite bookkeeping certificate for the audit-hardened reduction. It is not a semantic proof of the no-DRAW theorem.",
+  "controls": [
+    "boundary_entry",
+    "loss_sibling_entry",
+    "a_obligation",
+    "a_test_4",
+    "a_test_3",
+    "a_test_2",
+    "a_test_1",
+    "b_select",
+    "b2_first",
+    "b2_ready",
+    "factor_fork",
+    "high_return",
+    "marked_tail",
+    "short_lift",
+    "terminal_macro"
+  ],
+  "edges": [
+    {"from": "boundary_entry", "to": "a_obligation", "kind": "pure-routing", "guard": "factor-free A-selecting obligation entry"},
+    {"from": "boundary_entry", "to": "factor_fork", "kind": "pure-routing", "guard": "typed adjacent factor-frame entry"},
+    {"from": "loss_sibling_entry", "to": "factor_fork", "kind": "pure-routing", "guard": "typed factor frame carrying an existing LOSS token"},
+    {"from": "a_obligation", "to": "a_test_4", "kind": "pure-routing", "guard": "start bounded canonical A-side test"},
+    {"from": "a_obligation", "to": "factor_fork", "kind": "pure-routing", "guard": "retained-LOSS factor alternative"},
+    {"from": "a_test_4", "to": "a_test_3", "kind": "pure-routing", "guard": "next A-side test"},
+    {"from": "a_test_4", "to": "b_select", "kind": "pure-routing", "guard": "phase becomes B-selecting"},
+    {"from": "a_test_3", "to": "a_test_2", "kind": "pure-routing", "guard": "next A-side test"},
+    {"from": "a_test_3", "to": "b_select", "kind": "pure-routing", "guard": "phase becomes B-selecting"},
+    {"from": "a_test_2", "to": "a_test_1", "kind": "pure-routing", "guard": "next A-side test"},
+    {"from": "a_test_2", "to": "b_select", "kind": "pure-routing", "guard": "phase becomes B-selecting"},
+    {"from": "a_test_1", "to": "b_select", "kind": "pure-routing", "guard": "phase becomes B-selecting"},
+    {"from": "b_select", "to": "b2_first", "kind": "pure-routing", "guard": "selected valuation is exactly 2"},
+    {"from": "b_select", "to": "factor_fork", "kind": "pure-routing", "guard": "selected valuation is at least 3; no descent below a pre-streak anchor is asserted"},
+    {"from": "b2_first", "to": "b2_ready", "kind": "pure-routing", "guard": "first valuation-two transfer has been exposed"},
+    {"from": "factor_fork", "to": "high_return", "kind": "pure-routing", "guard": "typed high-return scan"},
+    {"from": "marked_tail", "to": "short_lift", "kind": "pure-routing", "guard": "finite tail countdown reaches a short lift"},
+    {"from": "short_lift", "to": "a_obligation", "kind": "pure-routing", "guard": "exact lift enters the generic obligation control without changing ranked data"},
+
+    {"from": "b2_ready", "to": "a_obligation", "kind": "OPEN-P1", "guard": "reset after a seeded A/B2 recycle requires a strict descendant/source certificate"},
+    {"from": "high_return", "to": "marked_tail", "kind": "OPEN-P2", "guard": "semantic attachment of the high-return DRAW to the marked tail"},
+    {"from": "high_return", "to": "terminal_macro", "kind": "OPEN-P2", "guard": "semantic attachment of a short terminal high-return row"},
+    {"from": "terminal_macro", "to": "a_obligation", "kind": "OPEN-P2", "guard": "any upward reset requires an explicit certified descendant replacement"},
+
+    {"from": "a_obligation", "to": "boundary_entry", "kind": "strict-source", "guard": "an actual continuing DRAW has a rigorously smaller retained coefficient source"},
+    {"from": "factor_fork", "to": "boundary_entry", "kind": "strict-token", "guard": "an already ranked finite token is replaced by a certified strict proof-tree descendant"},
+    {"from": "marked_tail", "to": "boundary_entry", "kind": "strict-token", "guard": "marked LOSS/WIN token is replaced by a certified strict descendant"}
+  ],
+  "strict_exit_classes": [
+    "genuine retained-source decrease proved from an actual DRAW state",
+    "certified proof-token descendant replacement"
+  ],
+  "open_obligations": {
+    "P1": "Seeded A/B2 reset provenance across multi-A streaks and all exceptional rows.",
+    "P2": "Semantic exhaustiveness and descendant provenance for factor/high-return/marked-tail/terminal routing."
+  },
+  "permanent_negative_regressions": [
+    {
+      "id": "coefficient-source-separation",
+      "data": {"s": 1, "J_s": 5, "factorful_coefficient": 15, "phase": 1, "boundary_child": 22, "child_coefficient": 11, "child_source": 3},
+      "forbids": "smaller canonical coefficient implies smaller coefficient source when powers of three are present"
+    },
+    {
+      "id": "pre-streak-anchor-separation",
+      "data": {"initial_source": 20, "A1": 30, "A2": 45, "A3": 68, "selected_valuation_at_68": 3, "B_68": 25},
+      "forbids": "high valuation after a multi-A streak implies descent below the source retained before the streak"
+    }
+  ]
+}
