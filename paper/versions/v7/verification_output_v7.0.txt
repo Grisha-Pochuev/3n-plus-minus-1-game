@@ -1,0 +1,9 @@
+V7.0 SUPPORTING ARITHMETIC REGRESSIONS PASSED
+normal-form states checked: 1..500000
+alternating-factor states checked: 1..500000
+side/source-selector states checked: 1..100000
+source-bound states checked: 1..100000
+odd coefficients checked: up to 20000
+random long-tail samples: 10000 at 512 bits
+STATUS: supporting evidence only - NOT a proof of the no-DRAW conjecture
+OPEN: source-zero bootstrap, high-return token continuity, D=2 attached module, router exhaustiveness

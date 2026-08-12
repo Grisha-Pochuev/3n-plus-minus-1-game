@@ -1,0 +1,44 @@
+PDF: /mnt/data/v7_final/3n_plus_minus_1_game_v7.0.pdf
+Pages: 16
+Encrypted: False
+Page sizes (pt, rounded):
+  - 595 x 842 (16 page(s))
+Metadata:
+  /Author: Grisha Pochuev
+  /CreationDate: D:20260811174610Z
+  /Creator: LaTeX with hyperref
+  /Keywords: 
+  /ModDate: D:20260811174610Z
+  /PTEX.Fullbanner: This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2025/dev/Debian) kpathsea version 6.4.0/dev
+  /Producer: pdfTeX-1.40.26
+  /Subject: 
+  /Title: The Two-Player 3n plus or minus 1 Game - Version 7.0
+  /Trapped: /False
+Outline items: 15
+Form fields: 0
+Attachments: 0
+Annotations: 97
+
+Fonts (pdffonts, first 25 lines):
+name                                 type              encoding         emb sub uni object ID
+------------------------------------ ----------------- ---------------- --- --- --- ---------
+BHNMRX+LMRoman12-Bold                Type 1            Custom           yes yes yes     73  0
+IEWJML+LMRoman17-Regular             Type 1            Custom           yes yes yes     74  0
+JAYQGI+LMMathItalic12-Regular        Type 1            Custom           yes yes yes     75  0
+HODYWV+LMMathSymbols10-Regular       Type 1            Custom           yes yes yes     76  0
+NGNTVK+LMRoman12-Regular             Type 1            Custom           yes yes yes     77  0
+XJNHCJ+LMRoman10-Regular             Type 1            Custom           yes yes yes     78  0
+LOQMRB+LMMono12-Regular              Type 1            Custom           yes yes yes     79  0
+JCIQLR+LMRoman10-Bold                Type 1            Custom           yes yes yes     80  0
+NCGRMT+LMRoman10-Italic              Type 1            Custom           yes yes yes     81  0
+XJNHCJ+LMRoman10-Regular             Type 1            Custom           yes yes yes     82  0
+DPZPZO+LMMathItalic10-Regular        Type 1            Custom           yes yes yes     83  0
+JTPRLN+LMMathItalic7-Regular         Type 1            Custom           yes yes yes     84  0
+ETLCUU+LMRomanCaps10-Regular         Type 1            Custom           yes yes yes    105  0
+SRKIGX+LMMathExtension10-Regular     Type 1            Custom           yes yes yes    117  0
+RYPEGT+LMRoman8-Regular              Type 1            Custom           yes yes yes    118  0
+XRDPNK+LMMathItalic8-Regular         Type 1            Custom           yes yes yes    120  0
+ZRHUML+LMMathSymbols8-Regular        Type 1            Custom           yes yes yes    130  0
+TZYURE+MSBM10                        Type 1            Builtin          yes yes yes    136  0
+GWJQAP+MSAM10                        Type 1            Builtin          yes yes yes    172  0
+HOXBTM+LMMono10-Regular              Type 1            Custom           yes yes yes    284  0
