@@ -1,10 +1,23 @@
 # Article source
 
-`main.tex` is the English preprint intended for a Zenodo
-**Publication / Preprint** record. It includes the author's correspondence
-address, the verification repository, the proof architecture, reproducibility
-commands, and an explicit distinction between the human proof, conditional
-global certificate, finite regression evidence, and Lean-checked metatheory.
+## Hostile-audit deliverable (12 August 2026)
+
+`audit_ready_reduction.tex` is the self-contained article that passed the
+claim-by-claim hostile audit recorded in
+`HOSTILE_AUDIT_AUDIT_READY_REDUCTION.md`.  Its compiled PDF is
+`../output/pdf/audit_ready_reduction.pdf`.
+
+The pass is deliberately scoped: this is a rigorous reduction, local-repair,
+and gap-report article.  It proves every theorem it asserts, but it does not
+claim the still-open unconditional no-DRAW theorem.  Advertising it as a
+complete solution would invalidate the audit verdict.
+
+`main.tex` is an English hostile-audit draft. It currently presents a rigorous
+conditional proof architecture, not a proof of the unconditional theorem. The
+shared long high-return token installation/carry/no-reseed lifecycle remains
+open.  The unbounded `D=2` row has a local strict payment conditional on its
+incoming marked occurrence, but does not install that occurrence. Do not
+publish or describe this revision as a completed solution.
 
 Published record: <https://doi.org/10.5281/zenodo.21844684>.
 

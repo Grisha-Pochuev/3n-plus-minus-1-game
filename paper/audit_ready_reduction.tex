@@ -1,0 +1,1164 @@
+\documentclass[11pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage[a4paper,margin=28mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+
+\hypersetup{
+  hidelinks,
+  pdftitle={A Rigorous Reduction for the Two-Player 3n plus or minus 1 Game},
+  pdfauthor={Grisha Pochuev}
+}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\odd}{\operatorname{odd}}
+\newcommand{\Win}{\mathsf{WIN}}
+\newcommand{\Loss}{\mathsf{LOSS}}
+\newcommand{\Draw}{\mathsf{DRAW}}
+\newcommand{\N}{\mathbb N}
+\newcommand{\vTwo}{v_2}
+\newcommand{\xor}{\mathbin{\mathtt{xor}}}
+\newcommand{\proved}{\textsc{proved}}
+\newcommand{\verified}{\textsc{verified by computation}}
+\newcommand{\conditional}{\textsc{conditional theorem}}
+\newcommand{\openstatus}{\textsc{open target, not claimed}}
+
+\title{A Rigorous Reduction for the Two-Player $3n\boldsymbol{\pm}1$ Game\\
+\large Verified Lemmas, a Conditional No-Draw Theorem, and the Remaining Refinement Problem}
+\author{Grisha Pochuev}
+\date{Adversarial-audit edition, 12 August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{%
+\begin{minipage}{0.91\textwidth}
+\textbf{Scope notice.}
+This manuscript does \emph{not} claim an unconditional solution of the game.
+It gives complete proofs of the exact binary normal form, the outcome lemmas,
+the finite-token rank, and the abstract no-draw criterion.  The application of
+that criterion to every legal game continuation still requires a concrete
+semantic refinement.  One unresolved token-provenance defect in the current
+assembly, and a second defect in the earlier v6.3 router, are identified in
+Section~\ref{sec:audit}.  Consequently, the assertion that
+optimal play always terminates is marked \openstatus, not \proved.  Within
+this stated reduction-and-audit scope, every theorem asserted by the
+manuscript has a proof and the final adversarial audit reports no red or
+orange defect.
+\end{minipage}}
+\end{center}
+
+\begin{abstract}
+From an odd integer $n>1$, a player chooses $3n+1$ or $3n-1$ and removes all
+powers of two; reaching $1$ wins.  Arbitrary play may cycle, so the problem is
+to exclude game-theoretic draws, not merely to find a decreasing move.  We
+derive a self-contained conjugacy to the binary game
+\[
+  q\longmapsto A(q)=\left\lceil\frac{3q}{2}\right\rceil,
+  \qquad
+  q\longmapsto B(q)=R(A(q)),
+\]
+where $R$ deletes the maximal alternating binary suffix and $B(q)<q$ for
+$q>0$.  We prove the exact finite-outcome recursion without imposing a finite
+search boundary, give a Gray-code description of $R$, and prove a
+well-founded multiset rank for finite proof witnesses.  We then state and
+prove an explicit semantic-refinement theorem: a productive lift of every
+draw into a certified lexicographically decreasing macro system rules out all
+draws.  The repository's routing certificate checks only the abstract macro
+system.  It does not construct the required lift and successor map.  A
+hostile audit exposes an uninstalled-witness error in the current high-return
+rank.  It also records an outcome-orientation error in the superseded v6.3
+loss-sibling router, so that the history of the argument is not silently
+rewritten.  These are gaps in proposed global bridges, not counterexamples to
+the game theorem.  The result of
+this paper is therefore a rigorous reduction with a precise open obligation.
+The shortest marked return is sharpened further: its apparent valuation-one
+subcase is empty, so that row always replaces an already retained losing token
+by one of its actual children.
+\end{abstract}
+
+\tableofcontents
+
+\section{Claim ledger and scope}
+
+Every theorem or lemma in this paper followed by a proof is labelled
+\proved.  Finite experiments are labelled \verified.  The global target is
+not inferred from either kind of finite computation.
+
+\begin{center}
+\begin{tabular}{p{0.55\textwidth}p{0.33\textwidth}}
+\hline
+Claim & Status \\
+\hline
+Exact $m$-space and $q$-space normal forms & \proved \\
+$B(q)<q$ and $B(B(A(q)))<q$ for $q>0$ & \proved \\
+Finite $\Win/\Loss$ recursion and the draw-child lemma & \proved \\
+Gray-code formula for the alternating-suffix deletion & \proved \\
+Finite-token replacement strictly lowers the rank & \proved \\
+Complete semantic macro refinement implies no draws & \conditional \\
+The checked JSON inventory supplies that refinement & \openstatus \\
+Optimal play terminates from every odd start & \openstatus \\
+Finite identities and regression suites listed in Section~\ref{sec:computation}
+  & \verified \\
+Fixed-tail loss-sibling and source-zero $j=1$ local repairs & \proved \\
+Shortest marked return ($D=1$) strictly pays its retained token & \proved \\
+\hline
+\end{tabular}
+\end{center}
+
+The distinction in the last four rows is the central audit boundary.  A
+certificate may correctly prove that a declared transition system is
+well-founded while failing to prove that every relevant game situation has a
+legal, outcome-compatible transition in that system.
+
+\section{The game and its infinite-graph semantics}
+
+For a positive even integer $x$, let $\vTwo(x)$ be the exponent of $2$ in
+$x$, and put
+\[
+  \odd(x)=\frac{x}{2^{\vTwo(x)}}.
+\]
+The positions are the positive odd integers.  Position $1$ is terminal and is
+losing for the player to move.  For odd $n>1$, the two children are
+\[
+  T_-(n)=\odd(3n-1),\qquad T_+(n)=\odd(3n+1).
+\]
+The graph is infinite and may contain cycles; for example
+$5\to7\to5$ is legal.  Finite-game backward induction may therefore not be
+used with an artificial boundary.
+
+\subsection{Finite proof trees}
+
+\begin{definition}[Finite outcome layers]
+Let $L_0=\{1\}$ and $W_0=\varnothing$.  Inductively, for $h\ge0$, define
+\begin{align*}
+ W_{h+1}&=W_h\cup
+ \{n>1:\text{ at least one child of $n$ belongs to $L_h$}\},\\
+ L_{h+1}&=L_h\cup
+ \{n>1:\text{ both children of $n$ belong to $W_h$}\}.
+\end{align*}
+Put $W=\bigcup_hW_h$, $L=\bigcup_hL_h$, and
+$D=\{1,3,5,\ldots\}\setminus(W\cup L)$.
+Membership in $W$ or $L$ is witnessed by a finite proof tree.  The least layer
+of membership is its proof height.
+\end{definition}
+
+\begin{lemma}[Disjointness; \proved]\label{lem:disjoint}
+$W\cap L=\varnothing$.
+\end{lemma}
+
+\begin{proof}
+Suppose otherwise and choose a position $x$ with a pair of $W$- and
+$L$-derivations for which the sum of the two derivation heights is minimal.
+The terminal position is never in $W$, so $x>1$.  The $W$-derivation chooses
+a child $y$ having an $L$-derivation of smaller height.  The $L$-derivation
+requires every child, including $y$, to have a $W$-derivation of smaller
+height.  Thus $y$ has both labels with a smaller sum of heights, a
+contradiction.
+\end{proof}
+
+\begin{definition}[Outcomes]
+We call the positions in $W$, $L$, and $D$ respectively $\Win$, $\Loss$, and
+$\Draw$.  The word ``draw'' means failure of both finite winning
+certificates.  It is not the same as ``not reached by a bounded search''.
+\end{definition}
+
+\begin{proposition}[Exact recursion; \proved]\label{prop:recursion}
+For every nonterminal position $x$:
+\begin{enumerate}
+\item[(i)] $x$ is $\Win$ if and only if at least one child is $\Loss$;
+\item[(ii)] $x$ is $\Loss$ if and only if both children are $\Win$;
+\item[(iii)] if $x$ is $\Draw$, then at least one child is $\Draw$ and no child is
+      $\Loss$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+The forward implications in (i) and (ii) follow from the last rule in a
+minimal finite derivation.  Conversely, a finite proof for a losing child may
+be extended by one node to a winning proof for its parent; two finite winning
+proofs may be joined below a losing parent.  This proves (i) and (ii).
+If a draw had a losing child, (i) would make it winning.  If neither child
+were a draw, both would be resolved; since neither is losing, both would be
+winning, and (ii) would make the parent losing.  This proves (iii).
+\end{proof}
+
+\begin{proposition}[Game-theoretic meaning; \proved]\label{prop:strategy}
+At a $\Win$ position, the player to move has a strategy reaching $1$ after
+finitely many moves.  At a $\Loss$ position, every first move gives the
+opponent such a strategy.  At a $\Draw$ position neither player can force a
+win.  Hence, if $D=\varnothing$, optimal play terminates at $1$ from every
+starting position.
+\end{proposition}
+
+\begin{proof}
+Induct on the finite proof height.  At a winning node, move to the certified
+losing child.  At a losing node, either move leads to a winning node of lower
+proof height in its attached finite proof tree.  Along play consistent with
+the relevant winning strategy the heights decrease through a finite tree, so
+the terminal node is reached.
+
+Now start at a draw.  Proposition~\ref{prop:recursion}(iii) supplies a draw
+child and excludes losing children.  Against any proposed winning strategy,
+the opponent preserves a draw whenever the proposed strategy leaves a draw;
+if it instead moves to a winning child (winning for the new player to move),
+the opponent switches to that child's finite winning strategy.  Thus the
+proposed strategy cannot force a win.  The same argument applies to either
+player.  The final assertion follows from Lemma~\ref{lem:disjoint} and the
+definition of $D$.
+\end{proof}
+
+\section{Exact binary normal form}
+
+Write an odd position as $n=2m+1$, $m\ge0$, and define
+\[
+  F(m)=\left\lceil\frac{3m}{2}\right\rceil.
+\]
+For $m>0$, let $R(m)$ be the integer obtained by deleting the maximal
+alternating suffix of the ordinary binary expansion of $m$.  If the whole
+word is alternating, the result is $0$; set $R(0)=0$.  For example,
+\[
+  R(1001_2)=10_2,\qquad R(10101_2)=0.
+\]
+
+The following recurrence is an exact definition suitable for induction:
+\begin{equation}\label{eq:Rrec}
+\begin{aligned}
+R(2a)&=\begin{cases}a,&a\text{ even},\\R(a),&a\text{ odd},\end{cases}\\
+R(2a+1)&=\begin{cases}R(a),&a\text{ even},\\a,&a\text{ odd}.
+\end{cases}
+\end{aligned}
+\end{equation}
+Indeed, the low bit extends the alternating suffix exactly when it differs
+from the preceding bit.
+
+\begin{theorem}[$m$-space normal form; \proved]\label{thm:mnormal}
+For $n=2m+1>1$, the two children, expressed again as
+$n'=2m'+1$, have coordinates
+\[
+  \boxed{m'=F(m)\quad\text{and}\quad m'=F(R(m)).}
+\]
+The unordered pair is meant; the sign producing each member depends on the
+parity of $m$.
+\end{theorem}
+
+\begin{proof}
+Since
+\[
+  3n-1=2(3m+1),\qquad 3n+1=2(3m+2),
+\]
+exactly one of $3m+1$ and $3m+2$ is odd.  If $m=2a$, the odd expression is
+$6a+1$ and its new coordinate is $3a=F(m)$.  If $m=2a+1$, the odd expression
+is $6a+5$ and its new coordinate is $3a+2=F(m)$.
+
+It remains to identify the branch whose inner expression is even.  We use
+strong induction on $m$.  For $m=0$ the only relevant position is terminal.
+If $m=2a$, the other odd child is $\odd(3a+1)$.  When $a$ is even, $3a+1$ is
+odd, its coordinate is $3a/2=F(a)$, and~\eqref{eq:Rrec} gives $R(m)=a$.
+When $a$ is odd, $3a+1$ is the even branch occurring in the smaller input
+$a$; the induction hypothesis gives coordinate $F(R(a))$, and
+$R(m)=R(a)$.  If $m=2a+1$, the other odd child is $\odd(3a+2)$.  When $a$ is
+odd it has coordinate $(3a+1)/2=F(a)$ and $R(m)=a$; when $a$ is even, the
+case $a=0$ gives coordinate $0=F(R(0))$ directly, while for $a>0$ the
+induction hypothesis at $a$ gives $F(R(a))$ and $R(m)=R(a)$.  These four cases
+prove the formula.
+\end{proof}
+
+\subsection{Conjugation}
+
+The image of $F$ is precisely the set of nonnegative integers not congruent
+to $1\pmod3$, and
+\begin{equation}\label{eq:Finverse}
+ F^{-1}(y)=
+ \begin{cases}
+  2y/3,&y\equiv0\pmod3,\\
+  (2y-1)/3,&y\equiv2\pmod3.
+ \end{cases}
+\end{equation}
+This follows immediately by separating even and odd inputs of $F$.
+Every child in Theorem~\ref{thm:mnormal} lies in this image.  Represent the
+$m$-coordinate $F(q)$ simply by $q$.
+
+\begin{theorem}[Conjugated game; \proved]\label{thm:conjugate}
+After the first move, the game is exactly the game on $q\in\N$ with terminal
+state $0$ and moves
+\[
+  \boxed{A(q)=F(q)=\left\lceil\frac{3q}{2}\right\rceil,
+  \qquad B(q)=R(F(q)).}
+\]
+Moreover, resolving every $q$-position resolves every original odd position.
+\end{theorem}
+
+\begin{proof}
+Apply Theorem~\ref{thm:mnormal} to a state whose $m$-coordinate is $F(q)$.
+Its child coordinates are $F(F(q))$ and $F(R(F(q)))$; after applying
+$F^{-1}$ these are $A(q)$ and $B(q)$.  The terminal coordinate is
+$0=F(0)$.  For an arbitrary original state with coordinate $m$, its two
+children have coordinates $F(m)$ and $F(R(m))$, so they are represented by
+$m$ and $R(m)$.  If every represented position is resolved, both children of
+the original state are resolved, and Proposition~\ref{prop:recursion} resolves
+the parent.
+\end{proof}
+
+\begin{lemma}[Strict contraction of $B$; \proved]\label{lem:Bcontract}
+For every $q>0$, $B(q)<q$.
+\end{lemma}
+
+\begin{proof}
+Deleting a nonempty suffix gives $R(x)\le\lfloor x/2\rfloor$ for $x>0$.
+Thus, for $q\ge2$,
+\[
+ B(q)\le\left\lfloor\frac{F(q)}2\right\rfloor
+ \le\left\lfloor\frac{3q+1}{4}\right\rfloor<q.
+\]
+Directly, $A(1)=2=10_2$ and $B(1)=0$.
+\end{proof}
+
+\begin{lemma}[A short descending block; \proved]\label{lem:BBA}
+For every $q>0$,
+\[
+ B(B(A(q)))<q,
+\]
+where a move reaching $0$ is left at $0$.
+\end{lemma}
+
+\begin{proof}
+From the proof of Lemma~\ref{lem:Bcontract},
+$B(x)\le(3x+1)/4$ and $A(q)\le(3q+1)/2$.  Therefore
+\[
+ B(B(A(q)))\le \frac{27q+23}{32}<q
+\]
+for $q\ge5$.  For $q=1,2,3,4$, direct binary suffix deletion gives the
+respective values $0,0,1,1$, all strictly below $q$.
+\end{proof}
+
+\begin{remark}[Why this is not a termination proof]
+Lemma~\ref{lem:BBA} controls a path segment containing two specified
+contracting moves.  It says nothing about arbitrarily long runs of $A$-moves,
+and it does not determine which child is compatible with $\Draw$.  Therefore
+it cannot by itself exclude an infinite optimal-play path.
+\end{remark}
+
+\section{The suffix operation in valuation and Gray coordinates}
+
+\begin{lemma}[Valuation formula; \proved]\label{lem:Rvaluation}
+For every $x>0$,
+\begin{equation}\label{eq:Rvaluation}
+ R(x)=
+ \begin{cases}
+ \left\lfloor x/2^{\vTwo(3x+1)}\right\rfloor,&x\text{ odd},\\[2mm]
+ \left\lfloor x/2^{\vTwo(3x+2)}\right\rfloor,&x\text{ even}.
+ \end{cases}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let the maximal alternating suffix have length $k$.  If $x$ is odd, its low
+bits begin $1,0,1,0,\ldots$; if $x$ is even, they begin
+$0,1,0,1,\ldots$.  The finite geometric sums give, modulo $2^k$,
+\[
+ x\equiv -3^{-1}\pmod{2^k}\quad(x\text{ odd}),
+ \qquad
+ x\equiv -2\cdot3^{-1}\pmod{2^k}\quad(x\text{ even}).
+\]
+Thus $2^k$ divides $3x+1$ in the odd case and $3x+2$ in the even case.  If a
+nonempty prefix remains, the boundary bit repeats the top suffix bit; using
+the same geometric sum modulo $2^{k+1}$ shows that divisibility by
+$2^{k+1}$ fails.  Hence the displayed valuation equals $k$, and division by
+that power of two deletes exactly the suffix.  If the suffix is the entire
+binary word, the valuation may exceed $k$, but both the quotient's floor and
+$R(x)$ are $0$.  This proves~\eqref{eq:Rvaluation}.
+\end{proof}
+
+\begin{lemma}[No fixed modulus; \proved]\label{lem:no-fixed-modulus}
+For every $K\ge1$ there exist $x\equiv y\pmod{2^K}$ with $R(x)\ne R(y)$.
+Consequently, no fixed residue modulo $2^K$ determines $R$ globally.
+\end{lemma}
+
+\begin{proof}
+Fix the same alternating word, with low bit $1$, in the lowest $K$ positions
+of $x$ and $y$.
+For $x$, choose the bit in position $K$ to repeat the bit in position $K-1$;
+for $y$, choose it to be the opposite bit and choose the next bit to repeat
+it.  Add one further leading $1$ if either finite word would otherwise have a
+leading zero.  Then the two integers agree in their lowest $K$ bits.  The
+maximal alternating suffix of $x$ has length $K$, whereas that of $y$ has
+length $K+1$.  After deletion, the low bit of $R(x)$ is the bit in position
+$K$, while the low bit of $R(y)$ is the opposite bit in position $K+1$.
+The retained prefixes are nonzero after the possible leading-bit addition;
+their parities differ, so $R(x)\ne R(y)$.
+\end{proof}
+
+Let
+\[
+  G(x)=x\xor\left\lfloor\frac{x}{2}\right\rfloor
+\]
+be reflected binary Gray code.
+
+\begin{theorem}[Gray deletion formula; \proved]\label{thm:gray}
+For every $x\ge0$,
+\[
+ \boxed{G(R(x))=
+ \left\lfloor
+ \frac{G(x)}{2^{\vTwo(G(x)+1)+1}}
+ \right\rfloor.}
+\]
+\end{theorem}
+
+\begin{proof}
+Write the binary digits of $x$ as $b_i$.  Away from the leading boundary, the
+Gray digit in position $i$ is $b_{i+1}\xor b_i$.  If the maximal alternating
+suffix has length $k$ and a nonempty prefix remains, the lowest $k-1$ Gray
+digits are $1$ and the boundary Gray digit is $0$.  Thus
+$\vTwo(G(x)+1)=k-1$, and shifting by $k$ leaves exactly the Gray code of the
+remaining prefix.  If the entire word is alternating, $G(x)$ is an all-ones
+word; the displayed shift removes the whole word (and one leading zero), so
+both sides are $0$.  The case $x=0$ is immediate.
+\end{proof}
+
+\begin{proposition}[Eight-state transducer; \proved]
+Read Gray words from least significant to most significant, with leading-zero
+padding.  The relation
+\[
+  h=G\bigl(A(G^{-1}(g))\bigr)
+\]
+is recognized by a finite transducer with eight carry states.
+\end{proposition}
+
+\begin{proof}
+Let $b_i,c_i$ be the binary digits of $q,A(q)$ and let
+$g_i=b_{i+1}\xor b_i$, $h_i=c_{i+1}\xor c_i$ be their Gray digits.  Since
+\[
+  2A(q)=3q+b_0=q+2q+b_0,
+\]
+a state at column $i$ may be taken as
+$\left(b_i,c_i,d_{i+1}\right)\in\{0,1\}^3$, where $d_{i+1}$ is the carry
+into column $i+1$.  On reading $(g_i,h_i)$, set
+\[
+ b_{i+1}=b_i\xor g_i,\qquad c_{i+1}=c_i\xor h_i.
+\]
+The transition is legal exactly when
+\[
+ c_i\equiv b_{i+1}+b_i+d_{i+1}\pmod2,\qquad
+ d_{i+2}=\left\lfloor\frac{b_{i+1}+b_i+d_{i+1}}2\right\rfloor.
+\]
+Initially $d_1=b_0$; the bits $b_0,c_0$ are guessed.  Accept after zero
+padding reaches $(0,0,0)$.  Gray inversion with the leading-zero condition
+makes both guesses unique.  The displayed column equations then hold if and
+only if $2A(q)=3q+b_0$, proving that the accepted pairs are exactly the stated
+relation.  There are $2^3=8$ states.
+\end{proof}
+
+Together with Theorem~\ref{thm:gray}, this proves that both game edges are
+rational binary relations.  Finite-state representability, however, is not a
+well-founded rank and does not exclude draws.
+
+\section{Finite proof witnesses and a sound token rank}
+
+Suppose a local outcome argument uses already certified finite proof trees.
+Record only their heights in a finite multiset $M$.  The word
+``already'' is essential: a finite state discovered later is not automatically
+a token carried by the current configuration.
+
+Define the numerical rank
+\[
+  \tau(M)=\sum_{h\in M}3^h,
+\]
+with multiplicity.  This is a dependency-free substitute for the natural
+ordinal sum of $\omega^h$ terms when every replacement has at most two
+children.
+
+\begin{lemma}[Token replacement; \proved]\label{lem:token}
+Let $M=U\uplus\{h\}$, and let
+$M'=U\uplus\{h_1,\ldots,h_k\}$, where $0\le k\le2$ and every
+$h_i<h$.  Then $\tau(M')<\tau(M)$.
+\end{lemma}
+
+\begin{proof}
+If $k=0$ the claim is immediate.  Otherwise $h\ge1$ and
+\[
+ \sum_{i=1}^k3^{h_i}\le2\cdot3^{h-1}<3^h.
+\]
+The unchanged contribution $\tau(U)$ may be added to both sides.
+\end{proof}
+
+\begin{corollary}[Well-founded token descent; \proved]
+There is no infinite sequence of finite token multisets in which every step
+is a replacement of the form in Lemma~\ref{lem:token}.
+\end{corollary}
+
+\begin{proof}
+The natural number $\tau(M)$ strictly decreases at every step.
+\end{proof}
+
+\begin{remark}[Provenance rule]
+Lemma~\ref{lem:token} permits replacing a particular retained occurrence
+$h\in M$.  It does not permit choosing an unrelated finite proof of height
+$u$, proving that new heights are below $u$, and inserting them into $M$ when
+$u$ was not in $M$.  For example, if $M=\varnothing$, inserting any nonempty
+list increases $\tau$, regardless of comparisons with witnesses external to
+$M$.
+\end{remark}
+
+\section{Three local router repairs proved explicitly}
+\label{sec:local-repairs}
+
+This section proves two draw-preserving constructions that were only named,
+but not constructed, in the earlier v6.3 manuscript: the fixed-tail
+loss-sibling orientation and the source-zero valuation-one exit.  It also
+proves that the formally possible valuation-one branch of the shortest marked
+return is empty.  None of these local lemmas repairs the separate long
+high-return token-installation defect of Section~\ref{sec:audit}.
+
+For $r\ge1$, $e\in\{0,1\}$, and odd $a>0$, put
+\[
+  Q_r^e(a)=2^r a-e,
+  \qquad J(s)=2A(s)+1.
+\]
+Thus
+\[
+ J(s)=\begin{cases}3s+1,&s\text{ even},\\3s+2,&s\text{ odd}.
+ \end{cases}
+\]
+
+\begin{lemma}[Canonical coefficient source; \proved]
+\label{lem:canonical-source}
+Every $x>0$ has unique coordinates
+\[
+ x=Q_r^e\bigl(3^kJ(s)\bigr),
+ \qquad r\ge1,\quad e\in\{0,1\},\quad k,s\in\N.
+\]
+If $\sigma(x)=s$ denotes the resulting coefficient source, then
+\[
+ \sigma(x)\le \frac{x-1}{6}.
+\]
+\end{lemma}
+
+\begin{proof}
+The parity of $x$ determines $e$: namely $e=x\bmod2$.  The factorization
+$x+e=2^r a$ with $a$ odd determines $r\ge1$ and $a$ uniquely.  Removing the
+maximal power $3^k$ determines an odd integer $a_0$ not divisible by three.
+Such integers are precisely $6t+1$ and $6t+5$.  The displayed formula for
+$J$ gives
+\[
+ J(2t)=6t+1,\qquad J(2t+1)=6t+5,
+\]
+so $a_0=J(s)$ for a unique $s$.  Finally
+\[
+ x=2^r3^kJ(s)-e\ge2J(s)-1\ge6s+1,
+\]
+which is the asserted bound.
+\end{proof}
+
+Call $q$ \emph{exceptional} when
+\[
+ q\equiv1,3,12,14\pmod {16};
+\]
+all other $q$ are called ordinary.
+
+\begin{lemma}[Ordinary side relation; \proved]
+\label{lem:ordinary-side}
+If $q$ is ordinary, then
+\[
+ B(A(q))\in\{A(B(q)),B(B(q))\}.
+\]
+Moreover, if $q$ is exceptional, then $A(q)$ is ordinary.
+\end{lemma}
+
+\begin{proof}
+Put $x=A(q)$, $s=R(x)=B(q)$, and let $k$ be the length of the maximal
+alternating suffix of $x$.  The condition $k\ge3$ says that the last three
+bits of $x$ are $010$ or $101$.  Substitution of the sixteen residues of
+$q$ into $A(q)=\lceil3q/2\rceil$ shows that this occurs exactly for
+$q\equiv1,3,12,14\pmod {16}$.  Thus $k\in\{1,2\}$ when $q$ is ordinary.
+
+If $k=1$, write $x=2s+e$, where the boundary condition for maximality says
+$s\equiv e\pmod2$.  The formulas
+\[
+ A(2s)=3s,\qquad A(2s+1)=3s+2
+\]
+show that $A(x)$ is obtained from $A(s)$ by appending the bit $e$.
+Deleting the new maximal alternating suffix therefore leaves $A(s)$ if the
+boundary bit repeats and leaves $R(A(s))=B(s)$ if it continues.
+
+If $k=2$, the two deleted bits are $01$ or $10$, and their high bit equals
+the last bit of $s$.  Directly, $x=4s+1$ with $s$ even gives
+$A(x)=4A(s)+2$, while $x=4s+2$ with $s$ odd gives
+$A(x)=4A(s)+1$.  Thus $A(x)$ is obtained from $A(s)$ by appending,
+respectively, $10$ or $01$.  The same boundary test leaves either $A(s)$
+or $R(A(s))=B(s)$.  This proves the first assertion.  For the second,
+direct substitution sends the four exceptional classes under $A$ to
+$2,5,10,13\pmod {16}$, none of which is exceptional.
+\end{proof}
+
+\begin{lemma}[Exceptional child-pair attachment; \proved]
+\label{lem:exceptional-pair}
+Let $q$ be exceptional and put $\ell=B(q)$.  For some $m\ge1$ and
+$\delta\in\{0,1\}$, the two children of $A(q)$ are exactly
+\[
+ Q_m^\delta(J(\ell)),\qquad Q_{m+1}^\delta(J(\ell)).
+\]
+Consequently, if $q$ is $\Win$, $A(q)$ is $\Draw$, and $\ell$ is $\Loss$,
+then this exact adjacent pair contains a continuing $\Draw$ and remains
+attached to the same losing state $\ell$.
+\end{lemma}
+
+\begin{proof}
+Write $q=16t+c$, $c\in\{1,3,12,14\}$.  Direct application of $A$ and $B$
+gives
+\[
+\begin{array}{c|c|c|c}
+c&\ell&B(A(q))&A^2(q)\\ \hline
+1&R(6t)&18t+1&36t+3\\
+3&R(6t+1)&18t+4&36t+8\\
+12&R(6t+4)&18t+13&36t+27\\
+14&R(6t+5)&18t+16&36t+32.
+\end{array}
+\]
+In the four rows put $z=6t,6t+1,6t+4,6t+5$, respectively.  If the maximal
+alternating suffix of $z$ has length $m$ and leaves $\ell=R(z)>0$, direct
+summation of that alternating suffix gives
+\[
+ 3z+1=Q_m^\delta(J(\ell)),
+ \qquad \delta=1-(z\bmod2).
+\]
+When the whole word is deleted, the same identity holds with $\ell=0$ and
+$m$ one larger than the binary length.  The third column is $3z+1$ and the
+fourth is twice that number plus $\delta$, proving the two coordinates.
+If $A(q)$ is a draw, its children contain no loss and at least one draw by
+Proposition~\ref{prop:recursion}; the final assertion follows.
+\end{proof}
+
+\begin{lemma}[Fixed-tail loss-sibling constructor; \proved]
+\label{lem:fixed-tail-sibling}
+Let $c>0$ be odd, $r\ge2$, and $e\in\{0,1\}$.  Put
+\[
+ X=Q_r^e(3c),\quad G=Q_r^e(c),\quad
+ H=Q_{r+1}^e(c),\quad Y=A(G).
+\]
+Then $\{A(H),B(H)\}=\{X,Y\}$, in fact $A(H)=X$ and $B(H)=Y$.
+Suppose
+\[
+ X:\Draw,\qquad H:\Win,\qquad Y:\Loss.
+\]
+There is an explicit draw-preserving continuation:
+
+\begin{enumerate}
+\item[(a)] if $H$ is ordinary, then $P=B(A(H))$ is simultaneously a child of
+      $X$ and of $Y$; hence
+      \[
+      P:\Win,\qquad X\to P\text{ is a draw--win boundary},\qquad
+      h(P)\le h(H)-2;
+      \]
+\item[(b)] if $H$ is exceptional, the two children of the actual draw $X=A(H)$
+      are the exact adjacent pair of Lemma~\ref{lem:exceptional-pair} over
+      the same losing state $Y=B(H)$, and that pair contains a draw.
+\end{enumerate}
+No transition through the winning state $G$ is asserted.
+\end{lemma}
+
+\begin{proof}
+For $r\ge3$, constant-tail arithmetic gives
+\[
+ A(H)=Q_r^e(3c)=X,\qquad
+ B(H)=Q_{r-1}^e(3c)=A(G)=Y.
+\]
+At $r=2$ the same second identity is the direct exponent-two/one boundary
+calculation; the first identity is unchanged.
+
+Assume first that $H$ is ordinary.  Lemma~\ref{lem:ordinary-side} gives
+\[
+ P=B(A(H))\in\{A(B(H)),B(B(H))\}=\{A(Y),B(Y)\}.
+\]
+Thus $P$ is a child of the losing state $Y$ and is winning.  It is also the
+contracting child of $A(H)=X$, so it is a genuine winning child of the
+continuing draw.  Since a draw cannot be the losing witness for the winning
+state $H$, the stated orientation makes $Y$ its losing witness and
+\[
+ h(Y)=h(H)-1,\qquad h(P)\le h(Y)-1=h(H)-2.
+\]
+If $H$ is exceptional, apply Lemma~\ref{lem:exceptional-pair} with
+$q=H$, $A(H)=X$, and $B(H)=Y$.  This proves the second alternative and
+the exhaustiveness of the split.
+\end{proof}
+
+\begin{lemma}[Source-zero valuation-one exit; \proved]
+\label{lem:source-zero-j1}
+Let $n\ge2$, $\delta\in\{0,1\}$, and suppose
+\[
+ 3^n+1-2\delta=2J(y)
+\]
+has $2$-adic valuation one.  Put
+\[
+ C=R(3^n-\delta),\qquad E=Q_1^{1-\delta}(J(y)).
+\]
+Then $y=(3^{n-1}-1)/2>0$ and exactly one of the following two coordinate
+rows holds:
+\[
+\begin{array}{c|c|c|c}
+\delta&n&C&E\\ \hline
+0&\text{even}&A(y)&Q_1^1(J(y))\\
+1&\text{odd}&B(y)&Q_1^0(J(y)).
+\end{array}
+\]
+If $\{C,E\}$ contains a draw, then either $E$ itself is an explicit
+exponent-one draw lift over $y$, or $C$ is a draw with
+\[
+ \sigma(C)<y.
+\]
+Thus the raw valuation-one row is a strict coefficient-source exit, not an
+unconstructed loss-sibling entry.
+\end{lemma}
+
+\begin{proof}
+Valuation one in $3^n+1$ forces $n$ even, while valuation one in
+$3^n-1$ forces $n$ odd; this follows modulo four.  Dividing the displayed
+factorization by two gives $J(y)=(3^n+1-2\delta)/2$, and the explicit
+formula for $J$ yields $y=(3^{n-1}-1)/2$.  Direct substitution gives the
+two signed coordinates.  In the first row the last two bits of $3^n$ are
+$01$, so deletion gives $C=(3^n-1)/4=A(y)$.  In the second row appending
+the final zero to $J(y)$ extends the alternating suffix of $A(y)$, giving
+$C=B(y)$.
+
+If $E$ is a draw, the first alternative is already explicit.  Otherwise a
+draw in the pair must be $C$.  Lemma~\ref{lem:canonical-source} and
+$A(y)\le(3y+1)/2$ give
+\[
+ \sigma(A(y))\le\frac{A(y)-1}{6}
+ \le\frac{3y-1}{12}<y.
+\]
+For the other row, Lemmas~\ref{lem:Bcontract} and
+\ref{lem:canonical-source} give $\sigma(B(y))<y$.  Hence both raw rows make
+the claimed strict source descent.
+\end{proof}
+
+\begin{lemma}[Signed source boundary; \proved]
+\label{lem:signed-source-boundary}
+Let $s>0$, $e\in\{0,1\}$, and factor
+\[
+ 3J(s)+1-2e=2^vJ(t).
+\]
+Then
+\[
+ t=\begin{cases}
+ A(s),&v=1,\\
+ B(s),&v\ge2.
+ \end{cases}
+\]
+\end{lemma}
+
+\begin{proof}
+The odd integer $J(s)$ is the original game state represented by $s$.
+Theorem~\ref{thm:conjugate} says that the sources of its two signed children
+are exactly $A(s)$ and $B(s)$.  Of the consecutive even integers
+$3J(s)-1$ and $3J(s)+1$, one has valuation one and the other has valuation at
+least two.  The valuation-one odd quotient is greater than $J(s)$, whereas
+the valuation-at-least-two quotient is smaller than $J(s)$.  Since $J$ is
+strictly increasing, $A(s)>s>B(s)$ by Lemma~\ref{lem:Bcontract}; hence the
+first quotient has source $A(s)$ and the second has source $B(s)$.
+\end{proof}
+
+\begin{lemma}[The shortest marked return is strict; \proved]
+\label{lem:shortest-marked-return}
+Let $C>0$ be odd, let $g\in\{0,1\}$, and put
+\[
+ b=Q_1^g(C),\qquad q=B(b),\qquad y=A(b).
+\]
+Suppose that $b,q$ are $\Win$ and $y$ is $\Loss$.  Factor
+\[
+ 9J(b)+1-2g=2^jJ(w).
+\]
+Then $j\ge2$ and
+\[
+ w=\begin{cases}
+ A(y),&j=2,\\
+ B(y),&j\ge3.
+ \end{cases}
+\]
+Consequently $w$ is an actual winning child of the retained losing state
+$y$, and
+\[
+ h(w)\le h(y)-1.
+\]
+In particular this marked $D=1$ row is a legal strict token replacement; it
+has no valuation-one lift subcase.
+\end{lemma}
+
+\begin{proof}
+Because $b=2C-g$ has parity $g$, the formula for $J$ gives
+\[
+ J(b)=6C+1-2g.
+\]
+Hence
+\[
+ 9J(b)+1-2g=2(27C+5-10g).
+\]
+The integer in parentheses is even for both values of $g$, since $C$ is odd.
+Thus $j\ge2$.
+
+It remains to identify the returned source.  First note that
+\[
+ y=A(b)=3C-g,
+\]
+and therefore
+\[
+ J(y)=\begin{cases}
+ 9C+2,&g=0,\\
+ 9C-2,&g=1.
+ \end{cases}
+\]
+The remaining factorization is precisely the signed source boundary at $y$:
+\[
+ 3J(y)+1-2(1-g)=27C+5-10g=2^{j-1}J(w).
+\]
+If $j=2$, its valuation is one and
+Lemma~\ref{lem:signed-source-boundary} gives $w=A(y)$.  If $j\ge3$, its
+valuation is at least two and the same lemma gives $w=B(y)$.
+
+In both cases $w$ is a child of the retained $\Loss$ state $y$.
+Proposition~\ref{prop:recursion} makes it $\Win$, and adjoining this child to
+the finite losing proof for $y$ gives $h(w)\le h(y)-1$.
+\end{proof}
+
+\section{The abstract macro theorem}
+
+This section states exactly what a global certificate would have to prove.
+It deliberately separates a sound order-theoretic kernel from the semantic
+connection to the game.
+
+Let a macro configuration be
+\[
+  C=(s,M,a,N,c),
+\]
+where $s,a\in\N$ are outer and inner source parameters, $M,N$ are finite
+multisets of retained proof heights, and $c$ belongs to a finite control set.
+Assume the equal-rank control graph is acyclic, and choose a topological rank
+$d(c)\in\N$ that decreases on every control edge.  Put
+\[
+ \rho(C)=\bigl(s,\tau(M),a,\tau(N),d(c)\bigr)\in\N^5
+\]
+with lexicographic order.
+
+\begin{lemma}[Macro well-foundedness; \proved]\label{lem:macrowf}
+Any relation $C'\prec C$ satisfying $\rho(C')<_{\rm lex}\rho(C)$ is
+well-founded.
+\end{lemma}
+
+\begin{proof}
+The usual order on $\N$ is well-founded, and a finite lexicographic product of
+well-founded orders is well-founded.  Concretely, an infinite descending
+sequence would first strictly decrease the first coordinate only finitely
+often.  On a tail it is constant; repeat this argument successively for the
+remaining four coordinates.  The resulting tail would have all coordinates
+constant, contradicting strict lexicographic decrease.
+\end{proof}
+
+\begin{definition}[Complete draw-macro refinement]\label{def:refinement}
+A complete refinement consists of a predicate $\mathsf{Bad}(C)$ and two
+constructions:
+\begin{enumerate}
+\item[(R1)] for every conjugated draw $q$, a configuration $C$ with
+      $\mathsf{Bad}(C)$;
+\item[(R2)] for every $C$ with $\mathsf{Bad}(C)$, a configuration $C'$ with
+      $\mathsf{Bad}(C')$ and $C'\prec C$.
+\end{enumerate}
+Here every macro edge used in (R2) must be a finite legal game construction,
+must follow an actual $\Draw$ continuation supplied by
+Proposition~\ref{prop:recursion}, and must preserve the identities and
+provenance of all tokens unless Lemma~\ref{lem:token} certifies their strict
+replacement.
+\end{definition}
+
+\begin{theorem}[Conditional no-draw theorem; \proved]\label{thm:conditional}
+If a complete draw-macro refinement in the sense of
+Definition~\ref{def:refinement} exists, then the conjugated game has no draw
+positions.  Consequently, optimal play in the original game terminates at
+$1$ from every odd starting value.
+\end{theorem}
+
+\begin{proof}
+If a draw existed, (R1) would make the set of bad configurations nonempty.
+By Lemma~\ref{lem:macrowf}, every nonempty subset has a $\prec$-minimal
+element $C$.  But (R2) supplies a bad $C'\prec C$, a contradiction.  Hence
+there are no conjugated draws.  Theorem~\ref{thm:conjugate} resolves every
+original position, and Proposition~\ref{prop:strategy} gives finite
+termination under optimal play.
+\end{proof}
+
+\subsection{What the routing certificate does and does not prove}
+
+The checked inventory has 15 control states, 45 declared transitions, 12
+declared total guard partitions, 29 rank-strict transitions, and 16
+equal-rank transitions forming a directed acyclic graph.  These facts prove
+Lemma~\ref{lem:macrowf} for the \emph{declared} macro relation.  To instantiate
+Theorem~\ref{thm:conditional}, four additional obligations must be proved:
+
+\begin{enumerate}
+\item[(H1)] \textbf{Arithmetic validity.}  Every declared row has the asserted
+      exact child, source, exponent, and suffix identities.
+\item[(H2)] \textbf{Semantic coverage.}  The guards partition every game situation
+      that can arise from a draw; there is no missing entry or reset case.
+\item[(H3)] \textbf{Outcome and token compatibility.}  The selected route follows
+      an actual draw child, and every rank comparison concerns the actual
+      retained token occurrences, not newly introduced finite witnesses.
+\item[(H4)] \textbf{Finite productivity.}  Each macro invocation reaches a declared
+      successor after finitely many legal constructions, and a reset occurs
+      only after a preceding rank component has strictly decreased.
+\end{enumerate}
+
+The JSON checker validates declarations about the abstract inventory.  It
+cannot establish (H2)--(H4) merely by confirming that the declared guards are
+syntactically disjoint and exhaustive over their own declared parameter
+domains.  Likewise, the Lean structure called
+\texttt{DrawMacroRefinement} makes (R1)--(R2) explicit hypotheses; no concrete
+value of that structure is currently constructed.
+
+\section{Hostile audit of the proposed global bridge}\label{sec:audit}
+
+This section records proof defects, not merely requests for more exposition.
+Defect A applies to the current human assembly.  Defect B was a defect of the
+earlier v6.3 manuscript; it is repaired explicitly by
+Lemma~\ref{lem:fixed-tail-sibling}.  The source-zero valuation-one omission
+from that manuscript is repaired by Lemma~\ref{lem:source-zero-j1}.  The
+current proof still cannot instantiate Theorem~\ref{thm:conditional} until
+Defect A and the explicit semantic-refinement boundary are closed.
+
+\subsection{Defect A: the high-return witnesses are not installed tokens}
+
+In the high-return module, the argument constructs finite winning states
+$u,c$ and lower descendants $p,b$, with height inequalities of the schematic
+form
+\[
+  h(p)<h(u),\qquad h(b)<h(c).
+\]
+The next assembly step treats this as a strict replacement
+\[
+  \{h(u),h(c)\}\longmapsto\{h(p),h(b)\}
+\]
+inside the current token multiset.  However, the local lemma proves only that
+$u$ and $c$ are finite winning states; it does not prove that occurrences of
+$h(u)$ and $h(c)$ were already retained in the current outer or inner
+multiset.
+
+This is a logical failure of the premise of Lemma~\ref{lem:token}.  If the
+current multiset is empty, for example, installing $h(p)$ and $h(b)$ makes
+$\tau$ positive rather than smaller.  Comparisons with external witnesses do
+not repair the problem.  A valid repair must either:
+
+\begin{enumerate}
+\item[(a)] trace $u$ and $c$ as exact retained token occurrences from the entry
+      configuration to the high return; or
+\item[(b)] define a different rank that pays for their installation before the
+      return and prove strict descent for every reset.
+\end{enumerate}
+
+No such trace or prepaid rank is currently supplied.  Therefore the claimed
+strict high-return edge is \openstatus.
+
+\subsection{Repaired defect B (v6.3 only): the loss-sibling orientation}
+
+One entry pattern in the v6.3 normalizer has the outcome fingerprint
+\[
+  X:\Draw,\qquad H:\Win,\qquad Y:\Loss,\qquad G:\Win.
+\]
+The available local diamond keeps the draw at $X$.  The assembly nevertheless
+routes the configuration through a ``loss-sibling entry'' based at $G$.
+Because $G$ is winning rather than drawing, the v6.3 transition was not an
+outcome-compatible continuation of $X$.  Lemma~\ref{lem:fixed-tail-sibling}
+now supplies the missing constructor without moving the draw to $G$.  In the
+ordinary row, the actual draw $X$ has a winning child two proof levels below
+$H$; in the exceptional row, the two actual children of $X$ form an exact
+adjacent frame over the same losing state $Y$.  Thus this historical defect
+is closed in the present manuscript.
+
+\subsection{Additional obligations exposed by the audit}
+
+Two further points in v6.3 required explicit case proofs in addition to
+Defect B:
+
+\begin{itemize}
+\item the $D=2$ loss-anchored lift/factor exits must preserve or lower the
+      exact incoming token in every signed and raw exit, not merely produce
+      some finite witness; this local obligation is now closed by the exact
+      split $B(w)\in\{A^2(q),B(A(q))\}$ and the ordinary/exceptional
+      common-child identities recorded in the repository note
+      \emph{D2 loss-anchored obligation}, conditional only on the incoming
+      occurrence of $q$ being legally installed;
+\item the source-zero, valuation-one branch required an explicit route;
+      Lemma~\ref{lem:source-zero-j1} now proves that the signed exit is an
+      exact exponent-one lift and the raw exit is a strict coefficient-source
+      descent, so no new loss-sibling constructor is needed.
+\end{itemize}
+
+None of these observations disproves the desired game theorem.  Defect A shows
+that the current token installation and lifecycle have not yet been justified.
+The loss-sibling, source-zero, shortest marked $D=1$, and local $D=2$ rows
+are now closed.  The long high-return carry/no-reseed theorem remains the
+explicit global obligation.
+Independently, the current Lean development leaves the complete draw-to-macro
+map as an explicit structure parameter.  Thus the last implication needed
+for an unconditional proof is unavailable.  The exact acceptance conditions
+for Defect A are recorded in the repository note
+\emph{High-return provenance obligation}.
+
+\section{Computational verification and its exact scope}\label{sec:computation}
+
+All commands below were run on 12 August 2026 using Python 3.12.13.  They are
+reproducible from the repository snapshot audited for this manuscript.
+
+\begin{verbatim}
+python -m unittest discover -s tests -v
+python scripts/verify_claims.py --limit 100000
+python scripts/verify_global_certificate.py
+python audit.py --limit 100000
+\end{verbatim}
+
+The results were:
+
+\begin{itemize}
+\item 112 unit and regression tests passed;
+\item the $m$-space normal form was checked for $1\le m\le100{,}000$;
+\item $B(q)<q$ was checked for $1\le q\le100{,}000$;
+\item descent blocks were checked for odd $3\le n\le200{,}001$;
+\item the global inventory checker accepted 15 states and 45 transitions,
+      reporting the status \texttt{CONDITIONAL\_MACHINE\_CHECK} and four
+      unverified local refinement/outcome obligations;
+\item an independently verified finite proof DAG certified $q=100$ as
+      winning, using 59 nodes and maximum finite rank 44,448.
+\end{itemize}
+
+The previous manuscript v6.3 was also tested by
+\begin{verbatim}
+python verify_structure_v6_3.py
+python verify_v6_3.py --limit 250000 \
+  --random-samples 5000 --random-bits 256
+\end{verbatim}
+Both scripts passed.  The second script explicitly describes its scope as
+``arithmetic/control regressions only; human proof carries outcomes/ranks.''
+This is consistent with Defects A and B: neither is a false integer identity
+detectable by a finite arithmetic test.
+
+These results are \verified, not theorems about all integers.  In particular,
+an unknown node outside a finite retrograde window is not labelled winning or
+losing, and no finite cutoff is treated as a boundary condition.
+
+\section{A precise target for future work}
+
+The open problem has now been reduced to a concrete construction rather than
+an informal appeal to a complicated case analysis.
+
+\begin{proposition}[Sufficient remaining deliverable; \proved]
+It is sufficient to provide, in Lean or on paper, explicit functions
+implementing (R1)--(R2) of Definition~\ref{def:refinement}, together with
+proofs of (H1)--(H4).  No additional global game-theoretic argument would then
+be needed.
+\end{proposition}
+
+\begin{proof}
+Such functions instantiate the hypotheses of
+Theorem~\ref{thm:conditional}, whose conclusion is exactly the desired
+no-draw statement and, by conjugacy, optimal termination in the original
+game.
+\end{proof}
+
+For a hostile-audit-ready completion, the refinement should expose at least
+the following data on every transition:
+
+\begin{enumerate}
+\item the current legal game states and their certified outcomes;
+\item the actual draw child selected by Proposition~\ref{prop:recursion};
+\item the identities of retained token occurrences before and after the
+      transition;
+\item the exact arithmetic guard and proof that all alternatives are covered;
+\item the first coordinate of $\rho$ that strictly decreases, or the verified
+      equal-rank control edge;
+\item a finite bound or structural recursion proving that the macro returns.
+\end{enumerate}
+
+This format would make the two defects in Section~\ref{sec:audit} impossible
+to hide: an absent parent token cannot be named in item 3, and a winning state
+cannot be supplied as the draw child in item 2.
+
+\section{Conclusion}
+
+The exact binary conjugacy and the finite-outcome semantics isolate the real
+difficulty of the two-player $3n\pm1$ game.  The contracting branch, the
+Gray-code transducer, finite arithmetic checks, and a well-founded abstract
+macro rank are all useful and rigorously established.  They do not by
+themselves show that every draw continuation enters that rank system.
+
+The current global proof attempt fails at a specific semantic link: it uses
+high-return witnesses that have not been installed as retained tokens.  The
+earlier v6.3 attempt additionally routed one loss-sibling orientation through
+a winning state rather than the actual draw.  Accordingly, the unconditional
+theorem remains \openstatus.  Theorem~\ref{thm:conditional} states a complete and
+machine-friendly criterion whose future instantiation would finish the
+problem without any further appeal to informal global induction.
+
+\appendix
+\section{Adversarial-audit checklist}
+
+Before a future version claims the global target as \proved, each answer
+below must be supported by a proof object, a theorem
+reference, or an explicit finite case table with symbolic coverage.
+
+\begin{enumerate}
+\item[\textbf{A1.}] Is every use of ``draw has a draw child'' attached to the actual child
+      selected in the next macro state?
+\item[\textbf{A2.}] Is every token decreased by identity, not only by comparing numerical
+      heights of unrelated finite states?
+\item[\textbf{A3.}] When a seed is installed, which older rank coordinate has already
+      decreased and pays for the reset?
+\item[\textbf{A4.}] Are source and coefficient kept distinct under every $3^k$ factorization?
+\item[\textbf{A5.}] Are all suffix lengths handled symbolically, rather than by a fixed
+      modulus or search depth?
+\item[\textbf{A6.}] Does every loss-sibling orientation have an explicit constructor?
+\item[\textbf{A7.}] Are the short exponents $1,2,3$ proved separately wherever the generic
+      descent uses $D\ge3$ or $D\ge4$?
+\item[\textbf{A8.}] Does every macro return after finitely many steps, including exceptional
+      and source-zero branches?
+\item[\textbf{A9.}] Are equal-rank edges acyclic after preserving the actual full token
+      multisets, not merely their numerical ranks?
+\item[\textbf{A10.}] Has the concrete refinement, rather than only the abstract rank theorem,
+      been checked by the proof assistant?
+\end{enumerate}
+
+\begin{thebibliography}{9}
+
+\bibitem{Guy1986}
+R.~K. Guy,
+\emph{John Isbell's Game of Beanstalk and John Conway's Game of
+Beans-Don't-Talk},
+Mathematics Magazine \textbf{59} (1986), 259--269.
+\url{https://doi.org/10.1080/0025570X.1986.11977258}.
+
+\bibitem{Guy1996}
+R.~K. Guy,
+\emph{Unsolved Problems in Combinatorial Games}, Problem 42,
+in Games of No Chance, MSRI Publications 29, Cambridge University Press,
+1996.
+
+\bibitem{AHZ2024}
+I.~Alth\"ofer, M.~Hartisch, and T.~Zipproth,
+\emph{Analysis of a Collatz Game and Other Variants of the $3n+1$ Problem},
+Advances in Computer Games (2024), 123--132.
+\url{https://doi.org/10.1007/978-3-031-54968-7_11}.
+
+\bibitem{Repository}
+G.~Pochuev,
+\emph{Optimal $3n\mathbin{\pm}1$ Game Repository}, source code and proof
+notes, 2026.  \url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
+
+\end{thebibliography}
+
+\end{document}

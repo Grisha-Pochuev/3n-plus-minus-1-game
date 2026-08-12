@@ -24,7 +24,7 @@ class GlobalCertificateTests(unittest.TestCase):
     def test_accepts_committed_inventory(self) -> None:
         summary = CHECKER.verify_certificate(valid_certificate())
         self.assertEqual(summary["status"], "CONDITIONAL_MACHINE_CHECK")
-        self.assertEqual(summary["transitions"], 46)
+        self.assertEqual(summary["transitions"], 45)
 
     def test_rejects_missing_declared_case(self) -> None:
         payload = valid_certificate()

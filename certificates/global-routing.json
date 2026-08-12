@@ -7,7 +7,7 @@
   "claim_scope": "The checker validates the finite assembly and rank logic. The four listed refinement and outcome obligations remain part of the human proof.",
   "proof_source": {
     "path": "docs/verified-results.md",
-    "sha256": "9f934a5497007e93227fcfcd95414825fe6ee2ed954ecc806d8f2eaa4108fbc8",
+    "sha256": "3f01f1d9c751d38c8691e1ac56b83423a1c80c8ee3d751aaa8ba9267cf8054a1",
     "proof_section_ranges": ["14-27", "69-138"]
   },
   "machine_checked_obligations": [
@@ -125,7 +125,7 @@
     "marked_tail_result": {
       "kind": "enum",
       "meaning": "Complete refinement of D=1, D=2 and D>=3 marked constant-tail rows.",
-      "cases": ["d1_lower_child", "d1_exact_lift_q", "d2_exact_lift_y", "d_at_least_3_common_child"]
+      "cases": ["d1_lower_child", "d2_exact_lift_y", "d_at_least_3_common_child"]
     },
     "single_exact_lift": {
       "kind": "enum",
@@ -152,7 +152,7 @@
     {"id": "factor_fork", "guard_partition": "factor_fork_result", "meaning": "Exponent-one/higher factor fork."},
     {"id": "high_return", "guard_partition": "high_return_valuation", "meaning": "Connection from adjacent factor form to a new marked task."},
     {"id": "marked_tail", "guard_partition": "marked_tail_result", "meaning": "Marked WIN/WIN/LOSS constant-tail configuration."},
-    {"id": "short_exact_lift", "guard_partition": "single_exact_lift", "meaning": "The sole pure D=1 or D=2 exact lift."},
+    {"id": "short_exact_lift", "guard_partition": "single_exact_lift", "meaning": "The sole pure D=2 exact lift."},
     {"id": "terminal_macro", "guard_partition": "terminal_macro_result", "meaning": "Terminal exponent-two/three entry."}
   ],
   "transitions": [
@@ -205,7 +205,6 @@
     {"id": "high-return-long", "from": "high_return", "guard_case": "valuation_at_least_seven", "to": "marked_tail", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [102, 103, 129, 136], "meaning": "Rows v>=7 replace the carried pair before the new marked task."},
 
     {"id": "marked-d1-child", "from": "marked_tail", "guard_case": "d1_lower_child", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [129, 134, 136], "meaning": "The D=1 child row replaces the marked LOSS token."},
-    {"id": "marked-d1-lift", "from": "marked_tail", "guard_case": "d1_exact_lift_q", "to": "short_exact_lift", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [134, 136], "meaning": "The other D=1 row preserves the pair and enters an exact lift over q."},
     {"id": "marked-d2-lift", "from": "marked_tail", "guard_case": "d2_exact_lift_y", "to": "short_exact_lift", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [134, 136], "meaning": "The D=2 row preserves the pair and enters an exact lift over y."},
     {"id": "marked-long-child", "from": "marked_tail", "guard_case": "d_at_least_3_common_child", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "decrease"], "proof_sections": [130, 131, 132, 135, 136], "meaning": "Every D>=3 marked tail replaces y by its lower common WIN child r."},
     {"id": "short-lift-entry", "from": "short_exact_lift", "guard_case": "enter_a_obligation", "to": "a_obligation", "rank_effect": ["preserve", "preserve", "preserve", "preserve"], "proof_sections": [91, 96, 134, 136], "meaning": "After the sole short exact lift, stay in the generic subsystem."},

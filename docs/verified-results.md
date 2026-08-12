@@ -207,6 +207,16 @@ regression-tested in `tests/test_game.py`.  The outcome consequence is also
 checked on the boundary-safe finite table in `tests/test_retrograde.py`; the
 proof above, rather than that finite check, establishes the general result.
 
+For a least integer DRAW (q), the strict inequality (B(q)<q) makes
+(B(q)) finite.  It cannot be LOSS, so it is WIN and (A(q)) is DRAW.  This
+is only one forced A-step: at (A(q)), the side child (B(A(q))) can exceed
+(q), and minimality does not classify it.  In particular an infinite
+A-ray with WIN side children is **not** by itself a DRAW certificate; the
+vertices on that ray could alternate finite WIN and LOSS outcomes.  Any use
+of an A-ray must retain the outcome diamonds that prove each continuing
+vertex is DRAW.  This is the same warning as Pitfall 1 in a form convenient
+for the marked normalizer.
+
 For later finite-state work, the ordinary `A/B` choice can be refined.  With
 `x=A(q)`, let `k` be its alternating-suffix length and `r=R(x)=B(q)`.  Outside
 the exceptional classes `k` is `1` or `2`, and
@@ -11986,7 +11996,7 @@ global application of Section 132.  The arithmetic identities used in
 the zero row are covered by the regressions for Sections 113, 118, and
 121.
 
-## 134. The two shortest marked factor rows preserve the incoming pair
+## 134. The two shortest marked factor rows attach to the incoming pair
 
 The completeness audit exposes two rows that were normalized in Section
 102 but not covered by the (v\ge9) transport beginning in Section 104.
@@ -12025,9 +12035,28 @@ B(y),&j\ge3.
 \end{cases}}
 \]
 
-The first row is an exact inner lift over the already marked WIN token
-(q), so the outer pair ((q,y)) is retained unchanged.  In the other
-two rows (w) is an actual child of the marked LOSS token (y).  Hence
+In this marked specialization the formally displayed (j=1) row is
+actually empty.  Indeed, with (C=27J(t)), direct substitution gives
+
+\[
+J(b)=6C+1-2g,
+\]
+
+and therefore
+
+\[
+9J(b)+1-2g=2(27C+5-10g).
+\]
+
+Since (C) is odd, the bracket (27C+5-10g) is even in both phases.
+Consequently
+
+\[
+\boxed{j\ge2.}
+\]
+
+Thus (w) is always an actual child of the marked LOSS token (y): it is
+(A(y)) when (j=2), and (B(y)) when (j\ge3).  Hence
 
 \[
 w\text{ is WIN},\qquad h(w)\le h(y)-1,
@@ -12069,8 +12098,9 @@ from that lift, exactly the fixed-fibre obligation transition of Sections
 proved source/token edges fires.
 
 Consequently neither (v=7) nor (v=8) can reset the proof-token
-projection.  They supply respectively a strict descendant of (y), or
-an inner routing task over (q) or (y) in the same fibre.  This closes
+projection.  The (v=7) row always supplies a strict descendant of (y),
+whereas (v=8) supplies an inner routing task over (y) in the same fibre.
+This closes
 the only two marked-factor entry rows omitted by Sections 104--133; it
 does not yet certify that no connection between the listed routing types
 has been omitted.  The trichotomy and the fixed (v=8) valuation are
@@ -12157,9 +12187,120 @@ audit connections that enter a generic obligation or factor frame without
 the marked (q/y) orientation.  The common-child identities are
 regression-tested for odd (C<400), both phases, and (3\le D\le13).
 
-## 136. The complete marked/obligation normalizer is well-founded in each fibre
+## 135A. The direct D=2 lift pays the retained WIN token
 
-We can now verify the fibre condition of Section 132 for the routing
+The resonant (D=2) row of Section 134 has one direct-DRAW exit which was
+not ranked by the source identity alone.  Retain its exact marked data
+
+\[
+b,q\text{ WIN},\qquad y\text{ LOSS},\qquad
+q=A(b),\quad y=B(b),
+\]
+
+and its returned lift (w), which has (w) DRAW.  The arithmetic of the row
+gives
+
+\[
+\boxed{B(w)\in\{A^2(q),B(A(q))\}.}
+\]
+
+The second orientation is the canonical side-return token edge already
+proved in Sections 57--58.  It remains to treat
+
+\[
+x:=B(w)=A^2(q).
+\]
+
+Because (w) is DRAW, its child (x) is not LOSS.  Put
+
+\[
+p=B(q),\qquad v=A(q).
+\]
+
+If (b) is ordinary, the ordinary side identity places (p=B(A(b))) among
+the two children of the LOSS state (y=B(b)).  Hence (p) is WIN.  The WIN
+state (q) must therefore use (v) as its unique LOSS child.  It follows that
+
+\[
+h(v)=h(q)-1,\qquad
+x=A(v)\text{ is WIN},\qquad h(x)\le h(q)-2.
+\]
+
+It remains only the exceptional orientations.  The equality
+(B(w)=A^2(q)) selects exactly
+
+\[
+b\equiv12\pmod {16}\quad(g=0),\qquad
+b\equiv3\pmod {16}\quad(g=1).
+\]
+
+The arithmetic part of the exceptional side formula gives exact adjacent
+lifts
+
+\[
+p=Q_r^\epsilon(J(y)),\qquad
+v=Q_{r+1}^\epsilon(J(y))
+\]
+
+for some (r\ge1) and (\epsilon\in\{0,1\}).  These two states have an exact
+common child (c): for (r=1) this is the exponent-one/two boundary identity,
+and for (r\ge2) it is the long-tail identity
+(A(p)=B(v)).
+
+There are two exhaustive outcome cases.  If (p) is not LOSS, then exactly
+as in the ordinary case (v) is the unique LOSS child of (q), and
+
+\[
+x\text{ is WIN},\qquad h(x)\le h(q)-2.
+\]
+
+Suppose instead that (p) is LOSS.  Then (c) is WIN.  The state (v) cannot
+be WIN: its two children include (c) and (x), and neither is LOSS.  If (v)
+is DRAW, then (p) is the unique LOSS child of (q), so
+
+\[
+h(p)=h(q)-1.
+\]
+
+If (v) is LOSS as well, choose a minimum-height member of ({p,v}); its
+height is (h(q)-1).  When that member is (p), replace (q) by (p).  When it
+is (v), use its child (x), which is WIN and satisfies
+
+\[
+h(x)\le h(v)-1=h(q)-2.
+\]
+
+Thus every outcome orientation of the direct (D=2) lift replaces the
+already retained occurrence of the WIN token (q) by a certified proper
+proof-tree descendant.  The exact incidence, not the numerical size of a
+new witness, is what makes this a legal token edge.  The arithmetic split,
+exceptional residue filter, adjacent-lift coordinates, and common-child
+identity are regression-tested by
+`test_d2_a2_orientation_has_a_lower_common_child`.
+
+This proves the local (D=2) payment.  It does not prove that the occurrence
+(q) has been legally installed by the preceding long high return or carried
+to this row; that is the shared lifecycle obligation in Section 136.
+
+## 136. Proposed fixed-fibre normalizer (OPEN)
+
+**Status: UNVERIFIED LEAD.** The argument below is the proposed composition,
+not a proved lemma. Its long high-return step invokes Section 103 as a
+replacement of an incoming pair (u,c), but Sections 100--103 prove only
+local outcome and height inequalities; they do not prove that the active
+configuration already contains those exact token occurrences.  The formerly
+separate (D=2) exact lift now has a strict local replacement of the retained
+WIN occurrence (q), by the ordinary side identity or the exceptional
+common-child identity for (B(q),A(q)).  This does not prove that (q) was
+legally installed and carried to that row, so both places are now one shared
+red lifecycle obligation recorded in
+`high-return-provenance-obligation.md` and
+`d2-loss-anchored-obligation.md`.
+
+The following text records the intended proof once that lifecycle obligation
+is discharged. It must not be cited as an unconditional theorem.
+
+The proposed verification of the fibre condition of Section 132 for the routing
 system generated by Sections 91--135.  Fix an outer numerical source
 anchor and a proof-token multiset (M), and suppose for contradiction
 that there is an infinite routing path that preserves both fixed values.
@@ -12207,13 +12348,13 @@ constant-\(\sigma\) routing segment can visit only the two rows (D=1,2).
 
 Section 134 shows that these rows introduce no fresh finite token:
 
-- (D=1) either replaces (y) by an actual lower child, which is again
-  strict and hence impossible on a constant-\(\sigma\) segment, or enters
-  an exact lift over the already marked (q);
-- (D=2) enters an exact lift over the already marked (y).
+- (D=1) always replaces (y) by an actual lower child, and is therefore
+  impossible on a constant-\(\sigma\) segment;
+- (D=2) enters an exact lift over the already marked (y), after which
+  Section 135A pays the retained (q) occurrence on the direct-DRAW exit.
 
-Discarding the strict alternatives, both rows are therefore ordinary
-inner lift/obligation entries with the outer pair unchanged.
+Thus the only non-strict short entry is the single (D=2) inner
+lift/obligation entry with the outer pair unchanged.
 
 It remains to follow the generic obligation/factor subsystem.  Its case
 split is exhaustive:
@@ -12242,22 +12383,24 @@ lower descendants before a new marked task is installed.  For every
 \(v\ge7\), Section 103 strictly replaces the carried pair \(u,c\) by
 the pair \(q,y\).  These are strict \(\Psi(N)\)-edges at fixed \(a\).
 Sections 104--135 then transport the new pair through all tail lengths:
-the \(D\ge3\) rows pay a further strict token edge, whereas the two
-\(D=1,2\) rows preserve \(a,N\) and route to one exact lift.  Consequently
+the \(D\ge3\) rows and the sole \(D=1\) row pay a further strict token edge,
+whereas \(D=2\) preserves \(a,N\) and routes to one exact lift with the local
+payment of Section 135A.  Consequently
 every cross-transition from the generic subsystem back to a new marked
 factor task is strict in \(\sigma\); the short routing rows cannot reset
 that decrease.
 
 It remains to consider a path on which \(\sigma\) is constant.  Such a
-path cannot use a high-return re-entry or a \(D\ge3\) marked row.  It may
-start with one \(D=1,2\) exact lift, after which it stays in the generic
+path cannot use a high-return re-entry, a \(D\ge3\) marked row, or the
+\(D=1\) marked row.  It may start with the one \(D=2\) exact lift, after
+which it stays in the generic
 subsystem.  A canonical A-streak has at most four side tests by Section 93,
 and Sections 94--96 force every factor/B continuation either to lower
 \(a\), lower \(\Psi(N)\), or finish after its bounded routing counter.
 Thus the equal-\(\sigma\) relation is well-founded.  Applying Section 132
 to \(\sigma\) proves that the whole inner normalizer is well-founded;
 applying it to the outer projection proves the fixed-\(M\) claim.  This
-contradiction proves
+argument would prove
 
 \[
 \boxed{
@@ -12270,14 +12413,15 @@ globally well-founded: source edges may reset tokens, token edges may reset
 all inner lift/factor data, and the remaining equal-projection routing
 cannot be infinite.
 
-This is the normalizer theorem, not yet the no-DRAW theorem.  The final
+This is the proposed normalizer theorem, not yet a proved lemma. Even after
+the two obligations above are closed, the final
 completeness audit must show that every entry produced by the initial
 minimum-source and height-one reductions of Sections 15--90 is either a
 strict outer edge or one of the normalizer types listed here.  In
 particular no raw height-one resonance may be silently treated as a
 generic finite-source obligation.
 
-## 137. Every minimum-source and height-one entry reaches the normalizer
+## 137. Every minimum-source and height-one entry reaches the proposed normalizer
 
 We now audit the upstream entries to Section 136.  Suppose a DRAW exists
 and choose the globally least coefficient source (s) of a DRAW state.
@@ -12352,9 +12496,16 @@ Sections 129, 132, 136, and the entry statement forbid it.  That last
 assembly must also be checked against the infinite-path and minimum-DRAW
 pitfalls before the ledger status can change from OPEN.
 
-## 138. The game has no DRAW positions
+## 138. Conditional no-DRAW assembly (OPEN)
 
-We now assemble the preceding lemmas.
+**Status: CONDITIONAL.** This section proves the target conclusion only from
+the unproved fixed-fibre normalizer of Section 136. It is retained to make
+the final dependency explicit; it is not a proof that the game has no DRAW
+positions.
+
+Assume additionally that both open obligations in Section 136 have been
+proved, so that the fixed-fibre normalizer is genuinely well-founded. Under
+that extra hypothesis, we may assemble the preceding lemmas.
 
 ### The marked relation
 

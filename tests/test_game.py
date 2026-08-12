@@ -5190,23 +5190,71 @@ class GameArithmeticTests(unittest.TestCase):
                             )[0],
                             marked_loss,
                         )
-                    elif valuation == 1:
-                        self.assertEqual(
-                            constant_tail_source_coordinates(
-                                returned_source
-                            )[0],
-                            marked_win,
-                        )
-                    elif valuation == 2:
-                        self.assertEqual(
-                            returned_source,
-                            transformed_A(marked_loss),
-                        )
                     else:
-                        self.assertEqual(
-                            returned_source,
-                            transformed_B(marked_loss),
-                        )
+                        # In the D=1 row one has
+                        # 9*J(b)+1-2g = 2*(729*J(t)+5-10g),
+                        # and the bracket is even.  Hence the formal
+                        # valuation-one arm of the universal trichotomy is
+                        # unreachable in this marked specialization.
+                        self.assertGreaterEqual(valuation, 2)
+                        if valuation == 2:
+                            self.assertEqual(
+                                returned_source,
+                                transformed_A(marked_loss),
+                            )
+                        else:
+                            self.assertEqual(
+                                returned_source,
+                                transformed_B(marked_loss),
+                            )
+
+    def test_d2_a2_orientation_has_a_lower_common_child(self) -> None:
+        """The residual D=2 row exposes a child of the retained q token."""
+        for source in range(1, 10000):
+            embedded = embedded_original_state(source)
+            for phase in (0, 1):
+                b = constant_tail_state(27 * embedded, 2, phase)
+                q = transformed_A(b)
+                y = transformed_B(b)
+                w = 3 * q + 1
+                self.assertEqual(
+                    constant_tail_source_coordinates(w)[0], y
+                )
+
+                returned = transformed_B(w)
+                if returned != transformed_A(transformed_A(q)):
+                    self.assertEqual(
+                        returned, transformed_B(transformed_A(q))
+                    )
+                    continue
+
+                self.assertIn(b % 16, {3, 12})
+                lower = transformed_B(q)
+                middle = transformed_A(q)
+                upper = returned
+                coordinates = constant_tail_source_coordinates(lower)
+                self.assertEqual(coordinates[0], y)
+                self.assertEqual(coordinates[1], 0)
+                self.assertEqual(
+                    middle,
+                    constant_tail_state(
+                        embedded_original_state(y),
+                        coordinates[2] + 1,
+                        coordinates[3],
+                    ),
+                )
+                self.assertEqual(
+                    upper,
+                    constant_tail_state(
+                        3 * embedded_original_state(y),
+                        coordinates[2],
+                        coordinates[3],
+                    ),
+                )
+                common_children = set(transformed_moves(lower)).intersection(
+                    transformed_moves(middle)
+                )
+                self.assertEqual(len(common_children), 1)
 
     def test_every_nonshort_marked_factor_tail_has_lower_common_token(
         self,

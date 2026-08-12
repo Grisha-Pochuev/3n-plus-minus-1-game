@@ -1,8 +1,14 @@
 # Global no-DRAW proof
 
-Status: **PROVED (human proof)**. Independent external review is pending, and
-the complete theorem is not yet Lean-checked. See `../AUDIT.md` for the audit
-protocol and `../formal/COVERAGE.md` for the exact formalization boundary.
+Status: **OPEN — HOSTILE AUDIT FAILED**. The architecture below is a
+conditional proof plan, not a proof of the theorem. Section 136 currently
+uses a strict high-return token edge without proving that its input states
+`u,c` are already present token occurrences. The separate `D=2`
+loss-anchored return now has a local strict payment from the retained `q`
+occurrence, but the proposed global normalizer still has not proved that
+this occurrence is legally installed and carried into the row. See
+`high-return-provenance-obligation.md`, `d2-loss-anchored-obligation.md`, and
+`../AUDIT.md`.
 
 The final transition inventory and rank assembly also have a
 [`conditional symbolic certificate`](../certificates/global-routing-certificate.md).
@@ -10,7 +16,7 @@ Its checker verifies the declared coverage and size-change graph, while four
 local certificate-to-game obligations remain in the human proof. Certificate
 acceptance must not be described as a full formalization.
 
-## Theorem
+## Target theorem (not yet proved)
 
 For every odd positive starting integer, optimal play in the two-player
 \(3n\pm1\) game reaches \(1\) after finitely many moves.
@@ -44,18 +50,24 @@ assembled statements.
    \(h(r)\le h(y)-1\).  Before any inner branch is followed, the scan
    replaces the carried token \(y\) by \(r\), and every exit keeps that
    lower token and its exact source attachment marked.
-   The two remaining lengths \(D=1,2\) are exact lifts over the already
-   marked \(q\) or \(y\).
+   The \(D=1\) row always replaces \(y\) by an actual child.  The only
+   non-strict short entry is \(D=2\), an exact lift over the already marked
+   \(y\); its direct-DRAW exit has the local strict payment from the retained
+   \(q\) occurrence proved in Section 135A.
 
-3. **Fixed-fibre normalizer (Section 136).**  At fixed retained source and
+3. **Proposed fixed-fibre normalizer (Section 136; open).**  At fixed retained source and
    outer token multiset, the generic A/B obligation and factor routing is
    well-founded.  Canonical A-streaks have a proved four-side-test exit;
    valuation-two B-transfers install and then lower a finite local witness;
    higher valuations give source descent or enter factor forks that pay
    source or finite-token height; and a high return
    re-enters only the marked factor rows from item 2.  More importantly,
-   every return from the generic subsystem passes through a strict
-   high-return replacement before a new marked pair is installed.  The
+   the proposed assembly asserts that every return from the generic subsystem
+   passes through a strict high-return replacement before a new marked pair
+   is installed. This assertion is not established: Sections 100 and 103
+   prove local height inequalities for `u,c,p,b,q,y`, but do not prove that
+   the incoming configuration already carries the exact occurrences `u,c`.
+   The
    internal source/token rank
    \(\omega^\omega a+\Psi(N)\) therefore decreases across every such
    cross-transition.  Applying the well-founded-fibre lemma again inside
@@ -69,7 +81,9 @@ assembled statements.
    item 3.  The height-one resonance is coupled across consecutive factor
    levels and is not treated by a fixed-depth search.
 
-Assume a DRAW exists and choose the least coefficient source \(s\) of a
+Conditional on closing item 3's shared high-return installation/carry
+lifecycle, one
+would argue as follows. Assume a DRAW exists and choose the least coefficient source \(s\) of a
 DRAW.  Following the exhaustive outcome diamonds gives a marked
 macro-configuration containing an actual DRAW.  A macrostep either reaches
 a DRAW below \(s\), strictly decreases \(\Phi\), or stays in one fixed
@@ -90,7 +104,9 @@ move until conjugated state \(0\), which corresponds to original state
 
 Odd original states divisible by three enter the conjugated state space
 after one legal move, because the odd part of \(3n\pm1\) is not divisible
-by three.  Therefore the conclusion holds for every odd starting value.
+by three. Therefore the conclusion would hold for every odd starting value.
+At present this last implication is conditional and the target theorem
+remains open.
 
 ## Pitfall audit
 

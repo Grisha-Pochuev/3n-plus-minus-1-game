@@ -18,18 +18,38 @@ third-party dependency.
 
 ## Scope
 
-Read [`COVERAGE.md`](COVERAGE.md). Lean formalizes the exact original move
-relation, the conjugated expanding branch, and its elementary arithmetic
-properties. It now also kernel-checks the general certificate metatheorem in
-[`ThreeNPlusMinusOne/Certificate.lean`](ThreeNPlusMinusOne/Certificate.lean):
-a lexicographically ranked relation is well-founded and therefore has no
-infinite descending route.
+Start with [`PROOF_MAP.md`](PROOF_MAP.md), then consult
+[`COVERAGE.md`](COVERAGE.md). Lean now formalizes the exact original move
+relation, uniqueness of odd-part reduction, the unbounded alternating-suffix
+operation, both conjugated branches, and their exact conjugacy with the
+original signed game. It also formalizes finite `WIN`/`LOSS` trees, the
+`DRAW`-successor lemma, the bounded token-split rank used by the inventory,
+and the four-component macro rank with its finite control DAG. The arithmetic
+front now includes canonical constant-tail/source coordinates, the exact
+minimum-source boundary phase, arbitrary removal of coefficient factors of
+three, the two lifted-return source identities, the phase rows through
+Section 19, the complete phase-mismatch exclusion of Section 20, and the
+complete phase-match long-suffix exclusion of Section 21. It also proves
+the surviving Section 22 length-three diamonds and their exact two-level
+decrease for every concrete finite winning proof tree, all eight exact
+suffix-length-two frames and outcome forks of Section 23, and the universal
+A-selecting side-child descent of Section 24. Section 25's universal
+B-selecting large diamond and both permitted DRAW-entry transfers are also
+kernel-checked. The main Section 26 filter is checked as well: source
+survival, valuation two, and the eight residue classes modulo 256 are proved
+equivalent, and their next phases are split exhaustively into the stated
+sixteen classes modulo 512. Section 27's exact DRAW obligation is preserved
+by valuation-two B transfers, higher valuations strictly drop the source,
+and three further surviving B transfers are impossible. Section 28 then
+splits every A-selecting obligation into its canonical continuation or one
+of three fully marked bounded factor frames.
 
-Lean still does **not** kernel-check the alternating-suffix branch, the
-concrete marked multiset rank, the JSON-to-game refinement, or the global
-no-`DRAW` theorem. A successful build validates the metatheorem used by the
-certificate; it does not discharge the certificate's four human proof
-obligations.
+Lean still does **not** kernel-check the concrete refinement from every legal
+outcome-compatible game continuation to one of the declared macro cases. The
+remaining boundary is represented explicitly by `DrawMacroRefinement`: if
+that structure is constructed, Lean proves that every conjugated state is
+resolved. A successful build does not construct it and therefore does not yet
+prove the unconditional global no-`DRAW` theorem.
 
 This partial status is intentional and explicit: a compiling foundation is
 more auditable than a file that states the desired theorem through axioms or
@@ -44,13 +64,29 @@ unfinished placeholders.
 - executable examples are welcome, but are not substitutes for universal
   theorems.
 
-## Planned order
+## Progress and remaining order
 
-1. Define and prove uniqueness of alternating-suffix deletion `R`.
-2. Prove the exact normal form and `B(q)<q`.
-3. Formalize `WIN`, `LOSS`, `DRAW`, and canonical finite proof height.
-4. Formalize token multisets and the Section 129 ordinal descent.
-5. Refine the abstract Section 132 metatheorem to the concrete outer/inner
-   multiset ranks.
-6. Encode and prove the finite routing cases from Sections 130–137.
-7. State and prove Section 138 without adding axioms.
+Completed foundation:
+
+1. alternating-suffix deletion `R`, its unique recursive specification, and
+   `B(q)<q`;
+2. exact original/conjugated move equivalence;
+3. finite `WIN`, `LOSS`, `DRAW`, and the no-closed-well-founded-kernel lemma;
+4. the one-to-at-most-two token rank used by the concrete inventory;
+5. the nested outer/inner rank and equal-rank control DAG;
+6. a conditional Section 138 theorem with an explicit refinement parameter.
+
+The currently kernel-checked arithmetic front reaches the end of Section 28.
+The four long-suffix rows are impossible; each surviving length-three row
+installs a winning proof tree at least two levels lower; all eight
+suffix-length-two rows have their exact outcome fork; and the A-selecting
+half of the final switch has its strict height descent; and every remaining
+B-selecting fork transfers to the adjacent frame over its selected source.
+The Section 29 opposite-tail twin switch and the later marked normalizer
+remain to be translated before the refinement parameter can be constructed.
+
+Remaining work is to construct `DrawMacroRefinement` by formalizing the
+universal arithmetic guards and the remaining outcome/productivity cases
+beginning with Section 29 and continuing through Section 137. It must not be
+replaced by an axiom or by a translation of the JSON
+labels which does not prove their game semantics.

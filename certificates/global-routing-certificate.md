@@ -34,7 +34,7 @@ Sections 129–138 of `docs/verified-results.md`:
   factor forks, high returns, marked tails, and terminal macros;
 - 12 semantic guard partitions, including unbounded interval partitions for
   B-valuations and high-return valuations;
-- 46 transition schemas with their rank effect and exact proof-section
+- 45 transition schemas with their rank effect and exact proof-section
   references.
 
 The certificate stores schemas, not enumerated game positions. For example,
@@ -82,7 +82,7 @@ The checker independently verifies all of the following.
 6. The inventory cites all decisive assembly Sections 129, 132, 136, 137,
    and 138.
 
-The committed inventory currently contains 29 strict transitions and 17
+The committed inventory currently contains 29 strict transitions and 16
 equal-rank transitions. The latter form a finite DAG.
 
 ## Explicit trust boundary

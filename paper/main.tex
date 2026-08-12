@@ -5,7 +5,6 @@
 \usepackage{amsmath,amssymb,amsthm,mathtools}
 \usepackage[a4paper,margin=30mm]{geometry}
 \usepackage{microtype}
-\usepackage{xurl}
 \usepackage[hidelinks]{hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
@@ -19,13 +18,13 @@
 \newcommand{\LOSS}{\mathrm{LOSS}}
 \newcommand{\DRAW}{\mathrm{DRAW}}
 
-\title{Termination under Optimal Play in the Two-Player $3n\mathbin{\pm}1$ Game}
+\title{A Conditional Proof Architecture for the Two-Player $3n\mathbin{\pm}1$ Game}
 \author{Grisha Pochuev\\
   \small\href{mailto:n_854@mail.ru}{n\_854@mail.ru}\\
   \small\url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}\\
   \small\href{https://doi.org/10.5281/zenodo.21844684}%
   {doi:10.5281/zenodo.21844684}}
-\date{Preprint, 8 August 2026}
+\date{Hostile-audit revision, 12 August 2026}
 
 \begin{document}
 \maketitle
@@ -41,19 +40,23 @@ move replaces $n>1$ by the odd part of either $3n-1$ or $3n+1$, and the player
 who reaches $1$ wins. Arbitrary play need not terminate, so the relevant
 question is whether a draw can survive optimal play. We give a binary normal
 form with one expanding branch and one strictly contracting branch. The global
-argument marks finite outcome proofs by their canonical heights, ranks finite
-multisets of these tokens by an ordinal, and proves well-foundedness of the
-remaining equal-rank routing fibres. An exhaustive entry analysis then turns
-any hypothetical draw continuation into an infinite path in a well-founded
-marked transition system. Consequently no draw positions exist and optimal
-play reaches $1$ from every odd starting value. A detailed proof supplement,
+proposal marks finite outcome proofs by their canonical heights and ranks
+finite multisets of these tokens by an ordinal. A hostile audit finds that the
+proposed fixed-fibre normalizer is not yet proved: a long high-return step
+compares a locally constructed pair without establishing that the pair is
+already carried by the incoming rank. The formerly separate unbounded $D=2$
+loss-anchored row now has a strict local payment from its incoming marked WIN
+token, but the same missing lifecycle must install and carry that occurrence.
+Consequently this manuscript does not claim that all draw positions have been
+excluded. It gives a rigorous reduction, proves the sound abstract criterion
+that would finish the problem, and states the remaining obligation precisely. A detailed proof supplement,
 regression tests, and the exact status of the ongoing Lean formalization are
 included in the accompanying repository. The repository also contains a
 declarative global-routing certificate, a small independent checker, and a
 Lean proof of the general well-founded-certificate metatheorem. Their exact
 trust boundary is stated explicitly: the global assembly is machine-checked
 conditional on four local refinement obligations that remain part of the
-human proof.
+conditional argument.
 \end{abstract}
 
 \section{Introduction}
@@ -77,17 +80,24 @@ positions. We call every remaining position $\DRAW$. Thus finite-game backward
 induction cannot be used without a separate well-foundedness argument.
 
 Indeed arbitrary play may cycle; for example $5\to7\to5$ is possible. The
-main result concerns optimal play and is therefore strictly stronger than the
+target statement concerns optimal play and is therefore strictly stronger than the
 existence of some terminating choice and different from termination under all
 choices.
 
-\begin{theorem}[Main theorem]\label{thm:main}
+\begin{center}
+\fbox{\parbox{0.90\textwidth}{\textbf{Current status: OPEN.}
+The shared long high-return token installation and carry lifecycle has not
+passed hostile audit; the local $D=2$ payment is now proved conditional on
+that incoming occurrence.}}
+\end{center}
+
+\begin{proposition}[Target conjecture]\label{thm:main}
 For every positive odd starting integer, optimal play reaches $1$ after
 finitely many moves. Equivalently, the game has no $\DRAW$ positions.
-\end{theorem}
+\end{proposition}
 
 \paragraph{Independent verification package.}
-The complete proof supplement and the independently runnable verification
+The proof supplement and the independently runnable verification
 artifacts are maintained at
 \begin{center}
 \url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
@@ -98,8 +108,8 @@ and the conditional global-routing assembly. The same repository contains the
 negative tests and Lean-checked certificate metatheory, together with an
 explicit account of what remains human-verified.
 
-This manuscript presents the final dependency chain. Complete local case
-proofs are contained in the numbered proof supplement
+This manuscript presents the proposed dependency chain. Detailed local case
+arguments and their current statuses are contained in the numbered proof supplement
 \cite{PochuevRepository}; section numbers below refer to that supplement.
 The supplement, executable checks, certificate inventory, and formalization
 sources are openly available at
@@ -212,13 +222,54 @@ and $q$ its marked $\WIN$ child. There is a common $\WIN$ child $r$ with
 \]
 Before an inner branch is followed, the scan replaces the carried occurrence
 of $y$ by $r$. Every exit retains this lower token and its exact source
-attachment. The remaining rows $D=1,2$ are exact lifts over an already marked
-token and create no unranked fresh witness.
+attachment. The row $D=1$ always replaces the marked LOSS token by an actual
+child. The only non-strict short entry is $D=2$, an exact lift over an already
+marked token; its direct-DRAW exit pays the retained WIN token as in the next
+lemma.
 \end{lemma}
 
 This statement closes a common logical gap: reaching a later finite endpoint
 is insufficient unless it is comparable with the witness already used in the
 outer rank. Sections 130--135 prove precisely that comparison.
+
+\begin{lemma}[Direct $D=2$ payment; Supplement Section 135A]
+Retain a marked $D=2$ row
+\[
+ b,q\text{ WIN},\qquad y\text{ LOSS},\qquad q=A(b),\quad y=B(b),
+\]
+and let its direct returned lift $w$ be DRAW.  The exact split is
+\[
+ B(w)\in\{A^2(q),B(A(q))\}.
+\]
+In either orientation the already retained occurrence of $q$ has a
+certified proper proof-tree descendant before the inner routing data can be
+reset.
+\end{lemma}
+
+\begin{proof}
+The $B(A(q))$ orientation is the canonical side-return token edge.  Put
+$x=B(w)=A^2(q)$ in the other orientation, and write
+$p=B(q)$, $v=A(q)$. Since $w$ is DRAW, $x$ is not LOSS.
+
+If $b$ is ordinary, the ordinary side identity makes $p$ a child of the
+LOSS state $y$, hence $p$ is WIN. Thus $v$ is the unique LOSS child of $q$
+and $x$ is WIN with $h(x)\le h(q)-2$.
+
+The exceptional orientation occurs only for $b\equiv12,3\pmod {16}$.
+There the exact exceptional formula writes
+\[
+ p=Q_r^\epsilon(J(y)),\qquad
+ v=Q_{r+1}^\epsilon(J(y))
+\]
+for some $r\ge1$; these adjacent lifts have an exact common child $c$.
+If $p$ is not LOSS, the preceding argument again makes $v$ the unique LOSS
+child of $q$ and pays with $x$. If $p$ is LOSS, then $c$ is WIN and $v$
+cannot be WIN, since its two children $c,x$ are both non-LOSS. If $v$ is
+DRAW, $p$ is the unique LOSS child of $q$ and pays the token. If $v$ is
+LOSS, a minimum-height member of $\{p,v\}$ has height $h(q)-1$; use $p$
+itself, or use the child $x$ of $v$, whose height is at most $h(q)-2$.
+Every case is therefore an incidence-certified descendant replacement.
+\end{proof}
 
 \section{Well-founded fibres}
 
@@ -238,12 +289,12 @@ inside the current fibre. The formulation permits inner finite heights that
 are incomparable between different routes; only the retained outer projection
 must be monotone.
 
-\begin{lemma}[Fixed-fibre normalizer; Supplement Section 136]
+\begin{proposition}[Proposed fixed-fibre normalizer; open]
 Fix the retained coefficient source and the outer proof-token multiset. The
 complete generic obligation/factor routing relation is well-founded.
-\end{lemma}
+\end{proposition}
 
-\begin{proof}[Proof architecture]
+\begin{remark}[Failure point exposed by hostile audit]
 Canonical $A$-streaks have a four-side-test exit. Valuation-two $B$ transfers
 install and then lower a finite local witness. Higher valuations either lower
 the source or enter a factor fork that pays in source or proof height. A high
@@ -253,13 +304,34 @@ Within the fibre, the internal source/token measure has the form
 \[
   \omega^\omega a+\Psi(N),
 \]
-where $a$ is the inner source and $N$ its finite token multiset. Every return
-from the generic subsystem crosses a strict high-return replacement before a
-new marked pair is installed. Consequently cross-transitions cannot alternate
-forever between two separately terminating subsystems. Applying the fibre
-lemma to the complete transition inventory proves the claim. All arithmetic
-subcases are expanded in Section 136 and its cited lemmas.
-\end{proof}
+where $a$ is the inner source and $N$ its finite token multiset. The proposed
+long high-return edge replaces a pair $u,c$ by lower local descendants, but
+the incoming macro-configuration has not been shown to carry the exact
+occurrences $u,c$. Therefore the displayed local height inequalities do not
+yet decrease $\Psi(N)$. The proposition is open and cannot be used in a
+no-draw proof.
+
+The two defects may be one lifecycle problem. In the $D=2$ row the direct
+DRAW lift has the exact form
+\[
+ w=Q_m^\delta(J(y)),\qquad m\ge2,\qquad y\text{ a retained LOSS token}.
+\]
+Its phase is B-selecting. If $B(w)$ is DRAW, then $B(w)<w$ is a strict
+numerical exit. Otherwise $B(w)$ is WIN and $w\to B(w)$ is a concrete
+DRAW-to-WIN boundary while the continuing DRAW is $A(w)$. The exact side
+split is
+\[
+ B(w)\in\{A^2(q),B(A(q))\},
+\]
+where $q$ is the retained WIN member of the marked pair. The second row is
+ranked by the canonical side-return lemma. In the first row, the ordinary
+side identity or the exceptional common-child identity for $B(q),A(q)$
+always replaces the retained occurrence of $q$ by a proper proof-tree
+descendant. Thus the local $D=2$ payment is proved. What remains open is the
+shared lifecycle statement that legally installs the marked pair and carries
+the exact $q$ occurrence from long high return to this edge without an
+unranked reseed.
+\end{remark}
 
 \section{Entry completeness}
 
@@ -268,7 +340,7 @@ source through constant-tail frames. Sections 69--90 treat height one
 separately; its resonance is coupled across consecutive factor levels and is
 not replaced by a fixed-depth computation.
 
-\begin{lemma}[Entry trichotomy; Supplement Section 137]
+\begin{lemma}[Entry trichotomy; conditional target of Supplement Section 137]
 Every outcome-compatible continuation from the minimum-source and height-one
 analyses has one of three outputs:
 \begin{enumerate}
@@ -283,9 +355,15 @@ The supplement audits the earlier case splits against this trichotomy. This is
 the exhaustiveness step that connects the local arithmetic to the global
 well-founded relation.
 
-\section{Exclusion of draws}
+\section{Conditional exclusion of draws}
 
-\begin{proof}[Proof of Theorem~\ref{thm:main}]
+\begin{theorem}[Conditional no-draw criterion]
+If the proposed fixed-fibre normalizer is proved with exact token identities,
+including the high-return installation/carry lifecycle, and every entry in the trichotomy is a
+finite outcome-compatible refinement, then the game has no $\DRAW$ positions.
+\end{theorem}
+
+\begin{proof}
 Assume a $\DRAW$ exists and choose one with least coefficient source $s$.
 Following the exhaustive outcome diamonds produces a marked macro-configuration
 that still contains an actual $\DRAW$. By the entry trichotomy, every
@@ -311,7 +389,8 @@ $1$.
 
 Finally, if an original odd state is divisible by three, then after either
 legal move the odd part of $3n\pm1$ is not divisible by three and lies in the
-conjugated image. Hence the conclusion covers every odd starting state.
+conjugated image. Hence the conclusion covers every odd starting state under
+the stated hypotheses.
 \end{proof}
 
 \section{Verification status and reproducibility}
@@ -322,15 +401,15 @@ First, the mathematical supplement labels each claim as proved,
 computationally verified, conjectural, disproved, or an unverified lead.
 Second, standard-library Python code checks the exact normal form, descent
 identities, routing arithmetic, and bounded retrograde soundness. These finite
-runs are regression evidence and are not used as the proof of the infinite
+runs are regression evidence and are not used as a proof of the infinite
 theorem.
 
 Third, the repository contains a finite declarative inventory of the global
-routing assembly. It has 15 control states, 46 transition schemas, and 12
+routing assembly. It has 15 control states, 45 transition schemas, and 12
 guard partitions, including symbolic unbounded valuation and tail-length
 intervals. An independent standard-library Python checker verifies source
 integrity, complete coverage of the \emph{declared} cases, one rule per case,
-lexicographic reset discipline, and acyclicity of the 17 equal-rank control
+lexicographic reset discipline, and acyclicity of the 16 equal-rank control
 edges. The remaining 29 schemas have an explicit strict rank component.
 
 The checker prints the status \texttt{CONDITIONAL\_MACHINE\_CHECK}. Four
@@ -343,18 +422,49 @@ obligations deliberately remain on the human side of the trust boundary:
         separately carried finite tokens;
   \item finite productivity of every macro-normalization.
 \end{enumerate}
-Thus acceptance of the JSON certificate validates the final size-change
-assembly conditional on the cited Sections 14--137; it is not presented as a
-complete machine proof from the original move relation.
+Thus acceptance of the JSON certificate validates only the declared abstract
+size-change graph.  It does not validate the unresolved long high-return token
+installation, the direct-DRAW $D=2$ lift, or a complete refinement from the
+original move relation.  The certificate is therefore a conditional design
+artifact rather than evidence that the target conjecture has been proved.
 
-Fourth, a pinned Lean 4 project proves the general metatheory used by the
-certificate: the lexicographic product of well-founded relations is
-well-founded, a relation mapped to strict decreases in such a rank is
-well-founded, and a well-founded certified relation admits no infinite route.
-The Lean sources use no problem-specific axioms and contain no
-\texttt{sorry} or \texttt{admit}. Lean does not yet prove the concrete
-multiset rank or the four certificate-to-game refinement obligations, and the
-coverage table states this limitation explicitly.
+Fourth, a pinned Lean 4 project proves the exact unbounded alternating-suffix
+normal form and its conjugacy with the original signed game.  It formalizes
+finite WIN/LOSS trees, the DRAW-successor lemma, the one-to-at-most-two
+proof-token rank used by the inventory, the four-component macro rank, and
+the 17-edge equal-rank control DAG.  The arithmetic front additionally checks
+the constant-tail and unique source coordinates, the minimum-source boundary
+phase and reverse factor-three frame, the two lifted-return source identities,
+and the phase rows through Supplement Section 19.  It then proves that a
+complete semantic macro refinement would exclude every DRAW state.  The
+valuation-two, valuation-three, and arbitrary higher cases of the Section 20
+large diamond, including its outcome contradiction, are also kernel-checked.
+The Lean sources use no problem-specific axioms and contain no \texttt{sorry}
+or \texttt{admit}.  The minimum-source outcome fingerprint, returned-source
+drop, and exclusion of all four phase-mismatch classes in Section 20 are
+kernel-checked as well.  Section 21 is now carried through the exact adjacent
+pair, the strict common-child source bound, and the exclusion of all four
+long-suffix phase-match classes modulo 128.  For the four surviving
+suffix-length-three rows, Section 22 is also kernel-checked: the common child
+is reached through both branches of the returned WIN state and every concrete
+winning proof tree drops by at least two levels. Section 23 now checks the
+exact lifted frames, returned-child orientation, strict source drop, and
+forced outcome fork in all eight suffix-length-two rows. Section 24 checks
+the universal A-selecting side-child identity and its two-level proof-height
+drop. Section 25 checks the universal B-selecting large diamond and transfers
+both permitted DRAW entries to the adjacent frame over the selected source.
+The main Section 26 filter is also checked: source survival, exact valuation
+two, and the eight residue classes modulo 256 are proved equivalent; the
+next phase is then split exhaustively into the stated sixteen classes modulo
+512. Section 27 checks preservation of the exact DRAW obligation under
+valuation-two B transfers, strict source descent for every higher valuation,
+and exclusion of three further surviving B transfers. Lean does not yet
+construct the complete concrete refinement: Section 28 now also checks the
+strict side-source drop and the exhaustive split between the canonical
+A-continuation and three fully marked bounded factor frames. The Section 29
+opposite-tail switch and later universal guard coverage,
+outcome-compatible macro selection, and finite productivity remain the
+explicit boundary recorded in the coverage table.
 
 This separation is part of the result: it permits an auditor to reproduce the
 computations without confusing them with the well-foundedness proof, and to
@@ -379,22 +489,22 @@ and the human audit route are recorded in the repository's
 
 \section{Known proof hazards}
 
-The argument does not propagate a least draw indefinitely along the expanding
+The proposed argument does not propagate a least draw indefinitely along the expanding
 branch, infer a theorem from a search depth, use a fixed modulus for an
 unbounded suffix, or infer winning play from a merely terminating one-player
-strategy. It also does not replace retained witnesses by incomparable later
-witnesses. Most importantly, the fixed-fibre proof checks transitions between
-the obligation and factor subsystems; their separate termination would not by
-itself imply termination of their union.
+strategy. The hostile audit nevertheless found that its long high-return edge
+does not yet establish that the locally compared witnesses were retained by
+the incoming configuration. Separate termination of the obligation and factor
+subsystems would not by itself imply termination of their union.
 
 \section{Conclusion}
 
 The binary normal form isolates the contracting branch but does not itself
-rule out strategic cycles. The missing global control is supplied by marked
-finite outcome witnesses: strict token replacement gives an ordinal
-projection, and the remaining equal-projection routing is well-founded by an
-explicit normalizer analysis. Entry completeness then excludes every possible
-draw continuation and proves finite optimal play from all odd starts.
+rule out strategic cycles. Marked finite outcome witnesses provide a plausible
+global control, but the current normalizer has not yet proved the lifecycle of
+the long high-return pair. The local unbounded $D=2$ return now pays an
+incoming marked token, but that does not install the token globally.
+Therefore finite optimal play from all odd starts remains open.
 
 \section*{Data, code, and correspondence}
 
@@ -404,7 +514,7 @@ reproducibility records are available at
 \url{https://github.com/Grisha-Pochuev/3n-plus-minus-1-game}.
 \end{center}
 The repository is the authoritative location for the evolving verification
-artifacts. The released article and source are permanently archived at
+artifacts. An earlier archived version and source are available at
 \begin{center}
 \href{https://doi.org/10.5281/zenodo.21844684}%
 {doi:10.5281/zenodo.21844684}.

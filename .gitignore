@@ -25,3 +25,10 @@ paper/*.bbl
 paper/*.blg
 paper/*.log
 paper/*.out
+
+# Rendered audit previews and LaTeX intermediates are reproducible.  Keep only
+# the final reviewed PDF needed by readers of a clean clone.
+output/*
+!output/pdf/
+output/pdf/*
+!output/pdf/audit_ready_reduction.pdf

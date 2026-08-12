@@ -18,10 +18,11 @@ Players alternate and have perfect information.
 
 Prove that, under optimal play, every odd starting value leads to `1` after finitely many moves.
 
-Repository status: **PROVED (human proof)** in Sections 129–138 of
-`verified-results.md`, with the concise assembly in `global-proof.md`.
-Independent external review and full machine formalization are still pending;
-the official prize page may therefore continue to list the problem as open.
+Repository status: **OPEN**. Sections 129–138 of `verified-results.md` give
+proved local rank lemmas and a conditional global assembly, but the concrete
+high-return token-provenance/lifecycle refinement has not been proved. The
+current statement of the gap is in `high-return-provenance-obligation.md`;
+`global-proof.md` is explicitly conditional on closing it.
 
 Because arbitrary move sequences can cycle, this is not the ordinary Collatz convergence statement. For example,
 

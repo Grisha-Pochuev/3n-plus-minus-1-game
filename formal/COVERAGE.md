@@ -6,20 +6,45 @@ human proof, the JSON assembly check, and the part checked by the Lean kernel.
 | Claim | Human source | Lean status |
 |---|---|---|
 | Original positions are positive odd integers | `docs/problem.md` | **PROVED** in `Game.lean` |
-| Exact signed move relation (`3n±1`, then remove powers of two) | `docs/problem.md` | **FORMALIZED DEFINITION** in `Game.lean` |
+| Exact signed move relation (`3n±1`, then remove powers of two) | `docs/problem.md` | **PROVED** in `Game.lean` and `OriginalNormalForm.lean`, including uniqueness of the odd result |
 | Expanding normal-form branch `A(q)=ceil(3q/2)` | `docs/normal-form.md` | **PROVED** in `Game.lean`, including parity formulas and strict expansion |
-| Alternating-suffix branch `B(q)=R(A(q))` | `docs/normal-form.md` | **NOT YET FORMALIZED** |
+| Maximal alternating-suffix remainder `R` | `docs/normal-form.md` | **PROVED** in `NormalForm.lean` by an unbounded recursive bit scan with a unique relational specification |
+| Alternating-suffix branch `B(q)=R(A(q))` and `B(q)<q` | `docs/normal-form.md` | **PROVED** in `NormalForm.lean` |
+| Exact conjugacy of original moves with `A` and `B` | `docs/normal-form.md` | **PROVED** in `OriginalNormalForm.lean` |
+| Finite `WIN`/`LOSS`, `DRAW`, and existence of a `DRAW` child | `docs/problem.md`, Sections 9 and 138 | **PROVED** in `Outcome.lean` without a finite boundary |
+| Canonical constant-tail coordinates `Q_r^e(a)` for every positive state | Sections 14–15 | **PROVED** in `ConstantTail.lean`, `ConstantTailBounds.lean`, and `ConstantTailCoordinates.lean` |
+| Unique factorization of every positive odd coefficient as `3^k J(s)` | Section 17 | **PROVED** in `Source.lean` |
+| Globally minimum source exists for every nonempty `DRAW` set | Sections 17 and 137 | **PROVED** in `MinimumSource.lean` |
+| Exact exponent-one source phase, forced phase at a minimum `DRAW`, and exponent-two factor lift | Section 17 | **PROVED** in `SourceBoundary.lean` |
+| A DRAW coefficient `3^k a` at exponent at least two pulls back to coefficient `a` | Section 16 | **PROVED** in `ReverseFrame.lean`, including arbitrary `k` |
+| Canonical sources of `3w` and `3w-1` for positive odd `w` | Section 18 | **PROVED** in `LiftedReturn.lean` |
+| Four nondecreasing return rows and their eight phase match/mismatch subclasses | Section 19 | **PROVED** in `ReturnRows.lean` |
+| Exclusion of all four minimum-source phase-mismatch classes `5,15,16,26 (mod 32)`, including adjacent frames, source drop, forced outcome fingerprint, and every valuation case of the large diamond | Sections 19–20 | **PROVED** in `ReturnRows.lean` and `LargeDiamond.lean` |
+| High phase-match state has an exact adjacent pair `Q_{r+1}^{1-e}(J(c)), Q_r^{1-e}(J(c))` with `r>=1` | Section 21 | **PROVED** in `PhaseMatch.lean` |
+| The common child's canonical source is below the minimum and all four long-suffix classes `21,63,64,106 (mod 128)` are impossible | Section 21 | **PROVED** in `PhaseMatch.lean` for arbitrary residue parameters, including both outcome orientations |
+| Every surviving suffix-length-three phase match has a common grandchild through both branches and lowers every concrete WIN proof-tree height by at least two | Section 22 | **PROVED** in `HeightDescent.lean` for `0,42,85,127 (mod 128)` |
+| The eight suffix-length-two classes have the exact lifted frame, returned-child orientation, strict source drop, and forced WIN/LOSS outcome fork | Section 23 | **PROVED** in `LengthTwo.lean` for `10,31,32,53,74,95,96,117 (mod 128)` |
+| The side child of every A-selecting source lift is an ordinary child of `A(source)` and carries a WIN proof tree at least two levels lower under the Section 24 outcome hypotheses | Section 24 | **PROVED** in `SelectingLift.lean` |
+| Every B-selecting source lift has the universal large-diamond frame, and either permitted Section 25 DRAW entry transfers to its lower adjacent frame over source `B(source)` | Section 25 | **PROVED** in `BSelectingTransfer.lean`, without residue assumptions or bounded suffix arguments |
+| In the sixteen subclasses of the eight length-two rows, `transferred source >= minimum source` iff the B-selecting valuation is exactly two iff the source lies in `10,31,53,95,160,202,224,245 (mod 256)` | Section 26 | **PROVED** in `ValuationTwoFilter.lean` |
+| The valuation-two survivors split exhaustively modulo 512, with matching next phase exactly in `10,31,160,202,309,351,480,501` and opposite phase in the complementary eight classes | Section 26 | **PROVED** in `ValuationTwoFilter.lean`, including the parity split from every modulo-256 survivor |
+| The two DRAW entry forms make one exact obligation `O(x,e)`; an exponent-two B-selecting transfer preserves it with flipped phase, while every higher valuation from `x<2s` drops below `s` | Section 27 | **PROVED** in `TransferBound.lean` |
+| Every Section 26 survivor lies below `2s`, and three further B transfers fall strictly below `s`; hence at most two further B-selecting obligation transfers survive | Section 27 | **PROVED** in `TransferBound.lean` by a universal affine iterate bound and all eight exact initial rows |
+| The side child of every A-selecting obligation at `x<2s` has canonical source below the minimum; a DRAW lower member therefore continues as `O(A(x),1-e)` | Section 28 | **PROVED** in `ASelectingFactor.lean` |
+| In the adjacent-pair alternative, the exact `WIN/DRAW/WIN/LOSS/DRAW` fingerprint produces a factor frame over the retained side source, and every surviving lower exponent is one of `1,2,3` | Section 28 | **PROVED** in `ASelectingFactor.lean`, including one assembled exhaustive case theorem |
 | Lexicographic product of two well-founded relations is well-founded | `docs/verified-results.md`, Section 132 | **PROVED** in `Certificate.lean` |
-| A step relation ranked by that product is well-founded | `docs/verified-results.md`, Sections 132 and 138 | **PROVED** as a general metatheorem in `Certificate.lean` |
-| A well-founded certified relation has no infinite descending path | `docs/verified-results.md`, Section 138 | **PROVED** as a general metatheorem in `Certificate.lean` |
-| Multiset ordinal rank and strict descent of concrete proof obligations | `docs/verified-results.md`, Sections 129–137 | **NOT YET FORMALIZED** |
+| A step relation ranked by that product is well-founded and has no infinite descending path | `docs/verified-results.md`, Sections 132 and 138 | **PROVED** in `Certificate.lean` |
+| One token replaced by at most two lower proof-height descendants strictly decreases a well-founded rank | `docs/verified-results.md`, Section 129 | **PROVED** in `TokenRank.lean` using the dependency-free weight `3^h` |
+| Four-component outer/inner rank and equal-rank finite control DAG | `docs/verified-results.md`, Sections 132 and 136; `certificates/global-routing.json` | **PROVED AS AN ABSTRACT MACRO RELATION** in `MacroCertificate.lean` |
 | JSON transition inventory refines every legal game continuation | `certificates/global-routing.json` and Sections 91–137 | **NOT YET FORMALIZED**; explicit certificate trust boundary |
-| Optimal play always reaches `1` | `docs/verified-results.md`, Section 138 | **PROVED in the human proof; NOT YET LEAN-CHECKED** |
+| Complete refinement implies no conjugated `DRAW` state | `docs/verified-results.md`, Section 138 | **PROVED CONDITIONALLY** in `Refinement.lean`; the premise is the explicit `DrawMacroRefinement` structure |
+| Optimal play always reaches `1` | `docs/verified-results.md`, Section 138 | **OPEN**; Section 138 is conditional on a concrete high-return/refinement premise, which is not constructed in Lean or proved in the current human manuscript |
 
 No Lean file in this directory uses `axiom`, `admit`, or `sorry`. A successful
 `lake build` therefore verifies exactly the rows marked Lean-proved, and no
 more.
 
-Build record: **COMPUTATIONALLY VERIFIED** on 8 August 2026 with Lean 4.32.1;
-`lake build` completed successfully. The project has no third-party Lean
-dependencies.
+Build record: **COMPUTATIONALLY VERIFIED** on 12 August 2026 with Lean 4.32.1;
+`lake build --wfail` completed successfully. The project has no third-party Lean
+dependencies. GitHub CI also requests an independent `nanoda` check and
+rejects `sorry`.

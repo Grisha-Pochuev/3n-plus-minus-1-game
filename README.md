@@ -6,11 +6,19 @@ A proof repository for the two-player `3n±1` game (also known as Conway's
 ## Main claim
 
 Let `n > 1` be odd. A move chooses `3n+1` or `3n-1` and removes every factor
-of two. Reaching `1` wins immediately. The repository proves:
+of two. Reaching `1` wins immediately. The repository studies the following
+open claim:
 
-> **PROVED (human proof).** For every odd positive starting integer, optimal
-> play reaches `1` after finitely many moves. Equivalently, the game has no
-> `DRAW` positions.
+> **OPEN.** For every odd positive starting integer, optimal play reaches `1`
+> after finitely many moves. Equivalently, the game has no `DRAW` positions.
+
+The exact normal form and many local reductions are proved, but the proposed
+global assembly has an unresolved token-provenance gap at the long
+high-return transition.  The formerly separate unbounded `D=2`
+loss-anchored row now has a local strict payment from its incoming marked
+WIN token; what remains is the shared lifecycle theorem proving that the
+required marked pair is legally installed and carried to every such return.
+The unconditional theorem is not claimed.
 
 The concise assembly is in [`docs/global-proof.md`](docs/global-proof.md).
 The complete chain of local lemmas is in
@@ -19,15 +27,17 @@ status in [`docs/proof-ledger.md`](docs/proof-ledger.md).
 
 Important audit distinction:
 
-- the complete theorem is claimed as a **human proof**;
+- the complete theorem is **not yet proved**;
 - the symbolic global-routing certificate machine-checks the declared finite
   assembly and rank logic, conditional on four explicit human refinement and
   outcome obligations;
 - the Python suite checks exact identities and finite instances, but is not
   presented as a proof of the infinite theorem;
-- Lean checks the foundations and the general well-founded-certificate
-  metatheorem listed in [`formal/COVERAGE.md`](formal/COVERAGE.md); the global
-  theorem is **not yet Lean-checked**;
+- Lean checks the exact original/conjugated normal form, finite outcomes,
+  the minimum-source arithmetic through Section 28, token and macro ranks,
+  the finite control DAG, and a conditional no-`DRAW`
+  theorem listed in [`formal/COVERAGE.md`](formal/COVERAGE.md); the concrete
+  macro-to-game refinement is **not yet Lean-checked**;
 - independent external review is still pending.
 
 ## Start here
@@ -108,6 +118,8 @@ lake build
 
 See [`formal/README.md`](formal/README.md) and
 [`formal/COVERAGE.md`](formal/COVERAGE.md) before interpreting the result.
+GitHub Actions runs this build with warnings treated as errors and also asks
+the independent `nanoda` checker to reject any use of `sorry`.
 
 ## Repository map
 
@@ -124,6 +136,7 @@ See [`formal/README.md`](formal/README.md) and
 | [`scripts/`](scripts/) | reproducible verification and exploration |
 | [`certificates/`](certificates/) | finite proof DAGs and the conditional symbolic global assembly |
 | [`formal/`](formal/) | Lean project and explicit formalization coverage |
+| [`formal/PROOF_MAP.md`](formal/PROOF_MAP.md) | shortest external-review route through the Lean dependency chain |
 | [`paper/`](paper/) | article source, reviewed PDF, and publication license |
 | [`zenodo/`](zenodo/) | Zenodo metadata, preservation bundle instructions, and final publication checklist |
 

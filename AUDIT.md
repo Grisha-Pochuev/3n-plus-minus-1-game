@@ -5,12 +5,16 @@ mechanically, and where human mathematical review is still required.
 
 ## 1. Claim under review
 
-**PROVED (human proof).** Every odd positive starting value in the two-player
-`3n±1` game has finite remoteness. Equivalently, the conjugated game has no
-`DRAW` positions, and optimal play reaches `1` in finitely many moves.
-
-This is not yet a claim of independent acceptance or of a fully
-machine-checked theorem.
+**OPEN.** The proposed human proof does not currently establish that every
+odd positive starting value has finite remoteness. One decisive global
+obligation remains: the long high-return transition has not shown that its
+pair `u,c` consists of already retained token occurrences, nor that the
+resulting marked pair is carried without reseeding to its next strict
+payment. The formerly separate unbounded `D=2` row now has such a local
+payment from its retained `q` occurrence, but it does not install that
+occurrence. The required installation/carry/no-reseed theorem remains open. See
+[`docs/high-return-provenance-obligation.md`](docs/high-return-provenance-obligation.md)
+and [`docs/d2-loss-anchored-obligation.md`](docs/d2-loss-anchored-obligation.md).
 
 ## 2. Trust boundary
 
@@ -18,10 +22,10 @@ An audit has four separate layers.
 
 | Layer | What it establishes | What it does not establish |
 |---|---|---|
-| Human proof | The infinite theorem, if every lemma and dependency is correct | Kernel verification or independent acceptance |
+| Human proof | Local reductions and a conditional proof architecture | The unconditional infinite theorem; the open lifecycle obligation above invalidates the current global assembly |
 | Global assembly certificate | Totality of the declared symbolic partitions, one rule per declared case, valid lexicographic reset discipline, and no equal-rank control cycle | That the declared macro guards and effects refine every legal game continuation |
 | Python arithmetic and finite certificates | Exact implementation agreement on stated finite ranges and genuine finite `WIN`/`LOSS` proof DAGs | The theorem for all integers |
-| Lean build | The definitions and metatheorems marked Lean-proved in `formal/COVERAGE.md` | The concrete JSON-to-game refinement or the global no-`DRAW` theorem |
+| Lean build | Exact original/conjugated moves, finite outcomes, token and macro ranks, the control DAG, and the conditional theorem marked Lean-proved in `formal/COVERAGE.md` | Construction of the concrete JSON-to-game refinement or the unconditional global no-`DRAW` theorem |
 
 No bounded `UNKNOWN` position is called a draw. No finite cutoff is used as a
 substitute for well-foundedness.
@@ -144,13 +148,16 @@ false statement.
 
 ## 7. Current audit status
 
-- Human proof assembled: **PROVED within this repository**.
+- Unconditional human proof: **OPEN; HOSTILE AUDIT FAILED**.
+- Long high-return token provenance: **OPEN — RED**.
+- Unbounded `D=2` local token payment: **PROVED, conditional on the incoming marked occurrence**.
 - Symbolic global assembly: **CONDITIONAL MACHINE CHECK IMPLEMENTED**.
 - Python regression suite: **COMPUTATIONALLY VERIFIED** at the recorded
   revision.
 - Finite identity run through 100000: **COMPUTATIONALLY VERIFIED** at the
   recorded revision.
-- Lean certificate metatheory: **KERNEL-CHECKED BUILD**, with exact limitations
-  in `formal/COVERAGE.md`.
+- Lean normal form, outcome layer, token/macro ranks, control DAG, and
+  conditional no-`DRAW` bridge: **KERNEL-CHECKED BUILD**, with exact
+  limitations in `formal/COVERAGE.md`.
 - Concrete certificate-to-game refinement in Lean: **PENDING**.
 - Independent external review: **PENDING**.

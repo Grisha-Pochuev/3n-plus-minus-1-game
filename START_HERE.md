@@ -15,9 +15,9 @@ On a typical laptop this takes about one or two minutes. The final banner
 should be:
 
 ```text
-=== AUDIT PASSED ===
-All machine-checkable local stages passed ...
-Next: review the four declared global-certificate trust obligations ...
+=== MACHINE-CHECKABLE STAGES PASSED ===
+The unconditional no-DRAW theorem remains OPEN ...
+Next: review the declared trust obligations and the two hostile-audit gaps ...
 ```
 
 This one command verifies:
@@ -63,7 +63,8 @@ Read these three files:
 
 1. [`docs/problem.md`](docs/problem.md) — rules and outcome terminology;
 2. [`docs/normal-form.md`](docs/normal-form.md) — the exact binary reduction;
-3. [`docs/global-proof.md`](docs/global-proof.md) — the global argument.
+3. [`docs/global-proof.md`](docs/global-proof.md) — the proposed global
+   argument and its explicit failure point.
 
 Then open [`docs/proof-map.md`](docs/proof-map.md) to see where every part is
 proved in the full supplement.
@@ -114,5 +115,9 @@ lake build
 ```
 
 Read [`formal/COVERAGE.md`](formal/COVERAGE.md) first. Lean kernel-checks the
-general well-founded-certificate metatheorem, but not yet the concrete
-JSON-to-game refinement or the global no-`DRAW` theorem.
+exact normal form, outcome recursion, the minimum-source reduction through
+Section 28, proof-token rank, abstract macro rank,
+control DAG, and the
+implication from a complete semantic refinement to no `DRAW`. It does not yet
+construct that concrete JSON-to-game refinement, so the unconditional global
+theorem remains outside the kernel-checked scope.

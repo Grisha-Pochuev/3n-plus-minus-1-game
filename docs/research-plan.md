@@ -904,24 +904,17 @@ inventory can ignore Sections 103--122 as independent control cycles and
 focus on unmarked generic factor entries and their return to the universal
 obligation fork.
 
-Section 136 proves the fixed-fibre normalizer theorem.  A marked tail of
-length at least three cannot occur in an equal-projection fibre because
-Section 135 lowers its existing LOSS token.  The two shorter tails are
-exact lifts over existing tokens and return to the universal obligation
-subsystem.  A short marked row can occur at most once on an
-equal-inner-rank segment: the active normalizer inside the fixed outer fibre carries
-its own local source/token ordinal.  Every later return from the generic
-subsystem first performs the strict high-return replacement of Sections
-98--103 in that inner rank.  Sections 91--96 then exhaust every
-equal-inner-rank route after a possible short lift: canonical A-streaks are
-bounded, the valuation-two recycle installs and then lowers a finite local
-witness, larger valuations give strict source exits, and every factor fork
-pays source or token height.  Applying the fibre lemma at this inner level
-shows that neither the generic subsystem nor its cross-transition back to a
-marked row can support an infinite equal-outer-fibre path.  The last audit
-is now upstream: verify that Sections 15--90 send every minimum-source and
-height-one entry either through a strict outer edge or into this
-normalizer, with no omitted raw resonance.
+Section 136 records a proposed fixed-fibre normalizer, not a proved theorem.
+The local statements show that long marked tails lower an already retained
+LOSS token and that the two shorter tails are exact attached lifts.  The
+proposed composition then says that every later return from the generic
+subsystem first performs the high-return replacement of Sections 98--103.
+The hostile audit rejects that step for (v\ge7): the displayed finite
+states (u,c) have not been proved to be occurrences already present in the
+ranked multiset, nor to be installed by a nonrepeatable earlier-coordinate
+payment.  Until an exact carry/no-reseed theorem supplies that premise, the
+second application of the fibre lemma is unavailable and Section 136 remains
+an **UNVERIFIED LEAD**.
 
 Section 137 completes that upstream inventory.  The minimum-source
 constant-tail reduction of Sections 14--27 has only source descent,
@@ -937,7 +930,8 @@ well-founded source/fibre/token order, and check the argument explicitly
 against every pitfall concerning infinite play, fixed depth, and changing
 minimum witnesses.
 
-Section 138 performs that final assembly.  A hypothetical DRAW supplies an
+Section 138 records the final assembly conditional on Section 136.  Under
+that additional unproved premise, a hypothetical DRAW would supply an
 infinite outcome-compatible sequence of finite marked macrosteps.  Its
 ordinal projection
 
@@ -947,12 +941,10 @@ ordinal projection
 
 never increases; a source or token edge is strict, while an equal ordinal
 fibre decomposes into invariant fixed-source/fixed-token components and is
-well-founded by Section 136.  This contradicts the infinite marked path,
-so the conjugated game has no DRAW.  Canonical proof height then decreases
-on every optimal move to \(0\), which corresponds to the original terminal
-state \(1\).  The research task has therefore changed from finding the
-missing transition to independent proof audit, compression of the argument,
-and preparation of a submission-quality manuscript.
+well-founded by Section 136.  This would contradict the infinite marked path
+and yield the target conclusion.  Because the premise is open, the immediate
+research task remains the high-return token lifecycle, followed by a renewed
+semantic-completeness audit; the no-DRAW theorem is not currently proved.
 
 ## Priority 2: finite transducer plus numerical potential
 

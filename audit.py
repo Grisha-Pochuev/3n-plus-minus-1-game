@@ -34,8 +34,12 @@ REQUIRED_FILES = (
     "docs/problem.md",
     "docs/normal-form.md",
     "docs/global-proof.md",
+    "docs/d2-loss-anchored-obligation.md",
+    "docs/high-return-provenance-obligation.md",
     "docs/proof-map.md",
     "docs/proof-ledger.md",
+    "docs/rank-candidate-falsification-2026-08-12.md",
+    "docs/status-2026-08-12.md",
     "docs/verified-results.md",
     "docs/pitfalls.md",
     "scripts/verify_claims.py",
@@ -43,8 +47,21 @@ REQUIRED_FILES = (
     "scripts/verify_global_certificate.py",
     "scripts/verify_outcome_certificate.py",
     "scripts/README.md",
+    "formal/PROOF_MAP.md",
     "formal/COVERAGE.md",
     "formal/ThreeNPlusMinusOne/Certificate.lean",
+    "formal/ThreeNPlusMinusOne/Outcome.lean",
+    "formal/ThreeNPlusMinusOne/Refinement.lean",
+    "formal/ThreeNPlusMinusOne/LargeDiamond.lean",
+    "formal/ThreeNPlusMinusOne/PhaseMatch.lean",
+    "formal/ThreeNPlusMinusOne/HeightDescent.lean",
+    "formal/ThreeNPlusMinusOne/LengthTwo.lean",
+    "formal/ThreeNPlusMinusOne/SelectingLift.lean",
+    "formal/ThreeNPlusMinusOne/BSelectingTransfer.lean",
+    "formal/ThreeNPlusMinusOne/ValuationTwoFilter.lean",
+    "formal/ThreeNPlusMinusOne/TransferBound.lean",
+    "formal/ThreeNPlusMinusOne/ASelectingFactor.lean",
+    "formal/ThreeNPlusMinusOne/SourceBoundary.lean",
     ".zenodo.json",
     "paper/README.md",
     "paper/LICENSE.md",
@@ -277,11 +294,12 @@ def main() -> None:
     )
 
     elapsed = time.monotonic() - total_started
-    print("\n=== AUDIT PASSED ===")
+    print("\n=== MACHINE-CHECKABLE STAGES PASSED ===")
     print(f"All machine-checkable local stages passed in {elapsed:.2f}s.")
     print(
-        "Next: review the four declared global-certificate trust obligations "
-        "in AUDIT.md Sections 4–5."
+        "The unconditional no-DRAW theorem remains OPEN. Next: review the "
+        "four declared global-certificate trust obligations and the red/orange "
+        "gaps in AUDIT.md Sections 4–7."
     )
 
 
