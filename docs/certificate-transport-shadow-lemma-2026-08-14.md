@@ -1,23 +1,19 @@
 # Certificate transport by finite shadow words
 
-Status: proved for the exact marked input of Section 91. Repository-wide integration remains pending.
+Status: partial result; repository integration is pending.
 
-Retain the exact certificate occurrence `V*` and put `E=A(V)=Q_r^e(a)`, where the parallel factor frame has the opposite phase `g=1-e`.
+At the marked input of Section 91, retain occurrence `V*` and put `E=A(V)=Q_r^e(a)`, with parallel phase `g=1-e`.
 
-The reachable boundary levels are
+The reachable boundary levels are exactly
 
 `ceil((r-2)/2) <= k <= r-1`.
 
-For `k<=r-2`, the word
+For `k<=r-2`, the word `A^(2k-r+2) B^(r-k-2)` sends `E` to `Q_2^e(3^k a)`. For `k=r-1`, the word `A^(r-1)` sends `E` to `Q_1^e(3^(r-1)a)`.
 
-`W(r,k)=A^(2k-r+2) B^(r-k-2)`
+If `3C+1-2g=2^v T`, append `BA`. If the current valuation is one and `9C+1-2g=2^v S`, append `BAA` from exponent one or `ABA` from exponent two. Sections 79--80 show that these words cover the current and immediately following factor levels.
 
-sends `E` to `Q_2^e(3^k a)`. For `k=r-1`, the word `A^(r-1)` sends `E` to `Q_1^e(3^(r-1)a)`.
+Compare a selected fixed word path from `V*` with its fixed finite certificate tree. If the complete path is present, its endpoint is a proper certified descendant. Otherwise the first absent edge leaves a unary certificate node, whose selected child is a proper certified descendant. Thus every long arithmetic return exposes a strict descendant of `V*` without changing a certificate choice after branching.
 
-If `3C+1-2g=2^v T`, appending `BA` reaches `Q_(v-3)^e(3T)`. If the current valuation is one and `9C+1-2g=2^v S`, append `BAA` from exponent one or `ABA` from exponent two to reach `Q_(v-3)^e(3S)`. Sections 79--80 show that these words cover the current and immediately following factor levels.
+Important limitation: the replacement of `V*` and the later pair `(q,y)` currently occupy the same rank component. A decrease there does not by itself justify resetting that same component. Completion still requires either a strictly earlier coordinate for the `V*` replacement, with a complete re-entry rule, or a proof that the needed outgoing occurrences are carried inside the retained certificate forest.
 
-Compare the selected fixed word path from `V*` with its already fixed finite certificate tree. If the complete path is present, its endpoint is a proper certified descendant. Otherwise the first absent edge leaves a unary certificate node, and that node's already selected child is a proper certified descendant. Therefore a strict occurrence replacement happens before the new local task is initialized.
-
-The returned arithmetic states are thus cursors rather than newly installed rank entries. The outgoing marked pair is created only after the strict replacement, carried by Sections 104--135, and the direct `D=2` row uses Section 135A. Hence a fixed source/certificate fibre cannot repeatedly reinstall this transition.
-
-Regression: `python scripts/verify_high_return_shadow_words.py`.
+No global closure is claimed by this note. Regression: `python scripts/verify_high_return_shadow_words.py`.
