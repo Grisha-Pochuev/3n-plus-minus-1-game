@@ -54,6 +54,6 @@ more.
 
 Build record: **COMPUTATIONALLY VERIFIED** on 21 August 2026 with Lean 4.32.1;
 `lake build --wfail` and bundled `leanchecker` completed successfully in GitHub
-Actions run #49. The workflow has exactly two jobs: the Lean kernel check and
+Actions run #52. The workflow has exactly two jobs: the Lean kernel check and
 the Python proof audit. The project has no third-party Lean dependencies, and
 the warning-free kernel build rejects `sorry`.
