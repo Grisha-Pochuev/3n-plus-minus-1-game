@@ -57,21 +57,20 @@ theorem occurrenceMacroStep_decreases
       (occurrenceRank next) (occurrenceRank current) := by
   cases edge with
   | certified edge =>
-      exact Prod.Lex.left edge
+      apply Prod.Lex.left
+      exact edge
   | outerForest base inner edge =>
       rw [occurrenceRank, occurrenceRank, base]
       apply Prod.Lex.right
       unfold occurrenceForestRank
       rw [inner]
-      have decrease := proofTokenReplacement_decreases edge
-      omega
+      exact Nat.add_lt_add_right (proofTokenReplacement_decreases edge) _
   | innerForest base outer edge =>
       rw [occurrenceRank, occurrenceRank, base]
       apply Prod.Lex.right
       unfold occurrenceForestRank
       rw [outer]
-      have decrease := proofTokenReplacement_decreases edge
-      omega
+      exact Nat.add_lt_add_left (proofTokenReplacement_decreases edge) _
 
 theorem occurrenceMacroStep_wellFounded :
     WellFounded OccurrenceMacroStep := by
