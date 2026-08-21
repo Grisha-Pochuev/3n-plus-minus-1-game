@@ -36,12 +36,14 @@ human proof, the JSON assembly check, and the part checked by the Lean kernel.
 | The two members of the final factor frame share the exact Section 30 child; that child is non-losing and hence WIN or DRAW, while the opposite-tail WIN has a forced LOSS child | Section 30 | **PROVED** in `TwinRecurrence.lean`, including the signed exponent-one case and the explicit exponent-two/three recurrences |
 | At lower factor exponent one, the frame source is exactly `A (A source)`; an A-selecting common child has strictly smaller canonical source, while a B-selecting child has source `B(side)` and the exact valuation `2`, `3`, or `≥4` bounds | Section 31 | **PROVED** in `SignedBoundary.lean` |
 | After a lower exponent-two switch the surviving signed valuation is at most four; after exponent three the contracting and expanding continuations have valuations at most three and four | Section 32 | **PROVED** in `LongSwitchBounds.lean`, including exact factor-source bounds, common-source survival, and all three assembled DRAW cases |
-| A first valuation at least four in the exponent-three branch forces the returned source below the minimum-DRAW boundary | Section 33 | **PROVED** in `HighValuationReturn.lean`; the exact phase and `Q_{v-1}` coordinate identification remain separate obligations |
-| The two concrete exponent-three signed valuation equations imply the scaled relation, even tail product, and exact lower-exponent `Q` coordinate | Section 33 | **PROVED** in `HighValuationReturn.lean`; returned-phase identification and outcome routing remain open |
+| A first valuation at least four in the exponent-three branch forces the returned source below the minimum-DRAW boundary | Section 33 | **PROVED** in `HighValuationReturn.lean`, together with the phase split |
+| The two concrete exponent-three signed valuation equations imply the scaled relation, even tail product, exact lower-exponent `Q` coordinate, and its A-selecting phase | Section 33 | **PROVED** in `HighValuationReturn.lean`; outcome routing remains open |
 | Lexicographic product of two well-founded relations is well-founded | `docs/verified-results.md`, Section 132 | **PROVED** in `Certificate.lean` |
 | A step relation ranked by that product is well-founded and has no infinite descending path | `docs/verified-results.md`, Sections 132 and 138 | **PROVED** in `Certificate.lean` |
 | One token replaced by at most two lower proof-height descendants strictly decreases a well-founded rank | `docs/verified-results.md`, Section 129 | **PROVED** in `TokenRank.lean` using the dependency-free weight `3^h` |
+| Exact finite WIN/LOSS proof occurrences can be carried as occurrence-tagged tokens; selected LOSS children and common WIN grandchildren are strict descendants, and exact forest replacement decreases the token rank | Sections 22, 57–64, 129, 135A | **PROVED** in `TokenProvenance.lean`; this does not install a fresh occurrence |
 | Four-component outer/inner rank and equal-rank finite control DAG | `docs/verified-results.md`, Sections 132 and 136; `certificates/global-routing.json` | **PROVED AS AN ABSTRACT MACRO RELATION** in `MacroCertificate.lean` |
+| Occurrence-level macro rank: equal macro rank permits only exact lower-forest replacement, while strict macro edges may rebuild the forest | Sections 129, 132, 136 | **PROVED AS A REFINEMENT BOUNDARY** in `OccurrenceRefinement.lean`; semantic lift/progress is not constructed |
 | JSON transition inventory refines every legal game continuation | `certificates/global-routing.json` and Sections 91–137 | **NOT YET FORMALIZED**; explicit certificate trust boundary |
 | Complete refinement implies no conjugated `DRAW` state | `docs/verified-results.md`, Section 138 | **PROVED CONDITIONALLY** in `Refinement.lean`; the premise is the explicit `DrawMacroRefinement` structure |
 | Optimal play always reaches `1` | `docs/verified-results.md`, Section 138 | **OPEN**; Section 138 is conditional on a concrete high-return/refinement premise, which is not constructed in Lean or proved in the current human manuscript |
@@ -50,7 +52,8 @@ No Lean file in this directory uses `axiom`, `admit`, or `sorry`. A successful
 `lake build` therefore verifies exactly the rows marked Lean-proved, and no
 more.
 
-Build record: **COMPUTATIONALLY VERIFIED** on 12 August 2026 with Lean 4.32.1;
-`lake build --wfail` completed successfully. The project has no third-party Lean
-dependencies. GitHub CI also runs the bundled `leanchecker`; the warning-free
-kernel build rejects `sorry`.
+Build record: **COMPUTATIONALLY VERIFIED** on 21 August 2026 with Lean 4.32.1;
+`lake build --wfail` and bundled `leanchecker` completed successfully in GitHub
+Actions run #49. The workflow has exactly two jobs: the Lean kernel check and
+the Python proof audit. The project has no third-party Lean dependencies, and
+the warning-free kernel build rejects `sorry`.

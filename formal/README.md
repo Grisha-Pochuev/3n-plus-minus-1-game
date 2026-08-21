@@ -47,6 +47,15 @@ opposite-tail switch, its exact common-child recurrence, and the complete
 exponent-one source return with its signed valuation bounds. Section 32 then
 bounds all three signed continuations after the exponent-two/three switches.
 
+Section 33 is now kernel-checked through the full arithmetic return bridge:
+the high-valuation source drop, the scaled signed relation, the even tail
+product, the exact lower-exponent `Q_{v-1}` coordinate, and its A-selecting
+phase. `TokenProvenance.lean` carries exact finite proof-tree occurrences and
+proves strict rank payment for replacements by lower occurrences.
+`OccurrenceRefinement.lean` makes the remaining no-reseed condition explicit:
+an occurrence forest may change at equal macro rank only by such a certified
+replacement, while a fresh forest is permitted only after a strict macro step.
+
 Lean still does **not** kernel-check the concrete refinement from every legal
 outcome-compatible game continuation to one of the declared macro cases. The
 remaining boundary is represented explicitly by `DrawMacroRefinement`: if
@@ -79,22 +88,22 @@ Completed foundation:
 5. the nested outer/inner rank and equal-rank control DAG;
 6. a conditional Section 138 theorem with an explicit refinement parameter.
 
-The currently kernel-checked arithmetic front reaches the exact coordinate part
-of Section 33.  A first exponent-three valuation at least four forces a strict
-source drop, and the two concrete signed valuation equations force the returned
-`Q_{v-1}` coordinate.  The remaining obligations are phase identification,
-outcome routing, and the global `DrawMacroRefinement`.
+The currently kernel-checked arithmetic front reaches the phase-identified
+Section 33 return. A first exponent-three valuation at least four forces a
+strict source drop, and the two concrete signed valuation equations force the
+returned `Q_{v-1}` coordinate and its A-selecting phase. The remaining
+obligations are outcome routing and the global `DrawMacroRefinement`.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting
 half of the final switch has its strict height descent; and every remaining
 B-selecting fork transfers to the adjacent frame over its selected source.
-The Section 33 high-valuation exponent-three return and the later marked
-normalizer remain to be translated before the refinement parameter can be
-constructed.
+The later marked normalizer and its outcome-compatible lifecycle remain to be
+translated before the refinement parameter can be constructed.
 
-Remaining work is to construct `DrawMacroRefinement` by formalizing the
-universal arithmetic guards and the remaining outcome/productivity cases
-beginning with Section 33 and continuing through Section 137. It must not be
-replaced by an axiom or by a translation of the JSON
-labels which does not prove their game semantics.
+Remaining work is to construct the occurrence-level refinement by formalizing
+the universal arithmetic guards, preserving an actual `DRAW` carrier, and
+proving productivity for every outcome-compatible case through Section 137.
+The new occurrence layer states exactly what must be supplied, but does not
+replace that semantic construction with an axiom or with a translation of the
+JSON labels.

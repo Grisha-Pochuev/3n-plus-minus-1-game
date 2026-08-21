@@ -26,27 +26,31 @@ what it does not yet prove.
 | 18 | [`TwinRecurrence.lean`](ThreeNPlusMinusOne/TwinRecurrence.lean) | Complete Section 30 common-child recurrence, non-losing common outcome, and forced opposite-tail LOSS alternative | Section 31 signed-boundary source return |
 | 19 | [`SignedBoundary.lean`](ThreeNPlusMinusOne/SignedBoundary.lean) | Complete Section 31 exponent-one source identity, strict A-selecting return, exact B-source, and valuation trichotomy | Section 32 exponent-two/three signed bounds |
 | 20 | [`LongSwitchBounds.lean`](ThreeNPlusMinusOne/LongSwitchBounds.lean) | Complete Section 32 factor-source estimates, shared-source outcome lemma, and valuation bounds `≤4`, `≤3`, and `≤4` for the three actual switch cases | Section 33 high-valuation exponent-three return |
-| 21 | [`HighValuationReturn.lean`](ThreeNPlusMinusOne/HighValuationReturn.lean) | Section 33 opening contradiction: exponent-three first valuation `≥4` forces a strict drop below the minimum-DRAW source | Exact returned `Q_{v-1}` coordinate and phase identification |
-| 22 | [`HighValuationReturn.lean`](ThreeNPlusMinusOne/HighValuationReturn.lean) | Exact Section 33 arithmetic: the two signed valuation equations imply the scaled relation, even tail product, and returned `Q_{v-1}` coordinate | Returned phase identification and outcome routing |
+| 21 | [`HighValuationReturn.lean`](ThreeNPlusMinusOne/HighValuationReturn.lean) | Section 33 opening contradiction: exponent-three first valuation `≥4` forces a strict drop below the minimum-DRAW source | Outcome routing from the returned frame |
+| 22 | [`HighValuationReturn.lean`](ThreeNPlusMinusOne/HighValuationReturn.lean) | Exact Section 33 arithmetic: the two signed valuation equations imply the scaled relation, even tail product, returned `Q_{v-1}` coordinate, and its A-selecting phase | Outcome routing from the returned frame |
 | 21 | [`Outcome.lean`](ThreeNPlusMinusOne/Outcome.lean) | Finite `Winning`/`Losing` proof trees, `Draw`, a legal `DRAW` child from every `DRAW`, and the generic common-grandchild height lemma | A well-founded relation containing all DRAW continuations |
 | 22 | [`TokenRank.lean`](ThreeNPlusMinusOne/TokenRank.lean) | Strict well-founded rank for every inventory split of one token into at most two lower tokens | Proof that every human token change has this form |
 | 23 | [`Certificate.lean`](ThreeNPlusMinusOne/Certificate.lean) | General lexicographic well-foundedness and exclusion of infinite descending routes | Concrete game arithmetic |
 | 24 | [`MacroCertificate.lean`](ThreeNPlusMinusOne/MacroCertificate.lean) | Four-component abstract rank and all 16 equal-rank control transitions as a finite DAG | Semantic coverage of real game continuations by the macro states |
-| 25 | [`Refinement.lean`](ThreeNPlusMinusOne/Refinement.lean) | `DrawMacroRefinement -> no Draw` and hence finite resolution | A value of `DrawMacroRefinement` |
-| 26 | [`Termination.lean`](ThreeNPlusMinusOne/Termination.lean) | Transport of resolution and finite optimal proof steps back to the original odd-state game | Unconditional termination until the refinement exists |
+| 25 | [`TokenProvenance.lean`](ThreeNPlusMinusOne/TokenProvenance.lean) | Exact occurrence-tagged proof tokens, selected-loss/common-grandchild descendants, and strict forest replacement | Semantic proof that every game branch carries one of these occurrences |
+| 26 | [`OccurrenceRefinement.lean`](ThreeNPlusMinusOne/OccurrenceRefinement.lean) | Equal-rank no-reseed boundary and a conditional no-DRAW theorem over occurrence-carrying configurations | Concrete semantic `lift` and `progress` fields |
+| 27 | [`Refinement.lean`](ThreeNPlusMinusOne/Refinement.lean) | `DrawMacroRefinement -> no Draw` and hence finite resolution | A value of `DrawMacroRefinement` |
+| 28 | [`Termination.lean`](ThreeNPlusMinusOne/Termination.lean) | Transport of resolution and finite optimal proof steps back to the original odd-state game | Unconditional termination until the refinement exists |
 
 The decisive open declaration is therefore not a hidden `sorry`: it is the
-absence of a constructed `DrawMacroRefinement`. Its two fields expose the
-remaining obligations:
+absence of a constructed occurrence-level refinement (and, as a corollary, of
+a constructed `DrawMacroRefinement`). Its fields expose the remaining
+obligations:
 
 1. `lift`: every actual `DRAW` initializes a marked macro configuration;
 2. `progress`: every marked configuration containing an actual `DRAW` reaches
-   another such configuration by a certified macro step.
+   another such configuration by a certified macro step or an exact lower
+   occurrence replacement at fixed macro rank.
 
-The second field must formalize all universal arithmetic guards, preservation
-of an actual `DRAW` member, and finite productivity of the normalizers. The
-Python JSON checker validates the declared inventory, but it is not a proof of
-this semantic field.
+These fields must formalize all universal arithmetic guards, preservation of an
+actual `DRAW` member, exact occurrence alignment, and finite productivity of
+the normalizers. The Python JSON checker validates the declared inventory, but
+it is not a proof of this semantic field.
 
 For a claim-by-claim status table, read [`COVERAGE.md`](COVERAGE.md). For the
 human-to-Lean correspondence, use Sections 14–32 and 129–138 of
