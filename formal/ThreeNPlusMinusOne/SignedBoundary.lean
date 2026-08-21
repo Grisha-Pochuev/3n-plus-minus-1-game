@@ -188,7 +188,7 @@ theorem pow_two_B_le_of_nonselected
   have scaledShape :
       2 ^ exponent * (3 * B source + 1) =
         3 * (2 ^ exponent * B source) + 2 ^ exponent := by
-    simp [Nat.mul_add, Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm]
+    simp [Nat.mul_add, Nat.mul_comm, Nat.mul_left_comm]
   rw [scaledShape] at scaledLower
   omega
 
