@@ -29,5 +29,6 @@ import ThreeNPlusMinusOne.TokenRank
 import ThreeNPlusMinusOne.MacroCertificate
 import ThreeNPlusMinusOne.Outcome
 import ThreeNPlusMinusOne.TokenProvenance
+import ThreeNPlusMinusOne.OccurrenceRefinement
 import ThreeNPlusMinusOne.Refinement
 import ThreeNPlusMinusOne.Termination
