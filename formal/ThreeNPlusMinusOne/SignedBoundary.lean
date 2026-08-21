@@ -185,6 +185,11 @@ theorem pow_two_B_le_of_nonselected
     have upper := A_double_le source
     omega
   have scaledLower := Nat.mul_le_mul_left (2 ^ exponent) embeddedLower
+  have scaledShape :
+      2 ^ exponent * (3 * B source + 1) =
+        3 * (2 ^ exponent * B source) + 2 ^ exponent := by
+    simp [Nat.mul_add, Nat.mul_assoc, Nat.mul_comm, Nat.mul_left_comm]
+  rw [scaledShape] at scaledLower
   omega
 
 /-- The B-selecting half of the exponent-one boundary has the exact source
