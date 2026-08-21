@@ -47,5 +47,5 @@ more.
 
 Build record: **COMPUTATIONALLY VERIFIED** on 12 August 2026 with Lean 4.32.1;
 `lake build --wfail` completed successfully. The project has no third-party Lean
-dependencies. GitHub CI also requests an independent `nanoda` check and
-rejects `sorry`.
+dependencies. GitHub CI also runs the bundled `leanchecker`; the warning-free
+kernel build rejects `sorry`.
