@@ -25,12 +25,13 @@ what it does not yet prove.
 | 17 | [`OppositeTail.lean`](ThreeNPlusMinusOne/OppositeTail.lean) | Complete Section 29 opposite-tail identity and its forced local WIN/non-LOSS outcomes for all three bounded factor exponents | Section 30 common-child twin recurrence |
 | 18 | [`TwinRecurrence.lean`](ThreeNPlusMinusOne/TwinRecurrence.lean) | Complete Section 30 common-child recurrence, non-losing common outcome, and forced opposite-tail LOSS alternative | Section 31 signed-boundary source return |
 | 19 | [`SignedBoundary.lean`](ThreeNPlusMinusOne/SignedBoundary.lean) | Complete Section 31 exponent-one source identity, strict A-selecting return, exact B-source, and valuation trichotomy | Section 32 exponent-two/three signed bounds |
-| 20 | [`Outcome.lean`](ThreeNPlusMinusOne/Outcome.lean) | Finite `Winning`/`Losing` proof trees, `Draw`, a legal `DRAW` child from every `DRAW`, and the generic common-grandchild height lemma | A well-founded relation containing all DRAW continuations |
-| 21 | [`TokenRank.lean`](ThreeNPlusMinusOne/TokenRank.lean) | Strict well-founded rank for every inventory split of one token into at most two lower tokens | Proof that every human token change has this form |
-| 22 | [`Certificate.lean`](ThreeNPlusMinusOne/Certificate.lean) | General lexicographic well-foundedness and exclusion of infinite descending routes | Concrete game arithmetic |
-| 23 | [`MacroCertificate.lean`](ThreeNPlusMinusOne/MacroCertificate.lean) | Four-component abstract rank and all 16 equal-rank control transitions as a finite DAG | Semantic coverage of real game continuations by the macro states |
-| 24 | [`Refinement.lean`](ThreeNPlusMinusOne/Refinement.lean) | `DrawMacroRefinement -> no Draw` and hence finite resolution | A value of `DrawMacroRefinement` |
-| 25 | [`Termination.lean`](ThreeNPlusMinusOne/Termination.lean) | Transport of resolution and finite optimal proof steps back to the original odd-state game | Unconditional termination until the refinement exists |
+| 20 | [`LongSwitchBounds.lean`](ThreeNPlusMinusOne/LongSwitchBounds.lean) | Complete Section 32 factor-source estimates, shared-source outcome lemma, and valuation bounds `≤4`, `≤3`, and `≤4` for the three actual switch cases | Section 33 high-valuation exponent-three return |
+| 21 | [`Outcome.lean`](ThreeNPlusMinusOne/Outcome.lean) | Finite `Winning`/`Losing` proof trees, `Draw`, a legal `DRAW` child from every `DRAW`, and the generic common-grandchild height lemma | A well-founded relation containing all DRAW continuations |
+| 22 | [`TokenRank.lean`](ThreeNPlusMinusOne/TokenRank.lean) | Strict well-founded rank for every inventory split of one token into at most two lower tokens | Proof that every human token change has this form |
+| 23 | [`Certificate.lean`](ThreeNPlusMinusOne/Certificate.lean) | General lexicographic well-foundedness and exclusion of infinite descending routes | Concrete game arithmetic |
+| 24 | [`MacroCertificate.lean`](ThreeNPlusMinusOne/MacroCertificate.lean) | Four-component abstract rank and all 16 equal-rank control transitions as a finite DAG | Semantic coverage of real game continuations by the macro states |
+| 25 | [`Refinement.lean`](ThreeNPlusMinusOne/Refinement.lean) | `DrawMacroRefinement -> no Draw` and hence finite resolution | A value of `DrawMacroRefinement` |
+| 26 | [`Termination.lean`](ThreeNPlusMinusOne/Termination.lean) | Transport of resolution and finite optimal proof steps back to the original odd-state game | Unconditional termination until the refinement exists |
 
 The decisive open declaration is therefore not a hidden `sorry`: it is the
 absence of a constructed `DrawMacroRefinement`. Its two fields expose the
@@ -46,6 +47,6 @@ Python JSON checker validates the declared inventory, but it is not a proof of
 this semantic field.
 
 For a claim-by-claim status table, read [`COVERAGE.md`](COVERAGE.md). For the
-human-to-Lean correspondence, use Sections 14–31 and 129–138 of
+human-to-Lean correspondence, use Sections 14–32 and 129–138 of
 [`../docs/verified-results.md`](../docs/verified-results.md) and the transition
 identifiers in [`../certificates/global-routing.json`](../certificates/global-routing.json).

@@ -44,7 +44,8 @@ and three further surviving B transfers are impossible. Section 28 then
 splits every A-selecting obligation into its canonical continuation or one
 of three fully marked bounded factor frames. Sections 29--31 prove the
 opposite-tail switch, its exact common-child recurrence, and the complete
-exponent-one source return with its signed valuation bounds.
+exponent-one source return with its signed valuation bounds. Section 32 then
+bounds all three signed continuations after the exponent-two/three switches.
 
 Lean still does **not** kernel-check the concrete refinement from every legal
 outcome-compatible game continuation to one of the declared macro cases. The
@@ -78,18 +79,18 @@ Completed foundation:
 5. the nested outer/inner rank and equal-rank control DAG;
 6. a conditional Section 138 theorem with an explicit refinement parameter.
 
-The currently kernel-checked arithmetic front reaches the end of Section 31.
+The currently kernel-checked arithmetic front reaches the end of Section 32.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting
 half of the final switch has its strict height descent; and every remaining
 B-selecting fork transfers to the adjacent frame over its selected source.
-The Section 32 exponent-two/three signed bounds and the later marked
+The Section 33 high-valuation exponent-three return and the later marked
 normalizer remain to be translated before the refinement parameter can be
 constructed.
 
 Remaining work is to construct `DrawMacroRefinement` by formalizing the
 universal arithmetic guards and the remaining outcome/productivity cases
-beginning with Section 32 and continuing through Section 137. It must not be
+beginning with Section 33 and continuing through Section 137. It must not be
 replaced by an axiom or by a translation of the JSON
 labels which does not prove their game semantics.
