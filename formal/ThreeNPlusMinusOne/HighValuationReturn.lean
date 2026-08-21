@@ -174,4 +174,35 @@ theorem exponentThree_return_Q_coordinate_from_valuations
   exact exponentThree_return_Q_coordinate_of_even_tail bit rfl
     tailProductEquation tailProductEven signedRelation
 
+/-- The lower-exponent return has the expected A-selecting phase: the
+remaining three or more powers of two force the last two bits of the returned
+coordinate to be `11` in the zero-tail case and `00` in the one-tail case. -/
+theorem exponentThree_return_phase
+    {source returned exponent tailBit : Nat}
+    (bit : Bit tailBit) (exponentLarge : 4 ≤ exponent)
+    (coordinate :
+      returned = Q (embeddedValue source) (exponent - 1) (1 - tailBit)) :
+    sourceASelectingBit returned = tailBit := by
+  have powerSplit : 2 ^ (exponent - 1) =
+      4 * 2 ^ (exponent - 3) := by
+    obtain ⟨rest, hrest⟩ : ∃ rest, exponent - 1 = rest + 2 :=
+      ⟨exponent - 3, by omega⟩
+    rw [hrest]
+    simp [Nat.pow_add, Nat.mul_comm]
+  rcases bit with rfl | rfl
+  · rw [coordinate]
+    unfold sourceASelectingBit
+    simp [Q, powerSplit]
+    have positiveBase : 0 < embeddedValue source * 2 ^ (exponent - 3) :=
+      Nat.mul_pos (embeddedValue_positive source)
+        (Nat.pow_pos (by omega))
+    omega
+  · rw [coordinate]
+    unfold sourceASelectingBit
+    simp [Q, powerSplit]
+    have positiveBase : 0 < embeddedValue source * 2 ^ (exponent - 3) :=
+      Nat.mul_pos (embeddedValue_positive source)
+        (Nat.pow_pos (by omega))
+    omega
+
 end ThreeNPlusMinusOne
