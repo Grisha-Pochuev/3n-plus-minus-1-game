@@ -79,11 +79,11 @@ Completed foundation:
 5. the nested outer/inner rank and equal-rank control DAG;
 6. a conditional Section 138 theorem with an explicit refinement parameter.
 
-The currently kernel-checked arithmetic front reaches Section 33.  A first
-exponent-three valuation at least four forces a strict source drop, and the
-scaled signed relation plus even-tail hypotheses force the exact returned
-`Q_{v-1}` coordinate.  The remaining obligations are to derive those
-hypotheses from the concrete valuation and to identify the returned phase.
+The currently kernel-checked arithmetic front reaches the exact coordinate part
+of Section 33.  A first exponent-three valuation at least four forces a strict
+source drop, and the two concrete signed valuation equations force the returned
+`Q_{v-1}` coordinate.  The remaining obligations are phase identification,
+outcome routing, and the global `DrawMacroRefinement`.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting
