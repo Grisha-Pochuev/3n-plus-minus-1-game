@@ -77,18 +77,23 @@ theorem exponentThree_return_Q_coordinate
       simp [Nat.pow_succ, Nat.mul_comm]
     have lowerPowerSplit : 2 ^ (exponent - 1) =
         2 * 2 ^ (exponent - 2) := by
-      obtain ⟨rest, rfl⟩ : ∃ rest, exponent - 1 = rest + 1 :=
+      obtain ⟨rest, hrest⟩ : ∃ rest, exponent - 1 = rest + 1 :=
         ⟨exponent - 2, by omega⟩
+      rw [hrest]
       simp [Nat.pow_succ, Nat.mul_comm]
     have relation :
         2 * embeddedValue returned =
           3 * (2 ^ exponent * embeddedValue source) - 2 := by
       omega
     rw [powerSplit, lowerPowerSplit] at relation
+    obtain ⟨sourceHalf, sourceOdd⟩ := embeddedValue_odd source
+    rw [sourceOdd] at relation ⊢
     rcases even_or_odd returned with ⟨half, rfl⟩ | ⟨half, rfl⟩
-    · simp [embeddedValue_formula, Q] at relation ⊢
+    · simp [embeddedValue_formula, Q, Nat.mul_assoc, Nat.mul_left_comm,
+        Nat.mul_comm] at relation ⊢
       omega
-    · simp [embeddedValue_formula, Q] at relation ⊢
+    · simp [embeddedValue_formula, Q, Nat.mul_assoc, Nat.mul_left_comm,
+        Nat.mul_comm] at relation ⊢
       omega
   · subst complementBit
     have powerSplit : 2 ^ exponent = 2 * 2 ^ (exponent - 1) := by
@@ -97,18 +102,23 @@ theorem exponentThree_return_Q_coordinate
       simp [Nat.pow_succ, Nat.mul_comm]
     have lowerPowerSplit : 2 ^ (exponent - 1) =
         2 * 2 ^ (exponent - 2) := by
-      obtain ⟨rest, rfl⟩ : ∃ rest, exponent - 1 = rest + 1 :=
+      obtain ⟨rest, hrest⟩ : ∃ rest, exponent - 1 = rest + 1 :=
         ⟨exponent - 2, by omega⟩
+      rw [hrest]
       simp [Nat.pow_succ, Nat.mul_comm]
     have relation :
         2 * embeddedValue returned =
           3 * (2 ^ exponent * embeddedValue source) + 2 := by
       omega
     rw [powerSplit, lowerPowerSplit] at relation
+    obtain ⟨sourceHalf, sourceOdd⟩ := embeddedValue_odd source
+    rw [sourceOdd] at relation ⊢
     rcases even_or_odd returned with ⟨half, rfl⟩ | ⟨half, rfl⟩
-    · simp [embeddedValue_formula, Q] at relation ⊢
+    · simp [embeddedValue_formula, Q, Nat.mul_assoc, Nat.mul_left_comm,
+        Nat.mul_comm] at relation ⊢
       omega
-    · simp [embeddedValue_formula, Q] at relation ⊢
+    · simp [embeddedValue_formula, Q, Nat.mul_assoc, Nat.mul_left_comm,
+        Nat.mul_comm] at relation ⊢
       omega
 
 end ThreeNPlusMinusOne
