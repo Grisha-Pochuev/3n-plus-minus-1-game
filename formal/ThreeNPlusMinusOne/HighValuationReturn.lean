@@ -55,4 +55,60 @@ theorem exponentThree_high_valuation_return_case
   exact exponentThree_high_valuation_source_drops minimumPositive
     minimumDraw sourceBound sideBound bit valuation highValuation
 
+/-- The two signed numerator equations identify the returned source with the
+canonical lower-exponent tail.  This is the exact arithmetic coordinate
+calculation used after the Section 33 source-drop split. -/
+theorem exponentThree_return_Q_coordinate
+    {side returned source exponent tailBit complementBit : Nat}
+    (bit : Bit tailBit) (complement : complementBit = 1 - tailBit)
+    (exponentLarge : 4 ≤ exponent)
+    (firstValuation :
+      9 * embeddedValue side + 1 - 2 * tailBit =
+        2 ^ exponent * embeddedValue source)
+    (returnValuation :
+      27 * embeddedValue side + 1 - 2 * tailBit =
+        2 * embeddedValue returned) :
+    returned = Q (embeddedValue source) (exponent - 1) complementBit := by
+  rcases bit with rfl | rfl
+  · subst complementBit
+    have powerSplit : 2 ^ exponent = 2 * 2 ^ (exponent - 1) := by
+      obtain ⟨rest, rfl⟩ : ∃ rest, exponent = rest + 1 :=
+        ⟨exponent - 1, by omega⟩
+      simp [Nat.pow_succ, Nat.mul_comm]
+    have lowerPowerSplit : 2 ^ (exponent - 1) =
+        2 * 2 ^ (exponent - 2) := by
+      obtain ⟨rest, rfl⟩ : ∃ rest, exponent - 1 = rest + 1 :=
+        ⟨exponent - 2, by omega⟩
+      simp [Nat.pow_succ, Nat.mul_comm]
+    have relation :
+        2 * embeddedValue returned =
+          3 * (2 ^ exponent * embeddedValue source) - 2 := by
+      omega
+    rw [powerSplit, lowerPowerSplit] at relation
+    rcases even_or_odd returned with ⟨half, rfl⟩ | ⟨half, rfl⟩
+    · simp [embeddedValue_formula, Q] at relation ⊢
+      omega
+    · simp [embeddedValue_formula, Q] at relation ⊢
+      omega
+  · subst complementBit
+    have powerSplit : 2 ^ exponent = 2 * 2 ^ (exponent - 1) := by
+      obtain ⟨rest, rfl⟩ : ∃ rest, exponent = rest + 1 :=
+        ⟨exponent - 1, by omega⟩
+      simp [Nat.pow_succ, Nat.mul_comm]
+    have lowerPowerSplit : 2 ^ (exponent - 1) =
+        2 * 2 ^ (exponent - 2) := by
+      obtain ⟨rest, rfl⟩ : ∃ rest, exponent - 1 = rest + 1 :=
+        ⟨exponent - 2, by omega⟩
+      simp [Nat.pow_succ, Nat.mul_comm]
+    have relation :
+        2 * embeddedValue returned =
+          3 * (2 ^ exponent * embeddedValue source) + 2 := by
+      omega
+    rw [powerSplit, lowerPowerSplit] at relation
+    rcases even_or_odd returned with ⟨half, rfl⟩ | ⟨half, rfl⟩
+    · simp [embeddedValue_formula, Q] at relation ⊢
+      omega
+    · simp [embeddedValue_formula, Q] at relation ⊢
+      omega
+
 end ThreeNPlusMinusOne
