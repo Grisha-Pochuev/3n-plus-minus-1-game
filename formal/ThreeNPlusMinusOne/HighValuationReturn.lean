@@ -76,10 +76,9 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
         2 * embeddedValue returned = 6 * tailProduct - 2 := by
       simpa using signedRelation
     rw [tailProductEven] at relation ⊢
-    have target :
-        Q (embeddedValue source) (exponent - 1) 1 = 2 * half - 1 := by
-      simp [Q, ← tailProductEquation, Nat.mul_comm]
-    rw [target]
+    unfold Q
+    simp only [Nat.one_sub_zero]
+    rw [← tailProductEquation, tailProductEven]
     rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
       ⟨returnedHalf, rfl⟩
     · simp [embeddedValue_formula] at relation
@@ -91,10 +90,9 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
         2 * embeddedValue returned = 6 * tailProduct + 2 := by
       simpa using signedRelation
     rw [tailProductEven] at relation ⊢
-    have target :
-        Q (embeddedValue source) (exponent - 1) 0 = 2 * half := by
-      simp [Q, ← tailProductEquation, Nat.mul_comm]
-    rw [target]
+    unfold Q
+    simp only [Nat.one_sub_one]
+    rw [← tailProductEquation, tailProductEven]
     rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
       ⟨returnedHalf, rfl⟩
     · simp [embeddedValue_formula] at relation
