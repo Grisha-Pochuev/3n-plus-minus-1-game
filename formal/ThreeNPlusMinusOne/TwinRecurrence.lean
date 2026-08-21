@@ -193,7 +193,7 @@ theorem ASelectingFactorEscape.twinRecurrence
     dsimp [FactorTwinRecurrence]
     refine ⟨1, common, ?_⟩
     refine ⟨by omega, by omega, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_,
-      ?_, ?_, ?_, ?_, ?_⟩
+      ?_, ?_, ?_, ?_, ?_, ?_⟩
     · simpa [retained, lower, phase] using retainedLosing
     · simpa [opposite, coefficient, side, lower, phase] using oppositeWinning
     · exact retainedOtherWinning
@@ -246,7 +246,7 @@ theorem ASelectingFactorEscape.twinRecurrence
     dsimp [FactorTwinRecurrence]
     refine ⟨lowerExponent, common, ?_⟩
     refine ⟨exponentPositive, exponentBound, ?_, ?_, ?_, ?_, ?_, ?_, ?_,
-      ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+      ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · simpa [retained, lower, phase] using retainedLosing
     · simpa [opposite, coefficient, side, lower, phase] using oppositeWinning
     · exact retainedOtherWinning
