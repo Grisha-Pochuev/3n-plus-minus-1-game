@@ -73,6 +73,19 @@ theorem selected_loss_strict (token : WinningToken) :
   obtain ⟨loss, child, height⟩ := selected_loss token
   exact ⟨loss, child, by omega⟩
 
+/- A common grandchild can replace the retained WIN occurrence by an exact
+   lower occurrence, rather than by a merely numerical state. -/
+theorem common_grandchild
+    (token : WinningToken) {grandchild : Nat}
+    (grandchildPositive : 0 < grandchild)
+    (common : CommonGrandchild grandchild token.position) :
+    ∃ descendant : WinningToken,
+      descendant.position = grandchild ∧
+        descendant.height + 2 ≤ token.height := by
+  obtain ⟨height, tree, lower⟩ := WinningTree.commonGrandchild_lower
+    token.tree grandchildPositive common
+  exact ⟨⟨grandchild, height, tree⟩, rfl, lower⟩
+
 end WinningToken
 
 namespace LosingToken
@@ -115,6 +128,17 @@ def ProofTokenReplacement (next current : ProofForest) : Prop :=
       next = before ++ children ++ after ∧
         children.length ≤ 2 ∧
           ∀ child ∈ children, ProofToken.height child < ProofToken.height parent
+
+theorem proofTokenReplacement_single
+    {before after : ProofForest} {parent child : ProofToken}
+    (lower : ProofToken.height child < ProofToken.height parent) :
+    ProofTokenReplacement
+      (before ++ child :: after) (before ++ parent :: after) := by
+  refine ⟨before, after, parent, [child], by simp, by simp, by simp, ?_⟩
+  intro token member
+  simp only [List.mem_singleton] at member
+  subst token
+  exact lower
 
 theorem proofTokenReplacement_decreases
     {next current : ProofForest} (edge : ProofTokenReplacement next current) :
