@@ -165,7 +165,7 @@ theorem exponentThree_factorSource_bound
 four whenever its returned source survives the global minimum. -/
 theorem exponentTwo_signedValuation_le_four
     {minimum source side returned exponent tailBit : Nat}
-    (minimumPositive : 0 < minimum) (sourceBound : source < 2 * minimum)
+    (_minimumPositive : 0 < minimum) (sourceBound : source < 2 * minimum)
     (sideBound : 24 * side ≤ 27 * source + 11)
     (bit : Bit tailBit) (returnedSurvives : minimum ≤ returned)
     (valuation :
@@ -192,7 +192,7 @@ theorem exponentTwo_signedValuation_le_four
 has valuation at most three. -/
 theorem exponentThree_firstValuation_le_three
     {minimum source side returned exponent tailBit : Nat}
-    (minimumPositive : 0 < minimum) (sourceBound : source < 2 * minimum)
+    (_minimumPositive : 0 < minimum) (sourceBound : source < 2 * minimum)
     (sideBound : 48 * side ≤ 27 * source + 3)
     (bit : Bit tailBit) (returnedSurvives : minimum ≤ returned)
     (valuation :
@@ -219,7 +219,7 @@ theorem exponentThree_firstValuation_le_three
 at most four. -/
 theorem exponentThree_secondValuation_le_four
     {minimum source side returned exponent tailBit : Nat}
-    (minimumPositive : 0 < minimum) (sourceBound : source < 2 * minimum)
+    (_minimumPositive : 0 < minimum) (sourceBound : source < 2 * minimum)
     (sideBound : 48 * side ≤ 27 * source + 3)
     (bit : Bit tailBit) (returnedSurvives : minimum ≤ returned)
     (valuation :
