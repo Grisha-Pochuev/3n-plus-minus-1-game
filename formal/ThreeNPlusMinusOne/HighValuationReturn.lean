@@ -81,9 +81,9 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
     rw [← tailProductEquation, tailProductEven]
     rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
       ⟨returnedHalf, rfl⟩
-    · simp [embeddedValue_formula] at relation
+    · simp at relation
       omega
-    · simp [embeddedValue_formula] at relation
+    · simp at relation
       omega
   · subst complementBit
     have relation :
@@ -95,9 +95,9 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
     rw [← tailProductEquation, tailProductEven]
     rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
       ⟨returnedHalf, rfl⟩
-    · simp [embeddedValue_formula] at relation
+    · simp at relation
       omega
-    · simp [embeddedValue_formula] at relation
+    · simp at relation
       omega
 
 end ThreeNPlusMinusOne
