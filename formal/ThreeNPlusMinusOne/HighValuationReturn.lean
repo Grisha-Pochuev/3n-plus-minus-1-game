@@ -174,6 +174,26 @@ theorem exponentThree_return_Q_coordinate_from_valuations
   exact exponentThree_return_Q_coordinate_of_even_tail bit rfl
     tailProductEquation tailProductEven signedRelation
 
+theorem sourceASelectingBit_four_mul (base : Nat) :
+    sourceASelectingBit (4 * base) = 1 := by
+  unfold sourceASelectingBit
+  have hdiv : (4 * base) / 2 = 2 * base := by omega
+  have hmod : (2 * base) % 2 = 0 := by omega
+  rw [hdiv, hmod]
+  omega
+
+theorem sourceASelectingBit_four_mul_sub_one
+    {base : Nat} (basePositive : 0 < base) :
+    sourceASelectingBit (4 * base - 1) = 0 := by
+  unfold sourceASelectingBit
+  have hshape : 4 * base - 1 = 2 * (2 * base - 1) + 1 := by omega
+  rw [hshape]
+  have hdiv : (2 * (2 * base - 1) + 1) / 2 = 2 * base - 1 := by
+    omega
+  have hmod : (2 * base - 1) % 2 = 1 := by omega
+  rw [hdiv, hmod]
+  omega
+
 /-- The lower-exponent return has the expected A-selecting phase: the
 remaining three or more powers of two force the last two bits of the returned
 coordinate to be `11` in the zero-tail case and `00` in the one-tail case. -/
@@ -188,21 +208,28 @@ theorem exponentThree_return_phase
     obtain ⟨rest, hrest⟩ : ∃ rest, exponent - 1 = rest + 2 :=
       ⟨exponent - 3, by omega⟩
     rw [hrest]
+    have restShape : rest = exponent - 3 := by omega
+    rw [restShape]
     simp [Nat.pow_add, Nat.mul_comm]
+  let base := embeddedValue source * 2 ^ (exponent - 3)
+  have basePositive : 0 < base := by
+    dsimp [base]
+    exact Nat.mul_pos (embeddedValue_positive source)
+      (Nat.pow_pos (by omega))
   rcases bit with rfl | rfl
   · rw [coordinate]
-    unfold sourceASelectingBit
-    simp [Q, powerSplit]
-    have positiveBase : 0 < embeddedValue source * 2 ^ (exponent - 3) :=
-      Nat.mul_pos (embeddedValue_positive source)
-        (Nat.pow_pos (by omega))
-    omega
+    have coordinateShape :
+        Q (embeddedValue source) (exponent - 1) 1 = 4 * base - 1 := by
+      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm,
+        Nat.mul_left_comm]
+    rw [coordinateShape]
+    exact sourceASelectingBit_four_mul_sub_one basePositive
   · rw [coordinate]
-    unfold sourceASelectingBit
-    simp [Q, powerSplit]
-    have positiveBase : 0 < embeddedValue source * 2 ^ (exponent - 3) :=
-      Nat.mul_pos (embeddedValue_positive source)
-        (Nat.pow_pos (by omega))
-    omega
+    have coordinateShape :
+        Q (embeddedValue source) (exponent - 1) 0 = 4 * base := by
+      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm,
+        Nat.mul_left_comm]
+    rw [coordinateShape]
+    exact sourceASelectingBit_four_mul base
 
 end ThreeNPlusMinusOne
