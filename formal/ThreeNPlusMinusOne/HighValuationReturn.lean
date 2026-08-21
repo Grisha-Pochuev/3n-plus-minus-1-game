@@ -75,7 +75,7 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
     have relation :
         2 * embeddedValue returned = 6 * tailProduct - 2 := by
       simpa using signedRelation
-    rw [tailProductEven] at relation ⊢
+    rw [tailProductEven] at relation
     unfold Q
     simp only [Nat.one_sub_zero]
     rw [← tailProductEquation, tailProductEven]
@@ -89,7 +89,7 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
     have relation :
         2 * embeddedValue returned = 6 * tailProduct + 2 := by
       simpa using signedRelation
-    rw [tailProductEven] at relation ⊢
+    rw [tailProductEven] at relation
     unfold Q
     simp only [Nat.one_sub_one]
     rw [← tailProductEquation, tailProductEven]
