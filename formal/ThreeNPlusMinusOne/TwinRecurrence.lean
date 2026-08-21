@@ -154,8 +154,10 @@ theorem ASelectingFactorEscape.twinRecurrence
   have retainedOtherWinning : Winning (B retained) := by
     simpa [retained, lower, phase] using retainedChildren.2
   have highNotLosing : ¬ Losing high := by
-    rw [← highEquation]
-    exact factorDraw.children_not_losing.1
+    have childNotLosing := factorDraw.children_not_losing.1
+    rw [highEquation] at childNotLosing
+    simpa [high, coefficient, side, lower, oppositePhase, phase] using
+      childNotLosing
   have lowNotLosing' : ¬ Losing low := by
     simpa [low, coefficient, side, lower, oppositePhase, phase] using
       lowNotLosing
@@ -190,7 +192,6 @@ theorem ASelectingFactorEscape.twinRecurrence
       (Or.inr (by simpa [common] using shared)) (Or.inr rfl)
     dsimp [FactorTwinRecurrence]
     refine ⟨1, common, ?_⟩
-    dsimp only
     refine ⟨by omega, by omega, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_, ?_,
       ?_, ?_, ?_, ?_, ?_⟩
     · simpa [retained, lower, phase] using retainedLosing
@@ -244,7 +245,6 @@ theorem ASelectingFactorEscape.twinRecurrence
         oppositeChildLoss
     dsimp [FactorTwinRecurrence]
     refine ⟨lowerExponent, common, ?_⟩
-    dsimp only
     refine ⟨exponentPositive, exponentBound, ?_, ?_, ?_, ?_, ?_, ?_, ?_,
       ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
     · simpa [retained, lower, phase] using retainedLosing
