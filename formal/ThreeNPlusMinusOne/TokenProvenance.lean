@@ -90,7 +90,7 @@ theorem children (token : LosingToken) :
   | mk position height tree =>
       cases tree with
       | terminal =>
-          simp_all [A, B]
+          simp_all
       | replies nonterminal replyA replyB =>
           exact ⟨⟨A position, _, replyA⟩, ⟨B position, _, replyB⟩,
             rfl, rfl,
