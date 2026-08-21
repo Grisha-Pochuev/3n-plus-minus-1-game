@@ -78,7 +78,7 @@ theorem selectedFactor_exponentOne_side_eq_AA
       ⟨embeddedValue_positive _, embeddedValue_odd _, by omega,
         phaseBit, stateEquation⟩
     have coefficientEquation := (firstTail.unique secondTail).1
-    exact embeddedValue_injective coefficientEquation
+    exact (embeddedValue_injective coefficientEquation).symm
   · have nonselecting :
         oppositePhase = 1 - sourceASelectingBit (A source) := by
       rcases oppositePhaseBit with oppositeValue | oppositeValue <;>
