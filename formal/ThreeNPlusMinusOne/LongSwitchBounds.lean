@@ -242,4 +242,150 @@ theorem exponentThree_secondValuation_le_four
     · rw [bitOne] at scaledPower
       omega
 
+/-- Complete exponent-two branch of Section 32. -/
+theorem exponentTwo_switch_valuation_le_four
+    {minimum source side returned exponent : Nat}
+    (minimumPositive : 0 < minimum)
+    (minimumDraw : MinimumDrawSource minimum)
+    (sourceBound : source < 2 * minimum)
+    (frame :
+      A (A (Q (embeddedValue source) 2
+        (sourceASelectingBit source))) =
+        Q (embeddedValue side) 3
+          (1 - sourceASelectingBit source))
+    (commonDraw :
+      Draw (Q (3 * embeddedValue side) 1
+        (1 - sourceASelectingBit source)))
+    (exponentLarge : 2 ≤ exponent)
+    (valuation :
+      9 * embeddedValue side + 1 -
+          2 * (1 - sourceASelectingBit source) =
+        2 ^ exponent * embeddedValue returned) :
+    exponent ≤ 4 := by
+  let tailBit := 1 - sourceASelectingBit source
+  have bit : Bit tailBit := by
+    have phaseData := sourceASelectingBit_is_bit source
+    rcases phaseData with phaseZero | phaseOne
+    · exact Or.inr (by simp [tailBit, phaseZero])
+    · exact Or.inl (by simp [tailBit, phaseOne])
+  have coefficientPositive : 0 < 3 * embeddedValue side :=
+    Nat.mul_pos (by omega) (embeddedValue_positive side)
+  have transitionTail : IsConstantTail
+      (A (Q (3 * embeddedValue side) 1 tailBit))
+      (embeddedValue returned) exponent (1 - tailBit) := by
+    apply signedTransition_tail coefficientPositive
+      (embeddedValue_positive returned) (embeddedValue_odd returned)
+      bit exponentLarge
+    simpa [tailBit, show 3 * (3 * embeddedValue side) =
+      9 * embeddedValue side by omega] using valuation
+  have returnedSurvives : minimum ≤ returned := by
+    apply commonDraw.signedTransition_source_survives minimumDraw
+      exponentLarge
+    simpa [tailBit] using transitionTail
+  exact exponentTwo_signedValuation_le_four minimumPositive sourceBound
+    (exponentTwo_factorSource_bound frame) bit returnedSurvives
+    (by simpa [tailBit] using valuation)
+
+/-- Complete contracting-child branch of the exponent-three case in
+Section 32. -/
+theorem exponentThree_contracting_valuation_le_three
+    {minimum source side returned exponent : Nat}
+    (minimumPositive : 0 < minimum)
+    (minimumDraw : MinimumDrawSource minimum)
+    (sourceBound : source < 2 * minimum)
+    (frame :
+      A (A (Q (embeddedValue source) 2
+        (sourceASelectingBit source))) =
+        Q (embeddedValue side) 4
+          (1 - sourceASelectingBit source))
+    (contractingDraw :
+      Draw (B (Q (3 * embeddedValue side) 2
+        (1 - sourceASelectingBit source))))
+    (exponentLarge : 2 ≤ exponent)
+    (valuation :
+      9 * embeddedValue side + 1 -
+          2 * (1 - sourceASelectingBit source) =
+        2 ^ exponent * embeddedValue returned) :
+    exponent ≤ 3 := by
+  let tailBit := 1 - sourceASelectingBit source
+  have bit : Bit tailBit := by
+    have phaseData := sourceASelectingBit_is_bit source
+    rcases phaseData with phaseZero | phaseOne
+    · exact Or.inr (by simp [tailBit, phaseZero])
+    · exact Or.inl (by simp [tailBit, phaseOne])
+  have coefficientPositive : 0 < 3 * embeddedValue side :=
+    Nat.mul_pos (by omega) (embeddedValue_positive side)
+  have coefficientOdd : OddNat (3 * embeddedValue side) := by
+    obtain ⟨half, halfEquation⟩ := embeddedValue_odd side
+    exact ⟨3 * half + 1, by rw [halfEquation]; omega⟩
+  have transitionTail : IsConstantTail
+      (A (Q (3 * embeddedValue side) 1 tailBit))
+      (embeddedValue returned) exponent (1 - tailBit) := by
+    apply signedTransition_tail coefficientPositive
+      (embeddedValue_positive returned) (embeddedValue_odd returned)
+      bit exponentLarge
+    simpa [tailBit, show 3 * (3 * embeddedValue side) =
+      9 * embeddedValue side by omega] using valuation
+  have childSources :=
+    signedTransition_children_haveSource exponentLarge transitionTail
+  have sharedChild :
+      B (Q (3 * embeddedValue side) 1 tailBit) =
+        B (Q (3 * embeddedValue side) 2 tailBit) :=
+    B_Q_one_eq_two coefficientPositive coefficientOdd bit
+  have contractingSource : StateHasSource
+      (B (Q (3 * embeddedValue side) 2 tailBit)) returned := by
+    rw [← sharedChild]
+    exact childSources.2
+  have returnedSurvives : minimum ≤ returned :=
+    minimumDraw.minimum returned
+      ⟨_, by simpa [tailBit] using contractingDraw, contractingSource⟩
+  exact exponentThree_firstValuation_le_three minimumPositive sourceBound
+    (exponentThree_factorSource_bound frame) bit returnedSurvives
+    (by simpa [tailBit] using valuation)
+
+/-- Complete expanding-child branch of the exponent-three case in Section
+32. -/
+theorem exponentThree_expanding_valuation_le_four
+    {minimum source side returned exponent : Nat}
+    (minimumPositive : 0 < minimum)
+    (minimumDraw : MinimumDrawSource minimum)
+    (sourceBound : source < 2 * minimum)
+    (frame :
+      A (A (Q (embeddedValue source) 2
+        (sourceASelectingBit source))) =
+        Q (embeddedValue side) 4
+          (1 - sourceASelectingBit source))
+    (expandingDraw :
+      Draw (Q (9 * embeddedValue side) 1
+        (1 - sourceASelectingBit source)))
+    (exponentLarge : 2 ≤ exponent)
+    (valuation :
+      27 * embeddedValue side + 1 -
+          2 * (1 - sourceASelectingBit source) =
+        2 ^ exponent * embeddedValue returned) :
+    exponent ≤ 4 := by
+  let tailBit := 1 - sourceASelectingBit source
+  have bit : Bit tailBit := by
+    have phaseData := sourceASelectingBit_is_bit source
+    rcases phaseData with phaseZero | phaseOne
+    · exact Or.inr (by simp [tailBit, phaseZero])
+    · exact Or.inl (by simp [tailBit, phaseOne])
+  have coefficientPositive : 0 < 9 * embeddedValue side :=
+    Nat.mul_pos (by omega) (embeddedValue_positive side)
+  have transitionTail : IsConstantTail
+      (A (Q (9 * embeddedValue side) 1 tailBit))
+      (embeddedValue returned) exponent (1 - tailBit) := by
+    apply signedTransition_tail coefficientPositive
+      (embeddedValue_positive returned) (embeddedValue_odd returned)
+      bit exponentLarge
+    simpa [tailBit, show 3 * (9 * embeddedValue side) =
+      27 * embeddedValue side by omega] using valuation
+  have returnedSurvives : minimum ≤ returned := by
+    apply expandingDraw.signedTransition_source_survives minimumDraw
+      exponentLarge
+    simpa [tailBit] using transitionTail
+  exact exponentThree_secondValuation_le_four minimumPositive sourceBound
+    (exponentThree_factorSource_bound frame) bit returnedSurvives
+    (by simpa [tailBit] using valuation)
+
 end ThreeNPlusMinusOne
