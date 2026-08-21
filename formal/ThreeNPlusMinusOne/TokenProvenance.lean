@@ -172,7 +172,8 @@ theorem proofToken_common_grandchild_rank_payment
   refine ⟨descendant, position, ?_⟩
   apply proofTokenReplacement_decreases
   apply proofTokenReplacement_single
-  exact by omega
+  have hdesc : descendant.height < token.height := by omega
+  simpa [ProofToken.height] using hdesc
 
 theorem proofTokenReplacement_wellFounded :
     WellFounded ProofTokenReplacement := by
