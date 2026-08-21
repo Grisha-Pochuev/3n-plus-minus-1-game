@@ -77,18 +77,19 @@ theorem Draw.signedTransition_source_survives
     minimum ≤ returned := by
   have childSources :=
     signedTransition_children_haveSource exponentLarge tail
-  by_contra sourceDrops
-  have returnedSmaller : returned < minimum := by omega
-  have expandingNotDraw := minimumDraw.not_draw_of_smaller
-    childSources.1 returnedSmaller
-  have contractingNotDraw := minimumDraw.not_draw_of_smaller
-    childSources.2 returnedSmaller
-  have expandingWinning := winning_of_not_draw_and_not_losing
-    expandingNotDraw stateDraw.children_not_losing.1
-  have contractingWinning := winning_of_not_draw_and_not_losing
-    contractingNotDraw stateDraw.children_not_losing.2
-  exact stateDraw.2
-    (Losing.replies stateDraw.positive expandingWinning contractingWinning)
+  by_cases sourceSurvives : minimum ≤ returned
+  · exact sourceSurvives
+  · have returnedSmaller : returned < minimum := by omega
+    have expandingNotDraw := minimumDraw.not_draw_of_smaller
+      childSources.1 returnedSmaller
+    have contractingNotDraw := minimumDraw.not_draw_of_smaller
+      childSources.2 returnedSmaller
+    have expandingWinning := winning_of_not_draw_and_not_losing
+      expandingNotDraw stateDraw.children_not_losing.1
+    have contractingWinning := winning_of_not_draw_and_not_losing
+      contractingNotDraw stateDraw.children_not_losing.2
+    exact False.elim (stateDraw.2
+      (Losing.replies stateDraw.positive expandingWinning contractingWinning))
 
 /-- The source estimate attached to a lower exponent-two factor frame. -/
 theorem exponentTwo_factorSource_bound
@@ -109,12 +110,14 @@ theorem exponentTwo_factorSource_bound
     have first := A_Q (embeddedValue_positive source) phaseBit
       (by omega : 1 ≤ 2)
     rw [first]
+    have triplePositive : 0 < 3 * embeddedValue source :=
+      Nat.mul_pos (by omega) (embeddedValue_positive source)
     simpa [show 3 * (3 * embeddedValue source) =
       9 * embeddedValue source by omega] using
-      A_Q (by omega : 0 < 3 * embeddedValue source) phaseBit
+      A_Q triplePositive phaseBit
         (by omega : 1 ≤ 1)
   rw [upperEquation] at frame
-  rw [embeddedValue_formula source, embeddedValue_formula side] at frame ⊢
+  rw [embeddedValue_formula source, embeddedValue_formula side] at frame
   rcases phaseData with phaseZero | phaseOne
   · rw [phaseZero] at frame
     simp [Q] at frame
@@ -142,12 +145,14 @@ theorem exponentThree_factorSource_bound
     have first := A_Q (embeddedValue_positive source) phaseBit
       (by omega : 1 ≤ 2)
     rw [first]
+    have triplePositive : 0 < 3 * embeddedValue source :=
+      Nat.mul_pos (by omega) (embeddedValue_positive source)
     simpa [show 3 * (3 * embeddedValue source) =
       9 * embeddedValue source by omega] using
-      A_Q (by omega : 0 < 3 * embeddedValue source) phaseBit
+      A_Q triplePositive phaseBit
         (by omega : 1 ≤ 1)
   rw [upperEquation] at frame
-  rw [embeddedValue_formula source, embeddedValue_formula side] at frame ⊢
+  rw [embeddedValue_formula source, embeddedValue_formula side] at frame
   rcases phaseData with phaseZero | phaseOne
   · rw [phaseZero] at frame
     simp [Q] at frame
@@ -167,20 +172,21 @@ theorem exponentTwo_signedValuation_le_four
       9 * embeddedValue side + 1 - 2 * tailBit =
         2 ^ exponent * embeddedValue returned) :
     exponent ≤ 4 := by
-  by_contra exponentHigh
-  have powerBound : 32 ≤ 2 ^ exponent := by
-    have five : 5 ≤ exponent := by omega
-    simpa using Nat.pow_le_pow_right (by omega : 0 < 2) five
-  have scaledPower := Nat.mul_le_mul_right
-    (embeddedValue returned) powerBound
-  rw [← valuation] at scaledPower
-  rw [embeddedValue_formula returned, embeddedValue_formula side]
-    at scaledPower
-  rcases bit with bitZero | bitOne
-  · rw [bitZero] at scaledPower
-    omega
-  · rw [bitOne] at scaledPower
-    omega
+  by_cases exponentBound : exponent ≤ 4
+  · exact exponentBound
+  · have powerBound : 32 ≤ 2 ^ exponent := by
+      have five : 5 ≤ exponent := by omega
+      simpa using Nat.pow_le_pow_right (by omega : 0 < 2) five
+    have scaledPower := Nat.mul_le_mul_right
+      (embeddedValue returned) powerBound
+    rw [← valuation] at scaledPower
+    rw [embeddedValue_formula returned, embeddedValue_formula side]
+      at scaledPower
+    rcases bit with bitZero | bitOne
+    · rw [bitZero] at scaledPower
+      omega
+    · rw [bitOne] at scaledPower
+      omega
 
 /-- The contracting signed continuation after a lower exponent-three switch
 has valuation at most three. -/
@@ -193,20 +199,21 @@ theorem exponentThree_firstValuation_le_three
       9 * embeddedValue side + 1 - 2 * tailBit =
         2 ^ exponent * embeddedValue returned) :
     exponent ≤ 3 := by
-  by_contra exponentHigh
-  have powerBound : 16 ≤ 2 ^ exponent := by
-    have four : 4 ≤ exponent := by omega
-    simpa using Nat.pow_le_pow_right (by omega : 0 < 2) four
-  have scaledPower := Nat.mul_le_mul_right
-    (embeddedValue returned) powerBound
-  rw [← valuation] at scaledPower
-  rw [embeddedValue_formula returned, embeddedValue_formula side]
-    at scaledPower
-  rcases bit with bitZero | bitOne
-  · rw [bitZero] at scaledPower
-    omega
-  · rw [bitOne] at scaledPower
-    omega
+  by_cases exponentBound : exponent ≤ 3
+  · exact exponentBound
+  · have powerBound : 16 ≤ 2 ^ exponent := by
+      have four : 4 ≤ exponent := by omega
+      simpa using Nat.pow_le_pow_right (by omega : 0 < 2) four
+    have scaledPower := Nat.mul_le_mul_right
+      (embeddedValue returned) powerBound
+    rw [← valuation] at scaledPower
+    rw [embeddedValue_formula returned, embeddedValue_formula side]
+      at scaledPower
+    rcases bit with bitZero | bitOne
+    · rw [bitZero] at scaledPower
+      omega
+    · rw [bitOne] at scaledPower
+      omega
 
 /-- If the other exponent-three child is DRAW, its next signed valuation is
 at most four. -/
@@ -219,19 +226,20 @@ theorem exponentThree_secondValuation_le_four
       27 * embeddedValue side + 1 - 2 * tailBit =
         2 ^ exponent * embeddedValue returned) :
     exponent ≤ 4 := by
-  by_contra exponentHigh
-  have powerBound : 32 ≤ 2 ^ exponent := by
-    have five : 5 ≤ exponent := by omega
-    simpa using Nat.pow_le_pow_right (by omega : 0 < 2) five
-  have scaledPower := Nat.mul_le_mul_right
-    (embeddedValue returned) powerBound
-  rw [← valuation] at scaledPower
-  rw [embeddedValue_formula returned, embeddedValue_formula side]
-    at scaledPower
-  rcases bit with bitZero | bitOne
-  · rw [bitZero] at scaledPower
-    omega
-  · rw [bitOne] at scaledPower
-    omega
+  by_cases exponentBound : exponent ≤ 4
+  · exact exponentBound
+  · have powerBound : 32 ≤ 2 ^ exponent := by
+      have five : 5 ≤ exponent := by omega
+      simpa using Nat.pow_le_pow_right (by omega : 0 < 2) five
+    have scaledPower := Nat.mul_le_mul_right
+      (embeddedValue returned) powerBound
+    rw [← valuation] at scaledPower
+    rw [embeddedValue_formula returned, embeddedValue_formula side]
+      at scaledPower
+    rcases bit with bitZero | bitOne
+    · rw [bitZero] at scaledPower
+      omega
+    · rw [bitOne] at scaledPower
+      omega
 
 end ThreeNPlusMinusOne
