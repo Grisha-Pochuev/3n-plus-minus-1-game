@@ -22,7 +22,7 @@ refinement must discharge.
 namespace ThreeNPlusMinusOne
 
 structure OccurrenceMacroConfiguration where
-  macro : MacroConfiguration
+  base : MacroConfiguration
   outerForest : ProofForest
   innerForest : ProofForest
 
@@ -32,23 +32,23 @@ def occurrenceForestRank (configuration : OccurrenceMacroConfiguration) : Nat :=
 
 inductive OccurrenceMacroStep :
     OccurrenceMacroConfiguration → OccurrenceMacroConfiguration → Prop
-  | macro {next current : OccurrenceMacroConfiguration}
-      (edge : CertifiedMacroStep next.macro current.macro) :
+  | certified {next current : OccurrenceMacroConfiguration}
+      (edge : CertifiedMacroStep next.base current.base) :
       OccurrenceMacroStep next current
   | outerForest {next current : OccurrenceMacroConfiguration}
-      (macro : next.macro = current.macro)
+      (base : next.base = current.base)
       (inner : next.innerForest = current.innerForest)
       (edge : ProofTokenReplacement next.outerForest current.outerForest) :
       OccurrenceMacroStep next current
   | innerForest {next current : OccurrenceMacroConfiguration}
-      (macro : next.macro = current.macro)
+      (base : next.base = current.base)
       (outer : next.outerForest = current.outerForest)
       (edge : ProofTokenReplacement next.innerForest current.innerForest) :
       OccurrenceMacroStep next current
 
 def occurrenceRank (configuration : OccurrenceMacroConfiguration) :
     MacroConfiguration × Nat :=
-  (configuration.macro, occurrenceForestRank configuration)
+  (configuration.base, occurrenceForestRank configuration)
 
 theorem occurrenceMacroStep_decreases
     {next current : OccurrenceMacroConfiguration}
@@ -56,17 +56,17 @@ theorem occurrenceMacroStep_decreases
     Prod.Lex CertifiedMacroStep Nat.lt
       (occurrenceRank next) (occurrenceRank current) := by
   cases edge with
-  | macro edge =>
+  | certified edge =>
       exact Prod.Lex.left edge
-  | outerForest macro inner edge =>
-      rw [occurrenceRank, occurrenceRank, macro]
+  | outerForest base inner edge =>
+      rw [occurrenceRank, occurrenceRank, base]
       apply Prod.Lex.right
       unfold occurrenceForestRank
       rw [inner]
       have decrease := proofTokenReplacement_decreases edge
       omega
-  | innerForest macro outer edge =>
-      rw [occurrenceRank, occurrenceRank, macro]
+  | innerForest base outer edge =>
+      rw [occurrenceRank, occurrenceRank, base]
       apply Prod.Lex.right
       unfold occurrenceForestRank
       rw [outer]
