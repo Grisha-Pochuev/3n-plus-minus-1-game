@@ -180,7 +180,6 @@ theorem sourceASelectingBit_four_mul (base : Nat) :
   have hdiv : (4 * base) / 2 = 2 * base := by omega
   have hmod : (2 * base) % 2 = 0 := by omega
   rw [hdiv, hmod]
-  omega
 
 theorem sourceASelectingBit_four_mul_sub_one
     {base : Nat} (basePositive : 0 < base) :
@@ -192,7 +191,6 @@ theorem sourceASelectingBit_four_mul_sub_one
     omega
   have hmod : (2 * base - 1) % 2 = 1 := by omega
   rw [hdiv, hmod]
-  omega
 
 /-- The lower-exponent return has the expected A-selecting phase: the
 remaining three or more powers of two force the last two bits of the returned
