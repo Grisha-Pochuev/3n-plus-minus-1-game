@@ -33,12 +33,12 @@ theorem selectedFactor_oppositeTwin
   have phaseData := sourceASelectingBit_is_bit source
   rcases phaseData with phaseZero | phaseOne
   · rw [phaseZero] at expandingFrame ⊢
-    simp [Q, A, Nat.pow_succ, Nat.mul_comm, Nat.mul_left_comm,
-      Nat.mul_assoc] at expandingFrame ⊢
+    simp [Q, A, Nat.pow_succ, Nat.mul_comm, Nat.mul_assoc]
+      at expandingFrame ⊢
     omega
   · rw [phaseOne] at expandingFrame ⊢
-    simp [Q, A, Nat.pow_succ, Nat.mul_comm, Nat.mul_left_comm,
-      Nat.mul_assoc] at expandingFrame ⊢
+    simp [Q, A, Nat.pow_succ, Nat.mul_comm, Nat.mul_assoc]
+      at expandingFrame ⊢
     have sourcePositive := embeddedValue_positive source
     have sidePositive := embeddedValue_positive
       (B (Q (embeddedValue source) 1 1))
