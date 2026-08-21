@@ -90,10 +90,12 @@ theorem children (token : LosingToken) :
   | mk position height tree =>
       cases tree with
       | terminal =>
-          omega
+          simp_all [A, B]
       | replies nonterminal replyA replyB =>
           exact ⟨⟨A position, _, replyA⟩, ⟨B position, _, replyB⟩,
-            rfl, rfl, by omega, by omega⟩
+            rfl, rfl,
+            Nat.succ_le_succ (Nat.le_max_left _ _),
+            Nat.succ_le_succ (Nat.le_max_right _ _)⟩
 
 theorem child_strict (token : LosingToken) (nonterminal : 0 < token.position) :
     ∃ first second : WinningToken,
@@ -120,8 +122,11 @@ theorem proofTokenReplacement_decreases
   obtain ⟨before, after, parent, children, rfl, rfl, short, lower⟩ := edge
   have hlocal : tokenRank (children.map ProofToken.height) <
       tokenWeight (ProofToken.height parent) := by
-    apply short_lower_tokenRank_lt short
+    apply short_lower_tokenRank_lt
+    · simpa using short
     intro child member
+    simp only [List.mem_map] at member
+    obtain ⟨child, member, rfl⟩ := member
     exact lower child member
   simp only [proofTokenRank, tokenRank, List.map_append, List.sum_append,
     List.map_cons, List.sum_cons]
