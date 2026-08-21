@@ -30,11 +30,12 @@ theorem exponentThree_high_valuation_source_drops
         2 ^ exponent * embeddedValue returned)
     (highValuation : 4 ≤ exponent) :
     returned < minimum := by
-  by_contra notDrop
-  have returnedSurvives : minimum ≤ returned := by omega
-  have exponentBound := exponentThree_firstValuation_le_three
-    minimumPositive sourceBound sideBound bit returnedSurvives valuation
-  omega
+  by_cases sourceDrops : returned < minimum
+  · exact sourceDrops
+  · have returnedSurvives : minimum ≤ returned := by omega
+    have exponentBound := exponentThree_firstValuation_le_three
+      minimumPositive sourceBound sideBound bit returnedSurvives valuation
+    omega
 
 /-- The same return conclusion expressed as the exact disjunction used by
 the signed-transition case split. -/
