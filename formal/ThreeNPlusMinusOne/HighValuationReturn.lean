@@ -21,7 +21,7 @@ drop.  This is the contradiction used at the opening of Section 33. -/
 theorem exponentThree_high_valuation_source_drops
     {minimum source side returned exponent tailBit : Nat}
     (minimumPositive : 0 < minimum)
-    (minimumDraw : MinimumDrawSource minimum)
+    (_minimumDraw : MinimumDrawSource minimum)
     (sourceBound : source < 2 * minimum)
     (sideBound : 48 * side ≤ 27 * source + 3)
     (bit : Bit tailBit)
