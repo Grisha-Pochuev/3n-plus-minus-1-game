@@ -23,6 +23,20 @@ jobs:
           build: true
           build-args: --wfail
           test: false
+          nanoda: false
+          use-mathlib-cache: false
+      # lean-action v1 currently looks for a `package` declaration when
+      # detecting the nanoda module, while Lake's TOML format keeps `name`
+      # at the top level. Supply an equivalent Lean lakefile only after the
+      # warning-free kernel build, then run nanoda in the same worker.
+      - name: Prepare nanoda module detection
+        run: cp formal/lakefile.nanoda.lean formal/lakefile.lean
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: formal
+          auto-config: false
+          build: false
+          test: false
           nanoda: true
           nanoda-allow-sorry: false
           use-mathlib-cache: false

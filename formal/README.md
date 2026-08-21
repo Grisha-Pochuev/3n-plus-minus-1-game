@@ -76,17 +76,17 @@ Completed foundation:
 5. the nested outer/inner rank and equal-rank control DAG;
 6. a conditional Section 138 theorem with an explicit refinement parameter.
 
-The currently kernel-checked arithmetic front reaches the end of Section 28.
+The currently kernel-checked arithmetic front reaches the end of Section 29.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting
 half of the final switch has its strict height descent; and every remaining
 B-selecting fork transfers to the adjacent frame over its selected source.
-The Section 29 opposite-tail twin switch and the later marked normalizer
+The Section 30 common-child twin recurrence and the later marked normalizer
 remain to be translated before the refinement parameter can be constructed.
 
 Remaining work is to construct `DrawMacroRefinement` by formalizing the
 universal arithmetic guards and the remaining outcome/productivity cases
-beginning with Section 29 and continuing through Section 137. It must not be
+beginning with Section 30 and continuing through Section 137. It must not be
 replaced by an axiom or by a translation of the JSON
 labels which does not prove their game semantics.
