@@ -17,6 +17,7 @@ import ThreeNPlusMinusOne.BSelectingTransfer
 import ThreeNPlusMinusOne.ValuationTwoFilter
 import ThreeNPlusMinusOne.TransferBound
 import ThreeNPlusMinusOne.ASelectingFactor
+import ThreeNPlusMinusOne.OppositeTail
 import ThreeNPlusMinusOne.ReverseFrame
 import ThreeNPlusMinusOne.OriginalNormalForm
 import ThreeNPlusMinusOne.Certificate
