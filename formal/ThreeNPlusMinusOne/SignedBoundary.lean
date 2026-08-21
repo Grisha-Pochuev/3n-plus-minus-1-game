@@ -50,10 +50,8 @@ theorem selectedFactor_exponentOne_side_eq_AA
       oppositePhase = sourceASelectingBit (A source)
   · have phaseComplement :
         phase = 1 - sourceASelectingBit (A source) := by
-      rcases phaseBit with phaseZero | phaseOne <;>
-        rcases nextBit with nextZero | nextOne <;>
-        simp [oppositePhase, phaseZero, phaseOne, nextZero, nextOne] at
-          selecting ⊢
+      rcases phaseBit with phaseValue | phaseValue <;>
+        rcases nextBit with nextValue | nextValue <;> omega
     have secondSelected := A_sourceLift_selected (A source)
     have stateEquation :
         Q (embeddedValue (A (A source))) 1 phase =
@@ -83,9 +81,8 @@ theorem selectedFactor_exponentOne_side_eq_AA
     exact embeddedValue_injective coefficientEquation
   · have nonselecting :
         oppositePhase = 1 - sourceASelectingBit (A source) := by
-      rcases oppositePhaseBit with oppositeZero | oppositeOne <;>
-        rcases nextBit with nextZero | nextOne <;>
-        simp [oppositeZero, oppositeOne, nextZero, nextOne] at selecting ⊢
+      rcases oppositePhaseBit with oppositeValue | oppositeValue <;>
+        rcases nextBit with nextValue | nextValue <;> omega
     obtain ⟨exponent, exponentLarge, nonselectedTail⟩ :=
       sourceLift_nonselected_constantTail (A source)
     have liftedTail : IsConstantTail
