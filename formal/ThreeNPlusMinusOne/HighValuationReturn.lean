@@ -55,4 +55,51 @@ theorem exponentThree_high_valuation_return_case
   exact exponentThree_high_valuation_source_drops minimumPositive
     minimumDraw sourceBound sideBound bit valuation highValuation
 
+/-- Once the signed numerator has been scaled to an even tail product, the
+returned coordinate is exactly the lower-exponent constant tail.  The
+remaining Section 33 obligation is to derive the two hypotheses
+`tailProductEquation` and `tailProductEven` from the concrete valuation. -/
+theorem exponentThree_return_Q_coordinate_of_even_tail
+    {source returned exponent tailBit complementBit tailProduct half : Nat}
+    (bit : Bit tailBit) (complement : complementBit = 1 - tailBit)
+    (tailProductEquation :
+      tailProduct = embeddedValue source * 2 ^ (exponent - 1))
+    (tailProductEven : tailProduct = 2 * half)
+    (signedRelation :
+      2 * embeddedValue returned =
+        if tailBit = 0 then 6 * tailProduct - 2
+        else 6 * tailProduct + 2) :
+    returned = Q (embeddedValue source) (exponent - 1) complementBit := by
+  rcases bit with rfl | rfl
+  · subst complementBit
+    have relation :
+        2 * embeddedValue returned = 6 * tailProduct - 2 := by
+      simpa using signedRelation
+    rw [tailProductEven] at relation ⊢
+    have target :
+        Q (embeddedValue source) (exponent - 1) 1 = 2 * half - 1 := by
+      simp [Q, ← tailProductEquation, Nat.mul_comm]
+    rw [target]
+    rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
+      ⟨returnedHalf, rfl⟩
+    · simp [embeddedValue_formula] at relation
+      omega
+    · simp [embeddedValue_formula] at relation
+      omega
+  · subst complementBit
+    have relation :
+        2 * embeddedValue returned = 6 * tailProduct + 2 := by
+      simpa using signedRelation
+    rw [tailProductEven] at relation ⊢
+    have target :
+        Q (embeddedValue source) (exponent - 1) 0 = 2 * half := by
+      simp [Q, ← tailProductEquation, Nat.mul_comm]
+    rw [target]
+    rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
+      ⟨returnedHalf, rfl⟩
+    · simp [embeddedValue_formula] at relation
+      omega
+    · simp [embeddedValue_formula] at relation
+      omega
+
 end ThreeNPlusMinusOne
