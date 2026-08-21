@@ -97,4 +97,37 @@ theorem selectedFactor_exponentOne_side_eq_AA
     have exponentEquation := (liftedTail.unique exponentOneTail).2.1
     omega
 
+/-- In the A-selecting signed continuation of the exponent-one frame, the
+canonical source of the common child is strictly smaller than the source
+which generated the factor fork. -/
+theorem exponentOne_commonChild_source_strict
+    {source side common rho : Nat} (sourceLarge : 4 ≤ source)
+    (sideEquation : side = A (A source))
+    (phaseEquation :
+      1 - sourceASelectingBit source = sourceASelectingBit side)
+    (commonEquation :
+      common = B (Q (embeddedValue side) 1
+        (1 - sourceASelectingBit source)))
+    (coordinates : StateHasSource common rho) :
+    rho < source := by
+  have commonChild : common = A (A side) ∨ common = B (A side) := by
+    rw [commonEquation, phaseEquation]
+    exact selectedLift_side_child side
+  have commonBound : common ≤ A (A side) := by
+    rcases commonChild with commonA | commonB
+    · rw [commonA]
+    · rw [commonB]
+      exact B_le_A (A side)
+  obtain ⟨sourceExponent, tailExponent, tailBit, coefficient,
+    tail, sourceData⟩ := coordinates
+  have coefficientBound := tail.coefficient_le_half
+  have embeddedBound := sourceData.embedded_le_coefficient
+  rw [embeddedValue_formula] at embeddedBound
+  have firstExpansion := A_double_le source
+  have secondExpansion := A_double_le (A source)
+  have thirdExpansion := A_double_le side
+  have fourthExpansion := A_double_le (A side)
+  rw [sideEquation] at commonBound thirdExpansion fourthExpansion
+  omega
+
 end ThreeNPlusMinusOne
