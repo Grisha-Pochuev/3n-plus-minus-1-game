@@ -1,0 +1,140 @@
+import ThreeNPlusMinusOne.Outcome
+import ThreeNPlusMinusOne.TokenRank
+
+set_option autoImplicit false
+
+/-!
+# Occurrence-preserving proof-token forests
+
+The global routing certificate ranks proof heights, but a height decrease is
+sound only when the corresponding proof occurrence was already present.  This
+file makes that provenance explicit.  A token stores its exact finite proof
+tree, and a forest is a list of such occurrences.  Replacing one occurrence
+by at most two proper proof descendants is kernel-checked to decrease the
+same additive token rank used by the abstract macro certificate.
+
+This is the reusable token-lifecycle layer for the remaining semantic
+refinement.  It does not install a token at a fresh state; callers must supply
+the incoming occurrence explicitly.
+-/
+
+namespace ThreeNPlusMinusOne
+
+structure WinningToken where
+  position : Nat
+  height : Nat
+  tree : WinningTree position height
+
+structure LosingToken where
+  position : Nat
+  height : Nat
+  tree : LosingTree position height
+
+inductive ProofToken
+  | winning (token : WinningToken)
+  | losing (token : LosingToken)
+
+namespace ProofToken
+
+def position : ProofToken → Nat
+  | .winning token => token.position
+  | .losing token => token.position
+
+def height : ProofToken → Nat
+  | .winning token => token.height
+  | .losing token => token.height
+
+end ProofToken
+
+abbrev ProofForest := List ProofToken
+
+def proofTokenRank (forest : ProofForest) : Nat :=
+  tokenRank (forest.map ProofToken.height)
+
+namespace WinningToken
+
+/-- Every retained WIN occurrence exposes its selected LOSS proof child. -/
+theorem selected_loss (token : WinningToken) :
+    ∃ loss : LosingToken,
+      (loss.position = A token.position ∨ loss.position = B token.position) ∧
+        loss.height + 1 = token.height := by
+  cases token with
+  | mk position height tree =>
+      cases tree with
+      | moveA nonterminal reply =>
+          exact ⟨⟨A position, _, reply⟩, Or.inl rfl, rfl⟩
+      | moveB nonterminal reply =>
+          exact ⟨⟨B position, _, reply⟩, Or.inr rfl, rfl⟩
+
+theorem selected_loss_strict (token : WinningToken) :
+    ∃ loss : LosingToken,
+      (loss.position = A token.position ∨ loss.position = B token.position) ∧
+        loss.height < token.height := by
+  obtain ⟨loss, child, height⟩ := selected_loss token
+  exact ⟨loss, child, by omega⟩
+
+end WinningToken
+
+namespace LosingToken
+
+/-- Every retained LOSS occurrence carries both of its WIN children. -/
+theorem children (token : LosingToken) :
+    0 < token.position →
+    ∃ first second : WinningToken,
+      first.position = A token.position ∧
+        second.position = B token.position ∧
+          first.height + 1 ≤ token.height ∧
+          second.height + 1 ≤ token.height := by
+  intro nonterminal
+  cases token with
+  | mk position height tree =>
+      cases tree with
+      | terminal =>
+          omega
+      | replies nonterminal replyA replyB =>
+          exact ⟨⟨A position, _, replyA⟩, ⟨B position, _, replyB⟩,
+            rfl, rfl, by omega, by omega⟩
+
+theorem child_strict (token : LosingToken) (nonterminal : 0 < token.position) :
+    ∃ first second : WinningToken,
+      first.position = A token.position ∧
+        second.position = B token.position ∧
+          first.height < token.height ∧ second.height < token.height := by
+  obtain ⟨first, second, firstPosition, secondPosition, firstHeight,
+    secondHeight⟩ := children token nonterminal
+  exact ⟨first, second, firstPosition, secondPosition, by omega, by omega⟩
+
+end LosingToken
+
+/-- Replace one exact proof occurrence by a short list of lower occurrences. -/
+def ProofTokenReplacement (next current : ProofForest) : Prop :=
+  ∃ before after parent children,
+    current = before ++ parent :: after ∧
+      next = before ++ children ++ after ∧
+        children.length ≤ 2 ∧
+          ∀ child ∈ children, ProofToken.height child < ProofToken.height parent
+
+theorem proofTokenReplacement_decreases
+    {next current : ProofForest} (edge : ProofTokenReplacement next current) :
+    proofTokenRank next < proofTokenRank current := by
+  obtain ⟨before, after, parent, children, rfl, rfl, short, lower⟩ := edge
+  have hlocal : tokenRank (children.map ProofToken.height) <
+      tokenWeight (ProofToken.height parent) := by
+    apply short_lower_tokenRank_lt short
+    intro child member
+    exact lower child member
+  simp only [proofTokenRank, tokenRank, List.map_append, List.sum_append,
+    List.map_cons, List.sum_cons]
+  simp only [tokenRank] at hlocal
+  omega
+
+theorem proofTokenReplacement_wellFounded :
+    WellFounded ProofTokenReplacement := by
+  apply Subrelation.wf
+    (q := ProofTokenReplacement)
+    (r := InvImage Nat.lt proofTokenRank)
+  · intro next current edge
+    exact proofTokenReplacement_decreases edge
+  · exact InvImage.wf proofTokenRank Nat.lt_wfRel.wf
+
+end ThreeNPlusMinusOne
