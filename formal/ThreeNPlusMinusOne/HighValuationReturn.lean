@@ -77,7 +77,7 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
       simpa using signedRelation
     rw [tailProductEven] at relation
     unfold Q
-    simp only [Nat.one_sub_zero]
+    simp
     rw [← tailProductEquation, tailProductEven]
     rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
       ⟨returnedHalf, rfl⟩
@@ -91,7 +91,7 @@ theorem exponentThree_return_Q_coordinate_of_even_tail
       simpa using signedRelation
     rw [tailProductEven] at relation
     unfold Q
-    simp only [Nat.one_sub_one]
+    simp
     rw [← tailProductEquation, tailProductEven]
     rcases even_or_odd returned with ⟨returnedHalf, rfl⟩ |
       ⟨returnedHalf, rfl⟩
