@@ -79,7 +79,10 @@ Completed foundation:
 5. the nested outer/inner rank and equal-rank control DAG;
 6. a conditional Section 138 theorem with an explicit refinement parameter.
 
-The currently kernel-checked arithmetic front reaches the end of Section 32.
+The currently kernel-checked arithmetic front reaches the opening implication of
+Section 33: a first exponent-three valuation at least four forces a strict
+source drop.  The exact returned `Q_{v-1}` coordinate and phase identification
+are still explicit obligations.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting
