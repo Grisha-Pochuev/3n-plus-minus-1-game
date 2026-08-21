@@ -116,6 +116,7 @@ theorem exponentOne_commonChild_source_strict
   have commonBound : common ≤ A (A side) := by
     rcases commonChild with commonA | commonB
     · rw [commonA]
+      exact Nat.le_refl _
     · rw [commonB]
       exact B_le_A (A side)
   obtain ⟨sourceExponent, tailExponent, tailBit, coefficient,
