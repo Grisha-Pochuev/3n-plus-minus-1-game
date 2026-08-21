@@ -157,6 +157,23 @@ theorem proofTokenReplacement_decreases
   simp only [tokenRank] at hlocal
   omega
 
+theorem proofToken_common_grandchild_rank_payment
+    {before after : ProofForest} (token : WinningToken)
+    {grandchild : Nat} (grandchildPositive : 0 < grandchild)
+    (common : CommonGrandchild grandchild token.position) :
+    ∃ descendant : WinningToken,
+      descendant.position = grandchild ∧
+        proofTokenRank
+            (before ++ ProofToken.winning descendant :: after) <
+          proofTokenRank
+            (before ++ ProofToken.winning token :: after) := by
+  obtain ⟨descendant, position, lower⟩ := token.common_grandchild
+    grandchildPositive common
+  refine ⟨descendant, position, ?_⟩
+  apply proofTokenReplacement_decreases
+  apply proofTokenReplacement_single
+  exact by omega
+
 theorem proofTokenReplacement_wellFounded :
     WellFounded ProofTokenReplacement := by
   apply Subrelation.wf
