@@ -169,16 +169,24 @@ theorem common_grandchild (token : CertifiedWinningToken)
   cases token with
   | mk position height certificate =>
       cases certificate with
-      | moveA nonterminal reply =>
+      | @moveA _ replyHeight nonterminal reply =>
           obtain ⟨descendant, descendantPosition, lower⟩ :=
             CertifiedLosingToken.positive_child
               ⟨A position, _, reply⟩ grandchildPositive common.1
-          exact ⟨descendant, descendantPosition, by omega⟩
-      | moveB nonterminal reply =>
+          have replyLower : descendant.height + 1 ≤ replyHeight := by
+            simpa using lower
+          refine ⟨descendant, descendantPosition, ?_⟩
+          change descendant.height + 2 ≤ replyHeight + 1
+          omega
+      | @moveB _ replyHeight nonterminal reply =>
           obtain ⟨descendant, descendantPosition, lower⟩ :=
             CertifiedLosingToken.positive_child
               ⟨B position, _, reply⟩ grandchildPositive common.2
-          exact ⟨descendant, descendantPosition, by omega⟩
+          have replyLower : descendant.height + 1 ≤ replyHeight := by
+            simpa using lower
+          refine ⟨descendant, descendantPosition, ?_⟩
+          change descendant.height + 2 ≤ replyHeight + 1
+          omega
 
 /-- The data-level common-grandchild extraction is a strict height decrease. -/
 theorem common_grandchild_strict (token : CertifiedWinningToken)
