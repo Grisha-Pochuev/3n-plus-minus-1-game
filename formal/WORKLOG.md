@@ -18,7 +18,9 @@
   DRAW parent, extracts an actual DRAW lift from either obligation form, and
   turns an A-selecting shared WIN child into a concrete DRAW-to-WIN boundary.
   The `v≥6` high-return branch now supplies that A-selecting parity guard
-  directly from its constant-tail coordinates.
+  directly from its constant-tail coordinates.  The odd-coefficient `v=5`
+  branch is now recorded separately as the exact exceptional equality, so
+  the long-range guard is not silently extended across an invalid case.
 - Updated `README.md`, `PROOF_MAP.md`, and `COVERAGE.md` in the same change.
   The records deliberately do not claim that the global DRAW refinement or
   the Section 34 outcome-routing step has been completed.

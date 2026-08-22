@@ -258,6 +258,38 @@ theorem highReturn_long_AA_parity_guard
   rw [expansionParity, contractingPhase]
   rcases bit with tailZero | tailOne <;> omega
 
+/-- The omitted short-long case `v=5` is a genuine exceptional phase: when
+the returned coefficient is odd, the next two expansions of its contracting
+side have exactly the A-selecting phase, rather than the complementary phase
+required by the Section 24 transfer. -/
+theorem highReturn_v5_AA_parity_exception
+    {coefficient tailBit : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) :
+    A (A (B (Q coefficient 4 tailBit))) % 2 =
+      sourceASelectingBit (B (Q coefficient 4 tailBit)) := by
+  have contractingChild := highReturn_contracting_child positive bit
+    (by omega : 4 ≤ 5)
+  have firstExpansion :
+      A (B (Q coefficient 4 tailBit)) = Q (9 * coefficient) 1 tailBit := by
+    rw [contractingChild]
+    simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega] using
+      A_Q (by omega : 0 < 3 * coefficient) bit (by omega : 1 ≤ 2)
+  have secondExpansion :
+      A (A (B (Q coefficient 4 tailBit))) = Q (27 * coefficient) 0 tailBit := by
+    rw [firstExpansion]
+    simpa [show 3 * (9 * coefficient) = 27 * coefficient by omega] using
+      A_Q (by omega : 0 < 9 * coefficient) bit (by omega : 1 ≤ 1)
+  have contractingPhase := highReturn_long_contracting_phase positive bit
+    (by omega : 5 ≤ 5)
+  rw [secondExpansion, contractingPhase]
+  obtain ⟨half, coefficientShape⟩ := odd
+  rcases bit with tailZero | tailOne
+  · rw [tailZero, coefficientShape]
+    simp [Q] <;> omega
+  · rw [tailOne, coefficientShape]
+    simp [Q] <;> omega
+
 /-- Conditional nonexceptional Section 35 transfer.  For every `v≥6`, once
 the exact returned `DRAW` obligation and its common-child WIN witness are
 supplied, it yields a concrete DRAW-to-WIN boundary at that child. -/
