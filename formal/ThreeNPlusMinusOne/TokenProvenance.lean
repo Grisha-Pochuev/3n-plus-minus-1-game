@@ -175,6 +175,37 @@ theorem proofToken_common_grandchild_rank_payment
   have hdesc : descendant.height < token.height := by omega
   simpa [ProofToken.height] using hdesc
 
+/-- Replacing two already retained occurrences by two lower occurrences pays
+the same forest rank.  This is intentionally a replacement of named tokens,
+not an installation of finite outcomes at fresh positions. -/
+theorem proofToken_pair_replacement_decreases
+    {before middle after : ProofForest}
+    {firstParent firstChild secondParent secondChild : ProofToken}
+    (firstLower : ProofToken.height firstChild < ProofToken.height firstParent)
+    (secondLower : ProofToken.height secondChild < ProofToken.height secondParent) :
+    proofTokenRank
+        (before ++ [firstChild] ++ middle ++ [secondChild] ++ after) <
+      proofTokenRank
+        (before ++ [firstParent] ++ middle ++ [secondParent] ++ after) := by
+  have firstStep :
+      ProofTokenReplacement
+        (before ++ [firstChild] ++ middle ++ [secondParent] ++ after)
+        (before ++ [firstParent] ++ middle ++ [secondParent] ++ after) := by
+    simpa [List.append_assoc] using
+      (proofTokenReplacement_single
+        (before := before) (after := middle ++ [secondParent] ++ after)
+        (parent := firstParent) (child := firstChild) firstLower)
+  have secondStep :
+      ProofTokenReplacement
+        (before ++ [firstChild] ++ middle ++ [secondChild] ++ after)
+        (before ++ [firstChild] ++ middle ++ [secondParent] ++ after) := by
+    simpa [List.append_assoc] using
+      (proofTokenReplacement_single
+        (before := before ++ [firstChild] ++ middle) (after := after)
+        (parent := secondParent) (child := secondChild) secondLower)
+  exact lt_trans (proofTokenReplacement_decreases secondStep)
+    (proofTokenReplacement_decreases firstStep)
+
 theorem proofTokenReplacement_wellFounded :
     WellFounded ProofTokenReplacement := by
   apply Subrelation.wf
