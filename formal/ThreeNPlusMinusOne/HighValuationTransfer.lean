@@ -154,6 +154,61 @@ theorem exponentThree_return_contracting_constantTail_from_valuations
   exact exponentThree_return_Q_coordinate_from_valuations bit
     (by omega) tailProductEquation firstValuation returnValuation
 
+/-- The B-selecting lift at the returned Section 33 source has exact
+valuation two.  This is the arithmetic input needed to turn an actual DRAW
+carrier at that lift into the Section 35 obligation over its B-child. -/
+theorem highReturn_bSelecting_valuation_two
+    {coefficient exponent tailBit : Nat}
+    (positive : 0 < coefficient) (bit : Bit tailBit)
+    (exponentLarge : 4 ≤ exponent) :
+    BSelectingValuationTwo (Q coefficient (exponent - 1) tailBit) := by
+  have selectingPhase :
+      sourceASelectingBit (Q coefficient (exponent - 1) tailBit) =
+        1 - tailBit :=
+    sourceASelectingBit_Q_long positive bit (by omega : 2 ≤ exponent - 1)
+  have doubleComplement : 1 - (1 - tailBit) = tailBit := by
+    rcases bit with tailZero | tailOne <;> omega
+  have returnedChild := highReturn_contracting_child positive bit exponentLarge
+  have returnedEmbedded :
+      embeddedValue (Q coefficient (exponent - 1) tailBit) =
+        2 * Q (3 * coefficient) (exponent - 2) tailBit + 1 := by
+    unfold embeddedValue
+    rw [A_Q positive bit (by omega : 1 ≤ exponent - 1)]
+  have childEmbedded :
+      embeddedValue (B (Q coefficient (exponent - 1) tailBit)) =
+        2 * Q (9 * coefficient) (exponent - 4) tailBit + 1 := by
+    rw [returnedChild]
+    unfold embeddedValue
+    simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega,
+      show exponent - 3 - 1 = exponent - 4 by omega] using
+      A_Q (by omega : 0 < 3 * coefficient) bit
+        (by omega : 1 ≤ exponent - 3)
+  have powerSplit : 2 ^ (exponent - 2) = 4 * 2 ^ (exponent - 4) := by
+    obtain ⟨rest, restShape⟩ : ∃ rest, exponent - 2 = rest + 2 :=
+      ⟨exponent - 4, by omega⟩
+    rw [restShape]
+    have restEquation : rest = exponent - 4 := by omega
+    rw [restEquation]
+    simp [Nat.pow_add, Nat.mul_comm]
+  have valuation :
+      3 * embeddedValue (Q coefficient (exponent - 1) tailBit) + 1 -
+          2 * tailBit =
+        2 ^ 2 * embeddedValue (B (Q coefficient (exponent - 1) tailBit)) := by
+    rw [returnedEmbedded, childEmbedded]
+    rcases bit with tailZero | tailOne
+    · rw [tailZero]
+      simp [Q, powerSplit, Nat.mul_assoc, Nat.mul_comm,
+        Nat.mul_left_comm]
+      omega
+    · rw [tailOne]
+      simp [Q, powerSplit, Nat.mul_assoc, Nat.mul_comm,
+        Nat.mul_left_comm]
+      omega
+  unfold BSelectingValuationTwo
+  rw [selectingPhase, doubleComplement]
+  exact signedTransition_tail (embeddedValue_positive _)
+    (embeddedValue_positive _) (embeddedValue_odd _) bit (by omega) valuation
+
 /-- In the boundary `v=4` case, the returned contracting side has selecting
 bit `e`; hence its Section 35 obligation phase is the B-selecting complement
 `1-e`. -/
