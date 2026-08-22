@@ -691,4 +691,27 @@ theorem highReturn_long_draw_to_lower_winning_boundary
   exact ⟨drawLift, commonHeight, drawLiftDraw, drawLiftChild,
     commonTree, lower⟩
 
+/-- The complete local `v≥6` Section 35 boundary can be entered directly
+from a concrete DRAW at the Section 33 return lift.  The two Section 34 WIN
+carriers remain explicit hypotheses, so this result does not manufacture an
+outcome-routing step. -/
+theorem highReturn_lift_draw_to_lower_winning_boundary
+    {coefficient exponent tailBit height : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) (exponentLarge : 6 ≤ exponent)
+    (liftDraw : Draw
+      (Q (embeddedValue (Q coefficient (exponent - 1) tailBit)) 1 tailBit))
+    (sideTree :
+      WinningTree (B (Q coefficient (exponent - 1) tailBit)) height)
+    (selectedWinning : Winning (A (B (Q coefficient (exponent - 1) tailBit)))) :
+    ∃ drawLift commonHeight,
+      Draw drawLift ∧
+      B drawLift = B (A (B (Q coefficient (exponent - 1) tailBit))) ∧
+      WinningTree (B (A (B (Q coefficient (exponent - 1) tailBit))))
+        commonHeight ∧ commonHeight + 2 ≤ height := by
+  apply highReturn_long_draw_to_lower_winning_boundary
+    positive odd bit exponentLarge sideTree selectedWinning
+  exact highReturn_draw_obligation_of_lift_draw positive bit
+    (by omega : 4 ≤ exponent) liftDraw
+
 end ThreeNPlusMinusOne
