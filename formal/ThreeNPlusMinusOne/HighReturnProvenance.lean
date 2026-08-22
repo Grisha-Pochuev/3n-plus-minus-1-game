@@ -143,8 +143,10 @@ theorem highReturn_long_retained_pair_outer_steps
                 innerForest := innerForest } := by
   obtain ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
     firstLower, secondLower, _⟩ :=
-    highReturn_long_retained_pair_rank_payment positive odd bit exponentLarge
-      returnedToken contractingToken returnedPosition contractingPosition
+    highReturn_long_retained_pair_rank_payment
+      (before := before) (middle := middle) (after := after)
+      positive odd bit exponentLarge returnedToken contractingToken
+      returnedPosition contractingPosition
   refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
     ?_, ?_⟩
   · refine OccurrenceMacroStep.outerForest
