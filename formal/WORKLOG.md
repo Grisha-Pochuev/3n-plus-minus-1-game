@@ -53,6 +53,11 @@
   both individual heights and the common forest rank strictly lower. The
   file deliberately supplies no fresh pair and makes no claim about entry,
   carry, or a later re-entry.
+- Extended that retained-pair result to the occurrence refinement boundary:
+  the two replacements are now constructed as two explicit equal-base
+  `OccurrenceMacroStep.outerForest` steps.  This proves legality and rank
+  payment of the local occurrence update, but deliberately does not assume or
+  prove preservation of a semantic `Bad` predicate along it.
 
 ## Verification record
 
@@ -72,6 +77,10 @@
   paired common-grandchild packaging, and its long high-return specialization.
   Each run used exactly one GitHub Actions job. Run #13 exposed a namespace
   spelling error in the intermediate proof and was repaired in run #14.
+- Run #19 checked the explicit embedding of the retained high-return pair
+  replacement into two occurrence-level outer-forest steps. It used exactly
+  one GitHub Actions job. Runs #17--18 exposed elaboration errors in the first
+  draft; they were repaired rather than hidden or weakened.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
