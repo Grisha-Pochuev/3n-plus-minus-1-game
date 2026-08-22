@@ -73,6 +73,14 @@ theorem selected_loss_strict (token : WinningToken) :
   obtain ⟨loss, child, height⟩ := selected_loss token
   exact ⟨loss, child, by omega⟩
 
+/-- A retained WIN token is necessarily nonterminal. -/
+theorem positive (token : WinningToken) : 0 < token.position := by
+  cases token with
+  | mk position height tree =>
+      cases tree with
+      | moveA nonterminal _ => exact nonterminal
+      | moveB nonterminal _ => exact nonterminal
+
 /- A common grandchild can replace the retained WIN occurrence by an exact
    lower occurrence, rather than by a merely numerical state. -/
 theorem common_grandchild
@@ -205,6 +213,37 @@ theorem proofToken_pair_replacement_decreases
         (parent := secondParent) (child := secondChild) secondLower)
   exact Nat.lt_trans (proofTokenReplacement_decreases secondStep)
     (proofTokenReplacement_decreases firstStep)
+
+/-- Two retained WIN tokens can be replaced together by positive common
+grandchildren of their respective positions.  The result keeps the exact
+descendant occurrences and proves the forest-rank payment in one statement. -/
+theorem proofToken_pair_common_grandchild_rank_payment
+    {before middle after : ProofForest}
+    (first second : WinningToken)
+    {firstGrandchild secondGrandchild : Nat}
+    (firstPositive : 0 < firstGrandchild)
+    (secondPositive : 0 < secondGrandchild)
+    (firstCommon : CommonGrandchild firstGrandchild first.position)
+    (secondCommon : CommonGrandchild secondGrandchild second.position) :
+    ∃ firstDescendant secondDescendant : WinningToken,
+      firstDescendant.position = firstGrandchild ∧
+        secondDescendant.position = secondGrandchild ∧
+          proofTokenRank
+              (before ++ [ProofToken.winning firstDescendant] ++ middle ++
+                [ProofToken.winning secondDescendant] ++ after) <
+            proofTokenRank
+              (before ++ [ProofToken.winning first] ++ middle ++
+                [ProofToken.winning second] ++ after) := by
+  obtain ⟨firstDescendant, firstPosition, firstBound⟩ :=
+    first.common_grandchild firstPositive firstCommon
+  obtain ⟨secondDescendant, secondPosition, secondBound⟩ :=
+    second.common_grandchild secondPositive secondCommon
+  refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition, ?_⟩
+  apply proofToken_pair_replacement_decreases
+  · simpa [ProofToken.height] using
+      (show firstDescendant.height < first.height by omega)
+  · simpa [ProofToken.height] using
+      (show secondDescendant.height < second.height by omega)
 
 theorem proofTokenReplacement_wellFounded :
     WellFounded ProofTokenReplacement := by
