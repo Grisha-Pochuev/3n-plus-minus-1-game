@@ -112,10 +112,10 @@ theorem FiniteOutcomeRoute.realize
       | losing tree covers =>
           unfold ConjugatedMove at move
           rcases move with ⟨nonterminal, nextA | nextB⟩
-          · subst next
+          · cases nextA
             exact RouteTree.winning (WinningTree.moveA nonterminal tree)
               (WinningTreeCovers.moveA nonterminal tree covers)
-          · subst next
+          · cases nextB
             exact RouteTree.winning (WinningTree.moveB nonterminal tree)
               (WinningTreeCovers.moveB nonterminal tree covers)
   | losingStop losing =>
@@ -126,13 +126,13 @@ theorem FiniteOutcomeRoute.realize
       | winning tree covers =>
           unfold ConjugatedMove at move
           rcases move with ⟨nonterminal, nextA | nextB⟩
-          · subst next
+          · cases nextA
             obtain ⟨_, otherWinning⟩ := losing.children_winning nonterminal
             obtain ⟨_, otherTree⟩ := otherWinning
             exact RouteTree.losing
               (LosingTree.replies nonterminal tree otherTree)
               (LosingTreeCovers.repliesA nonterminal tree otherTree covers)
-          · subst next
+          · cases nextB
             obtain ⟨otherWinning, _⟩ := losing.children_winning nonterminal
             obtain ⟨_, otherTree⟩ := otherWinning
             exact RouteTree.losing
