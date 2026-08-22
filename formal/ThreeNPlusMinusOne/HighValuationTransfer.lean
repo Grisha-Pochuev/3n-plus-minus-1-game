@@ -361,6 +361,121 @@ theorem highReturn_v5_AA_parity_exception
   · rw [tailOne, coefficientShape]
     simp [Q] <;> omega
 
+/-- A `WIN` tree whose `A` child is already known to be `WIN` must select its
+`B` child.  Either child of that selected LOSS reply is consequently a WIN
+occurrence at least two proof levels lower. -/
+theorem WinningTree.twoLevelDrop_of_A_winning
+    {state common height : Nat}
+    (tree : WinningTree state height) (siblingWinning : Winning (A state))
+    (commonEquation : common = A (B state) ∨ common = B (B state)) :
+    ∃ commonHeight, WinningTree common commonHeight ∧
+      commonHeight + 2 ≤ height := by
+  cases tree with
+  | moveA _ reply =>
+      apply False.elim
+      exact siblingWinning.not_losing ⟨_, reply⟩
+  | moveB nonterminal reply =>
+      have replyOutcome : Losing (B state) := ⟨_, reply⟩
+      have commonWinning : Winning common := by
+        rcases commonEquation with commonA | commonB
+        · rw [commonA]
+          exact (replyOutcome.children_winning (B_pos nonterminal)).1
+        · rw [commonB]
+          exact (replyOutcome.children_winning (B_pos nonterminal)).2
+      have commonPositive : 0 < common := by
+        by_cases commonZero : common = 0
+        · apply False.elim
+          apply commonWinning.not_losing
+          rw [commonZero]
+          exact terminal_losing
+        · omega
+      obtain ⟨commonHeight, commonTree, lower⟩ :=
+        reply.positive_child_lower commonPositive commonEquation
+      exact ⟨commonHeight, commonTree, by omega⟩
+
+/-- At the short nonexceptional boundary `v=6`, the common side
+`B(A(Z))` is the contracting child of the LOSS sibling `B(Z)`. -/
+theorem highReturn_v6_common_side_child
+    {coefficient tailBit : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) :
+    B (A (B (Q coefficient 5 tailBit))) =
+      B (B (B (Q coefficient 5 tailBit))) := by
+  have contractingChild := highReturn_contracting_child positive bit
+    (by omega : 4 ≤ 6)
+  have ninePositive : 0 < 9 * coefficient := by omega
+  have nineOdd : OddNat (9 * coefficient) := by
+    obtain ⟨half, coefficientShape⟩ := odd
+    exact ⟨9 * half + 4, by rw [coefficientShape]; omega⟩
+  calc
+    B (A (B (Q coefficient 5 tailBit))) =
+        B (A (Q (3 * coefficient) 3 tailBit)) := by
+      rw [contractingChild]
+    _ = B (Q (9 * coefficient) 2 tailBit) := by
+      rw [A_Q (by omega : 0 < 3 * coefficient) bit (by omega : 1 ≤ 3)]
+    _ = B (Q (9 * coefficient) 1 tailBit) := by
+      exact (B_Q_one_eq_two ninePositive nineOdd bit).symm
+    _ = B (Q (3 * coefficient) 3 tailBit) := by
+      rw [B_Q (by omega : 0 < 3 * coefficient) bit (by omega : 3 ≤ 3)]
+    _ = B (B (Q coefficient 5 tailBit)) := by
+      rw [contractingChild]
+
+/-- Beyond `v=6`, the same common side is the expanding child of the LOSS
+sibling `B(Z)`. -/
+theorem highReturn_v_ge7_common_side_child
+    {coefficient exponent tailBit : Nat}
+    (positive : 0 < coefficient) (bit : Bit tailBit)
+    (exponentLarge : 7 ≤ exponent) :
+    B (A (B (Q coefficient (exponent - 1) tailBit))) =
+      A (B (B (Q coefficient (exponent - 1) tailBit))) := by
+  have contractingChild := highReturn_contracting_child positive bit
+    (by omega : 4 ≤ exponent)
+  have returnedGrandchild :
+      B (B (Q coefficient (exponent - 1) tailBit)) =
+        Q (9 * coefficient) (exponent - 5) tailBit := by
+    rw [contractingChild]
+    exact B_Q (by omega : 0 < 3 * coefficient) bit (by omega : 3 ≤ exponent - 3)
+  calc
+    B (A (B (Q coefficient (exponent - 1) tailBit))) =
+        B (A (Q (3 * coefficient) (exponent - 3) tailBit)) := by
+      rw [contractingChild]
+    _ = B (Q (9 * coefficient) (exponent - 4) tailBit) := by
+      rw [A_Q (by omega : 0 < 3 * coefficient) bit
+        (by omega : 1 ≤ exponent - 3)]
+    _ = Q (27 * coefficient) (exponent - 6) tailBit := by
+      simpa [show 3 * (9 * coefficient) = 27 * coefficient by omega] using
+        B_Q (by omega : 0 < 9 * coefficient) bit
+          (by omega : 3 ≤ exponent - 4)
+    _ = A (Q (9 * coefficient) (exponent - 5) tailBit) := by
+      symm
+      simpa [show 3 * (9 * coefficient) = 27 * coefficient by omega] using
+        A_Q (by omega : 0 < 9 * coefficient) bit
+          (by omega : 1 ≤ exponent - 5)
+    _ = A (B (B (Q coefficient (exponent - 1) tailBit))) := by
+      rw [returnedGrandchild]
+
+/-- The Section 35 common side has a concrete WIN tree two levels below a
+given returned-side tree, provided the Section 34 selected child is WIN.
+The `v=6` and `v≥7` child orientations are handled explicitly. -/
+theorem highReturn_long_common_side_height_drop
+    {coefficient exponent tailBit height : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) (exponentLarge : 6 ≤ exponent)
+    (tree : WinningTree (B (Q coefficient (exponent - 1) tailBit)) height)
+    (selectedWinning : Winning (A (B (Q coefficient (exponent - 1) tailBit)))) :
+    ∃ commonHeight,
+      WinningTree (B (A (B (Q coefficient (exponent - 1) tailBit))))
+        commonHeight ∧ commonHeight + 2 ≤ height := by
+  by_cases boundary : exponent = 6
+  · subst exponent
+    apply WinningTree.twoLevelDrop_of_A_winning tree selectedWinning
+    right
+    exact highReturn_v6_common_side_child positive odd bit
+  · have longRange : 7 ≤ exponent := by omega
+    apply WinningTree.twoLevelDrop_of_A_winning tree selectedWinning
+    left
+    exact highReturn_v_ge7_common_side_child positive bit longRange
+
 /-- Conditional nonexceptional Section 35 transfer.  For every `v≥6`, once
 the exact returned `DRAW` obligation and its common-child WIN witness are
 supplied, it yields a concrete DRAW-to-WIN boundary at that child. -/
@@ -383,5 +498,37 @@ theorem highReturn_long_draw_to_winning_boundary
   exact selectedObligation_draw_to_winning_boundary obligation
     (highReturn_long_AA_parity_guard positive bit exponentLarge)
     targetWinning
+
+/-- Full local Section 35 boundary for `v≥6`.  A retained WIN tree at the
+returned contracting side and its selected Section 34 WIN child make the
+common side an explicit lower WIN occurrence; the exact DRAW obligation then
+ends at that same occurrence.  This theorem deliberately keeps those actual
+outcome carriers as hypotheses rather than manufacturing a fresh one. -/
+theorem highReturn_long_draw_to_lower_winning_boundary
+    {coefficient exponent tailBit height : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) (exponentLarge : 6 ≤ exponent)
+    (sideTree :
+      WinningTree (B (Q coefficient (exponent - 1) tailBit)) height)
+    (selectedWinning : Winning (A (B (Q coefficient (exponent - 1) tailBit))))
+    (obligation :
+      DrawObligation (B (Q coefficient (exponent - 1) tailBit))
+        (1 - tailBit)) :
+    ∃ drawLift commonHeight,
+      Draw drawLift ∧
+      B drawLift = B (A (B (Q coefficient (exponent - 1) tailBit))) ∧
+      WinningTree (B (A (B (Q coefficient (exponent - 1) tailBit))))
+        commonHeight ∧ commonHeight + 2 ≤ height := by
+  obtain ⟨commonHeight, commonTree, lower⟩ :=
+    highReturn_long_common_side_height_drop positive odd bit exponentLarge
+      sideTree selectedWinning
+  have commonWinning :
+      Winning (B (A (B (Q coefficient (exponent - 1) tailBit)))) :=
+    ⟨commonHeight, commonTree⟩
+  obtain ⟨drawLift, drawLiftDraw, drawLiftChild, _⟩ :=
+    highReturn_long_draw_to_winning_boundary positive bit exponentLarge
+      obligation commonWinning
+  exact ⟨drawLift, commonHeight, drawLiftDraw, drawLiftChild,
+    commonTree, lower⟩
 
 end ThreeNPlusMinusOne
