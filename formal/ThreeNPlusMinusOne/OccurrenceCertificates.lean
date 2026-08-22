@@ -246,8 +246,14 @@ def certifiedProofTokenRank (forest : CertifiedProofForest) : Nat :=
 theorem certifiedProofTokenRank_toProofForest (forest : CertifiedProofForest) :
     proofTokenRank forest.toProofForest = certifiedProofTokenRank forest := by
   unfold proofTokenRank certifiedProofTokenRank CertifiedProofForest.toProofForest
-  simp only [List.map_map, Function.comp_apply,
-    CertifiedProofToken.erase_height]
+  apply congrArg tokenRank
+  induction forest with
+  | nil => rfl
+  | cons token forest ih =>
+      simp only [List.map_cons, List.cons.injEq, ih, and_true]
+      change ProofToken.height (CertifiedProofToken.erase token) =
+        CertifiedProofToken.height token
+      exact CertifiedProofToken.erase_height token
 
 /-- Replace one retained data-level occurrence by at most two already stored
 lower data-level descendants. -/
