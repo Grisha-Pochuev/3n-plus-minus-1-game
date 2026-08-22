@@ -73,6 +73,18 @@
   data-level proof-token forest, a replacement relation with at most two
   lower descendants, a strict well-founded rank, and a one-way erasure proof
   into the existing logical occurrence forest.
+- Added `CertifiedOccurrenceRefinement.lean`, a data-level macro boundary over
+  those certificate forests. Its rank is well-founded, every step erases to
+  the prior occurrence macro step, and it exposes a conditional no-DRAW
+  theorem with the semantic `lift`/`progress` obligations still explicit.
+- Added `CertifiedHighReturnProvenance.lean`. For the retained `v≥7` pair it
+  carries the two concrete common-grandchild certificates, their strict rank
+  payment, and both equal-base data-level macro steps. It does not provide
+  entry, carry, or preinstallation of that pair.
+- Added `CertifiedProofPathProvenance.lean`. It is the data-level analogue of
+  first-exit provenance: every legal path either follows the precise stored
+  certificate choices or yields a lower stored LOSS certificate, registered
+  immediately as a data-level macro replacement.
 
 ## Verification record
 
@@ -107,6 +119,10 @@
   single Lean kernel and `leanchecker` job. Runs #33, #35, and #36 exposed
   intermediate height-normalization and proposition-elimination issues; they
   were repaired without weakening the checked claims.
+- Runs #38, #39, #40, and #41 checked, respectively, the data-level
+  high-return rank payment, data-level macro refinement/erasure, its
+  high-return embedding, and data-level first-exit provenance. Each run had
+  exactly one Lean kernel and `leanchecker` job.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
@@ -118,7 +134,8 @@ Prove the entry, carry, and no-reseed part of the long high-return lifecycle:
 use a finite preinstalled **data-level** proof forest to cover every zero-rank
 route until a strict first-exit/descendant payment occurs, without rebuilding
 a taller compatible tree after the future branch is known. Connect that
-invariant to the actual Section 33--34 DRAW/WIN carriers. The `v=5`
-exceptional branch remains a separate finite target.
+invariant to the actual Section 33--34 DRAW/WIN carriers and use it to build
+the concrete `CertifiedOccurrenceDrawMacroRefinement`. The `v=5` exceptional
+branch remains a separate finite target.
 The remaining global boundary remains the construction of
 `DrawMacroRefinement`; it is not an axiom and is not closed by this change.

@@ -69,6 +69,12 @@ extracted from already stored data, and a certified forest has a strict
 replacement rank whose one-way erasure agrees with the existing logical
 occurrence rank. No bare `Winning` or `Losing` proposition is converted into
 such a certificate after a route is known.
+`CertifiedOccurrenceRefinement.lean` lifts that carrier to the macro boundary
+and erases every data-level step into the existing occurrence relation.
+`CertifiedHighReturnProvenance.lean` realizes the retained `v≥7` pair payment
+as two such data-level macro steps, and
+`CertifiedProofPathProvenance.lean` gives the corresponding data-level
+first-exit alternative for an arbitrary legal path.
 `OccurrenceRefinement.lean` makes the remaining no-reseed condition explicit:
 an occurrence forest may change at equal macro rank only by such a certified
 replacement, while a fresh forest is permitted only after a strict macro step.
@@ -132,8 +138,9 @@ still-open task is a finite *preinstalled* forest that covers all relevant
 zero-rank routes without such reseeding.
 The data-level certificate forest now supplies a sound carrier for that task:
 its individual branch choices survive across certified descendants, but the
-concrete preinstallation, route coverage, and semantic `Bad` invariant have
-not yet been constructed.
+data-level first-exit and safe long-return replacements are now checked. The
+concrete preinstallation, universal route coverage, and semantic `Bad`
+invariant have not yet been constructed.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting
