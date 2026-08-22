@@ -228,22 +228,27 @@ theorem proofToken_pair_common_grandchild_rank_payment
     ∃ firstDescendant secondDescendant : WinningToken,
       firstDescendant.position = firstGrandchild ∧
         secondDescendant.position = secondGrandchild ∧
-          proofTokenRank
-              (before ++ [ProofToken.winning firstDescendant] ++ middle ++
-                [ProofToken.winning secondDescendant] ++ after) <
-            proofTokenRank
-              (before ++ [ProofToken.winning first] ++ middle ++
-                [ProofToken.winning second] ++ after) := by
+          firstDescendant.height < first.height ∧
+            secondDescendant.height < second.height ∧
+              proofTokenRank
+                  (before ++ [ProofToken.winning firstDescendant] ++ middle ++
+                    [ProofToken.winning secondDescendant] ++ after) <
+                proofTokenRank
+                  (before ++ [ProofToken.winning first] ++ middle ++
+                    [ProofToken.winning second] ++ after) := by
   obtain ⟨firstDescendant, firstPosition, firstBound⟩ :=
     first.common_grandchild firstPositive firstCommon
   obtain ⟨secondDescendant, secondPosition, secondBound⟩ :=
     second.common_grandchild secondPositive secondCommon
-  refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition, ?_⟩
+  have firstLower : firstDescendant.height < first.height := by omega
+  have secondLower : secondDescendant.height < second.height := by omega
+  refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
+    firstLower, secondLower, ?_⟩
   apply proofToken_pair_replacement_decreases
   · simpa [ProofToken.height] using
-      (show firstDescendant.height < first.height by omega)
+      firstLower
   · simpa [ProofToken.height] using
-      (show secondDescendant.height < second.height by omega)
+      secondLower
 
 theorem proofTokenReplacement_wellFounded :
     WellFounded ProofTokenReplacement := by
