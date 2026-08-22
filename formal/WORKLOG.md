@@ -41,6 +41,11 @@
   Section 33 return lift now yields the Section 35 `DrawObligation` for the
   returned contracting side. This remains conditional on that actual DRAW
   carrier; no Section 33--34 outcome-routing premise was added or hidden.
+- Composed that bridge with the `v≥6` lower-height boundary. A concrete DRAW
+  at the return lift, a returned-side WIN tree, and the selected Section 34
+  WIN witness now give one exact DRAW-to-WIN boundary at the common side with
+  a WIN proof tree at least two levels lower. Those three outcome carriers
+  remain parameters of the theorem.
 
 ## Verification record
 
@@ -54,6 +59,8 @@
   checked its concrete DRAW-lift-to-obligation bridge. Each run contained
   exactly one GitHub Actions job. Run #9 exposed an intermediate proof error;
   it was repaired before run #10 rather than being suppressed.
+- Run #12 checked the composed direct return-lift-to-lower-WIN boundary with
+  the same single job.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is

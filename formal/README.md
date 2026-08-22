@@ -58,7 +58,8 @@ constant-tail certificates. Every positive high-return coordinate now has
 the exact B-selecting valuation-two transition, and an explicitly supplied
 DRAW at its return lift yields the returned-side obligation. For `v≥6`, the
 common side is linked to the forced LOSS sibling, producing the explicit
-lower-height DRAW-to-WIN boundary once the actual carriers are supplied. The
+lower-height DRAW-to-WIN boundary directly when the actual carriers are
+supplied. The
 single-worker Lean verification completed successfully. `TokenProvenance.lean` carries exact
 finite proof-tree occurrences and proves strict rank payment for replacements
 by lower occurrences.
