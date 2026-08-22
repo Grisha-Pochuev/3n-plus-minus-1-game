@@ -51,6 +51,22 @@ certificate and either stored branch of a data-level LOSS certificate. -/
           (LosingCertificate.replies nonterminal replyA replyB) (position :: path)
 end
 
+theorem WinningCertificateCovers.starts_at :
+    {position height : Nat} → {certificate : WinningCertificate position height} →
+      {path : List Nat} → WinningCertificateCovers certificate path →
+        ∃ rest, path = position :: rest
+  | _, _, _, _, .stop _ => ⟨[], rfl⟩
+  | _, _, _, _, .moveA _ _ _ => ⟨_, rfl⟩
+  | _, _, _, _, .moveB _ _ _ => ⟨_, rfl⟩
+
+theorem LosingCertificateCovers.starts_at :
+    {position height : Nat} → {certificate : LosingCertificate position height} →
+      {path : List Nat} → LosingCertificateCovers certificate path →
+        ∃ rest, path = position :: rest
+  | _, _, _, _, .stop _ => ⟨[], rfl⟩
+  | _, _, _, _, .repliesA _ _ _ _ => ⟨_, rfl⟩
+  | _, _, _, _, .repliesB _ _ _ _ => ⟨_, rfl⟩
+
 /- Every data-level coverage witness follows actual legal conjugated moves. -/
 mutual
   theorem WinningCertificateCovers.gamePath :
@@ -58,11 +74,15 @@ mutual
         {path : List Nat} → WinningCertificateCovers certificate path →
           GamePath path
     | _, _, _, _, .stop _ => trivial
-    | _, _, _, _, .moveA nonterminal reply covered =>
-        ⟨⟨nonterminal, Or.inl rfl⟩,
+    | _, _, _, _, .moveA nonterminal reply covered => by
+        obtain ⟨rest, tailEq⟩ := LosingCertificateCovers.starts_at covered
+        cases tailEq
+        exact ⟨⟨nonterminal, Or.inl rfl⟩,
           LosingCertificateCovers.gamePath covered⟩
-    | _, _, _, _, .moveB nonterminal reply covered =>
-        ⟨⟨nonterminal, Or.inr rfl⟩,
+    | _, _, _, _, .moveB nonterminal reply covered => by
+        obtain ⟨rest, tailEq⟩ := LosingCertificateCovers.starts_at covered
+        cases tailEq
+        exact ⟨⟨nonterminal, Or.inr rfl⟩,
           LosingCertificateCovers.gamePath covered⟩
 
   theorem LosingCertificateCovers.gamePath :
@@ -70,11 +90,15 @@ mutual
         {path : List Nat} → LosingCertificateCovers certificate path →
           GamePath path
     | _, _, _, _, .stop _ => trivial
-    | _, _, _, _, .repliesA nonterminal replyA replyB covered =>
-        ⟨⟨nonterminal, Or.inl rfl⟩,
+    | _, _, _, _, .repliesA nonterminal replyA replyB covered => by
+        obtain ⟨rest, tailEq⟩ := WinningCertificateCovers.starts_at covered
+        cases tailEq
+        exact ⟨⟨nonterminal, Or.inl rfl⟩,
           WinningCertificateCovers.gamePath covered⟩
-    | _, _, _, _, .repliesB nonterminal replyA replyB covered =>
-        ⟨⟨nonterminal, Or.inr rfl⟩,
+    | _, _, _, _, .repliesB nonterminal replyA replyB covered => by
+        obtain ⟨rest, tailEq⟩ := WinningCertificateCovers.starts_at covered
+        cases tailEq
+        exact ⟨⟨nonterminal, Or.inr rfl⟩,
           WinningCertificateCovers.gamePath covered⟩
 end
 
