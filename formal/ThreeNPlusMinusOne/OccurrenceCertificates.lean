@@ -125,7 +125,9 @@ theorem children (token : CertifiedLosingToken)
   | mk position height certificate =>
       cases certificate with
       | terminal =>
-          omega
+          have impossible : False := by
+            simpa using nonterminal
+          exact False.elim impossible
       | replies storedNonterminal replyA replyB =>
           exact ⟨⟨A position, _, replyA⟩, ⟨B position, _, replyB⟩,
             rfl, rfl,
