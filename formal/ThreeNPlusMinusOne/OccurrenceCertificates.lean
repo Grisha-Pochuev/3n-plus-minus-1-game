@@ -42,7 +42,7 @@ end
 mutual
   /-- Forget the data-level branch identity and recover the existing finite
   WIN proposition. -/
-  def WinningCertificate.toWinningTree :
+  theorem WinningCertificate.toWinningTree :
       {position height : Nat} → WinningCertificate position height →
         WinningTree position height
     | _, _, .moveA nonterminal reply =>
@@ -52,7 +52,7 @@ mutual
 
   /-- Forget the data-level branch identity and recover the existing finite
   LOSS proposition. -/
-  def LosingCertificate.toLosingTree :
+  theorem LosingCertificate.toLosingTree :
       {position height : Nat} → LosingCertificate position height →
         LosingTree position height
     | _, _, .terminal => LosingTree.terminal
@@ -125,9 +125,7 @@ theorem children (token : CertifiedLosingToken)
   | mk position height certificate =>
       cases certificate with
       | terminal =>
-          have impossible : False := by
-            simpa using nonterminal
-          exact False.elim impossible
+          simp at nonterminal
       | replies storedNonterminal replyA replyB =>
           exact ⟨⟨A position, _, replyA⟩, ⟨B position, _, replyB⟩,
             rfl, rfl,
