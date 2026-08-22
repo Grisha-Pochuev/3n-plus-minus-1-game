@@ -38,8 +38,8 @@ human proof, the JSON assembly check, and the part checked by the Lean kernel.
 | After a lower exponent-two switch the surviving signed valuation is at most four; after exponent three the contracting and expanding continuations have valuations at most three and four | Section 32 | **PROVED** in `LongSwitchBounds.lean`, including exact factor-source bounds, common-source survival, and all three assembled DRAW cases |
 | A first valuation at least four in the exponent-three branch forces the returned source below the minimum-DRAW boundary | Section 33 | **PROVED** in `HighValuationReturn.lean`, together with the phase split |
 | The two concrete exponent-three signed valuation equations imply the scaled relation, even tail product, exact lower-exponent `Q` coordinate, and its A-selecting phase | Section 33 | **PROVED** in `HighValuationReturn.lean`; outcome routing remains open |
-| At the Section 34 returned coordinate, the contracting and expanding children have the exact boundary/long common-child diamonds; if the returned coordinate has a concrete WIN tree and its contracting side is WIN, that common child has a concrete WIN tree at least two levels lower | Section 34 | **FORMALIZED; ONE-WORKER KERNEL CHECK PENDING** in `HighValuationHeight.lean`; connecting this occurrence to the actual DRAW continuation remains open |
-| The returned contracting side selects the Section 34 lower child through `B` at `v=4` and through `A` at `v≥5`; any exact valuation-two signed transition from a DRAW parent packages its actual carrier as the corresponding `DrawObligation`, which still exposes a DRAW lift; under the Section 24 A-selecting guard a shared WIN child is thereby a concrete DRAW-to-WIN boundary.  The guard is derived uniformly for `v≥6`, while the odd-coefficient `v=5` case is formally shown to be the complementary exceptional phase | Section 35 | **FORMALIZED; ONE-WORKER KERNEL CHECK PENDING** in `HighValuationTransfer.lean`; deriving the concrete high-return valuation-two tail and the final common-child WIN witness remains open |
+| At the Section 34 returned coordinate, the contracting and expanding children have the exact boundary/long common-child diamonds; if the returned coordinate has a concrete WIN tree and its contracting side is WIN, that common child has a concrete WIN tree at least two levels lower | Section 34 | **PROVED** in `HighValuationHeight.lean`; connecting this occurrence to the actual DRAW continuation remains open |
+| The returned contracting side selects the Section 34 lower child through `B` at `v=4` and through `A` at `v≥5`; any exact valuation-two signed transition from a DRAW parent packages its actual carrier as the corresponding `DrawObligation`, which still exposes a DRAW lift; under the Section 24 A-selecting guard a shared WIN child is thereby a concrete DRAW-to-WIN boundary.  The guard is derived uniformly for `v≥6`, while the odd-coefficient `v=5` case is formally shown to be the complementary exceptional phase | Section 35 | **PROVED** in `HighValuationTransfer.lean`; deriving the concrete high-return valuation-two tail and the final common-child WIN witness remains open |
 | Lexicographic product of two well-founded relations is well-founded | `docs/verified-results.md`, Section 132 | **PROVED** in `Certificate.lean` |
 | A step relation ranked by that product is well-founded and has no infinite descending path | `docs/verified-results.md`, Sections 132 and 138 | **PROVED** in `Certificate.lean` |
 | One token replaced by at most two lower proof-height descendants strictly decreases a well-founded rank | `docs/verified-results.md`, Section 129 | **PROVED** in `TokenRank.lean` using the dependency-free weight `3^h` |
@@ -54,8 +54,8 @@ No Lean file in this directory uses `axiom`, `admit`, or `sorry`. A successful
 `lake build` therefore verifies exactly the rows marked Lean-proved, and no
 more.
 
-Build record: **COMPUTATIONALLY VERIFIED** on 21 August 2026 with Lean 4.32.1;
-`lake build --wfail` and bundled `leanchecker` completed successfully in GitHub
-Actions run #52. The workflow has exactly two jobs: the Lean kernel check and
-the Python proof audit. The project has no third-party Lean dependencies, and
-the warning-free kernel build rejects `sorry`.
+Build record: **COMPUTATIONALLY VERIFIED** on 22 August 2026 with Lean 4.32.1;
+`lake build --wfail` and bundled `leanchecker` completed successfully in the
+one-worker GitHub Actions run #3. The active pull-request workflow has exactly
+one Lean job. The project has no third-party Lean dependencies, and the
+warning-free kernel build rejects `sorry`.

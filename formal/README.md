@@ -50,10 +50,10 @@ bounds all three signed continuations after the exponent-two/three switches.
 Section 33 is now kernel-checked through the full arithmetic return bridge:
 the high-valuation source drop, the scaled signed relation, the even tail
 product, the exact lower-exponent `Q_{v-1}` coordinate, and its A-selecting
-phase. The working tree also contains source formalizations of the Section 34
-returned-state diamonds and the opening phase calculations of Section 35. A
-fresh Lean kernel build of those two additions is still pending under the
-single-worker verification constraint. `TokenProvenance.lean` carries exact
+phase. Sections 34--35 are now kernel-checked: they contain the returned-state
+diamonds, the local two-level height payment, and the opening phase and
+DRAW-obligation calculations, including the exceptional `v=5` phase. The
+single-worker Lean verification completed successfully. `TokenProvenance.lean` carries exact
 finite proof-tree occurrences and proves strict rank payment for replacements
 by lower occurrences.
 `OccurrenceRefinement.lean` makes the remaining no-reseed condition explicit:
@@ -92,11 +92,9 @@ Completed foundation:
 5. the nested outer/inner rank and equal-rank control DAG;
 6. a conditional Section 138 theorem with an explicit refinement parameter.
 
-The latest fresh kernel-checked arithmetic front reaches the phase-identified
-Section 33 return. The unverified working-tree additions formalize the local
-Section 34 high-valuation diamond and the Section 35 calculation selecting
-its lower WIN child in the boundary and long cases, including the parity guard
-for its nonexceptional `v≥6` range. A first exponent-three
+The latest fresh kernel-checked arithmetic front reaches Sections 34--35:
+the local high-valuation diamond, the returned-side selection calculation,
+the `v≥6` parity guard, and the exceptional `v=5` equality. A first exponent-three
 valuation at least four forces a strict source drop, and the two concrete
 signed valuation equations force the returned `Q_{v-1}` coordinate and its
 A-selecting phase. The remaining obligations are to route those outcomes

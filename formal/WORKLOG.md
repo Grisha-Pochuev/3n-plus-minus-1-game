@@ -27,17 +27,18 @@
 
 ## Verification record
 
-- The inherited commit `c518f8c` records a green GitHub Actions run #52 for
-  the prior codebase.  It does not verify the unpushed Section 34 addition.
-- Local Lean tools are unavailable in this environment, so no new kernel
-  build is claimed.  `git diff --check` is clean.
-- `lean-one-worker.yml` is a separate one-job Lean workflow.  It runs for a
-  pull-request update limited to `formal/**` (and can also be started by hand);
-  the old two-job workflow ignores such formal-only updates.
+- The one-worker workflow ran successfully twice after the Section 34--35
+  additions: run #2 checked the height/transfer work, and run #3 checked the
+  added `v=5` exceptional phase.  Both used only the single Lean kernel and
+  `leanchecker` job.
+- Local Lean tools remain unavailable in this environment; the GitHub checks
+  are the claimed kernel verification.  `git diff --check` is clean.
+- `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
+  also reduced to one Lean job and does not run for pull requests.
 
 ## Next exact target
 
-Formalize the Section 35 transfer that carries the returned B-selecting DRAW
-lift to the lower-height WIN occurrence while preserving the actual DRAW
-carrier.  The remaining global boundary remains the construction of
+Derive the concrete high-return valuation-two tail and the final common-child
+WIN witness required to feed the now-kernel-checked Section 35 boundary.
+The remaining global boundary remains the construction of
 `DrawMacroRefinement`; it is not an axiom and is not closed by this change.
