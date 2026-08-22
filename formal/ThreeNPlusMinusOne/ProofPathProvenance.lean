@@ -73,7 +73,7 @@ private theorem proofTree_covers_or_lower_loss_by_height :
             ∃ loss : LosingToken, loss.height < height) := by
   intro height
   induction height using Nat.strongRecOn with
-  | h height ih =>
+  | ind height ih =>
       constructor
       · intro position tree rest path
         let token : WinningToken := ⟨position, height, tree⟩
