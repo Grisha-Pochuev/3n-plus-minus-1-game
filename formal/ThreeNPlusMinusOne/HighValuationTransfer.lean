@@ -46,14 +46,12 @@ theorem sourceASelectingBit_Q_long
   rcases bit with tailZero | tailOne
   · rw [tailZero]
     have stateShape : Q coefficient exponent 0 = 4 * base := by
-      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm,
-        Nat.mul_left_comm]
+      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm]
     rw [stateShape]
     simpa using sourceASelectingBit_four_mul base
   · rw [tailOne]
     have stateShape : Q coefficient exponent 1 = 4 * base - 1 := by
-      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm,
-        Nat.mul_left_comm]
+      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm]
     rw [stateShape]
     simpa using sourceASelectingBit_four_mul_sub_one basePositive
 
@@ -76,14 +74,12 @@ theorem Q_mod_two
   rcases bit with tailZero | tailOne
   · rw [tailZero]
     have stateShape : Q coefficient exponent 0 = 2 * base := by
-      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm,
-        Nat.mul_left_comm]
+      simp [Q, powerSplit, base, Nat.mul_left_comm]
     rw [stateShape]
     omega
   · rw [tailOne]
     have stateShape : Q coefficient exponent 1 = 2 * base - 1 := by
-      simp [Q, powerSplit, base, Nat.mul_assoc, Nat.mul_comm,
-        Nat.mul_left_comm]
+      simp [Q, powerSplit, base, Nat.mul_left_comm]
     rw [stateShape]
     omega
 
