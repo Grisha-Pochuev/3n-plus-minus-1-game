@@ -107,7 +107,9 @@ valuation at least four forces a strict source drop, and the two concrete
 signed valuation equations force the returned `Q_{v-1}` coordinate and its
 A-selecting phase. The returned coordinate's B-selecting valuation-two
 transition and its conditional DRAW-lift-to-obligation bridge are now checked.
-The remaining obligations are to route those outcomes
+For the long `v≥7` row, a pair of already retained exact WIN occurrences is
+now replaced by its two lower common-grandchild occurrences with a strict
+forest-rank payment. The remaining obligations are to route those outcomes
 from the actual DRAW continuation and to construct the global
 `DrawMacroRefinement`.
 The four long-suffix rows are impossible; each surviving length-three row

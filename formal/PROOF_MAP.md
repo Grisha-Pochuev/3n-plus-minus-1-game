@@ -34,10 +34,11 @@ what it does not yet prove.
 | 26 | [`TokenRank.lean`](ThreeNPlusMinusOne/TokenRank.lean) | Strict well-founded rank for every inventory split of one token into at most two lower tokens | Proof that every human token change has this form |
 | 27 | [`Certificate.lean`](ThreeNPlusMinusOne/Certificate.lean) | General lexicographic well-foundedness and exclusion of infinite descending routes | Concrete game arithmetic |
 | 28 | [`MacroCertificate.lean`](ThreeNPlusMinusOne/MacroCertificate.lean) | Four-component abstract rank and all 16 equal-rank control transitions as a finite DAG | Semantic coverage of real game continuations by the macro states |
-| 29 | [`TokenProvenance.lean`](ThreeNPlusMinusOne/TokenProvenance.lean) | Exact occurrence-tagged proof tokens, selected-loss/common-grandchild descendants, and strict forest replacement | Semantic proof that every game branch carries one of these occurrences |
-| 30 | [`OccurrenceRefinement.lean`](ThreeNPlusMinusOne/OccurrenceRefinement.lean) | Equal-rank no-reseed boundary and a conditional no-DRAW theorem over occurrence-carrying configurations | Concrete semantic `lift` and `progress` fields |
-| 31 | [`Refinement.lean`](ThreeNPlusMinusOne/Refinement.lean) | `DrawMacroRefinement -> no Draw` and hence finite resolution | A value of `DrawMacroRefinement` |
-| 32 | [`Termination.lean`](ThreeNPlusMinusOne/Termination.lean) | Transport of resolution and finite optimal proof steps back to the original odd-state game | Unconditional termination until the refinement exists |
+| 29 | [`TokenProvenance.lean`](ThreeNPlusMinusOne/TokenProvenance.lean) | Exact occurrence-tagged proof tokens, selected-loss/common-grandchild descendants, and strict one- or two-token forest replacement | Semantic proof that every game branch carries one of these occurrences |
+| 30 | [`HighReturnProvenance.lean`](ThreeNPlusMinusOne/HighReturnProvenance.lean) | The safe retained-pair case of the long `v≥7` return: exact retained `u,c` WIN tokens become exact lower `p,b` descendants with a strict forest-rank payment | Entry, carry, and no-reseed proof that every semantic high-return visit has that retained pair |
+| 31 | [`OccurrenceRefinement.lean`](ThreeNPlusMinusOne/OccurrenceRefinement.lean) | Equal-rank no-reseed boundary and a conditional no-DRAW theorem over occurrence-carrying configurations | Concrete semantic `lift` and `progress` fields |
+| 32 | [`Refinement.lean`](ThreeNPlusMinusOne/Refinement.lean) | `DrawMacroRefinement -> no Draw` and hence finite resolution | A value of `DrawMacroRefinement` |
+| 33 | [`Termination.lean`](ThreeNPlusMinusOne/Termination.lean) | Transport of resolution and finite optimal proof steps back to the original odd-state game | Unconditional termination until the refinement exists |
 
 The decisive open declaration is therefore not a hidden `sorry`: it is the
 absence of a constructed occurrence-level refinement (and, as a corollary, of

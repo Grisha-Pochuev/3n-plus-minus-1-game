@@ -43,7 +43,8 @@ human proof, the JSON assembly check, and the part checked by the Lean kernel.
 | Lexicographic product of two well-founded relations is well-founded | `docs/verified-results.md`, Section 132 | **PROVED** in `Certificate.lean` |
 | A step relation ranked by that product is well-founded and has no infinite descending path | `docs/verified-results.md`, Sections 132 and 138 | **PROVED** in `Certificate.lean` |
 | One token replaced by at most two lower proof-height descendants strictly decreases a well-founded rank | `docs/verified-results.md`, Section 129 | **PROVED** in `TokenRank.lean` using the dependency-free weight `3^h` |
-| Exact finite WIN/LOSS proof occurrences can be carried as occurrence-tagged tokens; selected LOSS children and common WIN grandchildren are strict descendants, and exact forest replacement decreases the token rank | Sections 22, 57–64, 129, 135A | **PROVED** in `TokenProvenance.lean`; this does not install a fresh occurrence |
+| Exact finite WIN/LOSS proof occurrences can be carried as occurrence-tagged tokens; selected LOSS children and common WIN grandchildren are strict descendants; one or two named retained tokens can be replaced by lower exact descendants with a strict forest-rank payment | Sections 22, 57–64, 129, 135A | **PROVED** in `TokenProvenance.lean`; this does not install a fresh occurrence |
+| In the long high-return row `v≥7`, if the incoming forest already retains exact WIN occurrences at the returned state and its contracting child, the two exact common-grandchild occurrences replace them with both heights and the forest rank strictly lower | Sections 100–103, 129, 136 | **PROVED CONDITIONALLY** in `HighReturnProvenance.lean`; the entry, carry, and no-reseed conditions needed to establish that incoming pair remain open |
 | Four-component outer/inner rank and equal-rank finite control DAG | `docs/verified-results.md`, Sections 132 and 136; `certificates/global-routing.json` | **PROVED AS AN ABSTRACT MACRO RELATION** in `MacroCertificate.lean` |
 | Occurrence-level macro rank: equal macro rank permits only exact lower-forest replacement, while strict macro edges may rebuild the forest | Sections 129, 132, 136 | **PROVED AS A REFINEMENT BOUNDARY** in `OccurrenceRefinement.lean`; semantic lift/progress is not constructed |
 | JSON transition inventory refines every legal game continuation | `certificates/global-routing.json` and Sections 91–137 | **NOT YET FORMALIZED**; explicit certificate trust boundary |
@@ -56,6 +57,6 @@ more.
 
 Build record: **COMPUTATIONALLY VERIFIED** on 22 August 2026 with Lean 4.32.1;
 `lake build --wfail` and bundled `leanchecker` completed successfully in the
-one-worker GitHub Actions run #12. The active pull-request workflow has exactly
+one-worker GitHub Actions run #16. The active pull-request workflow has exactly
 one Lean job. The project has no third-party Lean dependencies, and the
 warning-free kernel build rejects `sorry`.

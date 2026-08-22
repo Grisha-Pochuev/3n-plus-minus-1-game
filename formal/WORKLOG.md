@@ -46,6 +46,13 @@
   WIN witness now give one exact DRAW-to-WIN boundary at the common side with
   a WIN proof tree at least two levels lower. Those three outcome carriers
   remain parameters of the theorem.
+- Added `HighReturnProvenance.lean`, which formalizes the first admissible
+  alternative in the red lifecycle obligation for `v≥7`: when exact WIN
+  occurrences at the returned state and contracting child are already
+  retained, their two exact common-grandchild descendants replace them with
+  both individual heights and the common forest rank strictly lower. The
+  file deliberately supplies no fresh pair and makes no claim about entry,
+  carry, or a later re-entry.
 
 ## Verification record
 
@@ -61,6 +68,10 @@
   it was repaired before run #10 rather than being suppressed.
 - Run #12 checked the composed direct return-lift-to-lower-WIN boundary with
   the same single job.
+- Runs #14--16 checked, respectively, the two-token rank composition, the
+  paired common-grandchild packaging, and its long high-return specialization.
+  Each run used exactly one GitHub Actions job. Run #13 exposed a namespace
+  spelling error in the intermediate proof and was repaired in run #14.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
@@ -68,8 +79,9 @@
 
 ## Next exact target
 
-Connect the actual Section 33--34 DRAW/WIN carriers to the now-kernel-checked
-Section 35 boundary. The `v=5` exceptional branch remains a separate finite
-target.
+Prove the entry, carry, and no-reseed part of the long high-return lifecycle:
+connect actual Section 33--34 DRAW/WIN carriers to the now-kernel-checked
+retained-pair replacement. The `v=5` exceptional branch remains a separate
+finite target.
 The remaining global boundary remains the construction of
 `DrawMacroRefinement`; it is not an axiom and is not closed by this change.
