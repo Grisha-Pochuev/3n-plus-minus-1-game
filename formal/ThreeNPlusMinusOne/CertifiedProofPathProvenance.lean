@@ -51,6 +51,42 @@ certificate and either stored branch of a data-level LOSS certificate. -/
           (LosingCertificate.replies nonterminal replyA replyB) (position :: path)
 end
 
+/-- Forgetting branch-choice data takes data-level coverage to the earlier
+proposition-level coverage relation on the erased finite tree. -/
+mutual
+  theorem WinningCertificateCovers.toWinningTreeCovers :
+      {position height : Nat} {certificate : WinningCertificate position height}
+        {path : List Nat} → WinningCertificateCovers certificate path →
+          WinningTreeCovers (WinningCertificate.toWinningTree certificate) path
+    | _, _, _, _, .stop certificate =>
+        WinningTreeCovers.stop (WinningCertificate.toWinningTree certificate)
+    | _, _, _, _, .moveA nonterminal reply covered =>
+        WinningTreeCovers.moveA nonterminal
+          (LosingCertificate.toLosingTree reply)
+          (LosingCertificateCovers.toLosingTreeCovers covered)
+    | _, _, _, _, .moveB nonterminal reply covered =>
+        WinningTreeCovers.moveB nonterminal
+          (LosingCertificate.toLosingTree reply)
+          (LosingCertificateCovers.toLosingTreeCovers covered)
+
+  theorem LosingCertificateCovers.toLosingTreeCovers :
+      {position height : Nat} {certificate : LosingCertificate position height}
+        {path : List Nat} → LosingCertificateCovers certificate path →
+          LosingTreeCovers (LosingCertificate.toLosingTree certificate) path
+    | _, _, _, _, .stop certificate =>
+        LosingTreeCovers.stop (LosingCertificate.toLosingTree certificate)
+    | _, _, _, _, .repliesA nonterminal replyA replyB covered =>
+        LosingTreeCovers.repliesA nonterminal
+          (WinningCertificate.toWinningTree replyA)
+          (WinningCertificate.toWinningTree replyB)
+          (WinningCertificateCovers.toWinningTreeCovers covered)
+    | _, _, _, _, .repliesB nonterminal replyA replyB covered =>
+        LosingTreeCovers.repliesB nonterminal
+          (WinningCertificate.toWinningTree replyA)
+          (WinningCertificate.toWinningTree replyB)
+          (WinningCertificateCovers.toWinningTreeCovers covered)
+end
+
 private theorem certificate_covers_or_lower_loss_by_height :
     ∀ height : Nat,
       (∀ {position : Nat} (certificate : WinningCertificate position height)
