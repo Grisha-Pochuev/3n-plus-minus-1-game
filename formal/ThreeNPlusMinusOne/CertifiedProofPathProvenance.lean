@@ -51,6 +51,107 @@ certificate and either stored branch of a data-level LOSS certificate. -/
           (LosingCertificate.replies nonterminal replyA replyB) (position :: path)
 end
 
+/- A child token extracted from the concrete stored certificate of its parent. -/
+inductive CertifiedTokenChild : CertifiedProofToken → CertifiedProofToken → Prop
+  | winningA {position height : Nat} (nonterminal : 0 < position)
+      (reply : LosingCertificate (A position) height) :
+      CertifiedTokenChild
+        (.winning ⟨position, height + 1,
+          WinningCertificate.moveA nonterminal reply⟩)
+        (.losing ⟨A position, height, reply⟩)
+  | winningB {position height : Nat} (nonterminal : 0 < position)
+      (reply : LosingCertificate (B position) height) :
+      CertifiedTokenChild
+        (.winning ⟨position, height + 1,
+          WinningCertificate.moveB nonterminal reply⟩)
+        (.losing ⟨B position, height, reply⟩)
+  | losingA {position heightA heightB : Nat} (nonterminal : 0 < position)
+      (replyA : WinningCertificate (A position) heightA)
+      (replyB : WinningCertificate (B position) heightB) :
+      CertifiedTokenChild
+        (.losing ⟨position, max heightA heightB + 1,
+          LosingCertificate.replies nonterminal replyA replyB⟩)
+        (.winning ⟨A position, heightA, replyA⟩)
+  | losingB {position heightA heightB : Nat} (nonterminal : 0 < position)
+      (replyA : WinningCertificate (A position) heightA)
+      (replyB : WinningCertificate (B position) heightB) :
+      CertifiedTokenChild
+        (.losing ⟨position, max heightA heightB + 1,
+          LosingCertificate.replies nonterminal replyA replyB⟩)
+        (.winning ⟨B position, heightB, replyB⟩)
+
+theorem CertifiedTokenChild.move
+    {parent child : CertifiedProofToken}
+    (edge : CertifiedTokenChild parent child) :
+    ConjugatedMove child.position parent.position := by
+  cases edge with
+  | winningA nonterminal reply =>
+      exact ⟨nonterminal, Or.inl rfl⟩
+  | winningB nonterminal reply =>
+      exact ⟨nonterminal, Or.inr rfl⟩
+  | losingA nonterminal replyA replyB =>
+      exact ⟨nonterminal, Or.inl rfl⟩
+  | losingB nonterminal replyA replyB =>
+      exact ⟨nonterminal, Or.inr rfl⟩
+
+theorem CertifiedTokenChild.height_lower
+    {parent child : CertifiedProofToken}
+    (edge : CertifiedTokenChild parent child) :
+    child.height < parent.height := by
+  cases edge <;> simp [CertifiedProofToken.height] <;> omega
+
+/-- A finite traversal whose tokens are exact nested children of the preceding
+stored certificate. -/
+inductive StoredCertificateRoute : List CertifiedProofToken → List Nat → Prop
+  | singleton (token : CertifiedProofToken) :
+      StoredCertificateRoute [token] [token.position]
+  | extend {parent child : CertifiedProofToken}
+      {tail : List CertifiedProofToken} {path : List Nat}
+      (edge : CertifiedTokenChild parent child)
+      (route : StoredCertificateRoute (child :: tail) path) :
+      StoredCertificateRoute (parent :: child :: tail) (parent.position :: path)
+
+/- A covered path has a concrete route of retained nested certificate tokens. -/
+mutual
+  theorem WinningCertificateCovers.toStoredRoute :
+      {position height : Nat} → {certificate : WinningCertificate position height} →
+        {path : List Nat} → WinningCertificateCovers certificate path →
+          ∃ tail,
+            StoredCertificateRoute
+              (CertifiedProofToken.winning ⟨position, height, certificate⟩ :: tail)
+              path
+    | _, _, _, _, .stop certificate =>
+        ⟨[], StoredCertificateRoute.singleton
+          (CertifiedProofToken.winning ⟨_, _, certificate⟩)⟩
+    | _, _, _, _, .moveA nonterminal reply covered =>
+        obtain ⟨tail, route⟩ := LosingCertificateCovers.toStoredRoute covered
+        exact ⟨tail, StoredCertificateRoute.extend
+          (CertifiedTokenChild.winningA nonterminal reply) route⟩
+    | _, _, _, _, .moveB nonterminal reply covered =>
+        obtain ⟨tail, route⟩ := LosingCertificateCovers.toStoredRoute covered
+        exact ⟨tail, StoredCertificateRoute.extend
+          (CertifiedTokenChild.winningB nonterminal reply) route⟩
+
+  theorem LosingCertificateCovers.toStoredRoute :
+      {position height : Nat} → {certificate : LosingCertificate position height} →
+        {path : List Nat} → LosingCertificateCovers certificate path →
+          ∃ tail,
+            StoredCertificateRoute
+              (CertifiedProofToken.losing ⟨position, height, certificate⟩ :: tail)
+              path
+    | _, _, _, _, .stop certificate =>
+        ⟨[], StoredCertificateRoute.singleton
+          (CertifiedProofToken.losing ⟨_, _, certificate⟩)⟩
+    | _, _, _, _, .repliesA nonterminal replyA replyB covered =>
+        obtain ⟨tail, route⟩ := WinningCertificateCovers.toStoredRoute covered
+        exact ⟨tail, StoredCertificateRoute.extend
+          (CertifiedTokenChild.losingA nonterminal replyA replyB) route⟩
+    | _, _, _, _, .repliesB nonterminal replyA replyB covered =>
+        obtain ⟨tail, route⟩ := WinningCertificateCovers.toStoredRoute covered
+        exact ⟨tail, StoredCertificateRoute.extend
+          (CertifiedTokenChild.losingB nonterminal replyA replyB) route⟩
+end
+
 theorem WinningCertificateCovers.starts_at :
     {position height : Nat} → {certificate : WinningCertificate position height} →
       {path : List Nat} → WinningCertificateCovers certificate path →
