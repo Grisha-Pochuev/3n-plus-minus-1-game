@@ -1,4 +1,4 @@
-import ThreeNPlusMinusOne.TokenProvenance
+import ThreeNPlusMinusOne.OccurrenceRefinement
 
 set_option autoImplicit false
 
@@ -166,5 +166,44 @@ theorem WinningToken.covers_path_or_lower_loss
     WinningTreeCovers token.tree (token.position :: rest) ∨
       ∃ loss : LosingToken, loss.height < token.height := by
   exact token.tree.covers_or_lower_loss path
+
+/-- If a legal path leaves a retained WIN proof tree, the exposed selected
+LOSS occurrence can be registered immediately as an exact lower
+occurrence-forest replacement.  The covered-path alternative keeps the
+existing proof tree unchanged. -/
+theorem WinningToken.covers_path_or_lower_loss_outer_step
+    (token : WinningToken) {rest : List Nat}
+    (path : GamePath (token.position :: rest))
+    {before after innerForest : ProofForest}
+    (base : MacroConfiguration) :
+    WinningTreeCovers token.tree (token.position :: rest) ∨
+      ∃ loss : LosingToken,
+        loss.height < token.height ∧
+          OccurrenceMacroStep
+            { base := base
+              outerForest := before ++ [ProofToken.losing loss] ++ after
+              innerForest := innerForest }
+            { base := base
+              outerForest := before ++ [ProofToken.winning token] ++ after
+              innerForest := innerForest } := by
+  obtain covered | ⟨loss, lower⟩ := token.covers_path_or_lower_loss path
+  · exact Or.inl covered
+  · refine Or.inr ⟨loss, lower, ?_⟩
+    refine OccurrenceMacroStep.outerForest
+      (next :=
+        { base := base
+          outerForest := before ++ [ProofToken.losing loss] ++ after
+          innerForest := innerForest })
+      (current :=
+        { base := base
+          outerForest := before ++ [ProofToken.winning token] ++ after
+          innerForest := innerForest })
+      rfl rfl ?_
+    simpa [List.append_assoc] using
+      (proofTokenReplacement_single
+        (before := before) (after := after)
+        (parent := ProofToken.winning token)
+        (child := ProofToken.losing loss)
+        (by simpa [ProofToken.height] using lower))
 
 end ThreeNPlusMinusOne
