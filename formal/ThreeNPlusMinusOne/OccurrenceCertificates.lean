@@ -132,6 +132,64 @@ theorem children (token : CertifiedLosingToken)
             Nat.succ_le_succ (Nat.le_max_left _ _),
             Nat.succ_le_succ (Nat.le_max_right _ _)⟩
 
+/-- A positive legal child of a stored LOSS certificate is an already stored
+WIN certificate whose height is lower by at least one. -/
+theorem positive_child (token : CertifiedLosingToken)
+    {child : Nat} (childPositive : 0 < child)
+    (move : child = A token.position ∨ child = B token.position) :
+    ∃ childToken : CertifiedWinningToken,
+      childToken.position = child ∧ childToken.height + 1 ≤ token.height := by
+  cases token with
+  | mk position height certificate =>
+      cases certificate with
+      | terminal =>
+          rcases move with move | move <;> simp [A, B] at move <;> omega
+      | replies storedNonterminal replyA replyB =>
+          rcases move with moveA | moveB
+          · subst child
+            exact ⟨⟨A position, _, replyA⟩, rfl,
+              Nat.succ_le_succ (Nat.le_max_left _ _)⟩
+          · subst child
+            exact ⟨⟨B position, _, replyB⟩, rfl,
+              Nat.succ_le_succ (Nat.le_max_right _ _)⟩
+
 end CertifiedLosingToken
+
+namespace CertifiedWinningToken
+
+/-- A positive common grandchild is extracted directly from the retained
+data-level WIN certificate.  In contrast to the proposition-level theorem,
+the returned descendant carries its original branch choices as data. -/
+theorem common_grandchild (token : CertifiedWinningToken)
+    {grandchild : Nat} (grandchildPositive : 0 < grandchild)
+    (common : CommonGrandchild grandchild token.position) :
+    ∃ descendant : CertifiedWinningToken,
+      descendant.position = grandchild ∧
+        descendant.height + 2 ≤ token.height := by
+  cases token with
+  | mk position height certificate =>
+      cases certificate with
+      | moveA nonterminal reply =>
+          obtain ⟨descendant, descendantPosition, lower⟩ :=
+            CertifiedLosingToken.positive_child
+              ⟨A position, _, reply⟩ grandchildPositive common.1
+          exact ⟨descendant, descendantPosition, by omega⟩
+      | moveB nonterminal reply =>
+          obtain ⟨descendant, descendantPosition, lower⟩ :=
+            CertifiedLosingToken.positive_child
+              ⟨B position, _, reply⟩ grandchildPositive common.2
+          exact ⟨descendant, descendantPosition, by omega⟩
+
+/-- The data-level common-grandchild extraction is a strict height decrease. -/
+theorem common_grandchild_strict (token : CertifiedWinningToken)
+    {grandchild : Nat} (grandchildPositive : 0 < grandchild)
+    (common : CommonGrandchild grandchild token.position) :
+    ∃ descendant : CertifiedWinningToken,
+      descendant.position = grandchild ∧ descendant.height < token.height := by
+  obtain ⟨descendant, position, lower⟩ :=
+    token.common_grandchild grandchildPositive common
+  exact ⟨descendant, position, by omega⟩
+
+end CertifiedWinningToken
 
 end ThreeNPlusMinusOne
