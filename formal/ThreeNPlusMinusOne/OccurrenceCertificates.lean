@@ -341,4 +341,72 @@ theorem certifiedProofToken_common_grandchild_rank_payment
   apply certifiedProofTokenReplacement_single
   simpa [CertifiedProofToken.height] using descendantLower
 
+/-- Two named data-level occurrences can be replaced in sequence by lower
+data-level descendants, paying the same strict certified-forest rank. -/
+theorem certifiedProofToken_pair_replacement_decreases
+    {before middle after : CertifiedProofForest}
+    {firstParent firstChild secondParent secondChild : CertifiedProofToken}
+    (firstLower :
+      CertifiedProofToken.height firstChild < CertifiedProofToken.height firstParent)
+    (secondLower :
+      CertifiedProofToken.height secondChild < CertifiedProofToken.height secondParent) :
+    certifiedProofTokenRank
+        (before ++ [firstChild] ++ middle ++ [secondChild] ++ after) <
+      certifiedProofTokenRank
+        (before ++ [firstParent] ++ middle ++ [secondParent] ++ after) := by
+  have firstStep :
+      CertifiedProofTokenReplacement
+        (before ++ [firstChild] ++ middle ++ [secondParent] ++ after)
+        (before ++ [firstParent] ++ middle ++ [secondParent] ++ after) := by
+    simpa [List.append_assoc] using
+      (certifiedProofTokenReplacement_single
+        (before := before) (after := middle ++ [secondParent] ++ after)
+        (parent := firstParent) (child := firstChild) firstLower)
+  have secondStep :
+      CertifiedProofTokenReplacement
+        (before ++ [firstChild] ++ middle ++ [secondChild] ++ after)
+        (before ++ [firstChild] ++ middle ++ [secondParent] ++ after) := by
+    simpa [List.append_assoc] using
+      (certifiedProofTokenReplacement_single
+        (before := before ++ [firstChild] ++ middle) (after := after)
+        (parent := secondParent) (child := secondChild) secondLower)
+  exact Nat.lt_trans (certifiedProofTokenReplacement_decreases secondStep)
+    (certifiedProofTokenReplacement_decreases firstStep)
+
+/-- Pair the direct common-grandchild extraction with the data-level forest
+rank, preserving the individual branch choices of both descendants. -/
+theorem certifiedProofToken_pair_common_grandchild_rank_payment
+    {before middle after : CertifiedProofForest}
+    (first second : CertifiedWinningToken)
+    {firstGrandchild secondGrandchild : Nat}
+    (firstPositive : 0 < firstGrandchild)
+    (secondPositive : 0 < secondGrandchild)
+    (firstCommon : CommonGrandchild firstGrandchild first.position)
+    (secondCommon : CommonGrandchild secondGrandchild second.position) :
+    ∃ firstDescendant secondDescendant : CertifiedWinningToken,
+      firstDescendant.position = firstGrandchild ∧
+        secondDescendant.position = secondGrandchild ∧
+          firstDescendant.height < first.height ∧
+            secondDescendant.height < second.height ∧
+              certifiedProofTokenRank
+                  (before ++ [CertifiedProofToken.winning firstDescendant] ++
+                    middle ++ [CertifiedProofToken.winning secondDescendant] ++
+                      after) <
+                certifiedProofTokenRank
+                  (before ++ [CertifiedProofToken.winning first] ++ middle ++
+                    [CertifiedProofToken.winning second] ++ after) := by
+  obtain ⟨firstDescendant, firstPosition, firstBound⟩ :=
+    first.common_grandchild firstPositive firstCommon
+  obtain ⟨secondDescendant, secondPosition, secondBound⟩ :=
+    second.common_grandchild secondPositive secondCommon
+  have firstLower : firstDescendant.height < first.height := by
+    omega
+  have secondLower : secondDescendant.height < second.height := by
+    omega
+  refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
+    firstLower, secondLower, ?_⟩
+  apply certifiedProofToken_pair_replacement_decreases
+  · simpa [CertifiedProofToken.height] using firstLower
+  · simpa [CertifiedProofToken.height] using secondLower
+
 end ThreeNPlusMinusOne
