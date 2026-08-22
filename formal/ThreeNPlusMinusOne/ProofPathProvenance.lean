@@ -72,7 +72,7 @@ private theorem proofTree_covers_or_lower_loss_by_height :
           LosingTreeCovers tree (position :: rest) ∨
             ∃ loss : LosingToken, loss.height < height) := by
   intro height
-  induction height using Nat.strong_induction_on with
+  induction height using Nat.strongRecOn with
   | h height ih =>
       constructor
       · intro position tree rest path
