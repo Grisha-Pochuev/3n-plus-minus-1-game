@@ -1,5 +1,6 @@
 import ThreeNPlusMinusOne.HighValuationTransfer
 import ThreeNPlusMinusOne.TokenProvenance
+import ThreeNPlusMinusOne.OccurrenceRefinement
 
 set_option autoImplicit false
 
@@ -96,5 +97,71 @@ theorem highReturn_long_retained_pair_rank_payment
   exact proofToken_pair_common_grandchild_rank_payment
     returnedToken contractingToken firstPositive secondPositive firstCommon
       secondCommon
+
+/-- The retained-pair replacement is admitted by the occurrence-level macro
+relation as two explicit equal-base forest steps.  Thus the local payment is
+not merely a numerical inequality: it is a legal sequence of replacements of
+the named incoming occurrences.  Preservation of a semantic `Bad` predicate
+along these two steps remains part of the open global refinement. -/
+theorem highReturn_long_retained_pair_outer_steps
+    {coefficient exponent tailBit : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) (exponentLarge : 7 ≤ exponent)
+    {before middle after innerForest : ProofForest}
+    (base : MacroConfiguration)
+    (returnedToken contractingToken : WinningToken)
+    (returnedPosition :
+      returnedToken.position = Q coefficient (exponent - 1) tailBit)
+    (contractingPosition :
+      contractingToken.position = B (Q coefficient (exponent - 1) tailBit)) :
+    ∃ firstDescendant secondDescendant : WinningToken,
+      firstDescendant.position =
+          B (A (Q coefficient (exponent - 1) tailBit)) ∧
+        secondDescendant.position =
+          B (A (B (Q coefficient (exponent - 1) tailBit))) ∧
+          OccurrenceMacroStep
+            { base := base
+              outerForest :=
+                before ++ [ProofToken.winning firstDescendant] ++ middle ++
+                  [ProofToken.winning secondDescendant] ++ after
+              innerForest := innerForest }
+            { base := base
+              outerForest :=
+                before ++ [ProofToken.winning firstDescendant] ++ middle ++
+                  [ProofToken.winning contractingToken] ++ after
+              innerForest := innerForest } ∧
+            OccurrenceMacroStep
+              { base := base
+                outerForest :=
+                  before ++ [ProofToken.winning firstDescendant] ++ middle ++
+                    [ProofToken.winning contractingToken] ++ after
+                innerForest := innerForest }
+              { base := base
+                outerForest :=
+                  before ++ [ProofToken.winning returnedToken] ++ middle ++
+                    [ProofToken.winning contractingToken] ++ after
+                innerForest := innerForest } := by
+  obtain ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
+    firstLower, secondLower, _⟩ :=
+    highReturn_long_retained_pair_rank_payment positive odd bit exponentLarge
+      returnedToken contractingToken returnedPosition contractingPosition
+  refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
+    ?_, ?_⟩
+  · apply OccurrenceMacroStep.outerForest rfl rfl
+    simpa [List.append_assoc] using
+      (proofTokenReplacement_single
+        (before := before ++ [ProofToken.winning firstDescendant] ++ middle)
+        (after := after)
+        (parent := ProofToken.winning contractingToken)
+        (child := ProofToken.winning secondDescendant)
+        (by simpa [ProofToken.height] using secondLower))
+  · apply OccurrenceMacroStep.outerForest rfl rfl
+    simpa [List.append_assoc] using
+      (proofTokenReplacement_single
+        (before := before)
+        (after := middle ++ [ProofToken.winning contractingToken] ++ after)
+        (parent := ProofToken.winning returnedToken)
+        (child := ProofToken.winning firstDescendant)
+        (by simpa [ProofToken.height] using firstLower))
 
 end ThreeNPlusMinusOne
