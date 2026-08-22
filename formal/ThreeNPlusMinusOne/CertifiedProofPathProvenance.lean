@@ -111,6 +111,50 @@ inductive StoredCertificateRoute : List CertifiedProofToken → List Nat → Pro
       (route : StoredCertificateRoute (child :: tail) path) :
       StoredCertificateRoute (parent :: child :: tail) (parent.position :: path)
 
+/-- The strict-height invariant carried by every adjacent edge of a stored
+certificate route. -/
+inductive StrictCertifiedTokenChain : List CertifiedProofToken → Prop
+  | singleton (token : CertifiedProofToken) :
+      StrictCertifiedTokenChain [token]
+  | extend {parent child : CertifiedProofToken}
+      {tail : List CertifiedProofToken}
+      (lower : child.height < parent.height)
+      (chain : StrictCertifiedTokenChain (child :: tail)) :
+      StrictCertifiedTokenChain (parent :: child :: tail)
+
+theorem StoredCertificateRoute.starts_at
+    {token : CertifiedProofToken} {tail : List CertifiedProofToken}
+    {path : List Nat}
+    (route : StoredCertificateRoute (token :: tail) path) :
+    ∃ rest, path = token.position :: rest := by
+  cases route with
+  | singleton token =>
+      exact ⟨[], rfl⟩
+  | extend edge route =>
+      exact ⟨_, rfl⟩
+
+theorem StoredCertificateRoute.strictChain
+    {tokens : List CertifiedProofToken} {path : List Nat}
+    (route : StoredCertificateRoute tokens path) :
+    StrictCertifiedTokenChain tokens := by
+  induction route with
+  | singleton token =>
+      exact StrictCertifiedTokenChain.singleton token
+  | extend edge route ih =>
+      exact StrictCertifiedTokenChain.extend edge.height_lower ih
+
+theorem StoredCertificateRoute.gamePath
+    {tokens : List CertifiedProofToken} {path : List Nat}
+    (route : StoredCertificateRoute tokens path) :
+    GamePath path := by
+  induction route with
+  | singleton token =>
+      trivial
+  | extend edge route ih =>
+      obtain ⟨rest, pathEq⟩ := StoredCertificateRoute.starts_at route
+      cases pathEq
+      exact ⟨edge.move, ih⟩
+
 /- A covered path has a concrete route of retained nested certificate tokens. -/
 mutual
   theorem WinningCertificateCovers.toStoredRoute :
@@ -155,6 +199,17 @@ mutual
           StoredCertificateRoute.extend
           (CertifiedTokenChild.losingB nonterminal replyA replyB) route⟩
 end
+
+theorem CertifiedWinningToken.covered_stored_route
+    (token : CertifiedWinningToken) {rest : List Nat}
+    (covered : WinningCertificateCovers token.certificate
+      (token.position :: rest)) :
+    ∃ tail,
+      StoredCertificateRoute
+        (CertifiedProofToken.winning token :: tail) (token.position :: rest) := by
+  cases token with
+  | mk position height certificate =>
+      exact WinningCertificateCovers.toStoredRoute covered
 
 theorem WinningCertificateCovers.starts_at :
     {position height : Nat} → {certificate : WinningCertificate position height} →
