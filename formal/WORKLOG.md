@@ -65,6 +65,14 @@
   existence of a compatible finite tree for an alternating finite-outcome
   route.  The latter tree can be taller than a previously retained token, so
   it is deliberately not treated as a rank replacement or token installation.
+- Added `OccurrenceCertificates.lean`. It duplicates finite WIN/LOSS trees in
+  `Type`, so concrete branch selections remain data rather than
+  proof-irrelevant fields. A positive legal child and a common grandchild are
+  extracted directly from a stored certificate; no bare finite-outcome
+  proposition is converted back into certificate data. The file also adds a
+  data-level proof-token forest, a replacement relation with at most two
+  lower descendants, a strict well-founded rank, and a one-way erasure proof
+  into the existing logical occurrence forest.
 
 ## Verification record
 
@@ -93,6 +101,12 @@
   realization. Each used exactly one GitHub Actions job. Runs #21--25 and
   #28 exposed intermediate declaration/elaboration errors; the successful
   theorems were kept at the same stated strength after repair.
+- Runs #32, #34, and #37 checked, respectively, theorem-level certificate
+  erasure, direct data-level common-grandchild extraction, and the
+  data-level forest replacement/rank layer. Each successful run used the
+  single Lean kernel and `leanchecker` job. Runs #33, #35, and #36 exposed
+  intermediate height-normalization and proposition-elimination issues; they
+  were repaired without weakening the checked claims.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
@@ -101,10 +115,10 @@
 ## Next exact target
 
 Prove the entry, carry, and no-reseed part of the long high-return lifecycle:
-use a finite preinstalled proof forest to cover every zero-rank route until a
-strict first-exit/descendant payment occurs, without rebuilding a taller
-compatible tree after the future branch is known. Connect that invariant to
-the actual Section 33--34 DRAW/WIN carriers. The `v=5` exceptional branch
-remains a separate finite target.
+use a finite preinstalled **data-level** proof forest to cover every zero-rank
+route until a strict first-exit/descendant payment occurs, without rebuilding
+a taller compatible tree after the future branch is known. Connect that
+invariant to the actual Section 33--34 DRAW/WIN carriers. The `v=5`
+exceptional branch remains a separate finite target.
 The remaining global boundary remains the construction of
 `DrawMacroRefinement`; it is not an axiom and is not closed by this change.
