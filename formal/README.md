@@ -53,7 +53,11 @@ product, the exact lower-exponent `Q_{v-1}` coordinate, and its A-selecting
 phase. Sections 34--35 are now kernel-checked: they contain the returned-state
 diamonds, the local two-level height payment, and the opening phase and
 DRAW-obligation calculations, including the exceptional `v=5` phase. The
-single-worker Lean verification completed successfully. `TokenProvenance.lean` carries exact
+exact signed valuations also produce the returned and contracting-side
+constant-tail certificates.  For `v≥6`, the common side is linked to the
+forced LOSS sibling, producing the explicit lower-height DRAW-to-WIN
+boundary once the actual carriers are supplied. The single-worker Lean
+verification completed successfully. `TokenProvenance.lean` carries exact
 finite proof-tree occurrences and proves strict rank payment for replacements
 by lower occurrences.
 `OccurrenceRefinement.lean` makes the remaining no-reseed condition explicit:
@@ -94,7 +98,8 @@ Completed foundation:
 
 The latest fresh kernel-checked arithmetic front reaches Sections 34--35:
 the local high-valuation diamond, the returned-side selection calculation,
-the `v≥6` parity guard, and the exceptional `v=5` equality. A first exponent-three
+the `v≥6` parity guard, the exceptional `v=5` equality, the transported
+constant-tail certificates, and the long common-side height descent. A first exponent-three
 valuation at least four forces a strict source drop, and the two concrete
 signed valuation equations force the returned `Q_{v-1}` coordinate and its
 A-selecting phase. The remaining obligations are to route those outcomes

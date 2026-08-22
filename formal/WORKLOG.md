@@ -21,16 +21,27 @@
   directly from its constant-tail coordinates.  The odd-coefficient `v=5`
   branch is now recorded separately as the exact exceptional equality, so
   the long-range guard is not silently extended across an invalid case.
+- Connected the Section 33 signed valuation equations to the Section 35
+  vocabulary without an outcome assumption: they now construct the exact
+  `IsConstantTail` certificate for the returned state and for its contracting
+  `B`-child.
+- Closed the conditional long `v≥6` local boundary.  The `v=6` common side is
+  the contracting child of the forced LOSS sibling, while at `v≥7` it is the
+  expanding child.  A retained WIN tree at the returned side and the selected
+  Section 34 WIN child therefore produce a common-side WIN tree two levels
+  lower, and the existing obligation closes at that very occurrence.
 - Updated `README.md`, `PROOF_MAP.md`, and `COVERAGE.md` in the same change.
   The records deliberately do not claim that the global DRAW refinement or
   the Section 34 outcome-routing step has been completed.
 
 ## Verification record
 
-- The one-worker workflow ran successfully twice after the Section 34--35
-  additions: run #2 checked the height/transfer work, and run #3 checked the
-  added `v=5` exceptional phase.  Both used only the single Lean kernel and
-  `leanchecker` job.
+- The one-worker workflow ran successfully four times after the Section 34--35
+  additions: run #2 checked the height/transfer work, run #3 checked the
+  added `v=5` exceptional phase, run #4 checked the return-to-tail bridge,
+  and run #7 checked the complete conditional `v≥6` local boundary. Each used
+  only the single Lean kernel and `leanchecker` job. Runs #5--6 exposed and
+  then resolved arithmetic details in the new `v=6` identity.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
@@ -38,7 +49,8 @@
 
 ## Next exact target
 
-Derive the concrete high-return valuation-two tail and the final common-child
-WIN witness required to feed the now-kernel-checked Section 35 boundary.
+Derive the concrete high-return valuation-two transition and connect the
+actual Section 33--34 DRAW/WIN carriers to the now-kernel-checked Section 35
+boundary. The `v=5` exceptional branch remains a separate finite target.
 The remaining global boundary remains the construction of
 `DrawMacroRefinement`; it is not an axiom and is not closed by this change.
