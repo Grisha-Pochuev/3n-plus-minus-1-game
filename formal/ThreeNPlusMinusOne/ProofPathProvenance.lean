@@ -61,86 +61,101 @@ mutual
           (position :: path)
 end
 
-mutual
-  /-- First-exit provenance for a retained WIN tree.  If a legal path from its
-  root is not covered by the selected finite proof tree, an exact selected LOSS
-  subtree of strictly smaller height has already been exposed. -/
-  theorem WinningTree.covers_or_lower_loss
-      {position height : Nat} (tree : WinningTree position height)
-      {rest : List Nat} (path : GamePath (position :: rest)) :
-      WinningTreeCovers tree (position :: rest) ∨
-        ∃ loss : LosingToken, loss.height < height := by
-    let token : WinningToken := ⟨position, height, tree⟩
-    cases rest with
-    | nil =>
-        exact Or.inl (WinningTreeCovers.stop tree)
-    | cons next rest =>
-        change ConjugatedMove next position ∧ GamePath (next :: rest) at path
-        rcases path with ⟨move, tailPath⟩
-        unfold ConjugatedMove at move
-        cases tree with
-        | moveA nonterminal reply =>
-            rcases move.2 with nextA | nextB
-            · subst next
-              obtain covered | lower :=
-                LosingTree.covers_or_lower_loss reply tailPath
-              · exact Or.inl (WinningTreeCovers.moveA nonterminal reply covered)
-              · rcases lower with ⟨loss, lossLower⟩
-                exact Or.inr ⟨loss, by omega⟩
-            · subst next
-              obtain ⟨loss, _, lossLower⟩ := token.selected_loss_strict
-              exact Or.inr ⟨loss, by simpa [token] using lossLower⟩
-        | moveB nonterminal reply =>
-            rcases move.2 with nextA | nextB
-            · subst next
-              obtain ⟨loss, _, lossLower⟩ := token.selected_loss_strict
-              exact Or.inr ⟨loss, by simpa [token] using lossLower⟩
-            · subst next
-              obtain covered | lower :=
-                LosingTree.covers_or_lower_loss reply tailPath
-              · exact Or.inl (WinningTreeCovers.moveB nonterminal reply covered)
-              · rcases lower with ⟨loss, lossLower⟩
-                exact Or.inr ⟨loss, by omega⟩
-  termination_by height
-  decreasing_by omega
+private theorem proofTree_covers_or_lower_loss_by_height :
+    ∀ height : Nat,
+      (∀ {position : Nat} (tree : WinningTree position height)
+          {rest : List Nat}, GamePath (position :: rest) →
+          WinningTreeCovers tree (position :: rest) ∨
+            ∃ loss : LosingToken, loss.height < height) ∧
+      (∀ {position : Nat} (tree : LosingTree position height)
+          {rest : List Nat}, GamePath (position :: rest) →
+          LosingTreeCovers tree (position :: rest) ∨
+            ∃ loss : LosingToken, loss.height < height) := by
+  intro height
+  induction height using Nat.strong_induction_on with
+  | h height ih =>
+      constructor
+      · intro position tree rest path
+        let token : WinningToken := ⟨position, height, tree⟩
+        cases rest with
+        | nil =>
+            exact Or.inl (WinningTreeCovers.stop tree)
+        | cons next rest =>
+            change ConjugatedMove next position ∧ GamePath (next :: rest) at path
+            rcases path with ⟨move, tailPath⟩
+            unfold ConjugatedMove at move
+            cases tree with
+            | @moveA _ childHeight nonterminal reply =>
+                rcases move.2 with nextA | nextB
+                · subst next
+                  obtain covered | lower :=
+                    (ih childHeight (by omega)).2 reply tailPath
+                  · exact Or.inl
+                      (WinningTreeCovers.moveA nonterminal reply covered)
+                  · rcases lower with ⟨loss, lossLower⟩
+                    exact Or.inr ⟨loss, by omega⟩
+                · subst next
+                  obtain ⟨loss, _, lossLower⟩ := token.selected_loss_strict
+                  exact Or.inr ⟨loss, by simpa [token] using lossLower⟩
+            | @moveB _ childHeight nonterminal reply =>
+                rcases move.2 with nextA | nextB
+                · subst next
+                  obtain ⟨loss, _, lossLower⟩ := token.selected_loss_strict
+                  exact Or.inr ⟨loss, by simpa [token] using lossLower⟩
+                · subst next
+                  obtain covered | lower :=
+                    (ih childHeight (by omega)).2 reply tailPath
+                  · exact Or.inl
+                      (WinningTreeCovers.moveB nonterminal reply covered)
+                  · rcases lower with ⟨loss, lossLower⟩
+                    exact Or.inr ⟨loss, by omega⟩
+      · intro position tree rest path
+        cases rest with
+        | nil =>
+            exact Or.inl (LosingTreeCovers.stop tree)
+        | cons next rest =>
+            change ConjugatedMove next position ∧ GamePath (next :: rest) at path
+            rcases path with ⟨move, tailPath⟩
+            unfold ConjugatedMove at move
+            cases tree with
+            | terminal =>
+                omega
+            | @replies _ heightA heightB nonterminal replyA replyB =>
+                rcases move.2 with nextA | nextB
+                · subst next
+                  obtain covered | lower :=
+                    (ih heightA (by omega)).1 replyA tailPath
+                  · exact Or.inl
+                      (LosingTreeCovers.repliesA nonterminal replyA replyB covered)
+                  · rcases lower with ⟨loss, lossLower⟩
+                    exact Or.inr ⟨loss, by omega⟩
+                · subst next
+                  obtain covered | lower :=
+                    (ih heightB (by omega)).1 replyB tailPath
+                  · exact Or.inl
+                      (LosingTreeCovers.repliesB nonterminal replyA replyB covered)
+                  · rcases lower with ⟨loss, lossLower⟩
+                    exact Or.inr ⟨loss, by omega⟩
 
-  /-- The companion first-exit statement for a LOSS tree.  Both immediate
-  children are present in a LOSS tree, so any exit occurs strictly lower in
-  one of its retained WIN replies. -/
-  theorem LosingTree.covers_or_lower_loss
-      {position height : Nat} (tree : LosingTree position height)
-      {rest : List Nat} (path : GamePath (position :: rest)) :
-      LosingTreeCovers tree (position :: rest) ∨
-        ∃ loss : LosingToken, loss.height < height := by
-    cases rest with
-    | nil =>
-        exact Or.inl (LosingTreeCovers.stop tree)
-    | cons next rest =>
-        change ConjugatedMove next position ∧ GamePath (next :: rest) at path
-        rcases path with ⟨move, tailPath⟩
-        unfold ConjugatedMove at move
-        cases tree with
-        | terminal =>
-            omega
-        | replies nonterminal replyA replyB =>
-            rcases move.2 with nextA | nextB
-            · subst next
-              obtain covered | lower :=
-                WinningTree.covers_or_lower_loss replyA tailPath
-              · exact Or.inl
-                  (LosingTreeCovers.repliesA nonterminal replyA replyB covered)
-              · rcases lower with ⟨loss, lossLower⟩
-                exact Or.inr ⟨loss, by omega⟩
-            · subst next
-              obtain covered | lower :=
-                WinningTree.covers_or_lower_loss replyB tailPath
-              · exact Or.inl
-                  (LosingTreeCovers.repliesB nonterminal replyA replyB covered)
-              · rcases lower with ⟨loss, lossLower⟩
-                exact Or.inr ⟨loss, by omega⟩
-  termination_by height
-  decreasing_by omega
-end
+/-- First-exit provenance for a retained WIN tree.  If a legal path from its
+root is not covered by the selected finite proof tree, an exact selected LOSS
+subtree of strictly smaller height has already been exposed. -/
+theorem WinningTree.covers_or_lower_loss
+    {position height : Nat} (tree : WinningTree position height)
+    {rest : List Nat} (path : GamePath (position :: rest)) :
+    WinningTreeCovers tree (position :: rest) ∨
+      ∃ loss : LosingToken, loss.height < height := by
+  exact (proofTree_covers_or_lower_loss_by_height height).1 tree path
+
+/-- The companion first-exit statement for a LOSS tree.  Both immediate
+children are present in a LOSS tree, so any exit occurs strictly lower in one
+of its retained WIN replies. -/
+theorem LosingTree.covers_or_lower_loss
+    {position height : Nat} (tree : LosingTree position height)
+    {rest : List Nat} (path : GamePath (position :: rest)) :
+    LosingTreeCovers tree (position :: rest) ∨
+      ∃ loss : LosingToken, loss.height < height := by
+  exact (proofTree_covers_or_lower_loss_by_height height).2 tree path
 
 /-- The first-exit alternative can be stated directly from an occurrence
 token: a retained WIN token either covers the legal path or yields a proper
