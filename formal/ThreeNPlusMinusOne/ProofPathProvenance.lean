@@ -1,0 +1,150 @@
+import ThreeNPlusMinusOne.TokenProvenance
+
+set_option autoImplicit false
+
+/-!
+# First-exit provenance for finite proof trees
+
+A finite WIN/LOSS proof tree need not contain every legal game continuation:
+at a WIN node it contains exactly its selected LOSS reply.  This file makes
+the resulting first-exit principle explicit.  A legal path starting at a
+retained finite tree either stays inside that tree, or exposes a strictly
+lower selected LOSS occurrence before it can leave.  The result records a
+real descendant token; it does not authorize discarding it or installing an
+unrelated finite witness later.
+-/
+
+namespace ThreeNPlusMinusOne
+
+/-- A finite sequence of consecutive legal conjugated moves.  Singleton and
+empty sequences are paths, while every longer sequence records its first
+move and then its suffix. -/
+def GamePath : List Nat → Prop
+  | [] => True
+  | _ :: [] => True
+  | current :: next :: rest =>
+      ConjugatedMove next current ∧ GamePath (next :: rest)
+
+/-- A path is covered by a WIN proof tree when it follows the one selected
+LOSS reply at every WIN node and either reply at every LOSS node. -/
+mutual
+  inductive WinningTreeCovers :
+      {position height : Nat} → WinningTree position height → List Nat → Prop
+    | stop {position height : Nat} (tree : WinningTree position height) :
+        WinningTreeCovers tree [position]
+    | moveA {position height : Nat} (nonterminal : 0 < position)
+        (reply : LosingTree (A position) height) {path : List Nat}
+        (covered : LosingTreeCovers reply path) :
+        WinningTreeCovers (WinningTree.moveA nonterminal reply) (position :: path)
+    | moveB {position height : Nat} (nonterminal : 0 < position)
+        (reply : LosingTree (B position) height) {path : List Nat}
+        (covered : LosingTreeCovers reply path) :
+        WinningTreeCovers (WinningTree.moveB nonterminal reply) (position :: path)
+
+  /-- A path is covered by a LOSS proof tree when it follows either available
+  WIN reply at every nonterminal LOSS node. -/
+  inductive LosingTreeCovers :
+      {position height : Nat} → LosingTree position height → List Nat → Prop
+    | stop {position height : Nat} (tree : LosingTree position height) :
+        LosingTreeCovers tree [position]
+    | repliesA {position heightA heightB : Nat} (nonterminal : 0 < position)
+        (replyA : WinningTree (A position) heightA)
+        (replyB : WinningTree (B position) heightB) {path : List Nat}
+        (covered : WinningTreeCovers replyA path) :
+        LosingTreeCovers (LosingTree.replies nonterminal replyA replyB)
+          (position :: path)
+    | repliesB {position heightA heightB : Nat} (nonterminal : 0 < position)
+        (replyA : WinningTree (A position) heightA)
+        (replyB : WinningTree (B position) heightB) {path : List Nat}
+        (covered : WinningTreeCovers replyB path) :
+        LosingTreeCovers (LosingTree.replies nonterminal replyA replyB)
+          (position :: path)
+end
+
+/-- First-exit provenance for a retained WIN tree.  If a legal path from its
+root is not covered by the selected finite proof tree, an exact selected LOSS
+subtree of strictly smaller height has already been exposed. -/
+mutual
+  theorem WinningTree.covers_or_lower_loss
+      {position height : Nat} (tree : WinningTree position height)
+      {rest : List Nat} (path : GamePath (position :: rest)) :
+      WinningTreeCovers tree (position :: rest) ∨
+        ∃ loss : LosingToken, loss.height < height := by
+    cases rest with
+    | nil =>
+        exact Or.inl (WinningTreeCovers.stop tree)
+    | cons next rest =>
+        change ConjugatedMove next position ∧ GamePath (next :: rest) at path
+        rcases path with ⟨move, tailPath⟩
+        unfold ConjugatedMove at move
+        cases tree with
+        | moveA nonterminal reply =>
+            rcases move.2 with nextA | nextB
+            · subst next
+              obtain covered | lower :=
+                LosingTree.covers_or_lower_loss reply tailPath
+              · exact Or.inl (WinningTreeCovers.moveA nonterminal reply covered)
+              · rcases lower with ⟨loss, lossLower⟩
+                exact Or.inr ⟨loss, by omega⟩
+            · subst next
+              exact Or.inr ⟨⟨A position, _, reply⟩, by omega⟩
+        | moveB nonterminal reply =>
+            rcases move.2 with nextA | nextB
+            · subst next
+              exact Or.inr ⟨⟨B position, _, reply⟩, by omega⟩
+            · subst next
+              obtain covered | lower :=
+                LosingTree.covers_or_lower_loss reply tailPath
+              · exact Or.inl (WinningTreeCovers.moveB nonterminal reply covered)
+              · rcases lower with ⟨loss, lossLower⟩
+                exact Or.inr ⟨loss, by omega⟩
+
+  /-- The companion first-exit statement for a LOSS tree.  Both immediate
+  children are present in a LOSS tree, so any exit occurs strictly lower in
+  one of its retained WIN replies. -/
+  theorem LosingTree.covers_or_lower_loss
+      {position height : Nat} (tree : LosingTree position height)
+      {rest : List Nat} (path : GamePath (position :: rest)) :
+      LosingTreeCovers tree (position :: rest) ∨
+        ∃ loss : LosingToken, loss.height < height := by
+    cases rest with
+    | nil =>
+        exact Or.inl (LosingTreeCovers.stop tree)
+    | cons next rest =>
+        change ConjugatedMove next position ∧ GamePath (next :: rest) at path
+        rcases path with ⟨move, tailPath⟩
+        unfold ConjugatedMove at move
+        cases tree with
+        | terminal =>
+            omega
+        | replies nonterminal replyA replyB =>
+            rcases move.2 with nextA | nextB
+            · subst next
+              obtain covered | lower :=
+                WinningTree.covers_or_lower_loss replyA tailPath
+              · exact Or.inl
+                  (LosingTreeCovers.repliesA nonterminal replyA replyB covered)
+              · rcases lower with ⟨loss, lossLower⟩
+                exact Or.inr ⟨loss, by omega⟩
+            · subst next
+              obtain covered | lower :=
+                WinningTree.covers_or_lower_loss replyB tailPath
+              · exact Or.inl
+                  (LosingTreeCovers.repliesB nonterminal replyA replyB covered)
+              · rcases lower with ⟨loss, lossLower⟩
+                exact Or.inr ⟨loss, by omega⟩
+termination_by height
+decreasing_by omega
+end
+
+/-- The first-exit alternative can be stated directly from an occurrence
+token: a retained WIN token either covers the legal path or yields a proper
+retained LOSS descendant. -/
+theorem WinningToken.covers_path_or_lower_loss
+    (token : WinningToken) {rest : List Nat}
+    (path : GamePath (token.position :: rest)) :
+    WinningTreeCovers token.tree (token.position :: rest) ∨
+      ∃ loss : LosingToken, loss.height < token.height := by
+  exact token.tree.covers_or_lower_loss path
+
+end ThreeNPlusMinusOne
