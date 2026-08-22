@@ -51,6 +51,33 @@ certificate and either stored branch of a data-level LOSS certificate. -/
           (LosingCertificate.replies nonterminal replyA replyB) (position :: path)
 end
 
+/- Every data-level coverage witness follows actual legal conjugated moves. -/
+mutual
+  theorem WinningCertificateCovers.gamePath :
+      {position height : Nat} → {certificate : WinningCertificate position height} →
+        {path : List Nat} → WinningCertificateCovers certificate path →
+          GamePath path
+    | _, _, _, _, .stop _ => trivial
+    | _, _, _, _, .moveA nonterminal reply covered =>
+        ⟨⟨nonterminal, Or.inl rfl⟩,
+          LosingCertificateCovers.gamePath covered⟩
+    | _, _, _, _, .moveB nonterminal reply covered =>
+        ⟨⟨nonterminal, Or.inr rfl⟩,
+          LosingCertificateCovers.gamePath covered⟩
+
+  theorem LosingCertificateCovers.gamePath :
+      {position height : Nat} → {certificate : LosingCertificate position height} →
+        {path : List Nat} → LosingCertificateCovers certificate path →
+          GamePath path
+    | _, _, _, _, .stop _ => trivial
+    | _, _, _, _, .repliesA nonterminal replyA replyB covered =>
+        ⟨⟨nonterminal, Or.inl rfl⟩,
+          WinningCertificateCovers.gamePath covered⟩
+    | _, _, _, _, .repliesB nonterminal replyA replyB covered =>
+        ⟨⟨nonterminal, Or.inr rfl⟩,
+          WinningCertificateCovers.gamePath covered⟩
+end
+
 /- Forgetting branch-choice data takes data-level coverage to the earlier
 proposition-level coverage relation on the erased finite tree. -/
 mutual
