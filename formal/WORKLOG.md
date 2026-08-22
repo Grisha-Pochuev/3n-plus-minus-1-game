@@ -58,6 +58,13 @@
   `OccurrenceMacroStep.outerForest` steps.  This proves legality and rank
   payment of the local occurrence update, but deliberately does not assume or
   prove preservation of a semantic `Bad` predicate along it.
+- Added `ProofPathProvenance.lean`.  It formalizes the audited first-exit
+  lemma: a legal path from a retained finite WIN tree either remains covered
+  or exposes a strictly lower selected LOSS witness, which is immediately
+  registered as an outer-forest occurrence replacement.  It also formalizes
+  existence of a compatible finite tree for an alternating finite-outcome
+  route.  The latter tree can be taller than a previously retained token, so
+  it is deliberately not treated as a rank replacement or token installation.
 
 ## Verification record
 
@@ -81,6 +88,11 @@
   replacement into two occurrence-level outer-forest steps. It used exactly
   one GitHub Actions job. Runs #17--18 exposed elaboration errors in the first
   draft; they were repaired rather than hidden or weakened.
+- Runs #26, #27, and #29 checked, respectively, the first-exit provenance
+  lemma, its immediate outer-forest payment, and finite alternating-route
+  realization. Each used exactly one GitHub Actions job. Runs #21--25 and
+  #28 exposed intermediate declaration/elaboration errors; the successful
+  theorems were kept at the same stated strength after repair.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
@@ -89,8 +101,10 @@
 ## Next exact target
 
 Prove the entry, carry, and no-reseed part of the long high-return lifecycle:
-connect actual Section 33--34 DRAW/WIN carriers to the now-kernel-checked
-retained-pair replacement. The `v=5` exceptional branch remains a separate
-finite target.
+use a finite preinstalled proof forest to cover every zero-rank route until a
+strict first-exit/descendant payment occurs, without rebuilding a taller
+compatible tree after the future branch is known. Connect that invariant to
+the actual Section 33--34 DRAW/WIN carriers. The `v=5` exceptional branch
+remains a separate finite target.
 The remaining global boundary remains the construction of
 `DrawMacroRefinement`; it is not an axiom and is not closed by this change.

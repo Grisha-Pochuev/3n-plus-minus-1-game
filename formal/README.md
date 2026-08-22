@@ -114,6 +114,16 @@ equal-base occurrence-level forest steps. The remaining obligations are to
 preserve the semantic DRAW/`Bad` invariant across those steps, route the
 occurrences from the actual DRAW continuation, and construct the global
 `DrawMacroRefinement`.
+
+The current occurrence work also has a checked first-exit lemma: a legal path
+from a retained finite WIN tree is either covered by that tree or exposes a
+strictly lower selected LOSS witness, which can be paid immediately in the
+outer forest. A separately checked construction realizes any finite
+alternating route with finite outcome witnesses by a compatible proof tree.
+That construction may be taller than the already retained tree, so it cannot
+be used to install a replacement token after the route has been chosen. The
+still-open task is a finite *preinstalled* forest that covers all relevant
+zero-rank routes without such reseeding.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting
