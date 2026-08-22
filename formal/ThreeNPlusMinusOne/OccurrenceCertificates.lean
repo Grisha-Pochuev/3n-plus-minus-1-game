@@ -200,4 +200,139 @@ theorem common_grandchild_strict (token : CertifiedWinningToken)
 
 end CertifiedWinningToken
 
+/-- A proof occurrence whose finite branch choices remain available as data. -/
+inductive CertifiedProofToken
+  | winning (token : CertifiedWinningToken)
+  | losing (token : CertifiedLosingToken)
+
+namespace CertifiedProofToken
+
+def position : CertifiedProofToken → Nat
+  | .winning token => token.position
+  | .losing token => token.position
+
+def height : CertifiedProofToken → Nat
+  | .winning token => token.height
+  | .losing token => token.height
+
+/-- Forget data-level certificate choices while retaining the existing
+occurrence token. -/
+def erase : CertifiedProofToken → ProofToken
+  | .winning token => .winning token.erase
+  | .losing token => .losing token.erase
+
+@[simp]
+theorem erase_height (token : CertifiedProofToken) :
+    ProofToken.height token.erase = token.height := by
+  cases token <;> rfl
+
+end CertifiedProofToken
+
+abbrev CertifiedProofForest := List CertifiedProofToken
+
+namespace CertifiedProofForest
+
+/-- The logical occurrence forest obtained by erasing branch-choice data. -/
+def toProofForest (forest : CertifiedProofForest) : ProofForest :=
+  forest.map CertifiedProofToken.erase
+
+end CertifiedProofForest
+
+/-- The same well-founded weight used for logical proof tokens, now applied
+to data-level proof certificates. -/
+def certifiedProofTokenRank (forest : CertifiedProofForest) : Nat :=
+  tokenRank (forest.map CertifiedProofToken.height)
+
+theorem certifiedProofTokenRank_toProofForest (forest : CertifiedProofForest) :
+    proofTokenRank forest.toProofForest = certifiedProofTokenRank forest := by
+  unfold proofTokenRank certifiedProofTokenRank CertifiedProofForest.toProofForest
+  simp [List.map_map]
+
+/-- Replace one retained data-level occurrence by at most two already stored
+lower data-level descendants. -/
+structure CertifiedProofTokenReplacement
+    (next current : CertifiedProofForest) : Prop where
+  before : CertifiedProofForest
+  after : CertifiedProofForest
+  parent : CertifiedProofToken
+  children : CertifiedProofForest
+  current_eq : current = before ++ parent :: after
+  next_eq : next = before ++ children ++ after
+  short : children.length ≤ 2
+  lower : ∀ child ∈ children,
+    CertifiedProofToken.height child < CertifiedProofToken.height parent
+
+theorem certifiedProofTokenReplacement_single
+    {before after : CertifiedProofForest}
+    {parent child : CertifiedProofToken}
+    (lower : CertifiedProofToken.height child < CertifiedProofToken.height parent) :
+    CertifiedProofTokenReplacement
+      (before ++ child :: after) (before ++ parent :: after) := by
+  refine ⟨before, after, parent, [child], by simp, by simp, by simp, ?_⟩
+  intro token member
+  simp only [List.mem_singleton] at member
+  subst token
+  exact lower
+
+/-- Erasing data-level branch choices takes a data-level replacement to the
+already checked logical occurrence replacement. -/
+theorem certifiedProofTokenReplacement_toProofTokenReplacement
+    {next current : CertifiedProofForest}
+    (edge : CertifiedProofTokenReplacement next current) :
+    ProofTokenReplacement next.toProofForest current.toProofForest := by
+  rcases edge with ⟨before, after, parent, children, currentEq, nextEq,
+    short, lower⟩
+  refine ⟨before.toProofForest, after.toProofForest, parent.erase,
+    children.toProofForest, ?_, ?_, ?_, ?_⟩
+  · rw [currentEq]
+    simp [CertifiedProofForest.toProofForest]
+  · rw [nextEq]
+    simp [CertifiedProofForest.toProofForest]
+  · simpa [CertifiedProofForest.toProofForest] using short
+  · intro child member
+    simp only [CertifiedProofForest.toProofForest, List.mem_map] at member
+    obtain ⟨storedChild, storedMember, rfl⟩ := member
+    simpa using lower storedChild storedMember
+
+theorem certifiedProofTokenReplacement_decreases
+    {next current : CertifiedProofForest}
+    (edge : CertifiedProofTokenReplacement next current) :
+    certifiedProofTokenRank next < certifiedProofTokenRank current := by
+  rw [← certifiedProofTokenRank_toProofForest next,
+    ← certifiedProofTokenRank_toProofForest current]
+  exact proofTokenReplacement_decreases
+    (certifiedProofTokenReplacement_toProofTokenReplacement edge)
+
+theorem certifiedProofTokenReplacement_wellFounded :
+    WellFounded CertifiedProofTokenReplacement := by
+  apply Subrelation.wf
+    (q := CertifiedProofTokenReplacement)
+    (r := InvImage Nat.lt certifiedProofTokenRank)
+  · intro next current edge
+    exact certifiedProofTokenReplacement_decreases edge
+  · exact InvImage.wf certifiedProofTokenRank Nat.lt_wfRel.wf
+
+/-- A positive common grandchild of a retained data-level WIN occurrence can
+replace that occurrence inside a data-level forest, and its erasure is
+compatible with the existing proof-token rank. -/
+theorem certifiedProofToken_common_grandchild_rank_payment
+    {before after : CertifiedProofForest}
+    (token : CertifiedWinningToken)
+    {grandchild : Nat} (grandchildPositive : 0 < grandchild)
+    (common : CommonGrandchild grandchild token.position) :
+    ∃ descendant : CertifiedWinningToken,
+      descendant.position = grandchild ∧
+        certifiedProofTokenRank
+            (before ++ CertifiedProofToken.winning descendant :: after) <
+          certifiedProofTokenRank
+            (before ++ CertifiedProofToken.winning token :: after) := by
+  obtain ⟨descendant, descendantPosition, lower⟩ :=
+    token.common_grandchild grandchildPositive common
+  have descendantLower : descendant.height < token.height := by
+    omega
+  refine ⟨descendant, descendantPosition, ?_⟩
+  apply certifiedProofTokenReplacement_decreases
+  apply certifiedProofTokenReplacement_single
+  simpa [CertifiedProofToken.height] using descendantLower
+
 end ThreeNPlusMinusOne
