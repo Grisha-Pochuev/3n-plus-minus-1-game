@@ -183,7 +183,7 @@ theorem highReturn_bSelecting_valuation_two
     unfold embeddedValue
     simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega,
       show exponent - 3 - 1 = exponent - 4 by omega] using
-      congrArg (fun value => 2 * value + 1)
+      congrArg (fun value => 2 * value)
         (A_Q (by omega : 0 < 3 * coefficient) bit
           (by omega : 1 ≤ exponent - 3))
   have powerSplit : 2 ^ (exponent - 2) = 4 * 2 ^ (exponent - 4) := by
@@ -194,6 +194,9 @@ theorem highReturn_bSelecting_valuation_two
     rw [restEquation]
     simp [Nat.pow_add, Nat.mul_comm]
   let base := coefficient * 2 ^ (exponent - 4)
+  have basePositive : 0 < base := by
+    dsimp [base]
+    exact Nat.mul_pos positive (Nat.pow_pos (by omega))
   have returnedProduct :
       (3 * coefficient) * 2 ^ (exponent - 2) = 12 * base := by
     rw [powerSplit]
@@ -227,10 +230,10 @@ theorem highReturn_bSelecting_valuation_two
         2 ^ 2 * embeddedValue (B (Q coefficient (exponent - 1) tailBit)) := by
     rw [returnedEmbedded, childEmbedded]
     rcases bit with tailZero | tailOne
-    · rw [tailZero]
+    · subst tailBit
       rw [returnedZero, childZero]
       omega
-    · rw [tailOne]
+    · subst tailBit
       rw [returnedOne, childOne]
       omega
   unfold BSelectingValuationTwo
