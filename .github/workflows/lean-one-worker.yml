@@ -1,0 +1,28 @@
+name: Lean verification (one worker)
+
+on:
+  pull_request:
+    paths:
+      - 'formal/**'
+  workflow_dispatch:
+
+concurrency:
+  group: lean-one-worker-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lean:
+    name: Lean kernel and leanchecker
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: formal
+          build: true
+          build-args: --wfail
+          test: false
+          leanchecker: true
+          nanoda: false
+          use-mathlib-cache: false
