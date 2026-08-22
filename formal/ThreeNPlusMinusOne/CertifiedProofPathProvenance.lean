@@ -125,11 +125,13 @@ mutual
           (CertifiedProofToken.winning ⟨_, _, certificate⟩)⟩
     | _, _, _, _, .moveA nonterminal reply covered => by
         obtain ⟨tail, route⟩ := LosingCertificateCovers.toStoredRoute covered
-        exact ⟨tail, StoredCertificateRoute.extend
+        exact ⟨CertifiedProofToken.losing ⟨_, _, reply⟩ :: tail,
+          StoredCertificateRoute.extend
           (CertifiedTokenChild.winningA nonterminal reply) route⟩
     | _, _, _, _, .moveB nonterminal reply covered => by
         obtain ⟨tail, route⟩ := LosingCertificateCovers.toStoredRoute covered
-        exact ⟨tail, StoredCertificateRoute.extend
+        exact ⟨CertifiedProofToken.losing ⟨_, _, reply⟩ :: tail,
+          StoredCertificateRoute.extend
           (CertifiedTokenChild.winningB nonterminal reply) route⟩
 
   theorem LosingCertificateCovers.toStoredRoute :
@@ -144,11 +146,13 @@ mutual
           (CertifiedProofToken.losing ⟨_, _, certificate⟩)⟩
     | _, _, _, _, .repliesA nonterminal replyA replyB covered => by
         obtain ⟨tail, route⟩ := WinningCertificateCovers.toStoredRoute covered
-        exact ⟨tail, StoredCertificateRoute.extend
+        exact ⟨CertifiedProofToken.winning ⟨_, _, replyA⟩ :: tail,
+          StoredCertificateRoute.extend
           (CertifiedTokenChild.losingA nonterminal replyA replyB) route⟩
     | _, _, _, _, .repliesB nonterminal replyA replyB covered => by
         obtain ⟨tail, route⟩ := WinningCertificateCovers.toStoredRoute covered
-        exact ⟨tail, StoredCertificateRoute.extend
+        exact ⟨CertifiedProofToken.winning ⟨_, _, replyB⟩ :: tail,
+          StoredCertificateRoute.extend
           (CertifiedTokenChild.losingB nonterminal replyA replyB) route⟩
 end
 
