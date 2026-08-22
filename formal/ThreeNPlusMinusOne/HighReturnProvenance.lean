@@ -147,7 +147,20 @@ theorem highReturn_long_retained_pair_outer_steps
       returnedToken contractingToken returnedPosition contractingPosition
   refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
     ?_, ?_⟩
-  · apply OccurrenceMacroStep.outerForest rfl rfl
+  · refine OccurrenceMacroStep.outerForest
+      (next :=
+        { base := base
+          outerForest :=
+            before ++ [ProofToken.winning firstDescendant] ++ middle ++
+              [ProofToken.winning secondDescendant] ++ after
+          innerForest := innerForest })
+      (current :=
+        { base := base
+          outerForest :=
+            before ++ [ProofToken.winning firstDescendant] ++ middle ++
+              [ProofToken.winning contractingToken] ++ after
+          innerForest := innerForest })
+      rfl rfl ?_
     simpa [List.append_assoc] using
       (proofTokenReplacement_single
         (before := before ++ [ProofToken.winning firstDescendant] ++ middle)
@@ -155,7 +168,20 @@ theorem highReturn_long_retained_pair_outer_steps
         (parent := ProofToken.winning contractingToken)
         (child := ProofToken.winning secondDescendant)
         (by simpa [ProofToken.height] using secondLower))
-  · apply OccurrenceMacroStep.outerForest rfl rfl
+  · refine OccurrenceMacroStep.outerForest
+      (next :=
+        { base := base
+          outerForest :=
+            before ++ [ProofToken.winning firstDescendant] ++ middle ++
+              [ProofToken.winning contractingToken] ++ after
+          innerForest := innerForest })
+      (current :=
+        { base := base
+          outerForest :=
+            before ++ [ProofToken.winning returnedToken] ++ middle ++
+              [ProofToken.winning contractingToken] ++ after
+          innerForest := innerForest })
+      rfl rfl ?_
     simpa [List.append_assoc] using
       (proofTokenReplacement_single
         (before := before)
