@@ -25,9 +25,9 @@ def GamePath : List Nat → Prop
   | current :: next :: rest =>
       ConjugatedMove next current ∧ GamePath (next :: rest)
 
-/-- A path is covered by a WIN proof tree when it follows the one selected
-LOSS reply at every WIN node and either reply at every LOSS node. -/
 mutual
+  /-- A path is covered by a WIN proof tree when it follows the one selected
+  LOSS reply at every WIN node and either reply at every LOSS node. -/
   inductive WinningTreeCovers :
       {position height : Nat} → WinningTree position height → List Nat → Prop
     | stop {position height : Nat} (tree : WinningTree position height) :
@@ -61,10 +61,10 @@ mutual
           (position :: path)
 end
 
-/-- First-exit provenance for a retained WIN tree.  If a legal path from its
-root is not covered by the selected finite proof tree, an exact selected LOSS
-subtree of strictly smaller height has already been exposed. -/
 mutual
+  /-- First-exit provenance for a retained WIN tree.  If a legal path from its
+  root is not covered by the selected finite proof tree, an exact selected LOSS
+  subtree of strictly smaller height has already been exposed. -/
   theorem WinningTree.covers_or_lower_loss
       {position height : Nat} (tree : WinningTree position height)
       {rest : List Nat} (path : GamePath (position :: rest)) :
