@@ -33,6 +33,14 @@
 - Updated `README.md`, `PROOF_MAP.md`, and `COVERAGE.md` in the same change.
   The records deliberately do not claim that the global DRAW refinement or
   the Section 34 outcome-routing step has been completed.
+- Proved the formerly missing concrete high-return B-selecting
+  valuation-two transition for every positive returned `Q` coordinate with
+  `v≥4`. The proof expands both embedded values, factors the shared power of
+  two, and checks both tail-bit cases exactly.
+- Added the direct carrier bridge: an explicitly supplied `DRAW` at the
+  Section 33 return lift now yields the Section 35 `DrawObligation` for the
+  returned contracting side. This remains conditional on that actual DRAW
+  carrier; no Section 33--34 outcome-routing premise was added or hidden.
 
 ## Verification record
 
@@ -42,6 +50,10 @@
   and run #7 checked the complete conditional `v≥6` local boundary. Each used
   only the single Lean kernel and `leanchecker` job. Runs #5--6 exposed and
   then resolved arithmetic details in the new `v=6` identity.
+- Run #10 checked the exact high-return valuation-two proof, and run #11
+  checked its concrete DRAW-lift-to-obligation bridge. Each run contained
+  exactly one GitHub Actions job. Run #9 exposed an intermediate proof error;
+  it was repaired before run #10 rather than being suppressed.
 - Local Lean tools remain unavailable in this environment; the GitHub checks
   are the claimed kernel verification.  `git diff --check` is clean.
 - `lean-one-worker.yml` runs the pull-request Lean check.  The legacy entry is
@@ -49,8 +61,8 @@
 
 ## Next exact target
 
-Derive the concrete high-return valuation-two transition and connect the
-actual Section 33--34 DRAW/WIN carriers to the now-kernel-checked Section 35
-boundary. The `v=5` exceptional branch remains a separate finite target.
+Connect the actual Section 33--34 DRAW/WIN carriers to the now-kernel-checked
+Section 35 boundary. The `v=5` exceptional branch remains a separate finite
+target.
 The remaining global boundary remains the construction of
 `DrawMacroRefinement`; it is not an axiom and is not closed by this change.
