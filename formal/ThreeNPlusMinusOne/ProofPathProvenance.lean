@@ -70,6 +70,7 @@ mutual
       {rest : List Nat} (path : GamePath (position :: rest)) :
       WinningTreeCovers tree (position :: rest) ∨
         ∃ loss : LosingToken, loss.height < height := by
+    let token : WinningToken := ⟨position, height, tree⟩
     cases rest with
     | nil =>
         exact Or.inl (WinningTreeCovers.stop tree)
@@ -87,17 +88,21 @@ mutual
               · rcases lower with ⟨loss, lossLower⟩
                 exact Or.inr ⟨loss, by omega⟩
             · subst next
-              exact Or.inr ⟨⟨A position, _, reply⟩, by omega⟩
+              obtain ⟨loss, _, lossLower⟩ := token.selected_loss_strict
+              exact Or.inr ⟨loss, by simpa [token] using lossLower⟩
         | moveB nonterminal reply =>
             rcases move.2 with nextA | nextB
             · subst next
-              exact Or.inr ⟨⟨B position, _, reply⟩, by omega⟩
+              obtain ⟨loss, _, lossLower⟩ := token.selected_loss_strict
+              exact Or.inr ⟨loss, by simpa [token] using lossLower⟩
             · subst next
               obtain covered | lower :=
                 LosingTree.covers_or_lower_loss reply tailPath
               · exact Or.inl (WinningTreeCovers.moveB nonterminal reply covered)
               · rcases lower with ⟨loss, lossLower⟩
                 exact Or.inr ⟨loss, by omega⟩
+  termination_by height
+  decreasing_by omega
 
   /-- The companion first-exit statement for a LOSS tree.  Both immediate
   children are present in a LOSS tree, so any exit occurs strictly lower in
@@ -133,8 +138,8 @@ mutual
                   (LosingTreeCovers.repliesB nonterminal replyA replyB covered)
               · rcases lower with ⟨loss, lossLower⟩
                 exact Or.inr ⟨loss, by omega⟩
-termination_by height
-decreasing_by omega
+  termination_by height
+  decreasing_by omega
 end
 
 /-- The first-exit alternative can be stated directly from an occurrence
