@@ -302,6 +302,29 @@ theorem drawObligation_of_signed_valuation_two
   rw [tail.equation]
   exact R_Q tail.positive tail.bit (by omega : 2 ≤ 2)
 
+/-- A concrete DRAW carrier at the Section 33 return lift supplies the
+Section 35 obligation for the returned contracting side.  The preceding
+valuation-two theorem supplies the exact constant-tail witness. -/
+theorem highReturn_draw_obligation_of_lift_draw
+    {coefficient exponent tailBit : Nat}
+    (positive : 0 < coefficient) (bit : Bit tailBit)
+    (exponentLarge : 4 ≤ exponent)
+    (liftDraw : Draw
+      (Q (embeddedValue (Q coefficient (exponent - 1) tailBit)) 1 tailBit)) :
+    DrawObligation (B (Q coefficient (exponent - 1) tailBit))
+      (1 - tailBit) := by
+  have valuation := highReturn_bSelecting_valuation_two
+    positive bit exponentLarge
+  have selectingPhase :
+      sourceASelectingBit (Q coefficient (exponent - 1) tailBit) =
+        1 - tailBit :=
+    sourceASelectingBit_Q_long positive bit (by omega : 2 ≤ exponent - 1)
+  have doubleComplement : 1 - (1 - tailBit) = tailBit := by
+    rcases bit with tailZero | tailOne <;> omega
+  unfold BSelectingValuationTwo at valuation
+  rw [selectingPhase, doubleComplement] at valuation
+  exact drawObligation_of_signed_valuation_two liftDraw valuation
+
 namespace DrawObligation
 
 /-- Every obligation retains a concrete DRAW carrier at one of its two lift
