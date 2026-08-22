@@ -50,8 +50,12 @@ bounds all three signed continuations after the exponent-two/three switches.
 Section 33 is now kernel-checked through the full arithmetic return bridge:
 the high-valuation source drop, the scaled signed relation, the even tail
 product, the exact lower-exponent `Q_{v-1}` coordinate, and its A-selecting
-phase. `TokenProvenance.lean` carries exact finite proof-tree occurrences and
-proves strict rank payment for replacements by lower occurrences.
+phase. The working tree also contains source formalizations of the Section 34
+returned-state diamonds and the opening phase calculations of Section 35. A
+fresh Lean kernel build of those two additions is still pending under the
+single-worker verification constraint. `TokenProvenance.lean` carries exact
+finite proof-tree occurrences and proves strict rank payment for replacements
+by lower occurrences.
 `OccurrenceRefinement.lean` makes the remaining no-reseed condition explicit:
 an occurrence forest may change at equal macro rank only by such a certified
 replacement, while a fresh forest is permitted only after a strict macro step.
@@ -88,11 +92,16 @@ Completed foundation:
 5. the nested outer/inner rank and equal-rank control DAG;
 6. a conditional Section 138 theorem with an explicit refinement parameter.
 
-The currently kernel-checked arithmetic front reaches the phase-identified
-Section 33 return. A first exponent-three valuation at least four forces a
-strict source drop, and the two concrete signed valuation equations force the
-returned `Q_{v-1}` coordinate and its A-selecting phase. The remaining
-obligations are outcome routing and the global `DrawMacroRefinement`.
+The latest fresh kernel-checked arithmetic front reaches the phase-identified
+Section 33 return. The unverified working-tree additions formalize the local
+Section 34 high-valuation diamond and the Section 35 calculation selecting
+its lower WIN child in the boundary and long cases, including the parity guard
+for its nonexceptional `v≥6` range. A first exponent-three
+valuation at least four forces a strict source drop, and the two concrete
+signed valuation equations force the returned `Q_{v-1}` coordinate and its
+A-selecting phase. The remaining obligations are to route those outcomes
+from the actual DRAW continuation and to construct the global
+`DrawMacroRefinement`.
 The four long-suffix rows are impossible; each surviving length-three row
 installs a winning proof tree at least two levels lower; all eight
 suffix-length-two rows have their exact outcome fork; and the A-selecting

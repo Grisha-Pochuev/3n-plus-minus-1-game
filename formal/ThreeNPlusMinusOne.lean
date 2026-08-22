@@ -22,6 +22,8 @@ import ThreeNPlusMinusOne.TwinRecurrence
 import ThreeNPlusMinusOne.SignedBoundary
 import ThreeNPlusMinusOne.LongSwitchBounds
 import ThreeNPlusMinusOne.HighValuationReturn
+import ThreeNPlusMinusOne.HighValuationHeight
+import ThreeNPlusMinusOne.HighValuationTransfer
 import ThreeNPlusMinusOne.ReverseFrame
 import ThreeNPlusMinusOne.OriginalNormalForm
 import ThreeNPlusMinusOne.Certificate
