@@ -36,6 +36,7 @@ import ThreeNPlusMinusOne.ProofPathProvenance
 import ThreeNPlusMinusOne.HighReturnProvenance
 import ThreeNPlusMinusOne.CertifiedOccurrenceRefinement
 import ThreeNPlusMinusOne.CertifiedHighReturnProvenance
+import ThreeNPlusMinusOne.CertifiedProofPathProvenance
 import ThreeNPlusMinusOne.OccurrenceRefinement
 import ThreeNPlusMinusOne.Refinement
 import ThreeNPlusMinusOne.Termination
