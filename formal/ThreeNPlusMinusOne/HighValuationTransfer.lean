@@ -418,12 +418,13 @@ theorem highReturn_v6_common_side_child
           (by omega : 1 ≤ 3))
     _ = B (Q (9 * coefficient) 1 tailBit) := by
       exact (B_Q_one_eq_two ninePositive nineOdd bit).symm
-    _ = B (Q (3 * coefficient) 3 tailBit) := by
-      symm
-      simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega] using
-        B_Q (by omega : 0 < 3 * coefficient) bit (by omega : 3 ≤ 3)
-    _ = B (B (Q coefficient 5 tailBit)) := by
-      exact congrArg B contractingChild.symm
+    _ = B (B (Q (3 * coefficient) 3 tailBit)) := by
+      exact congrArg B (by
+        simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega] using
+          (B_Q (by omega : 0 < 3 * coefficient) bit
+            (by omega : 3 ≤ 3)).symm)
+    _ = B (B (B (Q coefficient 5 tailBit))) := by
+      exact congrArg B (congrArg B contractingChild.symm)
 
 /-- Beyond `v=6`, the same common side is the expanding child of the LOSS
 sibling `B(Z)`. -/
