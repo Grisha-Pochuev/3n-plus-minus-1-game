@@ -203,7 +203,7 @@ theorem proofToken_pair_replacement_decreases
       (proofTokenReplacement_single
         (before := before ++ [firstChild] ++ middle) (after := after)
         (parent := secondParent) (child := secondChild) secondLower)
-  exact lt_trans (proofTokenReplacement_decreases secondStep)
+  exact Nat.lt_trans (proofTokenReplacement_decreases secondStep)
     (proofTokenReplacement_decreases firstStep)
 
 theorem proofTokenReplacement_wellFounded :
