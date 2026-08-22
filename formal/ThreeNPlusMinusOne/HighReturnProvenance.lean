@@ -192,4 +192,72 @@ theorem highReturn_long_retained_pair_outer_steps
         (child := ProofToken.winning firstDescendant)
         (by simpa [ProofToken.height] using firstLower))
 
+/-- A concrete long-return DRAW boundary can carry an already retained
+contracting-side WIN occurrence into its exact lower common-side occurrence.
+The returned DRAW lift remains an explicit result, while the finite witness is
+replaced rather than freshly installed.  This is the local outcome-compatible
+part of the lifecycle; it does not establish that every semantic entry has
+the required retained token. -/
+theorem highReturn_long_boundary_outer_step
+    {coefficient exponent tailBit : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) (exponentLarge : 6 ≤ exponent)
+    {before after innerForest : ProofForest}
+    (base : MacroConfiguration)
+    (sideToken : WinningToken)
+    (sidePosition :
+      sideToken.position = B (Q coefficient (exponent - 1) tailBit))
+    (selectedWinning :
+      Winning (A (B (Q coefficient (exponent - 1) tailBit))))
+    (liftDraw : Draw
+      (Q (embeddedValue (Q coefficient (exponent - 1) tailBit)) 1 tailBit)) :
+    ∃ drawLift : Nat, ∃ descendant : WinningToken,
+      Draw drawLift ∧
+        B drawLift = B (A (B (Q coefficient (exponent - 1) tailBit))) ∧
+          descendant.position =
+            B (A (B (Q coefficient (exponent - 1) tailBit))) ∧
+            OccurrenceMacroStep
+              { base := base
+                outerForest :=
+                  before ++ [ProofToken.winning descendant] ++ after
+                innerForest := innerForest }
+              { base := base
+                outerForest :=
+                  before ++ [ProofToken.winning sideToken] ++ after
+                innerForest := innerForest } := by
+  have sideTree :
+      WinningTree (B (Q coefficient (exponent - 1) tailBit)) sideToken.height := by
+    rw [← sidePosition]
+    exact sideToken.tree
+  obtain ⟨drawLift, commonHeight, drawLiftDraw, drawLiftChild, commonTree,
+    lower⟩ :=
+    highReturn_lift_draw_to_lower_winning_boundary positive odd bit exponentLarge
+      liftDraw sideTree selectedWinning
+  let descendant : WinningToken :=
+    ⟨B (A (B (Q coefficient (exponent - 1) tailBit))), commonHeight, commonTree⟩
+  have descendantPosition :
+      descendant.position = B (A (B (Q coefficient (exponent - 1) tailBit))) :=
+    rfl
+  have descendantLower : descendant.height < sideToken.height := by
+    dsimp [descendant]
+    omega
+  refine ⟨drawLift, descendant, drawLiftDraw, drawLiftChild,
+    descendantPosition, ?_⟩
+  refine OccurrenceMacroStep.outerForest
+    (next :=
+      { base := base
+        outerForest := before ++ [ProofToken.winning descendant] ++ after
+        innerForest := innerForest })
+    (current :=
+      { base := base
+        outerForest := before ++ [ProofToken.winning sideToken] ++ after
+        innerForest := innerForest })
+    rfl rfl ?_
+  simpa [List.append_assoc] using
+    (proofTokenReplacement_single
+      (before := before) (after := after)
+      (parent := ProofToken.winning sideToken)
+      (child := ProofToken.winning descendant)
+      (by simpa [ProofToken.height] using descendantLower))
+
 end ThreeNPlusMinusOne
