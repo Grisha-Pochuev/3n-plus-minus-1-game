@@ -61,6 +61,84 @@ mutual
           (position :: path)
 end
 
+/-- Which finite outcome is carried at the current endpoint of a route. -/
+inductive RouteKind
+  | winning
+  | losing
+
+/-- A finite alternating route carrying the finite evidence needed to realize
+it as a compatible proof tree.  At a LOSS step the existing LOSS witness
+contains both child witnesses, so the route need name only the selected next
+child. -/
+inductive FiniteOutcomeRoute : RouteKind → Nat → List Nat → Prop
+  | winningStop {position : Nat} (winning : Winning position) :
+      FiniteOutcomeRoute .winning position [position]
+  | winningStep {position next : Nat} {rest : List Nat}
+      (move : ConjugatedMove next position)
+      (tail : FiniteOutcomeRoute .losing next (next :: rest)) :
+      FiniteOutcomeRoute .winning position (position :: next :: rest)
+  | losingStop {position : Nat} (losing : Losing position) :
+      FiniteOutcomeRoute .losing position [position]
+  | losingStep {position next : Nat} {rest : List Nat}
+      (losing : Losing position) (move : ConjugatedMove next position)
+      (tail : FiniteOutcomeRoute .winning next (next :: rest)) :
+      FiniteOutcomeRoute .losing position (position :: next :: rest)
+
+/-- A compatible finite proof tree together with its exact covered route. -/
+inductive RouteTree : RouteKind → Nat → List Nat → Prop
+  | winning {position height : Nat} {path : List Nat}
+      (tree : WinningTree position height)
+      (covers : WinningTreeCovers tree path) :
+      RouteTree .winning position path
+  | losing {position height : Nat} {path : List Nat}
+      (tree : LosingTree position height)
+      (covers : LosingTreeCovers tree path) :
+      RouteTree .losing position path
+
+/-- Every finite alternating route can be realized by a finite proof tree
+that covers exactly that route.  The constructed tree can differ from, and
+be taller than, a previously retained tree at the same numerical state; this
+theorem therefore creates no rank-replacement permission by itself. -/
+theorem FiniteOutcomeRoute.realize
+    {kind : RouteKind} {position : Nat} {path : List Nat}
+    (route : FiniteOutcomeRoute kind position path) :
+    RouteTree kind position path := by
+  induction route with
+  | winningStop winning =>
+      obtain ⟨height, tree⟩ := winning
+      exact RouteTree.winning tree (WinningTreeCovers.stop tree)
+  | winningStep move tail ih =>
+      cases ih with
+      | losing tree covers =>
+          unfold ConjugatedMove at move
+          rcases move with ⟨nonterminal, nextA | nextB⟩
+          · subst next
+            exact RouteTree.winning (WinningTree.moveA nonterminal tree)
+              (WinningTreeCovers.moveA nonterminal tree covers)
+          · subst next
+            exact RouteTree.winning (WinningTree.moveB nonterminal tree)
+              (WinningTreeCovers.moveB nonterminal tree covers)
+  | losingStop losing =>
+      obtain ⟨height, tree⟩ := losing
+      exact RouteTree.losing tree (LosingTreeCovers.stop tree)
+  | losingStep losing move tail ih =>
+      cases ih with
+      | winning tree covers =>
+          unfold ConjugatedMove at move
+          rcases move with ⟨nonterminal, nextA | nextB⟩
+          · subst next
+            obtain ⟨_, otherWinning⟩ := losing.children_winning nonterminal
+            obtain ⟨_, otherTree⟩ := otherWinning
+            exact RouteTree.losing
+              (LosingTree.replies nonterminal tree otherTree)
+              (LosingTreeCovers.repliesA nonterminal tree otherTree covers)
+          · subst next
+            obtain ⟨otherWinning, _⟩ := losing.children_winning nonterminal
+            obtain ⟨_, otherTree⟩ := otherWinning
+            exact RouteTree.losing
+              (LosingTree.replies nonterminal otherTree tree)
+              (LosingTreeCovers.repliesB nonterminal otherTree tree covers)
+
 private theorem proofTree_covers_or_lower_loss_by_height :
     ∀ height : Nat,
       (∀ {position : Nat} (tree : WinningTree position height)
