@@ -173,7 +173,9 @@ theorem highReturn_bSelecting_valuation_two
       embeddedValue (Q coefficient (exponent - 1) tailBit) =
         2 * Q (3 * coefficient) (exponent - 2) tailBit + 1 := by
     unfold embeddedValue
-    rw [A_Q positive bit (by omega : 1 ≤ exponent - 1)]
+    simpa only [show exponent - 1 - 1 = exponent - 2 by omega] using
+      congrArg (fun value => 2 * value + 1)
+        (A_Q positive bit (by omega : 1 ≤ exponent - 1))
   have childEmbedded :
       embeddedValue (B (Q coefficient (exponent - 1) tailBit)) =
         2 * Q (9 * coefficient) (exponent - 4) tailBit + 1 := by
@@ -181,8 +183,9 @@ theorem highReturn_bSelecting_valuation_two
     unfold embeddedValue
     simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega,
       show exponent - 3 - 1 = exponent - 4 by omega] using
-      A_Q (by omega : 0 < 3 * coefficient) bit
-        (by omega : 1 ≤ exponent - 3)
+      congrArg (fun value => 2 * value + 1)
+        (A_Q (by omega : 0 < 3 * coefficient) bit
+          (by omega : 1 ≤ exponent - 3))
   have powerSplit : 2 ^ (exponent - 2) = 4 * 2 ^ (exponent - 4) := by
     obtain ⟨rest, restShape⟩ : ∃ rest, exponent - 2 = rest + 2 :=
       ⟨exponent - 4, by omega⟩
@@ -190,6 +193,34 @@ theorem highReturn_bSelecting_valuation_two
     have restEquation : rest = exponent - 4 := by omega
     rw [restEquation]
     simp [Nat.pow_add, Nat.mul_comm]
+  let base := coefficient * 2 ^ (exponent - 4)
+  have returnedProduct :
+      (3 * coefficient) * 2 ^ (exponent - 2) = 12 * base := by
+    rw [powerSplit]
+    calc
+      (3 * coefficient) * (4 * 2 ^ (exponent - 4)) =
+          (3 * 4) * (coefficient * 2 ^ (exponent - 4)) := by ac_rfl
+      _ = 12 * base := by simp [base]
+  have childProduct :
+      (9 * coefficient) * 2 ^ (exponent - 4) = 9 * base := by
+    dsimp [base]
+    ac_rfl
+  have returnedZero :
+      Q (3 * coefficient) (exponent - 2) 0 = 12 * base := by
+    simp only [Q, Nat.sub_zero]
+    exact returnedProduct
+  have returnedOne :
+      Q (3 * coefficient) (exponent - 2) 1 = 12 * base - 1 := by
+    unfold Q
+    rw [returnedProduct]
+  have childZero :
+      Q (9 * coefficient) (exponent - 4) 0 = 9 * base := by
+    simp only [Q, Nat.sub_zero]
+    exact childProduct
+  have childOne :
+      Q (9 * coefficient) (exponent - 4) 1 = 9 * base - 1 := by
+    unfold Q
+    rw [childProduct]
   have valuation :
       3 * embeddedValue (Q coefficient (exponent - 1) tailBit) + 1 -
           2 * tailBit =
@@ -197,12 +228,10 @@ theorem highReturn_bSelecting_valuation_two
     rw [returnedEmbedded, childEmbedded]
     rcases bit with tailZero | tailOne
     · rw [tailZero]
-      simp [Q, powerSplit, Nat.mul_assoc, Nat.mul_comm,
-        Nat.mul_left_comm]
+      rw [returnedZero, childZero]
       omega
     · rw [tailOne]
-      simp [Q, powerSplit, Nat.mul_assoc, Nat.mul_comm,
-        Nat.mul_left_comm]
+      rw [returnedOne, childOne]
       omega
   unfold BSelectingValuationTwo
   rw [selectingPhase, doubleComplement]
