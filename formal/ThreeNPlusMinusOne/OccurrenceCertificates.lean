@@ -246,21 +246,21 @@ def certifiedProofTokenRank (forest : CertifiedProofForest) : Nat :=
 theorem certifiedProofTokenRank_toProofForest (forest : CertifiedProofForest) :
     proofTokenRank forest.toProofForest = certifiedProofTokenRank forest := by
   unfold proofTokenRank certifiedProofTokenRank CertifiedProofForest.toProofForest
-  simp [List.map_map]
+  simp only [List.map_map, Function.comp_apply,
+    CertifiedProofToken.erase_height]
 
 /-- Replace one retained data-level occurrence by at most two already stored
 lower data-level descendants. -/
-structure CertifiedProofTokenReplacement
+inductive CertifiedProofTokenReplacement
     (next current : CertifiedProofForest) : Prop where
-  before : CertifiedProofForest
-  after : CertifiedProofForest
-  parent : CertifiedProofToken
-  children : CertifiedProofForest
-  current_eq : current = before ++ parent :: after
-  next_eq : next = before ++ children ++ after
-  short : children.length ≤ 2
-  lower : ∀ child ∈ children,
-    CertifiedProofToken.height child < CertifiedProofToken.height parent
+  | mk (before after : CertifiedProofForest)
+      (parent : CertifiedProofToken) (children : CertifiedProofForest)
+      (current_eq : current = before ++ parent :: after)
+      (next_eq : next = before ++ children ++ after)
+      (short : children.length ≤ 2)
+      (lower : ∀ child ∈ children,
+        CertifiedProofToken.height child < CertifiedProofToken.height parent) :
+      CertifiedProofTokenReplacement next current
 
 theorem certifiedProofTokenReplacement_single
     {before after : CertifiedProofForest}
