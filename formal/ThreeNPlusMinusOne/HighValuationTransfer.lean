@@ -367,6 +367,7 @@ occurrence at least two proof levels lower. -/
 theorem WinningTree.twoLevelDrop_of_A_winning
     {state common height : Nat}
     (tree : WinningTree state height) (siblingWinning : Winning (A state))
+    (selectedChildPositive : 0 < B state)
     (commonEquation : common = A (B state) ∨ common = B (B state)) :
     ∃ commonHeight, WinningTree common commonHeight ∧
       commonHeight + 2 ≤ height := by
@@ -379,9 +380,9 @@ theorem WinningTree.twoLevelDrop_of_A_winning
       have commonWinning : Winning common := by
         rcases commonEquation with commonA | commonB
         · rw [commonA]
-          exact (replyOutcome.children_winning (B_pos nonterminal)).1
+          exact (replyOutcome.children_winning selectedChildPositive).1
         · rw [commonB]
-          exact (replyOutcome.children_winning (B_pos nonterminal)).2
+          exact (replyOutcome.children_winning selectedChildPositive).2
       have commonPositive : 0 < common := by
         by_cases commonZero : common = 0
         · apply False.elim
@@ -410,15 +411,19 @@ theorem highReturn_v6_common_side_child
   calc
     B (A (B (Q coefficient 5 tailBit))) =
         B (A (Q (3 * coefficient) 3 tailBit)) := by
-      rw [contractingChild]
+      exact congrArg (fun value => B (A value)) contractingChild
     _ = B (Q (9 * coefficient) 2 tailBit) := by
-      rw [A_Q (by omega : 0 < 3 * coefficient) bit (by omega : 1 ≤ 3)]
+      simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega] using
+        congrArg B (A_Q (by omega : 0 < 3 * coefficient) bit
+          (by omega : 1 ≤ 3))
     _ = B (Q (9 * coefficient) 1 tailBit) := by
       exact (B_Q_one_eq_two ninePositive nineOdd bit).symm
     _ = B (Q (3 * coefficient) 3 tailBit) := by
-      rw [B_Q (by omega : 0 < 3 * coefficient) bit (by omega : 3 ≤ 3)]
+      symm
+      simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega] using
+        B_Q (by omega : 0 < 3 * coefficient) bit (by omega : 3 ≤ 3)
     _ = B (B (Q coefficient 5 tailBit)) := by
-      rw [contractingChild]
+      exact congrArg B contractingChild.symm
 
 /-- Beyond `v=6`, the same common side is the expanding child of the LOSS
 sibling `B(Z)`. -/
@@ -433,26 +438,68 @@ theorem highReturn_v_ge7_common_side_child
   have returnedGrandchild :
       B (B (Q coefficient (exponent - 1) tailBit)) =
         Q (9 * coefficient) (exponent - 5) tailBit := by
-    rw [contractingChild]
-    exact B_Q (by omega : 0 < 3 * coefficient) bit (by omega : 3 ≤ exponent - 3)
+    calc
+      B (B (Q coefficient (exponent - 1) tailBit)) =
+          B (Q (3 * coefficient) (exponent - 3) tailBit) :=
+        congrArg B contractingChild
+      _ = Q (9 * coefficient) (exponent - 5) tailBit := by
+        simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega,
+          show exponent - 3 - 2 = exponent - 5 by omega] using
+          B_Q (by omega : 0 < 3 * coefficient) bit
+            (by omega : 3 ≤ exponent - 3)
   calc
     B (A (B (Q coefficient (exponent - 1) tailBit))) =
         B (A (Q (3 * coefficient) (exponent - 3) tailBit)) := by
-      rw [contractingChild]
+      exact congrArg (fun value => B (A value)) contractingChild
     _ = B (Q (9 * coefficient) (exponent - 4) tailBit) := by
-      rw [A_Q (by omega : 0 < 3 * coefficient) bit
-        (by omega : 1 ≤ exponent - 3)]
+      simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega,
+        show exponent - 3 - 1 = exponent - 4 by omega] using
+        congrArg B (A_Q (by omega : 0 < 3 * coefficient) bit
+          (by omega : 1 ≤ exponent - 3))
     _ = Q (27 * coefficient) (exponent - 6) tailBit := by
-      simpa [show 3 * (9 * coefficient) = 27 * coefficient by omega] using
+      simpa [show 3 * (9 * coefficient) = 27 * coefficient by omega,
+        show exponent - 4 - 2 = exponent - 6 by omega] using
         B_Q (by omega : 0 < 9 * coefficient) bit
           (by omega : 3 ≤ exponent - 4)
     _ = A (Q (9 * coefficient) (exponent - 5) tailBit) := by
       symm
-      simpa [show 3 * (9 * coefficient) = 27 * coefficient by omega] using
+      simpa [show 3 * (9 * coefficient) = 27 * coefficient by omega,
+        show exponent - 5 - 1 = exponent - 6 by omega] using
         A_Q (by omega : 0 < 9 * coefficient) bit
           (by omega : 1 ≤ exponent - 5)
     _ = A (B (B (Q coefficient (exponent - 1) tailBit))) := by
-      rw [returnedGrandchild]
+      exact congrArg A returnedGrandchild.symm
+
+/-- The selected LOSS sibling of the returned contracting side is nonterminal
+throughout the `v≥6` range. -/
+theorem highReturn_long_loss_sibling_positive
+    {coefficient exponent tailBit : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) (exponentLarge : 6 ≤ exponent) :
+    0 < B (B (Q coefficient (exponent - 1) tailBit)) := by
+  have contractingChild := highReturn_contracting_child positive bit
+    (by omega : 4 ≤ exponent)
+  have returnedGrandchild :
+      B (B (Q coefficient (exponent - 1) tailBit)) =
+        Q (9 * coefficient) (exponent - 5) tailBit := by
+    calc
+      B (B (Q coefficient (exponent - 1) tailBit)) =
+          B (Q (3 * coefficient) (exponent - 3) tailBit) :=
+        congrArg B contractingChild
+      _ = Q (9 * coefficient) (exponent - 5) tailBit := by
+        simpa [show 3 * (3 * coefficient) = 9 * coefficient by omega,
+          show exponent - 3 - 2 = exponent - 5 by omega] using
+          B_Q (by omega : 0 < 3 * coefficient) bit
+            (by omega : 3 ≤ exponent - 3)
+  have nineOdd : OddNat (9 * coefficient) := by
+    obtain ⟨half, coefficientShape⟩ := odd
+    exact ⟨9 * half + 4, by rw [coefficientShape]; omega⟩
+  have coordinates :
+      IsConstantTail (Q (9 * coefficient) (exponent - 5) tailBit)
+        (9 * coefficient) (exponent - 5) tailBit :=
+    ⟨by omega, nineOdd, by omega, bit, rfl⟩
+  rw [returnedGrandchild]
+  exact coordinates.state_positive
 
 /-- The Section 35 common side has a concrete WIN tree two levels below a
 given returned-side tree, provided the Section 34 selected child is WIN.
@@ -469,10 +516,12 @@ theorem highReturn_long_common_side_height_drop
   by_cases boundary : exponent = 6
   · subst exponent
     apply WinningTree.twoLevelDrop_of_A_winning tree selectedWinning
+      (highReturn_long_loss_sibling_positive positive odd bit (by omega))
     right
     exact highReturn_v6_common_side_child positive odd bit
   · have longRange : 7 ≤ exponent := by omega
     apply WinningTree.twoLevelDrop_of_A_winning tree selectedWinning
+      (highReturn_long_loss_sibling_positive positive odd bit exponentLarge)
     left
     exact highReturn_v_ge7_common_side_child positive bit longRange
 
