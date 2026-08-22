@@ -1,12 +1,13 @@
-name: Lean verification (legacy entry)
+name: Lean verification (one worker)
 
 on:
-  push:
-    branches: [main]
+  pull_request:
+    paths:
+      - 'formal/**'
   workflow_dispatch:
 
 concurrency:
-  group: verify-${{ github.ref }}
+  group: lean-one-worker-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

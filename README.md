@@ -119,7 +119,7 @@ lake build
 See [`formal/README.md`](formal/README.md) and
 [`formal/COVERAGE.md`](formal/COVERAGE.md) before interpreting the result.
 GitHub Actions runs this build with warnings treated as errors and also asks
-the independent `nanoda` checker to reject any use of `sorry`.
+the bundled `leanchecker` to recheck every module in the root package.
 
 ## Repository map
 
