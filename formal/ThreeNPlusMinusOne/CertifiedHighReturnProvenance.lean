@@ -1,5 +1,6 @@
 import ThreeNPlusMinusOne.HighReturnProvenance
 import ThreeNPlusMinusOne.OccurrenceCertificates
+import ThreeNPlusMinusOne.CertifiedOccurrenceRefinement
 
 set_option autoImplicit false
 
@@ -155,5 +156,89 @@ theorem certifiedHighReturn_long_retained_pair_replacements
         (parent := CertifiedProofToken.winning returnedToken)
         (child := CertifiedProofToken.winning firstDescendant)
         (by simpa [CertifiedProofToken.height] using firstLower))
+
+/-- The two data-level retained-pair replacements are legal equal-base steps
+of the data-level occurrence macro relation. Thus their local no-reseed
+status survives erasure into the prior occurrence refinement as well. -/
+theorem certifiedHighReturn_long_retained_pair_outer_steps
+    {coefficient exponent tailBit : Nat}
+    (positive : 0 < coefficient) (odd : OddNat coefficient)
+    (bit : Bit tailBit) (exponentLarge : 7 ≤ exponent)
+    {before middle after innerForest : CertifiedProofForest}
+    (base : MacroConfiguration)
+    (returnedToken contractingToken : CertifiedWinningToken)
+    (returnedPosition :
+      returnedToken.position = Q coefficient (exponent - 1) tailBit)
+    (contractingPosition :
+      contractingToken.position = B (Q coefficient (exponent - 1) tailBit)) :
+    ∃ firstDescendant secondDescendant : CertifiedWinningToken,
+      firstDescendant.position =
+          B (A (Q coefficient (exponent - 1) tailBit)) ∧
+        secondDescendant.position =
+          B (A (B (Q coefficient (exponent - 1) tailBit))) ∧
+          CertifiedOccurrenceMacroStep
+            { base := base
+              outerForest :=
+                before ++ [CertifiedProofToken.winning firstDescendant] ++
+                  middle ++ [CertifiedProofToken.winning secondDescendant] ++
+                    after
+              innerForest := innerForest }
+            { base := base
+              outerForest :=
+                before ++ [CertifiedProofToken.winning firstDescendant] ++
+                  middle ++ [CertifiedProofToken.winning contractingToken] ++
+                    after
+              innerForest := innerForest } ∧
+            CertifiedOccurrenceMacroStep
+              { base := base
+                outerForest :=
+                  before ++ [CertifiedProofToken.winning firstDescendant] ++
+                    middle ++ [CertifiedProofToken.winning contractingToken] ++
+                      after
+                innerForest := innerForest }
+              { base := base
+                outerForest :=
+                  before ++ [CertifiedProofToken.winning returnedToken] ++
+                    middle ++ [CertifiedProofToken.winning contractingToken] ++
+                      after
+                innerForest := innerForest } := by
+  obtain ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
+    secondReplacement, firstReplacement⟩ :=
+    certifiedHighReturn_long_retained_pair_replacements
+      (before := before) (middle := middle) (after := after)
+      positive odd bit exponentLarge returnedToken contractingToken
+      returnedPosition contractingPosition
+  refine ⟨firstDescendant, secondDescendant, firstPosition, secondPosition,
+    ?_, ?_⟩
+  · refine CertifiedOccurrenceMacroStep.outerForest
+      (next :=
+        { base := base
+          outerForest :=
+            before ++ [CertifiedProofToken.winning firstDescendant] ++ middle ++
+              [CertifiedProofToken.winning secondDescendant] ++ after
+          innerForest := innerForest })
+      (current :=
+        { base := base
+          outerForest :=
+            before ++ [CertifiedProofToken.winning firstDescendant] ++ middle ++
+              [CertifiedProofToken.winning contractingToken] ++ after
+          innerForest := innerForest })
+      rfl rfl ?_
+    exact secondReplacement
+  · refine CertifiedOccurrenceMacroStep.outerForest
+      (next :=
+        { base := base
+          outerForest :=
+            before ++ [CertifiedProofToken.winning firstDescendant] ++ middle ++
+              [CertifiedProofToken.winning contractingToken] ++ after
+          innerForest := innerForest })
+      (current :=
+        { base := base
+          outerForest :=
+            before ++ [CertifiedProofToken.winning returnedToken] ++ middle ++
+              [CertifiedProofToken.winning contractingToken] ++ after
+          innerForest := innerForest })
+      rfl rfl ?_
+    exact firstReplacement
 
 end ThreeNPlusMinusOne
